@@ -1,0 +1,30 @@
+{
+  "name": "dawn-patrol",
+  "version": "1.0.0",
+  "description": "Spike on fast event results API",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "^2.3.0",
+    "express": "^4.12.4",
+    "sync-request": "^2.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scottwillson/dawn-patrol.git"
+  },
+  "author": "Scott Willson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scottwillson/dawn-patrol/issues"
+  },
+  "homepage": "https://github.com/scottwillson/dawn-patrol#readme"
+}
