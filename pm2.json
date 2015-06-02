@@ -1,0 +1,11 @@
+{
+  "apps" : [{
+    "name"        : "dawn-patrol",
+    "script"      : "app.js",
+    "merge_logs"  : true,
+    "cwd"         : "/var/www/dawn-patrol",
+    "env": {
+        "NODE_ENV": "production"
+    }
+  }]
+}
