@@ -9,6 +9,7 @@
   "dependencies": {
     "chai": "^2.3.0",
     "express": "^4.12.4",
+    "pm2": "^0.12.15",
     "sync-request": "^2.0.1"
   },
   "devDependencies": {
