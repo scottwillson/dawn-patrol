@@ -1,4 +1,5 @@
 ansible/.ssh/*
+ansible/staging
 node_modules
 .DS_Store
 .vagrant

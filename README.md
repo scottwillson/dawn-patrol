@@ -33,7 +33,7 @@ Install Ansible
 
 Deploy
 ------
-    mkdir .ssh
+    mkdir ansible/.ssh
     ssh-keygen -f ansible/.ssh/id_rsa
 
     ./bin/deploy
@@ -42,12 +42,15 @@ Update test server
 ------------------
     ./bin/provision
 
+Staging server
+--------------
+Create ansible/staging inventory file with hostname or IP of staging server
+
+    ./bin/provision staging
+    ./bin/deploy staging
+
 Roadmap
 -------
-Simple end-to-end test
-Vagrant for staging server
-Ansible to configure Vagrant box
-Deploy
 shrinkwrap
 ES6
 Add basic monitoring
