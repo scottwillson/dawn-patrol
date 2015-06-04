@@ -13,3 +13,4 @@ else {
 var res = request('GET', 'http://' + host + '/event_results/0.json');
 var body = res.getBody().toString();
 expect(body).to.be.a('string');
+expect(body).to.eq('OK');
