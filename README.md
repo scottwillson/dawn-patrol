@@ -17,17 +17,30 @@ install Node.js, npm
 
 Tests
 -----
+    npm start
     npm test
 
-Staging server
---------------
+End to end test against local server
+------------------------------------
+    END_TO_END_HOST=0.0.0.0:3001 npm test
+
+Test server
+-----------
 Install Vagrant
+Install Ansible
 
     vagrant up
 
-Install Ansible
+Deploy
+------
+    mkdir .ssh
+    ssh-keygen -f .ssh/id_rsa
 
-    ansible-playbook -i staging deploy.yml
+    ./bin/deploy
+
+Update test server
+------------------
+    ./bin/provision
 
 Roadmap
 -------
@@ -35,6 +48,7 @@ Simple end-to-end test
 Vagrant for staging server
 Ansible to configure Vagrant box
 Deploy
+shrinkwrap
 ES6
 Add basic monitoring
 Collect metrics
@@ -55,3 +69,5 @@ Move cache updating to separate service?
 Try other data storage/servers and compare performance
 Multiplex requests from production
 Redirect production requests to here
+Docker
+PM2 without global?

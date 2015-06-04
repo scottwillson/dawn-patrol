@@ -1,0 +1,33 @@
+---
+- hosts: all
+  sudo: yes
+
+  tasks:
+    - shell: curl -sL https://deb.nodesource.com/setup_dev | bash creates=/usr/bin/node
+    - apt: name=nodejs state=latest
+    - apt: name=git state=latest
+
+    - user: name=dawn-patrol
+
+    - name: Set up authorized_keys for dawn-patrol user
+      authorized_key: user=dawn-patrol key="{{ item }}"
+      with_file:
+        - .ssh/id_rsa.pub
+
+    - file: path=/var/www owner=root mode=0755 state=directory
+    - file: path=/var/www/.pm2 owner=dawn-patrol mode=0750 state=directory
+    - file: path=/var/www/dawn-patrol owner=dawn-patrol mode=0750 state=directory
+
+    - name: Install pm2
+      npm:
+        name: pm2
+        global: yes
+
+    - name: install custome pm2 startup script
+      copy: src=pm2 dest=/etc/init.d/pm2 mode=0755
+
+    - name: Start pm2 service
+      service:
+        name: pm2
+        state: started
+        enabled: yes

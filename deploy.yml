@@ -1,0 +1,19 @@
+---
+- hosts: all
+  user: dawn-patrol
+
+  tasks:
+    - name: update repo
+      git: repo=https://github.com/scottwillson/dawn-patrol dest=/var/www/dawn-patrol
+      # notify:
+      #   - reload dawn-patrol
+
+    - npm: path=/var/www/dawn-patrol production=yes
+
+    # if not running:
+    - command: pm2 start /var/www/dawn-patrol/app.js
+    - command: pm2 save
+
+  # handlers:
+  #   - name: reload dawn-patrol
+  #     service: name=dawn-patrol state=reloaded
