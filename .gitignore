@@ -1,4 +1,4 @@
+ansible/.ssh/*
 node_modules
 .DS_Store
-.ssh/*
 .vagrant
