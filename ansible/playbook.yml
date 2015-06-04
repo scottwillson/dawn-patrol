@@ -23,7 +23,7 @@
         name: pm2
         global: yes
 
-    - name: install custome pm2 startup script
+    - name: install custom pm2 startup script
       copy: src=pm2 dest=/etc/init.d/pm2 mode=0755
 
     - name: Start pm2 service
