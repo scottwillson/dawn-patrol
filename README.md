@@ -34,7 +34,7 @@ Install Ansible
 Deploy
 ------
     mkdir .ssh
-    ssh-keygen -f .ssh/id_rsa
+    ssh-keygen -f ansible/.ssh/id_rsa
 
     ./bin/deploy
 
