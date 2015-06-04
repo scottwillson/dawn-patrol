@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 
 app.get('/event_results/0.json', function (req, res) {
-  res.send('YES');
+  res.send('OK');
 });
 
 var server = app.listen(3000, function () {
