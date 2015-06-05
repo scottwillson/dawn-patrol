@@ -1,7 +1,16 @@
 #!/bin/bash
 
-ansible-playbook \
-  -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory \
-  --private-key=ansible/.ssh/id_rsa \
-  -u vagrant \
-  ansible/deploy.yml
+case $1 in
+staging)
+  ansible-playbook \
+    -i ansible/staging \
+    --private-key=ansible/.ssh/id_rsa \
+    ansible/deploy.yml
+  ;;
+*)
+  ansible-playbook \
+    -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory \
+    --private-key=ansible/.ssh/id_rsa \
+    ansible/deploy.yml
+  ;;
+esac
