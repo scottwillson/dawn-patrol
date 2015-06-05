@@ -8,7 +8,7 @@
 
     - npm: path=/var/www/dawn-patrol production=yes
 
-    - shell: pgrep -f 'node /var/www/dawn-patrol/app2.js'
+    - shell: pgrep -f 'node /var/www/dawn-patrol/app.js'
       register: app_process
 
     - command: pm2 start /var/www/dawn-patrol/app.js --watch
