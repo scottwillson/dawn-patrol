@@ -8,10 +8,10 @@
 
     - npm: path=/var/www/dawn-patrol production=yes
 
-    - command: pgrep -c -f 'node /var/www/dawn-patrol/app.js'
+    - command: pgrep -c -f 'node /var/www/dawn-patrol/app.es6'
       register: app_process
 
-    - command: pm2 start /var/www/dawn-patrol/app.js --watch
+    - command: pm2 start /var/www/dawn-patrol/app.es6 --watch
       when: app_process == 0
 
     - command: pm2 save
