@@ -12,7 +12,7 @@
       register: app_process
       ignore_errors: yes
 
-    - command: pm2 start /var/www/dawn-patrol/dist/app.es6 --watch
+    - command: pm2 start /var/www/dawn-patrol/dist/app.js --watch
       when: app_process == 0
 
     - command: pm2 save
