@@ -13,7 +13,7 @@ Getting started
 install Node.js, npm
 
     npm install
-    node app.js
+    node start
 
 Tests
 -----
@@ -51,8 +51,8 @@ Create ansible/staging inventory file with hostname or IP of staging server
 
 Roadmap
 -------
-shrinkwrap
 ES6
+Deploy branches
 Add basic monitoring
 Collect metrics
 node.js app with canned response
