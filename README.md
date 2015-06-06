@@ -13,7 +13,7 @@ Getting started
 install Node.js, npm
 
     npm install
-    node start
+    node dist/app.js
 
 Tests
 -----
@@ -73,4 +73,4 @@ Try other data storage/servers and compare performance
 Multiplex requests from production
 Redirect production requests to here
 Docker
-PM2 without global?
+Use PM2 'ecosystem'

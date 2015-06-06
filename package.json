@@ -7,16 +7,17 @@
     "test": "test"
   },
   "dependencies": {
-    "babel": "^5.5.4",
     "chai": "^2.3.0",
     "express": "^4.12.4",
     "sync-request": "^2.0.1"
   },
   "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
     "mocha": "^2.2.5"
   },
   "scripts": {
-    "start": "./node_modules/babel/bin/babel-node app.es6",
+    "start": "node dist/app.js",
     "test": "mocha"
   },
   "repository": {
