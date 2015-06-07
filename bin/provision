@@ -6,6 +6,11 @@ staging)
     -i ansible/staging \
     ansible/provision.yml
   ;;
+  production)
+  ansible-playbook \
+    -i ansible/production \
+    ansible/provision.yml
+  ;;
 *)
   ansible-playbook \
     -i ansible/local \

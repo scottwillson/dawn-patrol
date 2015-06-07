@@ -7,6 +7,12 @@ staging)
     --private-key=ansible/.ssh/id_rsa \
     ansible/deploy.yml
   ;;
+production)
+  ansible-playbook \
+    -i ansible/production \
+    --private-key=ansible/.ssh/id_rsa \
+    ansible/deploy.yml
+  ;;
 *)
   ansible-playbook \
     -i ansible/local \
