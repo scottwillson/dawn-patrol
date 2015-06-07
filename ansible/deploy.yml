@@ -12,3 +12,6 @@
       ignore_errors: yes
 
     - command: pm2 save
+
+    - command: 'pm2 link {{ keymetrics_token }}'
+      when: keymetrics_token is defined

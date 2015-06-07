@@ -9,7 +9,7 @@ staging)
   ;;
 *)
   ansible-playbook \
-    -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory \
+    -i ansible/local \
     --private-key=ansible/.ssh/id_rsa \
     ansible/deploy.yml
   ;;

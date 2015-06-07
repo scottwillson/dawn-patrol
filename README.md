@@ -51,12 +51,10 @@ Create ansible/staging inventory file with hostname or IP of staging server
 
 Roadmap
 -------
-ES6
-Deploy branches
 Add basic monitoring
 Collect metrics
-node.js app with canned response
 Add performance test
+Tee requests from OBRA
 Fetch and forward data from OBRA
 Store data in Postgres denormalized (should be able to fufill any request by reading a single row)
 Fetch data from Postgres
