@@ -51,9 +51,9 @@ Create ansible/staging inventory file with hostname or IP of staging server
 
 Roadmap
 -------
-Add basic monitoring
-Collect metrics
 Add performance test
+Watch/gulp/auto test & transpile
+transpile all the things (including test)
 Tee requests from OBRA
 Fetch and forward data from OBRA
 Store data in Postgres denormalized (should be able to fufill any request by reading a single row)
@@ -70,5 +70,6 @@ Move cache updating to separate service?
 Try other data storage/servers and compare performance
 Multiplex requests from production
 Redirect production requests to here
+Rejigger Ansible files to follow best practices and remove duplication
 Docker
 Use PM2 'ecosystem'

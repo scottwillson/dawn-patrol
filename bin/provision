@@ -8,7 +8,7 @@ staging)
   ;;
 *)
   ansible-playbook \
-    -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory \
+    -i ansible/local \
     --private-key=.vagrant/machines/default/virtualbox/private_key \
     -u vagrant \
     ansible/provision.yml

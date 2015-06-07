@@ -5,13 +5,18 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.network "forwarded_port", guest: 3000, host: 3001
+  config.vm.network "forwarded_port", guest: 80, host: 8001
 
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "provision.yml"
+    ansible.playbook = "ansible/provision.yml"
     ansible.sudo = true
+    ansible.extra_vars = {
+      nginx_https_ip_address: "0.0.0.0",
+      nginx_server_names: "localhost"
+    }
   end
 end
