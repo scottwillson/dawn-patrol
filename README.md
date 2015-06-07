@@ -20,17 +20,17 @@ Tests
     npm start
     npm test
 
-End to end test against local server
-------------------------------------
-    END_TO_END_HOST=0.0.0.0:3001 npm test
-
 Test server
 -----------
 Install Vagrant
 Install Ansible
-
+Create ansible/local with contents like: default ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222
     vagrant up
 
+
+End to end test against local server
+------------------------------------
+    END_TO_END_HOST=0.0.0.0:3001 npm test
 Deploy
 ------
     mkdir ansible/.ssh
