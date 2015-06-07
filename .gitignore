@@ -1,5 +1,6 @@
 ansible/.ssh/*
 ansible/local
+ansible/production
 ansible/staging
 node_modules
 .DS_Store
