@@ -30,7 +30,7 @@ Create ansible/local with contents like: default ansible_ssh_host=127.0.0.1 ansi
 
 End to end test against local server
 ------------------------------------
-    END_TO_END_HOST=0.0.0.0:3001 npm test
+    TARGET_HOST=0.0.0.0:3001 npm test
 Deploy
 ------
     mkdir ansible/.ssh
@@ -48,6 +48,10 @@ Create ansible/staging inventory file with hostname or IP of staging server
 
     ./bin/provision staging
     ./bin/deploy staging
+
+Performance Test
+----------------
+Ad hoc: ```./node_modules/loadtest/bin/loadtest.js -c 8 -n 1000 http://dawnpatrol.staging.rocketsurgeryllc.com/event_results/0.json```
 
 Roadmap
 -------
