@@ -8,8 +8,10 @@
 
     - npm: path=/var/www/dawn-patrol production=yes
 
-    - command: pm2 start /var/www/dawn-patrol/dist/app.js --watch
+    - command: pm2 start /var/www/dawn-patrol/dist/app.js -i 0
       ignore_errors: yes
+
+    - command: pm2 reload app
 
     - command: pm2 save
 
