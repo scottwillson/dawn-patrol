@@ -8,11 +8,7 @@
 
     - npm: path=/var/www/dawn-patrol production=yes
 
-    - command: pgrep -c -f 'node /var/www/dawn-patrol/dist/app.js'
-      register: app_process
-      ignore_errors: yes
-
     - command: pm2 start /var/www/dawn-patrol/dist/app.js --watch
-      when: app_process == 0
+      ignore_errors: yes
 
     - command: pm2 save
