@@ -13,6 +13,7 @@ Getting started
 install Node.js, npm
 
     npm install
+    gulp
     node dist/app.js
 
 Tests
@@ -55,8 +56,6 @@ Ad hoc: ```./node_modules/loadtest/bin/loadtest.js -c 8 -n 1000 http://dawnpatro
 
 Roadmap
 -------
-Add performance test
-Watch/gulp/auto test & transpile
 transpile all the things (including test)
 Tee requests from OBRA
 Fetch and forward data from OBRA
@@ -77,3 +76,4 @@ Redirect production requests to here
 Rejigger Ansible files to follow best practices and remove duplication
 Docker
 Use PM2 'ecosystem'
+auto test
