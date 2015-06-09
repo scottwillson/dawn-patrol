@@ -770,6 +770,18 @@
       "from": "path-is-absolute@1.0.0",
       "resolved": "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.0.tgz"
     },
+    "pmx": {
+      "version": "0.3.16",
+      "from": "pmx@*",
+      "resolved": "https://registry.npmjs.org/pmx/-/pmx-0.3.16.tgz",
+      "dependencies": {
+        "json-stringify-safe": {
+          "version": "5.0.1",
+          "from": "json-stringify-safe@*",
+          "resolved": "https://registry.npmjs.org/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz"
+        }
+      }
+    },
     "qs": {
       "version": "2.4.2",
       "from": "qs@2.4.2",
