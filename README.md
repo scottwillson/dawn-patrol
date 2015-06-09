@@ -56,7 +56,6 @@ Ad hoc: ```./node_modules/loadtest/bin/loadtest.js -c 8 -n 1000 http://dawnpatro
 
 Roadmap
 -------
-transpile all the things (including test)
 Tee requests from OBRA
 Fetch and forward data from OBRA
 Store data in Postgres denormalized (should be able to fufill any request by reading a single row)
