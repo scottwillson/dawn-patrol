@@ -64,6 +64,7 @@ Ad hoc: ```./node_modules/loadtest/bin/loadtest.js -c 8 -n 1000 http://dawnpatro
 
 Roadmap
 -------
+improve DB setup in new environment
 Modify end to end test to work against test server and staging
   * Assume already deployed? (Move local startup code and make optional?)
   * How to assert results?
@@ -88,5 +89,3 @@ Rejigger Ansible files to follow best practices and remove duplication
 Docker
 Use PM2 'ecosystem'
 auto test
-use pg-promise
-improve DB setup in new environment
