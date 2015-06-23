@@ -17,7 +17,7 @@ install Node.js, npm
     node dist/server.js
 
 Create DBs
-
+    sudo apt-get install postgresql
     createdb dawn-patrol-test
     results.sql
 

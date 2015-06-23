@@ -17,6 +17,12 @@ var app = null;
 var api = null;
 var echoServer = null;
 
+function createTmpDir() {
+  if (!fs.existsSync('tmp')) {
+    fs.mkdirSync('tmp');
+  }
+}
+
 function getResultsCount() {
   return db.one('select count(*) from results').then(function (result) {
     var resultsCount = parseInt(result.count);
@@ -64,7 +70,7 @@ function teardown() {
   pgp.end();
 }
 
-fs.mkdirSync('tmp');
+createTmpDir();
 fs.writeFileSync('tmp/nginx.log', '');
 
 Promise.resolve(truncateResultsTable()).then(startApp()).then(startApi()).then(startEchoServer).then(appendToNginxLog).then(getResultsCount).timeout(1000)['finally'](teardown).done();
