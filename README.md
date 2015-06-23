@@ -14,7 +14,7 @@ install Node.js, npm
 
     npm install
     gulp
-    node dist/app.js
+    node dist/server.js
 
 Create DBs
 
@@ -37,6 +37,7 @@ Create ansible/local with contents like: default ansible_ssh_host=127.0.0.1 ansi
 End to end test against local server
 ------------------------------------
     TARGET_HOST=0.0.0.0:3001 npm test
+
 Deploy
 ------
     mkdir ansible/.ssh
