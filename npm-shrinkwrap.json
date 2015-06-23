@@ -813,6 +813,25 @@
         }
       }
     },
+    "pg-promise": {
+      "version": "1.6.3",
+      "from": "pg-promise@*",
+      "resolved": "https://registry.npmjs.org/pg-promise/-/pg-promise-1.6.3.tgz",
+      "dependencies": {
+        "promise": {
+          "version": "7.0.3",
+          "from": "promise@>=7.0.0 <8.0.0",
+          "resolved": "https://registry.npmjs.org/promise/-/promise-7.0.3.tgz",
+          "dependencies": {
+            "asap": {
+              "version": "2.0.3",
+              "from": "asap@>=2.0.3 <2.1.0",
+              "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.3.tgz"
+            }
+          }
+        }
+      }
+    },
     "pmx": {
       "version": "0.3.18",
       "from": "pmx@0.3.18",

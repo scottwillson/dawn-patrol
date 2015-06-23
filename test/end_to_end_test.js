@@ -5,35 +5,36 @@ process.env.NODE_ENV = 'test';
 var fs = require('fs');
 var Promise = require('bluebird');
 
-var pg = Promise.promisifyAll(require('pg'));
-var pgConnString = 'postgres://localhost/dawn-patrol-test';
+var pgpLib = require('pg-promise');
+var cn = {
+    host: 'localhost',
+    database: 'dawn-patrol-test'
+};
+var pgp = pgpLib(cn);
+var db = pgp(cn);
 
 var app = null;
 var api = null;
 var echoServer = null;
 
-function getResultsCount(database, releaseDatabaseConnection) {
-  return database.queryAsync('select count(*) from results')
+function getResultsCount() {
+  return db.one('select count(*) from results')
     .then(function(result) {
-      var resultsCount = parseInt(result.rows[0].count);
+      var resultsCount = parseInt(result.count);
 
       if (resultsCount === 1) {
-        releaseDatabaseConnection();
         return resultsCount;
       }
       else {
         return Promise.delay(20).then(function() {
-          return getResultsCount(database, releaseDatabaseConnection);
+          return getResultsCount();
         });
       }
   });
 }
 
-function truncateResultsTable(database, releaseDatabaseConnection) {
-  return database.queryAsync('truncate results')
-    .then(function() {
-      releaseDatabaseConnection();
-    });
+function truncateResultsTable() {
+  db.none('truncate results');
 }
 
 function startApp() {
@@ -53,22 +54,20 @@ function appendToNginxLog() {
 }
 
 function teardown() {
-  app.unref();
-  api.unref();
-  echoServer.unwatch();
-  pg.end();
+  if (app) { app.unref(); }
+  if (api) { api.unref(); }
+  if (echoServer) { echoServer.unwatch(); }
+  pgp.end();
 }
 
 fs.writeFileSync('tmp/nginx.log', '');
 
-pg.connectAsync(pgConnString)
-.spread(truncateResultsTable)
-.then(startApp)
-.then(startApi)
+Promise.resolve(truncateResultsTable())
+.then(startApp())
+.then(startApi())
 .then(startEchoServer)
 .then(appendToNginxLog)
-.then(function() { return pg.connectAsync(pgConnString); })
-.spread(getResultsCount)
+.then(getResultsCount)
 .timeout(1000)
 .finally(teardown)
 .done();
