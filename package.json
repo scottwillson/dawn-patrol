@@ -7,16 +7,18 @@
     "test": "test"
   },
   "dependencies": {
-    "chai": "^2.3.0",
+    "bluebird": "^2.9.30",
     "express": "^4.12.4",
+    "morgan": "^1.6.0",
+    "pg": "^4.4.0",
     "pmx": "^0.3.16",
-    "sync-request": "^2.0.1"
+    "tail": "^0.4.0"
   },
   "devDependencies": {
+    "babel-eslint": "^3.1.17",
+    "eslint": "^0.23.0",
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.1.0",
-    "loadtest": "^1.2.11",
-    "mocha": "^2.2.5"
+    "gulp-babel": "^5.1.0"
   },
   "scripts": {
     "start": "node dist/app.js",

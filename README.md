@@ -16,6 +16,11 @@ install Node.js, npm
     gulp
     node dist/app.js
 
+Create DBs
+
+    createdb dawn-patrol-test
+    results.sql
+
 Tests
 -----
     npm start
@@ -52,13 +57,17 @@ Create ansible/staging inventory file with hostname or IP of staging server
 
 Performance Test
 ----------------
-Ad hoc: ```./node_modules/loadtest/bin/loadtest.js -c 8 -n 1000 http://dawnpatrol.staging.rocketsurgeryllc.com/event_results/0.json```
+Ad hoc: ```./node_modules/loadtest/bin/loadtest.js -c 8 -n 1000 http://dawnpatrol.staging.rocketsurgeryllc.com/events/0/results.json```
 
 Roadmap
 -------
-Tee requests from OBRA
+Modify end to end test to work against test server and staging
+  * Assume already deployed? (Move local startup code and make optional?)
+  * How to assert results?
+  * Parameterize ports, URLs, and file locations
+awk '{print $7}' obra.access.log | egrep /events/[0-9]+/results.json
 Fetch and forward data from OBRA
-Store data in Postgres denormalized (should be able to fufill any request by reading a single row)
+Store data in Postgres denormalized (should be able to fulfill any request by reading a single row)
 Fetch data from Postgres
 Add nginx
 Add memcached (with memory limit)
@@ -76,3 +85,5 @@ Rejigger Ansible files to follow best practices and remove duplication
 Docker
 Use PM2 'ecosystem'
 auto test
+use pg-promise
+improve DB setup in new environment

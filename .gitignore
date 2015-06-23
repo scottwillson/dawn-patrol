@@ -3,5 +3,6 @@ ansible/local
 ansible/production
 ansible/staging
 node_modules
+tmp/*
 .DS_Store
 .vagrant

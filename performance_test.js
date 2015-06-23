@@ -9,7 +9,7 @@ else {
 
 var loadtest = require('loadtest');
 var options = {
-    url: 'http://' + host + '/event_results/0.json',
+    url: 'http://' + host + '/events/0/results.json',
     maxRequests: 1000,
     concurrency: 4
 };
