@@ -18,8 +18,10 @@ install Node.js, npm
 
 Create DBs
     sudo apt-get install postgresql
-    createdb dawn-patrol-test
-    results.sql
+    sudo -u postgres createuser -P dawn-patrol-test
+    # secret
+    sudo -u postgres createdb dawn-patrol-test -O dawn-patrol-test
+    psql -u dawn-patrol-test dawn-patrol-test < results.sql
 
 Tests
 -----
