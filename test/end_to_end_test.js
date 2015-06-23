@@ -60,6 +60,7 @@ function teardown() {
   pgp.end();
 }
 
+fs.mkdirSync('tmp');
 fs.writeFileSync('tmp/nginx.log', '');
 
 Promise.resolve(truncateResultsTable())

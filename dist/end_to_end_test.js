@@ -64,6 +64,7 @@ function teardown() {
   pgp.end();
 }
 
+fs.mkdirSync('tmp');
 fs.writeFileSync('tmp/nginx.log', '');
 
 Promise.resolve(truncateResultsTable()).then(startApp()).then(startApi()).then(startEchoServer).then(appendToNginxLog).then(getResultsCount).timeout(1000)['finally'](teardown).done();
