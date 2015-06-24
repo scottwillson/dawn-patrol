@@ -1,5 +1,5 @@
-\c dawn-patrol-test
-set role dawn-patrol-test;
+\c dawn-patrol
+set role dawn-patrol;
 
 create table results (
   event_id int not null default null,

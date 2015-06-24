@@ -6,7 +6,7 @@
     - name: update repo
       git: repo=https://github.com/scottwillson/dawn-patrol dest=/var/www/dawn-patrol
 
-    - command: psql postgres -f create_schema.sql
+    - command: psql postgres -f /var/www/dawn-patrol/sql/create_schema.sql
 
     - npm: path=/var/www/dawn-patrol production=yes
 
