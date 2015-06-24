@@ -6,14 +6,9 @@ var fs = require('fs');
 var Promise = require('bluebird');
 
 var pgpLib = require('pg-promise');
-var cn = {
-    host: 'localhost',
-    user: 'dawn-patrol-test',
-    password: 'secret',
-    database: 'dawn-patrol-test'
-};
-var pgp = pgpLib(cn);
-var db = pgp(cn);
+var pgp = pgpLib();
+var config = require('config');
+var db = pgp(config.get('database.connection'));
 
 var app = null;
 var api = null;
@@ -34,9 +29,7 @@ function getResultsCount() {
         return resultsCount;
       }
       else {
-        return Promise.delay(20).then(function() {
-          return getResultsCount();
-        });
+        return Promise.delay(20).then(getResultsCount());
       }
   });
 }

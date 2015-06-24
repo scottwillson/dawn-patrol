@@ -1,0 +1,5 @@
+{
+  "database": {
+    "connection": "postgres://dawn_patrol:dawn_patrol@localhost/dawn_patrol"
+  }
+}

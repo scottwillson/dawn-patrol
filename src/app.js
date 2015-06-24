@@ -8,14 +8,9 @@ var express = require('express');
 var morgan = require('morgan');
 
 var pgpLib = require('pg-promise');
-var cn = {
-    host: 'localhost',
-    user: 'dawn-patrol-test',
-    password: 'secret',
-    database: 'dawn-patrol-test'
-};
-var pgp = pgpLib(cn);
-var db = pgp(cn);
+var pgp = pgpLib();
+var config = require('config');
+var db = pgp(config.get('database.connection'));
 
 var app = express();
 app.use(morgan('combined'));

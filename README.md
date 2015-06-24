@@ -16,12 +16,9 @@ install Node.js, npm
     gulp
     node dist/server.js
 
-Create DBs
+Create DBs (Ubuntu)
     sudo apt-get install postgresql
-    sudo -u postgres createuser -P dawn-patrol-test
-    # secret
-    sudo -u postgres createdb dawn-patrol-test -O dawn-patrol-test
-    psql -u dawn-patrol-test dawn-patrol-test < results.sql
+    sudo -u postgres psql postgres -f setup_test.sql
 
 Tests
 -----
@@ -89,3 +86,4 @@ Rejigger Ansible files to follow best practices and remove duplication
 Docker
 Use PM2 'ecosystem'
 auto test
+Ensure app server throw exceptions
