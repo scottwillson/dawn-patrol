@@ -22,6 +22,9 @@
     - name: remove nginx default site
       file: path=/etc/nginx/sites-enabled/default state=absent
 
+    - postgresql_user: db=dawn_patrol name=dawn_patrol password=dawn_patrol
+    - postgresql_db: name=dawn_patrol owner=dawn_patrol
+
     - user: name=dawn-patrol
 
     - name: Set up authorized_keys for dawn-patrol user
