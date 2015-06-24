@@ -7,6 +7,8 @@
     - apt: name=nodejs state=latest
     - apt: name=git state=latest
     - apt: name=nginx state=latest
+    - apt: name=postgresql state=latest
+    - apt: name=python-psycopg2 state=latest
 
     - name: Start nginx service
       service:
@@ -21,9 +23,6 @@
 
     - name: remove nginx default site
       file: path=/etc/nginx/sites-enabled/default state=absent
-
-    - postgresql_user: db=dawn_patrol name=dawn_patrol password=dawn_patrol
-    - postgresql_db: name=dawn_patrol owner=dawn_patrol
 
     - user: name=dawn-patrol
 
@@ -53,3 +52,11 @@
   handlers:
     - name: reload nginx
       service: name=nginx state=reloaded
+
+- hosts: all
+  sudo: yes
+  sudo_user: postgres
+
+  tasks:
+    - postgresql_user: name=dawn_patrol password=dawn_patrol
+    - postgresql_db: name=dawn_patrol owner=dawn_patrol
