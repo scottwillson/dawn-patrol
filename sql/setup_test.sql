@@ -1,11 +1,11 @@
-drop database if exists dawn_patrol_test;
-drop role if exists dawn_patrol_test;
+drop database if exists "dawn-patrol-test";
+drop role if exists "dawn-patrol-test";
 
-create role dawn_patrol_test login password 'dawn_patrol_test';
-create database dawn_patrol_test owner dawn_patrol_test;
+create role "dawn-patrol-test" login password 'dawn-patrol-test';
+create database "dawn-patrol-test" owner "dawn-patrol-test";
 
-\c dawn_patrol_test
-set role dawn_patrol_test;
+\c "dawn-patrol-test"
+set role "dawn-patrol-test";
 
 create table results (
   event_id int not null default null,
