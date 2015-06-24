@@ -20,6 +20,8 @@ Create DBs (Ubuntu)
     sudo apt-get install postgresql
     sudo -u postgres psql postgres -f sql/setup_test.sql
 
+Start gulp to transpile: ```gulp```
+
 Tests
 -----
     npm start

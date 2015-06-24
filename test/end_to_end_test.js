@@ -11,7 +11,7 @@ var config = require('config');
 var db = pgp(config.get('database.connection'));
 
 var app = null;
-var api = null;
+var mockRailsApi = null;
 var echoServer = null;
 
 function createTmpDir() {
@@ -42,8 +42,8 @@ function startApp() {
   app = require('./app').app.listen(3000);
 }
 
-function startApi() {
-  api = require('./api_app').app.listen(3001);
+function startMockRailsApi() {
+  mockRailsApi = require('./mock_rails_api_app').app.listen(3001);
 }
 
 function startEchoServer() {
@@ -56,7 +56,7 @@ function appendToNginxLog() {
 
 function teardown() {
   if (app) { app.unref(); }
-  if (api) { api.unref(); }
+  if (mockRailsApi) { mockRailsApi.unref(); }
   if (echoServer) { echoServer.unwatch(); }
   pgp.end();
 }
@@ -66,7 +66,7 @@ fs.writeFileSync('tmp/nginx.log', '');
 
 Promise.resolve(truncateResultsTable())
 .then(startApp())
-.then(startApi())
+.then(startMockRailsApi())
 .then(startEchoServer)
 .then(appendToNginxLog)
 .then(getResultsCount)
