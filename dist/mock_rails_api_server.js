@@ -1,6 +1,6 @@
 'use strict';
 
-var app = require('./api_app').app;
+var app = require('./mock_rails_api_app').app;
 
 var server = app.listen(4000, function () {
   var host = server.address().address;

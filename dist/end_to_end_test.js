@@ -6,7 +6,7 @@ var fs = require('fs');
 var Promise = require('bluebird');
 
 var pgpLib = require('pg-promise');
-var pgp = pgpLib();
+var pgp = pgpLib({ promiseLib: Promise });
 var config = require('config');
 var db = pgp(config.get('database.connection'));
 

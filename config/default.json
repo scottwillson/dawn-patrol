@@ -1,5 +1,8 @@
 {
   "database": {
     "connection": "postgres://dawn-patrol:dawn-patrol@localhost/dawn-patrol"
+  },
+  "echoServer": {
+    "webServerLogFilePath": "tmp/nginx.log"
   }
 }

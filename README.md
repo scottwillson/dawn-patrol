@@ -89,3 +89,8 @@ Docker
 Use PM2 'ecosystem'
 auto test
 Ensure app server throw exceptions
+Authorization for admin actions would be nice!
+Actually return JSON, not strings
+Add unit tests
+Separate configs
+Separate each service into separate project?

@@ -1,8 +1,11 @@
 'use strict';
 
-var Tail = require('tail').Tail;
+var config = require('config');
 
-var tail = new Tail('tmp/nginx.log');
+var Tail = require('tail').Tail;
+var tail = new Tail(config.get('echoServer.webServerLogFilePath'));
+console.log('[echo] tail: ' + config.get('echoServer.webServerLogFilePath'));
+
 var http = require('http');
 
 tail.on('line', function (data) {
