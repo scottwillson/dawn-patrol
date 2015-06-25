@@ -13,6 +13,10 @@
     - command: pm2 start /var/www/dawn-patrol/dist/server.js -i 0
       ignore_errors: yes
 
+    # Test servers only
+    - command: pm2 start /var/www/dawn-patrol/dist/mock_rails_api_server.js -i 0
+      ignore_errors: yes
+
     - command: pm2 reload app
 
     - command: pm2 save

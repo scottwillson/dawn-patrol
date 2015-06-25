@@ -41,7 +41,7 @@ function startApp() {
 }
 
 function startMockRailsApi() {
-  mockRailsApi = require('./mock_rails_api_app').app.listen(3001);
+  mockRailsApi = require('./mock_rails_api_app').app.listen(4000);
 }
 
 function startEchoServer() {

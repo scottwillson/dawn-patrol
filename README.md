@@ -37,7 +37,7 @@ Create ansible/local with contents like: default ansible_ssh_host=127.0.0.1 ansi
 
 End to end test against local server
 ------------------------------------
-    TARGET_HOST=0.0.0.0:3001 npm test
+    node dist/end_to_end_test.js
 
 Deploy
 ------
