@@ -26,4 +26,10 @@ describe('app', function () {
       request(app).get('/results.json').set('Accept', 'application/json').expect('Content-Type', /json/).expect(200, '{"count":0}', done);
     });
   });
+
+  describe('DELETE all results', function () {
+    it('responds with count json', function (done) {
+      request(app)['delete']('/results.json').set('Accept', 'application/json').expect(200, done);
+    });
+  });
 });
