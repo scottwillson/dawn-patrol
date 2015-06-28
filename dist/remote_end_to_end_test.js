@@ -6,25 +6,25 @@ var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var expect = chai.expect;
 var httpRequest = require('request-promise');
-var Promise = require('bluebird');
 
 chai.use(chaiAsPromised);
 
-// Delete all results from app server
-// Make request to mock API server
-// Assert DB has results
+function deleteResults() {
+  return httpRequest({ uri: 'http://0.0.0.0:3000/results.json', method: 'DELETE' });
+}
+
+function resultsCount() {
+  return httpRequest('http://0.0.0.0:3000/results.json').then(function (response) {
+    return JSON.parse(response).count;
+  });
+}
 
 describe('end to end system', function () {
-  before(function () {
-    return httpRequest({ uri: 'http://0.0.0.0:3000/results.json', method: 'DELETE' });
-  });
+  before(deleteResults);
+
   it('should echo Rails API requests', function () {
-    return httpRequest('http://0.0.0.0:3000/results.json').then(function (response) {
-      return expect(JSON.parse(response).count).to.equal(0);
-    }).then(httpRequest('http://0.0.0.0:4000/events/0/results.json')).then(function () {
-      return httpRequest('http://0.0.0.0:3000/results.json');
-    }).then(function (response) {
-      return expect(JSON.parse(response).count).to.equal(1);
+    return expect(resultsCount()).to.eventually.equal(0).then(httpRequest('http://0.0.0.0:4000/events/0/results.json')).then(function () {
+      return expect(resultsCount()).to.eventually.equal(1);
     });
   });
 });
