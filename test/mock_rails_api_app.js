@@ -9,6 +9,10 @@ var app = express();
 var accessLogStream = fs.createWriteStream('tmp/nginx.log', {flags: 'a'});
 app.use(morgan('combined', {stream: accessLogStream}));
 
+if (process.env.NODE_ENV !== 'test') {
+  app.use(morgan('combined'));
+}
+
 function json() {
   return `
   [
