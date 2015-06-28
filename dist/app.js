@@ -18,7 +18,7 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.get('/events/0/results.json', function (req, res) {
-  db.one('insert into results (id, event_id) values (0, 0)').then(res.end());
+  db.none('insert into results (id, event_id) values (0, 0)').then(res.end());
 });
 
 app.get('/results.json', function (req, res) {

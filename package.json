@@ -18,12 +18,16 @@
   },
   "devDependencies": {
     "babel-eslint": "^3.1.17",
+    "chai": "^3.0.0",
+    "chai-as-promised": "^5.1.0",
     "eslint": "^0.23.0",
+    "expect.js": "^0.3.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "mocha": "^2.2.5",
     "request-promise": "^0.4.2",
-    "supertest": "^1.0.1"
+    "supertest": "^1.0.1",
+    "supertest-as-promised": "^2.0.1"
   },
   "scripts": {
     "start": "node dist/server.js",
