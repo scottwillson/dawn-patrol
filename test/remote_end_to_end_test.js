@@ -1,36 +1,34 @@
 'use strict';
 
+process.env.NODE_ENV = 'test';
+
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+var expect = chai.expect;
 var httpRequest = require('request-promise');
+var Promise = require('bluebird');
+
+chai.use(chaiAsPromised);
 
 // Delete all results from app server
 // Make request to mock API server
 // Assert DB has results
 
-httpRequest({
-  uri: 'http://0.0.0.0:3000/results.json',
-  method: 'DELETE'
-})
-.then(function() {
-  return httpRequest('http://0.0.0.0:3000/results.json');
-})
-.then(function(response) {
-  var count = JSON.parse(response).count;
-  if (count !== 0) {
-    throw 'Expected result count to be 0, but was: ' + count;
-  }
-})
-.then(function() { return httpRequest('http://0.0.0.0:4000/events/0/results.json'); })
-.then(function() {
-  return httpRequest('http://0.0.0.0:3000/results.json');
-})
-.then(function(response) {
-  var count = JSON.parse(response).count;
-  if (count !== 1) {
-    throw 'Expected result count to be 1, but was: ' + count;
-  }
+describe('end to end system', function() {
+  before(function () {
+    return httpRequest({ uri: 'http://0.0.0.0:3000/results.json', method: 'DELETE' });
+  });
+  it('should echo Rails API requests', function() {
+    return httpRequest('http://0.0.0.0:3000/results.json')
+      .then(function(response) {
+        return expect(JSON.parse(response).count).to.equal(0);
+      })
+      .then(httpRequest('http://0.0.0.0:4000/events/0/results.json'))
+      .then(function() {
+        return httpRequest('http://0.0.0.0:3000/results.json');
+      })
+      .then(function(response) {
+        return expect(JSON.parse(response).count).to.equal(1);
+      });
+  });
 });
-
-// TODO
-// Check servers are up
-// disable delete in production
-// Make tests run against staging (need config and deply changes)

@@ -63,6 +63,8 @@ Ad hoc: ```./node_modules/loadtest/bin/loadtest.js -c 8 -n 1000 http://dawnpatro
 
 Roadmap
 -------
+disable delete in production
+Make tests run against staging (need config and deply changes)
 improve DB setup in new environment
 Modify end to end test to work against test server and staging
   * Assume already deployed? (Move local startup code and make optional?)
