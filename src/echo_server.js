@@ -1,24 +1,29 @@
 'use strict';
 
 var config = require('config');
-
-var Tail = require('tail').Tail;
-var tail = new Tail(config.get('echoServer.webServerLogFilePath'));
-console.log('[echo] tail: ' + config.get('echoServer.webServerLogFilePath'));
-
 var http = require('http');
+var Tail = require('tail').Tail;
+
+function log(text) {
+  if (process.env.NODE_ENV !== 'test') {
+    console.log('[echo] ' + text);
+  }
+}
+
+var tail = new Tail(config.get('echoServer.webServerLogFilePath'));
+log('tail: ' + config.get('echoServer.webServerLogFilePath'));
 
 tail.on('line', function(data) {
-  console.log('[echo] url: ' + data);
+  log('url: ' + data);
   http.get('http://0.0.0.0:3000/events/0/results.json', function(res) {
-    console.log('[echo] app: ' + res.statusCode);
+    log('app: ' + res.statusCode);
   }).on('error', function(e) {
-    console.log('[echo] app error: ' + e.message);
+    log('app error: ' + e.message);
   });
 });
 
 tail.on('error', function(error) {
-  console.log('[echo] error: ', error);
+  log('error: ', error);
 });
 
 module.exports.echoServer = tail;
