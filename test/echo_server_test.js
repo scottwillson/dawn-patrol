@@ -4,15 +4,20 @@ process.env.NODE_ENV = 'test';
 
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
-var echoServer = require('./echo_server').echoServer;
+var config = require('config');
+var fs = require('fs');
 var nock = require('nock');
 
 chai.use(chaiAsPromised);
 
 describe('echoServer', function() {
   var apiServer;
+  var echoServer;
 
   before(function() {
+    fs.closeSync(fs.openSync(config.get('echoServer.webServerLogFilePath'), 'wx'));
+    echoServer = require('./echo_server').echoServer;
+
     apiServer = nock('http://0.0.0.0:3000').get('/events/0/results.json').reply(200);
     return apiServer;
   });
