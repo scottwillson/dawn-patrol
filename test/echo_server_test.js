@@ -15,7 +15,7 @@ describe('echoServer', function() {
   var echoServer;
 
   before(function() {
-    fs.closeSync(fs.openSync(config.get('echoServer.webServerLogFilePath'), 'w'));
+    fs.closeSync(fs.openSync(config.get('echoServer.webServerLogFilePath'), 'a'));
     echoServer = require('./echo_server').echoServer;
 
     apiServer = nock('http://0.0.0.0:3000').get('/events/0/results.json').reply(200);
