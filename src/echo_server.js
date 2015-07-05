@@ -2,7 +2,7 @@
 
 var config = require('config');
 var http = require('http');
-var Tail = require('tail').Tail;
+var Tail = require('always-tail2');
 
 function log(text) {
   if (process.env.NODE_ENV !== 'test') {

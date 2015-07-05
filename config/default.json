@@ -4,5 +4,8 @@
   },
   "echoServer": {
     "webServerLogFilePath": "tmp/nginx.log"
+  },
+  "endToEndTest": {
+    "appHost": "0.0.0.0:3000"
   }
 }
