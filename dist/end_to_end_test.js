@@ -2,29 +2,31 @@
 
 process.env.NODE_ENV = 'test';
 
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-var expect = chai.expect;
-var httpRequest = require('request-promise');
+var config = require('config');
+var expect = require('expect.js');
+var request = require('request');
 
-chai.use(chaiAsPromised);
-
-function deleteResults() {
-  return httpRequest({ uri: 'http://0.0.0.0:3000/results.json', method: 'DELETE' });
-}
-
-function resultsCount() {
-  return httpRequest('http://0.0.0.0:3000/results.json').then(function (response) {
-    return JSON.parse(response).count;
-  });
-}
+var appHost = config.get('endToEndTest.appHost');
 
 describe('end to end system', function () {
-  before(deleteResults);
+  before(function (done) {
+    request.del('http://' + appHost + '/results.json', function (error) {
+      done(error);
+    });
+  });
 
   it('should echo Rails API requests', function () {
-    return expect(resultsCount()).to.eventually.equal(0).then(httpRequest('http://0.0.0.0:4000/events/0/results.json')).then(function () {
-      return expect(resultsCount()).to.eventually.equal(1);
+    request.get('http://' + appHost + '/results.json', function (error, response, body) {
+      var resultsCount = JSON.parse(body).count;
+      expect(resultsCount).to.equal(0);
+
+      request.get('http://0.0.0.0:4000/events/0/results.json', function () {
+
+        request.get('http://' + appHost + '/results.json', function (error2, response2, body2) {
+          resultsCount = JSON.parse(body2).count;
+          expect(resultsCount).eventually.to.equal(1);
+        });
+      });
     });
   });
 });
