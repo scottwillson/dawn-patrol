@@ -89,6 +89,7 @@ Redirect production requests to here
 Rejigger Ansible files to follow best practices and remove duplication
 Docker
 Use PM2 'ecosystem'
+Move pm2_process.js out of git and customize per env?
 auto test
 Ensure app server throw exceptions
 Authorization for admin actions would be nice!

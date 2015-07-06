@@ -25,7 +25,8 @@
       "cwd"         : "/var/www/dawn-patrol",
       "instances"   : 1,
       "exec_mode"   : "cluster_mode",
-      "merge_logs"  : true
+      "merge_logs"  : true,
+      "out_file"    : "/home/dawn-patrol/.pm2/logs/mock-rails-api-server-out.log"
     }
   ]
 }
