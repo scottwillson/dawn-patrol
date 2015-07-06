@@ -6,8 +6,6 @@
     - name: update repo
       git: repo=https://github.com/scottwillson/dawn-patrol dest=/var/www/dawn-patrol
 
-    - file: path=/var/www/dawn-patrol/tmp owner=dawn-patrol mode=0750 state=directory
-
     - npm: path=/var/www/dawn-patrol production=yes
 
     - copy: src=pm2_processes.js dest=/var/www/dawn-patrol/config/pm2_processes.js
