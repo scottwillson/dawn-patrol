@@ -6,18 +6,13 @@
     - name: update repo
       git: repo=https://github.com/scottwillson/dawn-patrol dest=/var/www/dawn-patrol
 
-    - command: psql postgres -f /var/www/dawn-patrol/sql/create_schema.sql
+    - file: path=/var/www/dawn-patrol/tmp owner=dawn-patrol mode=0750 state=directory
 
     - npm: path=/var/www/dawn-patrol production=yes
 
-    - command: pm2 start /var/www/dawn-patrol/dist/server.js -i 0
-      ignore_errors: yes
+    - copy: src=pm2_processes.js dest=/var/www/dawn-patrol/config/pm2_processes.js
 
-    # Test servers only
-    - command: pm2 start /var/www/dawn-patrol/dist/mock_rails_api_server.js -i 0
-      ignore_errors: yes
-
-    - command: pm2 reload app
+    - command: pm2 startOrGracefulReload /var/www/dawn-patrol/config/pm2_processes.js
 
     - command: pm2 save
 
