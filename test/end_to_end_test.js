@@ -2,30 +2,34 @@
 
 process.env.NODE_ENV = 'test';
 
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
 var config = require('config');
-var expect = require('expect.js');
-var request = require('request');
+var request = require('request-promise');
+var retry = require('trytryagain');
+
+chai.use(chaiAsPromised);
+var expect = chai.expect;
 
 var appHost = config.get('endToEndTest.appHost');
 
+function getResultsCount() {
+  return request.get('http://' + appHost + '/results.json').then(function(response) {
+    return JSON.parse(response).count;
+  });
+}
+
 describe('end to end system', function() {
-  before(function(done) {
-    request.del('http://' + appHost + '/results.json', function(error) {
-      done(error);
-    });
+  before(function() {
+    return request.del('http://' + appHost + '/results.json');
   });
 
   it('should echo Rails API requests', function() {
-    request.get('http://' + appHost + '/results.json', function(error, response, body) {
-      var resultsCount = JSON.parse(body).count;
-      expect(resultsCount).to.equal(0);
-
-      request.get('http://0.0.0.0:4000/events/0/results.json', function() {
-
-        request.get('http://' + appHost + '/results.json', function(error2, response2, body2) {
-          resultsCount = JSON.parse(body2).count;
-          expect(resultsCount).eventually.to.equal(1);
-        });
+    return expect(getResultsCount()).to.eventually.equal(0)
+    .then(function() { return request.get('http://0.0.0.0:4000/events/0/results.json'); })
+    .then(function() {
+      return retry(function () {
+        return expect(getResultsCount()).to.eventually.equal(1);
       });
     });
   });

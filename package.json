@@ -13,10 +13,10 @@
     "express": "^4.12.4",
     "morgan": "^1.6.0",
     "pg": "^4.4.0",
-    "pg-promise": "^1.6.3",
-    "pmx": "^0.3.16"
+    "pg-promise": "^1.6.3"
   },
   "devDependencies": {
+    "attempt": "^1.0.1",
     "babel-eslint": "^3.1.17",
     "chai": "^3.0.0",
     "chai-as-promised": "^5.1.0",
@@ -28,8 +28,8 @@
     "nock": "^2.6.0",
     "request": "^2.58.0",
     "request-promise": "^0.4.2",
-    "supertest": "^1.0.1",
-    "supertest-as-promised": "^2.0.1"
+    "supertest-as-promised": "^2.0.1",
+    "trytryagain": "^1.1.0"
   },
   "scripts": {
     "start": "node dist/server.js",
