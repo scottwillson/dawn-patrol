@@ -16,7 +16,7 @@
       "exec_mode"   : "cluster_mode",
       "merge_logs"  : true,
       "env": {
-        "NODE_CONFIG": "'{ "echoServer": { "webServerLogFilePath": "/home/dawn-patrol/.pm2/logs/mock-rails-api-server-out.log" } }'"
+        "NODE_CONFIG": "'{ \"echoServer\": { \"webServerLogFilePath\": \"/home/dawn-patrol/.pm2/logs/mock-rails-api-server-out.log\" } }'"
       }
     },
     {
