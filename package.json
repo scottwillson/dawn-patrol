@@ -7,7 +7,7 @@
     "test": "test"
   },
   "dependencies": {
-    "always-tail2": "^1.0.0",
+    "always-tail": "^0.1.1",
     "bluebird": "^2.9.30",
     "config": "^1.14.0",
     "express": "^4.12.4",

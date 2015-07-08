@@ -1,8 +1,9 @@
 'use strict';
 
 var config = require('config');
+var fs = require('fs');
 var http = require('http');
-var Tail = require('always-tail2');
+var Tail = require('always-tail');
 
 function log(text) {
   if (process.env.NODE_ENV !== 'test') {
@@ -10,8 +11,10 @@ function log(text) {
   }
 }
 
-var tail = new Tail(config.get('echoServer.webServerLogFilePath'));
-log('tail: ' + config.get('echoServer.webServerLogFilePath'));
+var path = config.get('echoServer.webServerLogFilePath');
+var fileSize = fs.statSync(path).size;
+var tail = new Tail(path, '\n', { start: fileSize });
+log('tail: ' + path);
 
 tail.on('line', function (data) {
   log('url: ' + data);

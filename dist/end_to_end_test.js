@@ -5,6 +5,7 @@ process.env.NODE_ENV = 'test';
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var config = require('config');
+var fs = require('fs');
 var request = require('request-promise');
 var retry = require('trytryagain');
 
@@ -21,6 +22,7 @@ function getResultsCount() {
 
 describe('end to end system', function () {
   before(function () {
+    fs.closeSync(fs.openSync(config.get('echoServer.webServerLogFilePath'), 'a'));
     return request.del('http://' + appHost + '/results.json');
   });
 
