@@ -6,6 +6,7 @@
     "webServerLogFilePath": "tmp/nginx.log"
   },
   "endToEndTest": {
-    "appHost": "0.0.0.0:3000"
+    "appHost": "0.0.0.0:3000",
+    "mockRailsApiAppHost": "0.0.0.0:4000"
   }
 }
