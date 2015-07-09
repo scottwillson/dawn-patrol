@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
 }
 
-app.get('/events/0/results.json', function (req, res) {
+app.get('/events/:id/results.json', function (req, res) {
   db.none('insert into results (id, event_id) values (0, 0)').then(res.end());
 });
 

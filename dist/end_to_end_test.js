@@ -27,12 +27,13 @@ describe('end to end system', function () {
   });
 
   it('should echo Rails API requests', function () {
+    this.timeout(3000);
     return expect(getResultsCount()).to.eventually.equal(0).then(function () {
-      return request.get('http://0.0.0.0:4000/events/0/results.json');
+      return request.get('http://0.0.0.0:4000/events/' + Math.round(Math.random() * 10000) + '/results.json');
     }).then(function () {
       return retry(function () {
         return expect(getResultsCount()).to.eventually.equal(1);
-      });
+      }, { interval: 100, timeout: 30000 });
     });
   });
 });

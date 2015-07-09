@@ -188,7 +188,7 @@ function json() {
     }  ]`;
 }
 
-app.get('/events/0/results.json', function (req, res) {
+app.get('/events/:id/results.json', function (req, res) {
   res.send(json());
 });
 
