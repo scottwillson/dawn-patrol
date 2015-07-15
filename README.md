@@ -35,9 +35,13 @@ Create ansible/local with contents like: default ansible_ssh_host=127.0.0.1 ansi
     vagrant up
 
 
-End to end test against local server
-------------------------------------
+End to end test
+---------------
+start servers
     node dist/end_to_end_test.js
+
+provision and deploy to test server
+    NODE_CONFIG='{"endToEndTest": {"appHost": "0.0.0.0:3001", "mockRailsApiAppHost": "0.0.0.0:4001"}}' ./node_modules/mocha/bin/mocha dist/end_to_end_test.js
 
 Deploy
 ------

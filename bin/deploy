@@ -16,7 +16,8 @@ production)
 *)
   ansible-playbook \
     -i ansible/local \
-    --private-key=ansible/.ssh/id_rsa \
+    --private-key=.vagrant/machines/default/virtualbox/private_key \
+    -u vagrant \
     ansible/deploy.yml
   ;;
 esac

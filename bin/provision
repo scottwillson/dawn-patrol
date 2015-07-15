@@ -6,7 +6,7 @@ staging)
     -i ansible/staging \
     ansible/provision.yml
   ;;
-  production)
+production)
   ansible-playbook \
     -i ansible/production \
     ansible/provision.yml

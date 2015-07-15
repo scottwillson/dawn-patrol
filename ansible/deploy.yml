@@ -1,6 +1,7 @@
 ---
 - hosts: all
-  user: dawn-patrol
+  sudo: yes
+  sudo_user: dawn-patrol
 
   tasks:
     - name: update repo
@@ -16,3 +17,10 @@
 
     - command: 'pm2 link {{ keymetrics_token }}'
       when: keymetrics_token is defined
+
+- hosts: all
+  sudo: yes
+  sudo_user: postgres
+
+  tasks:
+    - command: psql postgres -f /var/www/dawn-patrol/sql/setup_development.sql
