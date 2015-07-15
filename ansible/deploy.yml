@@ -8,9 +8,9 @@
 
     - npm: path=/var/www/dawn-patrol production=yes
 
-    - copy: src=pm2_processes.js dest=/var/www/dawn-patrol/config/pm2_processes.js
+    - copy: src=pm2_processes.json dest=/var/www/dawn-patrol/config/pm2_processes.json
 
-    - command: pm2 startOrGracefulReload /var/www/dawn-patrol/config/pm2_processes.js
+    - command: pm2 startOrGracefulReload /var/www/dawn-patrol/config/pm2_processes.json
 
     - command: pm2 save
 

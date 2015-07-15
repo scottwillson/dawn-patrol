@@ -78,6 +78,7 @@ Add nginx
 Add memcached (with memory limit)
 configure nginx to use memcached
 Have node.js update memcached
+Apply https://github.com/airbnb/javascript
 proper response headers for caching
 Store normalized data
 All https
