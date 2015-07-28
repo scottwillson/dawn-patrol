@@ -4,7 +4,6 @@ case $1 in
 staging)
   ansible-playbook \
     -i ansible/staging \
-    --private-key=ansible/.ssh/id_rsa \
     ansible/deploy.yml
   ;;
 production)
