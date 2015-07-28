@@ -9,7 +9,7 @@
 
     - npm: path=/var/www/dawn-patrol production=yes
 
-    - copy: src=pm2_processes.json dest=/var/www/dawn-patrol/config/pm2_processes.json
+    - copy: src=pm2_processes/{{ pm2_config }}.json dest=/var/www/dawn-patrol/config/pm2_processes.json
 
     - command: pm2 startOrGracefulReload /var/www/dawn-patrol/config/pm2_processes.json
 
