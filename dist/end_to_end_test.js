@@ -5,7 +5,6 @@ process.env.NODE_ENV = 'test';
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 var config = require('config');
-var fs = require('fs');
 var request = require('request-promise');
 var retry = require('trytryagain');
 
