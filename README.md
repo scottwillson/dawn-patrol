@@ -68,10 +68,6 @@ Ad hoc: ```./node_modules/loadtest/bin/loadtest.js -c 8 -n 1000 http://dawnpatro
 Roadmap
 -------
 improve DB setup in new environment
-Modify end to end test to work against test server and staging
-  * Assume already deployed? (Move local startup code and make optional?)
-  * How to assert results?
-  * Parameterize ports, URLs, and file locations
 awk '{print $7}' obra.access.log | egrep /events/[0-9]+/results.json
 Fetch and forward data from OBRA
 Store data in Postgres denormalized (should be able to fulfill any request by reading a single row)
