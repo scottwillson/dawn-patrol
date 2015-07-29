@@ -40,7 +40,7 @@ End to end test
 start servers
     node dist/end_to_end_test.js
 
-provision and deploy to test server
+provision and deploy to local Vagrant test server
     NODE_CONFIG='{"endToEndTest": {"appHost": "0.0.0.0:3001", "railsAppHost": "0.0.0.0:4001"}}' ./node_modules/mocha/bin/mocha dist/end_to_end_test.js
 
 Deploy
@@ -67,7 +67,6 @@ Ad hoc: ```./node_modules/loadtest/bin/loadtest.js -c 8 -n 1000 http://dawnpatro
 
 Roadmap
 -------
-Make tests run against staging (need config and deploy changes)
 improve DB setup in new environment
 Modify end to end test to work against test server and staging
   * Assume already deployed? (Move local startup code and make optional?)
