@@ -33,7 +33,7 @@
 
     - file: path=/var/www owner=root mode=0755 state=directory
     - file: path=/var/www/.pm2 owner=dawn-patrol mode=0750 state=directory
-    - file: path=/var/www/dawn-patrol owner=dawn-patrol mode=0755 state=directory recurse=yes
+    - file: path=/var/www/dawn-patrol owner=dawn-patrol mode=0755 state=directory
 
     - name: Install pm2
       npm:
