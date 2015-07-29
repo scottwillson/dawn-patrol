@@ -20,7 +20,14 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.get('/events/:id/results.json', function (req, res) {
-  request.get('http://' + railsAppHost + '/events/' + req.params.id + '/results.json').then(function (response) {
+  var options = {
+    url: 'http://' + railsAppHost + '/events/' + req.params.id + '/results.json',
+    headers: {
+      'User-Agent': 'dawn-patrol'
+    }
+  };
+
+  request.get(options).then(function (response) {
     return JSON.parse(response);
   }).then(function () {
     return db.none('insert into results (event_id) values ($1)', [req.params.id]);

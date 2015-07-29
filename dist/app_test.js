@@ -46,7 +46,7 @@ describe('app', function () {
     before(function () {
       railsAppServer = nock('http://' + railsAppHost).get('/events/719/results.json').reply(200, {
         'event_id': 719
-      });
+      }).matchHeader('User-Agent', 'dawn-patrol');
       return railsAppServer;
     });
 

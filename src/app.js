@@ -20,7 +20,14 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.get('/events/:id/results.json', function (req, res) {
-  request.get('http://' + railsAppHost + '/events/' + req.params.id + '/results.json')
+  var options = {
+    url: 'http://' + railsAppHost + '/events/' + req.params.id + '/results.json',
+    headers: {
+      'User-Agent': 'dawn-patrol'
+    }
+  };
+
+  request.get(options)
     .then(function(response) {
       return JSON.parse(response);
     })
