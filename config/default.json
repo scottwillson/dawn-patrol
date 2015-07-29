@@ -7,6 +7,6 @@
   },
   "endToEndTest": {
     "appHost": "0.0.0.0:3000",
-    "mockRailsApiAppHost": "0.0.0.0:4000"
+    "railsAppHost": "0.0.0.0:4000"
   }
 }
