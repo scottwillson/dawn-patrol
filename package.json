@@ -14,7 +14,8 @@
     "morgan": "^1.6.0",
     "pg": "^4.4.0",
     "pg-promise": "^1.6.3",
-    "pmx": "https://registry.npmjs.org/pmx/-/pmx-0.3.19.tgz"
+    "pmx": "https://registry.npmjs.org/pmx/-/pmx-0.3.19.tgz",
+    "request-promise": "^0.4.2"
   },
   "devDependencies": {
     "babel-eslint": "^3.1.17",
@@ -25,7 +26,6 @@
     "gulp-babel": "^5.1.0",
     "mocha": "^2.2.5",
     "nock": "^2.6.0",
-    "request-promise": "^0.4.2",
     "supertest-as-promised": "^2.0.1",
     "trytryagain": "^1.1.0"
   },
