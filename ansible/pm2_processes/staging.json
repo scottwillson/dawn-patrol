@@ -16,7 +16,7 @@
       "exec_mode"   : "cluster_mode",
       "merge_logs"  : true,
       "env": {
-        "NODE_CONFIG": "{ \"echoServer\": { \"webServerLogFilePath\": \"/var/log/nginx/obra-access.log\" } }"
+        "NODE_CONFIG": "{ \"echoServer\": { \"webServerLogFilePath\": \"/var/log/nginx/obra.access.log\" } }"
       }
     }
   ]
