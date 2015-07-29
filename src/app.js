@@ -25,8 +25,10 @@ app.get('/results.json', function (req, res) {
   db.one('select count(*) from results').then(function(data) { res.json({ count: parseInt(data.count) }); });
 });
 
-app.delete('/results.json', function (req, res) {
-  db.none('delete from results').then(res.end());
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.delete('/results.json', function (req, res) {
+    db.none('delete from results').then(res.end());
+  });
+}
 
 module.exports.app = app;

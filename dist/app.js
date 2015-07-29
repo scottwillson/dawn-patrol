@@ -27,8 +27,10 @@ app.get('/results.json', function (req, res) {
   });
 });
 
-app['delete']('/results.json', function (req, res) {
-  db.none('delete from results').then(res.end());
-});
+if (process.env.NODE_ENV !== 'production') {
+  app['delete']('/results.json', function (req, res) {
+    db.none('delete from results').then(res.end());
+  });
+}
 
 module.exports.app = app;
