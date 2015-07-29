@@ -24,7 +24,7 @@
     - name: remove nginx default site
       file: path=/etc/nginx/sites-enabled/default state=absent
 
-    - user: name=dawn-patrol
+    - user: name=dawn-patrol groups=adm
 
     - name: Set up authorized_keys for dawn-patrol user
       authorized_key: user=dawn-patrol key="{{ item }}"
