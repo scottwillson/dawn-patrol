@@ -4,13 +4,8 @@ drop role if exists "dawn-patrol";
 create role "dawn-patrol" login password 'dawn-patrol';
 create database "dawn-patrol" owner "dawn-patrol";
 
-\c "dawn-patrol"
-set role "dawn-patrol";
+drop database if exists "dawn-patrol-test";
+drop role if exists "dawn-patrol-test";
 
-create table results (
-  event_id int not null default null,
-  id serial not null,
-  primary key(id)
-);
-
--- How about an index?
+create role "dawn-patrol-test" login password 'dawn-patrol-test';
+create database "dawn-patrol-test" owner "dawn-patrol-test";

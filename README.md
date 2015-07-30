@@ -18,14 +18,15 @@ install Node.js, npm
 
 Create DBs (Ubuntu)
     sudo apt-get install postgresql
-    sudo -u postgres psql postgres -f sql/setup_test.sql
+    sudo -u postgres psql postgres -f sql/setup_development.sql
 
 Start gulp to transpile: ```gulp```
 
 Tests
 -----
-    npm start
-    npm test
+    node node_modules/db-migrate/bin/db-migrate up -e test
+    ./node_modules/mocha/bin/mocha dist/app_test.js
+    ./node_modules/mocha/bin/mocha dist/echo_server_test.js 
 
 Test server
 -----------
@@ -73,7 +74,9 @@ Fetch and forward data from OBRA
 Store data in Postgres denormalized (should be able to fulfill any request by reading a single row)
 Fetch data from Postgres
 Drop 'endToEndTest' from config
+de-dupe DB config
 Add nginx
+check for outstanding DB migrations before running tests
 Add memcached (with memory limit)
 configure nginx to use memcached
 Have node.js update memcached

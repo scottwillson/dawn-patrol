@@ -10,6 +10,7 @@
     "always-tail": "^0.1.1",
     "bluebird": "^2.9.30",
     "config": "^1.14.0",
+    "db-migrate": "^0.9.18",
     "express": "^4.12.4",
     "morgan": "^1.6.0",
     "pg": "^4.4.0",

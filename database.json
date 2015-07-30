@@ -1,0 +1,16 @@
+{
+  "dev": {
+    "driver": "pg",
+    "user": "dawn-patrol",
+    "password": "dawn-patrol",
+    "host": "localhost",
+    "database": "dawn-patrol"
+  },
+  "test": {
+    "driver": "pg",
+    "user": "dawn-patrol-test",
+    "password": "dawn-patrol-test",
+    "host": "localhost",
+    "database": "dawn-patrol-test"
+  }
+}

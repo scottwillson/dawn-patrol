@@ -9,6 +9,8 @@
 
     - npm: path=/var/www/dawn-patrol production=yes
 
+    - command: node node_modules/db-migrate/bin/db-migrate up
+
     - copy: src=pm2_processes/{{ pm2_config }}.json dest=/var/www/dawn-patrol/config/pm2_processes.json
 
     - command: pm2 startOrGracefulReload /var/www/dawn-patrol/config/pm2_processes.json
@@ -21,6 +23,3 @@
 - hosts: all
   sudo: yes
   sudo_user: postgres
-
-  tasks:
-    - command: psql postgres -f /var/www/dawn-patrol/sql/setup_development.sql
