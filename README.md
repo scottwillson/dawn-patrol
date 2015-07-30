@@ -17,6 +17,7 @@ install Node.js, npm
     node dist/server.js
 
 Create DBs
+
     # ubuntu
     sudo apt-get install postgresql
     sudo -u postgres psql postgres -f sql/setup_development.sql
