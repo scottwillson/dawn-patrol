@@ -26,7 +26,7 @@ Tests
 -----
     node node_modules/db-migrate/bin/db-migrate up -e test
     ./node_modules/mocha/bin/mocha dist/app_test.js
-    ./node_modules/mocha/bin/mocha dist/echo_server_test.js 
+    ./node_modules/mocha/bin/mocha dist/echo_server_test.js
 
 Test server
 -----------
@@ -100,3 +100,4 @@ Actually return JSON, not strings
 Add unit tests
 Separate configs
 Separate each service into separate project?
+Use hash-like logging

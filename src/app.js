@@ -20,8 +20,9 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.get('/events/:id/results.json', function (req, res) {
+  var url = 'http://' + railsAppHost + '/events/' + req.params.id + '/results.json';
   var options = {
-    url: 'http://' + railsAppHost + '/events/' + req.params.id + '/results.json',
+    url: url,
     headers: {
       'User-Agent': 'dawn-patrol'
     }
@@ -36,7 +37,9 @@ app.get('/events/:id/results.json', function (req, res) {
     })
     .then(function() {
       return res.end();
-    });
+    }).catch(function(e) {
+      console.error(e + ' getting results from ' + url);
+  });
 });
 
 app.get('/results.json', function (req, res) {
