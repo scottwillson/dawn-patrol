@@ -16,9 +16,14 @@ install Node.js, npm
     gulp
     node dist/server.js
 
-Create DBs (Ubuntu)
+Create DBs
+    # ubuntu
     sudo apt-get install postgresql
     sudo -u postgres psql postgres -f sql/setup_development.sql
+
+    # OS X
+    brew install postgresql
+    psql postgres -f sql/setup_development.sql
 
 Start gulp to transpile: ```gulp```
 
@@ -28,8 +33,8 @@ Tests
     ./node_modules/mocha/bin/mocha dist/app_test.js
     ./node_modules/mocha/bin/mocha dist/echo_server_test.js
 
-Test server
------------
+Local virtual test server
+-------------------------
 Install Vagrant
 Install Ansible
 Create ansible/vagrant with contents like: default ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222
@@ -51,8 +56,8 @@ Deploy
 
     ./bin/deploy
 
-Update test server
-------------------
+Update vagrant server
+---------------------
     ./bin/provision
 
 Staging server
@@ -69,13 +74,14 @@ Ad hoc: ```./node_modules/loadtest/bin/loadtest.js -c 8 -n 1000 http://dawnpatro
 Roadmap
 -------
 staging end to end test needs to use real event ID
+auto test
 echo server needs to parse real event ID from log file
 awk '{print $7}' obra.access.log | egrep /events/[0-9]+/results.json
 Fetch and forward data from OBRA
 Store data in Postgres denormalized (should be able to fulfill any request by reading a single row)
 Fetch data from Postgres
 Drop 'endToEndTest' from config
-de-dupe DB config
+de-dupe DB config (migrations use separate file)
 Add nginx
 check for outstanding DB migrations before running tests
 Add memcached (with memory limit)
@@ -86,20 +92,16 @@ proper response headers for caching
 Store normalized data
 All https
 Add ember.js front end for fun
+Use hash-like logging
 Move cache updating to separate service?
 Try other data storage/servers and compare performance
 Multiplex requests from production
 Redirect production requests to here
-Rejigger Ansible files to follow best practices and remove duplication
-Docker
-Use PM2 'ecosystem'
-Move pm2_process.js out of git and customize per env?
-auto test
+Docker?
+Use PM2 'ecosystem'?
 Ensure app server throw exceptions
 Authorization for admin actions would be nice!
 Actually return JSON, not strings
-Separate configs
 Separate each service into separate project?
-Use hash-like logging
 Move DB creds to more secure spot
 Encapsulate end-to-end test running in a simple script
