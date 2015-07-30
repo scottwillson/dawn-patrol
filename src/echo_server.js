@@ -16,13 +16,19 @@ var fileSize = fs.statSync(path).size;
 var tail = new Tail(path, '\n', { start: fileSize });
 log('tail: ' + path);
 
+tail.isDawnPatrolRequest = function(line) {
+  return line.indexOf('dawn-patrol') > -1;
+};
+
 tail.on('line', function(data) {
   log('url: ' + data);
-  http.get('http://0.0.0.0:3000/events/0/results.json', function(res) {
-    log('app: ' + res.statusCode);
-  }).on('error', function(e) {
-    log('app error: ' + e.message);
-  });
+  if (!this.isDawnPatrolRequest(data)) {
+    http.get('http://0.0.0.0:3000/events/0/results.json', function(res) {
+      log('app: ' + res.statusCode);
+    }).on('error', function(e) {
+      log('app error: ' + e.message);
+    });
+  }
 });
 
 tail.on('error', function(error) {
