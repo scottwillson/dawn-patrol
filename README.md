@@ -69,8 +69,6 @@ Roadmap
 -------
 improve DB setup in new environment
 awk '{print $7}' obra.access.log | egrep /events/[0-9]+/results.json
-Check for dawn patrol user agent in nginx logs, and don't echo those requests
-(otherwise, we could trigger a loop)
 Fetch and forward data from OBRA
 Store data in Postgres denormalized (should be able to fulfill any request by reading a single row)
 Fetch data from Postgres
