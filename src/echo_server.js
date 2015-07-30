@@ -11,6 +11,7 @@ function log(text) {
   }
 }
 
+log(`start: ${process.env.NODE_ENV}`);
 var path = config.get('echoServer.webServerLogFilePath');
 var fileSize = fs.statSync(path).size;
 var tail = new Tail(path, '\n', { start: fileSize });
