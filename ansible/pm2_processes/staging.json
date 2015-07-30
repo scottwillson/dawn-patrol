@@ -6,7 +6,10 @@
       "cwd"         : "/var/www/dawn-patrol",
       "instances"   : 0,
       "exec_mode"   : "cluster_mode",
-      "merge_logs"  : true
+      "merge_logs"  : true,
+      "env": {
+        "NODE_ENV": "staging"
+      }
     },
     {
       "name"        : "echo_server",
@@ -16,7 +19,7 @@
       "exec_mode"   : "cluster_mode",
       "merge_logs"  : true,
       "env": {
-        "NODE_CONFIG": "{ \"echoServer\": { \"webServerLogFilePath\": \"/var/log/nginx/obra.access.log\" } }"
+        "NODE_ENV": "staging"
       }
     }
   ]

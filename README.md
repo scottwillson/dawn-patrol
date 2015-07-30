@@ -101,3 +101,4 @@ Add unit tests
 Separate configs
 Separate each service into separate project?
 Use hash-like logging
+Move DB creds to more secure spot

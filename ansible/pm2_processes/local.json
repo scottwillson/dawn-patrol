@@ -6,7 +6,11 @@
       "cwd"         : "/var/www/dawn-patrol",
       "instances"   : 0,
       "exec_mode"   : "cluster_mode",
-      "merge_logs"  : true
+      "merge_logs"  : true,
+      "env": {
+        "NODE_ENV": "local"
+      }
+
     },
     {
       "name"        : "echo_server",
@@ -16,7 +20,7 @@
       "exec_mode"   : "cluster_mode",
       "merge_logs"  : true,
       "env": {
-        "NODE_CONFIG": "{ \"echoServer\": { \"webServerLogFilePath\": \"/home/dawn-patrol/.pm2/logs/mock-rails-api-server-out.log\" } }"
+        "NODE_ENV": "local"
       }
     },
     {
@@ -26,7 +30,11 @@
       "instances"   : 1,
       "exec_mode"   : "cluster_mode",
       "merge_logs"  : true,
-      "out_file"    : "/home/dawn-patrol/.pm2/logs/mock-rails-api-server-out.log"
+      "out_file"    : "/home/dawn-patrol/.pm2/logs/mock-rails-api-server-out.log",
+      "env": {
+        "NODE_ENV": "local"
+      }
+
     }
   ]
 }

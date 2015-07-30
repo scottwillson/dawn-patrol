@@ -1,0 +1,5 @@
+{
+  "echoServer": {
+    "webServerLogFilePath": "/home/dawn-patrol/.pm2/logs/mock-rails-api-server-out.log"
+  }
+}
