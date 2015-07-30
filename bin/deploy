@@ -14,7 +14,7 @@ production)
   ;;
 *)
   ansible-playbook \
-    -i ansible/local \
+    -i ansible/vagrant \
     --private-key=.vagrant/machines/default/virtualbox/private_key \
     -u vagrant \
     ansible/deploy.yml

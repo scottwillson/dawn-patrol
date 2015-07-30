@@ -1,5 +1,5 @@
 ansible/.ssh/*
-ansible/local
+ansible/vagrant
 ansible/production
 ansible/staging
 node_modules
