@@ -58,5 +58,6 @@
   sudo_user: postgres
 
   tasks:
+    - postgresql_db: name=dawn-patrol owner=dawn-patrol state=absent
     - postgresql_user: name=dawn-patrol password=dawn-patrol
     - postgresql_db: name=dawn-patrol owner=dawn-patrol

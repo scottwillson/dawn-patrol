@@ -9,7 +9,9 @@
 
     - npm: path=/var/www/dawn-patrol production=yes
 
-    - command: node node_modules/db-migrate/bin/db-migrate up
+    - command: node /var/www/dawn-patrol/node_modules/db-migrate/bin/db-migrate up --config /var/www/dawn-patrol/database.json
+      args:
+        chdir: /var/www/dawn-patrol
 
     - copy: src=pm2_processes/{{ pm2_config }}.json dest=/var/www/dawn-patrol/config/pm2_processes.json
 
@@ -19,7 +21,3 @@
 
     - command: 'pm2 link {{ keymetrics_token }}'
       when: keymetrics_token is defined
-
-- hosts: all
-  sudo: yes
-  sudo_user: postgres
