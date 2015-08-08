@@ -38,7 +38,7 @@ describe('echoServer', function() {
   });
 
   describe('#isDawnPatrolRequest', function() {
-    it('recognize user agent from log line', function() {
+    it('recognizes user agent from log line', function() {
       var line = '::ffff:127.0.0.1 - - [25/Jun/2015:20:21:21 +0000] "GET /events/0/results.json HTTP/1.1" 200 5013 "-" "-"';
       expect(echoServer.isDawnPatrolRequest(line)).to.eq(false);
 
@@ -47,6 +47,13 @@ describe('echoServer', function() {
 
       line = '::ffff:127.0.0.1 - - [25/Jun/2015:20:21:21 +0000] "GET /events/0/results.json HTTP/1.1" 200 5013 "-" "dawn-patrol"';
       expect(echoServer.isDawnPatrolRequest(line)).to.eq(true);
+    });
+  });
+
+  describe('#eventId', function() {
+    it('finds event ID in log line', function() {
+      var line = '::ffff:127.0.0.1 - - [25/Jun/2015:20:21:21 +0000] "GET /events/19/results.json HTTP/1.1" 200 5013 "-" "dawn-patrol"';
+      expect(echoServer.eventId(line)).to.eq('19');
     });
   });
 });

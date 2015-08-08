@@ -21,10 +21,15 @@ tail.isDawnPatrolRequest = function(line) {
   return line.indexOf('dawn-patrol') > -1;
 };
 
+tail.eventId = function(line) {
+  return /events\/(\d+)\/results.json/g.exec(line)[1];
+};
+
 tail.on('line', function(data) {
   log('url: ' + data);
   if (!this.isDawnPatrolRequest(data)) {
-    http.get('http://0.0.0.0:3000/events/0/results.json', function(res) {
+    var eventId = this.eventId(data);
+    http.get(`http://0.0.0.0:3000/events/${eventId}/results.json`, function(res) {
       log('app: ' + res.statusCode);
     }).on('error', function(e) {
       log('app error: ' + e.message);
