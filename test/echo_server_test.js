@@ -54,6 +54,9 @@ describe('echoServer', function() {
     it('finds event ID in log line', function() {
       var line = '::ffff:127.0.0.1 - - [25/Jun/2015:20:21:21 +0000] "GET /events/19/results.json HTTP/1.1" 200 5013 "-" "dawn-patrol"';
       expect(echoServer.eventId(line)).to.eq('19');
+
+      line = '[echo] url: 173.164.122.113 - - [07/Aug/2015:17:05:07 -0700] "GET /events/7476/results.json HTTP/1.1" 302 109 "-" "-"';
+      expect(echoServer.eventId(line)).to.eq('7476');
     });
   });
 });
