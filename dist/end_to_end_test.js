@@ -20,6 +20,14 @@ function getResultsCount() {
   });
 }
 
+function eventId() {
+  if (config.has('endToEndTest.eventId')) {
+    return config.get('endToEndTest.eventId');
+  } else {
+    return Math.round(Math.random() * 10000);
+  }
+}
+
 describe('end to end system', function () {
   before(function () {
     return request.del('http://' + appHost + '/results.json');
@@ -28,7 +36,7 @@ describe('end to end system', function () {
   it('should echo Rails API requests', function () {
     this.timeout(5000);
     return expect(getResultsCount()).to.eventually.equal(0).then(function () {
-      return request.get('http://' + railsAppHost + '/events/' + Math.round(Math.random() * 10000) + '/results.json');
+      return request.get('http://' + railsAppHost + '/events/' + eventId() + '/results.json');
     }).then(function () {
       return retry(function () {
         return expect(getResultsCount()).to.eventually.equal(1);
