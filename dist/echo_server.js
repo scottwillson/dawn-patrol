@@ -22,18 +22,29 @@ tail.isDawnPatrolRequest = function (line) {
 };
 
 tail.eventId = function (line) {
-  return /events\/(\d+)\/results.json/g.exec(line)[1];
+  var matches = /events\/(\d+)\/results.json/g.exec(line);
+  if (matches === null) {
+    return null;
+  } else {
+    return matches[1];
+  }
+};
+
+tail.echoRequest = function (eventId) {
+  http.get('http://0.0.0.0:3000/events/' + eventId + '/results.json', function (res) {
+    log('app: ' + res.statusCode);
+  }).on('error', function (e) {
+    log('app error: ' + e.message);
+  });
 };
 
 tail.on('line', function (data) {
   log('url: ' + data);
   if (!this.isDawnPatrolRequest(data)) {
     var eventId = this.eventId(data);
-    http.get('http://0.0.0.0:3000/events/' + eventId + '/results.json', function (res) {
-      log('app: ' + res.statusCode);
-    }).on('error', function (e) {
-      log('app error: ' + e.message);
-    });
+    if (eventId !== null) {
+      this.echoRequest(eventId);
+    }
   }
 });
 
