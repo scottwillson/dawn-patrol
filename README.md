@@ -125,5 +125,5 @@ Roadmap
 * Separate each service into separate project?
 * Move DB creds to more secure spot
 * Encapsulate end-to-end test running in a simple script
-* staging end to end test needs to fetch real event ID
+* staging end to end test needs to fetch real event ID and expect correct count
 * Ensure EchoServer event emitters are cleaned up in tests
