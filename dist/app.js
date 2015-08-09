@@ -30,8 +30,11 @@ app.get('/events/:id/results.json', function (req, res) {
 
   request.get(options).then(function (response) {
     return JSON.parse(response);
-  }).then(function () {
-    return db.none('insert into results (event_id) values ($1)', [req.params.id]);
+  }).then(function (response) {
+    response.forEach(function (result) {
+      db.none('insert into results (event_id, rails_id) values ($1, $2)', [result.event_id, result.id]);
+    });
+    return true;
   }).then(function () {
     return res.end();
   })['catch'](function (e) {

@@ -34,6 +34,8 @@ Tests
     ./node_modules/mocha/bin/mocha dist/app_test.js
     ./node_modules/mocha/bin/mocha dist/echo_server_test.js
 
+     ./node_modules/mocha/bin/mocha -w dist/app_test.js dist/echo_server_test.js
+
 Local virtual test server
 -------------------------
 Install Vagrant
@@ -95,12 +97,8 @@ Performance Test
 
 Roadmap
 -------
-* staging end to end test needs to use real event ID
-* auto test
-* echo server needs to parse real event ID from log file
-* awk '{print $7}' obra.access.log | egrep /events/[0-9]+/results.json
 * Fetch and forward data from OBRA
-* Store data in Postgres denormalized (should be able to fulfill any request by reading a single row)
+* Store data in Postgres denormalized (should be able to fulfill any request by 1-2 selects)
 * Fetch data from Postgres
 * Drop 'endToEndTest' from config
 * de-dupe DB config (migrations use separate file)
@@ -127,3 +125,5 @@ Roadmap
 * Separate each service into separate project?
 * Move DB creds to more secure spot
 * Encapsulate end-to-end test running in a simple script
+* staging end to end test needs to fetch real event ID
+* Ensure EchoServer event emitters are cleaned up in tests

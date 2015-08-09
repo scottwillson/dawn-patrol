@@ -40,7 +40,7 @@ describe('end to end system', function() {
     .then(function() { return request.get(`http://${railsAppHost}/events/${eventId()}/results.json`); })
     .then(function() {
       return retry(function () {
-        return expect(getResultsCount()).to.eventually.equal(1);
+        return expect(getResultsCount()).to.eventually.equal(3);
       }, { interval: 100, timeout: 10000 });
     });
   });
