@@ -26,15 +26,19 @@ Create DBs
     brew install postgresql
     psql postgres -f sql/setup_development.sql
 
+    db-migrate up
+
 Start gulp to transpile: ```gulp```
+
+Add ./node_modules to $PATH
 
 Tests
 -----
-    node node_modules/db-migrate/bin/db-migrate up -e test
-    ./node_modules/mocha/bin/mocha dist/app_test.js
-    ./node_modules/mocha/bin/mocha dist/echo_server_test.js
+    db-migrate up -e test
+    mocha dist/app_test.js
+    mocha dist/echo_server_test.js
 
-     ./node_modules/mocha/bin/mocha -w dist/app_test.js dist/echo_server_test.js
+    mocha -w dist/app_test.js dist/echo_server_test.js
 
 Local virtual test server
 -------------------------
