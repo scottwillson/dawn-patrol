@@ -46,7 +46,6 @@ describe('end to end system', function() {
         return expect(getResultsCount()).to.eventually.equal(3);
       }, { interval: 100, timeout: 10000 });
     })
-    .then(function() { return expect(getResultsCount()).to.eventually.equal(3); })
     .then(function() { return request.get(`http://${railsAppHost}/events/${eventId()}/results.json`); })
     .then(function(response) {
       return retry(function () {
