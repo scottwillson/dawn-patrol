@@ -98,16 +98,17 @@ Performance Test
 
 Roadmap
 -------
-* Add Code Climate
 * Don't repeat attribute lists
 * Really need promises?
 * Decompose app and unit test
+* Assert end-to-end test response more thoroughly
 * Test response body more thoroughly
 * Store data in Postgres denormalized (should be able to fulfill any request by 1-2 selects)
 * Fetch data from Postgres
 * Drop 'endToEndTest' from config
 * de-dupe DB config (migrations use separate file)
 * Add nginx
+* Add uniqueness constraints
 * check for outstanding DB migrations before running tests
 * Add memcached (with memory limit)
 * configure nginx to use memcached
