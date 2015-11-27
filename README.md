@@ -98,7 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* Handle concurrent inserts. May have multiple concurrent requests for same event. Only want to insert single row for each result.
 *   "extends": "airbnb" ?
 * Don't repeat attribute lists
 * Really need promises?
