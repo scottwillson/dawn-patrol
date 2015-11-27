@@ -98,7 +98,6 @@ Performance Test
 
 Roadmap
 -------
-*   "extends": "airbnb" ?
 * Don't repeat attribute lists
 * Really need promises?
 * Decompose app and unit test

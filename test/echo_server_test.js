@@ -10,20 +10,13 @@ const nock = require('nock');
 chai.use(chaiAsPromised);
 
 describe('echoServer', () => {
-  var echoServer = null;
-
-  before(() => {
-    echoServer = require('../src/echo_server').echoServer;
-    return echoServer;
-  });
+  const echoServer = require('../src/echo_server').echoServer;
 
   describe('line event', () => {
-    var apiServer = null;
+    const apiServer = nock('http://0.0.0.0:3000').get('/events/0/results.json').reply(200);
 
     before(() => {
       fs.closeSync(fs.openSync(config.get('echoServer.webServerLogFilePath'), 'a'));
-      apiServer = nock('http://0.0.0.0:3000').get('/events/0/results.json').reply(200);
-      return apiServer;
     });
 
     it('echoes Rails API requests from nginx log to app', () => {
