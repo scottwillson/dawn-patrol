@@ -1,0 +1,33 @@
+engines:
+  brakeman:
+    enabled: false
+  bundler-audit:
+    enabled: false
+  csslint:
+    enabled: false
+  coffeelint:
+    enabled: false
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+    # Fails with: comparison of Fixnum with String failed
+    #       mass_threshold: 20
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+  nodesecurity:
+    enabled: true
+  rubocop:
+    enabled: false
+  scss-lint:
+    enabled: false
+ratings:
+  paths:
+  - "**.js"
+exclude_paths:
+- bin/**/*
+- config/**/*
+- sql/**/*
