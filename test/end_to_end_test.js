@@ -16,7 +16,6 @@ var railsAppHost = config.get('endToEndTest.railsAppHost');
 
 function getResultsCount() {
   return request.get('http://' + appHost + '/results.json').then(function(response) {
-    console.log(`getResultsCount ${JSON.parse(response).count}`);
     return JSON.parse(response).count;
   });
 }
@@ -49,7 +48,6 @@ describe('end to end system', function() {
           return requestResultsJSON(eventId).then(
             function(response) {
               var json = JSON.parse(response);
-              console.log(`first GET ${json}`);
               expect(json.length).to.equal(3);
               expect(json[0]).to.contain.any.keys('event_id');
               return expect(getResultsCount()).to.eventually.equal(3);
@@ -62,7 +60,6 @@ describe('end to end system', function() {
           return requestResultsJSON(eventId).then(
             function(response) {
               var json = JSON.parse(response);
-              console.log(`cached GET ${json}`);
               expect(json.length).to.equal(3);
               expect(json[0]).to.contain.any.keys('event_id');
               return expect(getResultsCount()).to.eventually.equal(3);

@@ -197,4 +197,14 @@ describe('app', function() {
         });
     });
   });
+
+  describe('#insertResults', function() {
+    it('does not insert duplicates', function() {
+      return expect(resultsCount()).to.eventually.eq(0)
+        .then(function() { return app.insertResults([{ event_id: 0, person_id: 0, id: 0 }]); })
+        .then(function() { return expect(resultsCount()).to.eventually.eq(1); })
+        .then(function() { return app.insertResults([{ event_id: 0, person_id: 0, id: 0 }]); })
+        .then(function() { return expect(resultsCount()).to.eventually.eq(1); });
+    });
+  });
 });

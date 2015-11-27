@@ -19,7 +19,19 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
 }
 
-function getResponseFromRailsServer(eventId) {
+app.insertResults = function(results) {
+  return results.forEach(function (result) {
+    return db.none('insert into results (event_id, person_id, rails_id) values ($1, $2, $3)', [result.event_id, result.person_id, result.id])
+    .catch(function (error) {
+      // duplicate key (make a method for this)
+      if (error.code !== '23505') {
+        throw error;
+      }
+    });
+  });
+};
+
+app.getResponseFromRailsServer = function(eventId) {
   var url = 'http://' + railsAppHost + '/events/' + eventId + '/results.json';
   var options = {
     url: url,
@@ -33,15 +45,12 @@ function getResponseFromRailsServer(eventId) {
       return JSON.parse(response);
     })
     .then(function(response) {
-      response.forEach(function (result) {
-        db.none('insert into results (event_id, person_id, rails_id) values ($1, $2, $3)', [result.event_id, result.person_id, result.id]);
-      });
-      return true;
+      return app.insertResults(response);
     })
     .catch(function(e) {
       console.error(e + ' getting results from ' + url);
   });
-}
+};
 
 app.get('/events/:id/results.json', function (req, res) {
   var eventId = req.params.id;
@@ -52,7 +61,7 @@ app.get('/events/:id/results.json', function (req, res) {
         return true;
       }
       else {
-        return getResponseFromRailsServer(eventId);
+        return app.getResponseFromRailsServer(eventId);
       }
     })
     .then(function() {

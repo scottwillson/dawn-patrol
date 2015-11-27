@@ -28,6 +28,7 @@ ratings:
   paths:
   - "**.js"
 exclude_paths:
+- .codeclimate.yml
 - bin/**/*
 - config/**/*
 - sql/**/*

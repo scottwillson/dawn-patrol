@@ -98,6 +98,8 @@ Performance Test
 
 Roadmap
 -------
+* Handle concurrent inserts. May have multiple concurrent requests for same event. Only want to insert single row for each result.
+*   "extends": "airbnb" ?
 * Don't repeat attribute lists
 * Really need promises?
 * Decompose app and unit test
@@ -134,3 +136,6 @@ Roadmap
 * staging end to end test needs to fetch real event ID and expect correct count
 * Ensure EchoServer event emitters are cleaned up in tests
 * Batch inserts from Rails server response
+* 'use strict' at build time
+* add racing_association_id
+* consider timestamp on inserts (do update if newer)
