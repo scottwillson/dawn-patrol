@@ -35,8 +35,6 @@ describe('end to end system', () => {
   });
 
   it('should store, forward, and cache Rails API requests', () => {
-    this.timeout(10000);
-
     const eventId = randomEventId();
     return expect(getResultsCount()).to.eventually.equal(0)
       .then(() => {
