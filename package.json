@@ -28,7 +28,7 @@
     "mocha": "^2.3.4",
     "nock": "^2.6.0",
     "supertest": "^1.1.0",
-    "supertest-as-promised": "^2.0.1",
+    "supertest-as-promised": "^2.0.2",
     "trytryagain": "^1.1.0"
   },
   "scripts": {

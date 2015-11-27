@@ -102,6 +102,9 @@ Performance Test
 Roadmap
 -------
 * Fetch and forward data from OBRA
+* Ditch transpilation and just use latest node?
+* Add Code Climate
+* Really need promises?
 * Store data in Postgres denormalized (should be able to fulfill any request by 1-2 selects)
 * Fetch data from Postgres
 * Drop 'endToEndTest' from config
@@ -131,3 +134,4 @@ Roadmap
 * Encapsulate end-to-end test running in a simple script
 * staging end to end test needs to fetch real event ID and expect correct count
 * Ensure EchoServer event emitters are cleaned up in tests
+* Batch inserts from Rails server response

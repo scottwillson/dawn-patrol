@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
 }
 
-function json() {
+function json(eventId) {
   return `
   [
     {
@@ -57,7 +57,7 @@ function json() {
       "event_date_range_s": "4/1",
       "date": "2006-04-01",
       "event_end_date": "2006-04-01",
-      "event_id": 22,
+      "event_id": ${eventId},
       "event_full_name": "Ice Breaker Criterium",
       "first_name": "Nick",
       "last_name": "Skenzick",
@@ -115,7 +115,7 @@ function json() {
       "event_date_range_s": "4/1",
       "date": "2006-04-01",
       "event_end_date": "2006-04-01",
-      "event_id": 22,
+      "event_id": ${eventId},
       "event_full_name": "Ice Breaker Criterium",
       "first_name": "Mikkel",
       "last_name": "Bossen",
@@ -173,7 +173,7 @@ function json() {
       "event_date_range_s": "4/1",
       "date": "2006-04-01",
       "event_end_date": "2006-04-01",
-      "event_id": 22,
+      "event_id": ${eventId},
       "event_full_name": "Ice Breaker Criterium",
       "first_name": "Aaron",
       "last_name": "Tuckerman",
@@ -189,7 +189,7 @@ function json() {
 }
 
 app.get('/events/:id/results.json', function (req, res) {
-  res.send(json());
+  res.send(json(req.params.id));
 });
 
 module.exports.app = app;

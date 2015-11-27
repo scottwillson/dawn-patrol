@@ -32,13 +32,17 @@ function eventResultsCount(eventId) {
 }
 
 function eventResult(railsId) {
-  return db.one('select * from results where rails_id=$1', [railsId]).then(function (result) {
-    return result;
+  return db.oneOrNone('select * from results where rails_id=$1', [railsId]).then(function (result) {
+    if (result) {
+      return result;
+    } else {
+      return [];
+    }
   });
 }
 
 function insertResult() {
-  return db.none('insert into results (id, event_id) values (0, 0)');
+  return db.none('insert into results (id, event_id, rails_id) values (0, 0, 0)');
 }
 
 describe('app', function () {
@@ -113,9 +117,9 @@ describe('app', function () {
 
     it('creates a new result in the DB', function () {
       return expect(resultsCount()).to.eventually.eq(0).then(function () {
-        return request(app).get('/events/23594/results.json').set('Accept', 'application/json').expect(200);
+        return expect(eventResultsCount(23594)).to.eventually.eq(0);
       }).then(function () {
-        return expect(resultsCount()).to.eventually.eq(1);
+        return request(app).get('/events/23594/results.json').set('Accept', 'application/json').expect(200);
       }).then(function () {
         return expect(eventResultsCount(23594)).to.eventually.eq(1);
       }).then(function () {

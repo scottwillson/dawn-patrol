@@ -19,8 +19,8 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
 }
 
-app.get('/events/:id/results.json', function (req, res) {
-  var url = 'http://' + railsAppHost + '/events/' + req.params.id + '/results.json';
+function getResponseFromRailsServer(eventId) {
+  var url = 'http://' + railsAppHost + '/events/' + eventId + '/results.json';
   var options = {
     url: url,
     headers: {
@@ -28,7 +28,7 @@ app.get('/events/:id/results.json', function (req, res) {
     }
   };
 
-  request.get(options)
+  return request.get(options)
     .then(function(response) {
       return JSON.parse(response);
     })
@@ -38,11 +38,29 @@ app.get('/events/:id/results.json', function (req, res) {
       });
       return true;
     })
-    .then(function() {
-      return res.end();
-    }).catch(function(e) {
+    .catch(function(e) {
       console.error(e + ' getting results from ' + url);
   });
+}
+
+app.get('/events/:id/results.json', function (req, res) {
+  var eventId = req.params.id;
+  return db.manyOrNone('select * from results where event_id=$1', [eventId])
+    .then(function(result) {
+      if (result.length > 0) {
+        res.json([{'result_id': '1'}]);
+        return true;
+      }
+      else {
+        return getResponseFromRailsServer(eventId);
+      }
+    })
+    .then(function() {
+      return res.end();
+    })
+    .catch(function(e) {
+      console.error(e + ' getting results for event ID ' + eventId);
+    });
 });
 
 app.get('/results.json', function (req, res) {
