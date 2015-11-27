@@ -98,8 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* Fetch and forward data from OBRA
-* Ditch transpilation and just use latest node?
 * Add Code Climate
 * Don't repeat attribute lists
 * Really need promises?
