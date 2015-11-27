@@ -34,7 +34,7 @@ function getResponseFromRailsServer(eventId) {
     })
     .then(function(response) {
       response.forEach(function (result) {
-        db.none('insert into results (event_id, rails_id) values ($1, $2)', [result.event_id, result.id]);
+        db.none('insert into results (event_id, person_id, rails_id) values ($1, $2, $3)', [result.event_id, result.person_id, result.id]);
       });
       return true;
     })
@@ -48,7 +48,7 @@ app.get('/events/:id/results.json', function (req, res) {
   return db.manyOrNone('select * from results where event_id=$1', [eventId])
     .then(function(result) {
       if (result.length > 0) {
-        res.json([{'result_id': '1'}]);
+        res.json(result);
         return true;
       }
       else {

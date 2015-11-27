@@ -125,6 +125,7 @@ describe('app', function () {
       }).then(function () {
         return expect(eventResult(31168421)).to.eventually.include({
           event_id: 23594,
+          person_id: 119267,
           rails_id: 31168421
         });
       });
@@ -148,10 +149,6 @@ describe('app', function () {
         return request(app).get('/events/0/results.json').set('Accept', 'application/json').expect(200);
       }).then(function () {
         return expect(resultsCount()).to.eventually.eq(1);
-      }).then(function () {
-        return expect(eventResultsCount(0)).to.eventually.eq(1);
-      }).then(function () {
-        return expect(eventResult(0)).to.eventually.contain.any.keys({ 'event_id': 0 });
       });
     });
 

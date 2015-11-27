@@ -104,7 +104,10 @@ Roadmap
 * Fetch and forward data from OBRA
 * Ditch transpilation and just use latest node?
 * Add Code Climate
+* Don't repeat attribute lists
 * Really need promises?
+* Decompose app and unit test
+* Test response body more thoroughly
 * Store data in Postgres denormalized (should be able to fulfill any request by 1-2 selects)
 * Fetch data from Postgres
 * Drop 'endToEndTest' from config
