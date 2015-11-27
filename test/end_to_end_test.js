@@ -1,21 +1,19 @@
-'use strict';
-
 process.env.NODE_ENV = 'test';
 
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-var config = require('config');
-var request = require('request-promise');
-var retry = require('trytryagain');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+const config = require('config');
+const request = require('request-promise');
+const retry = require('trytryagain');
 
 chai.use(chaiAsPromised);
-var expect = chai.expect;
+const expect = chai.expect;
 
-var appHost = config.get('endToEndTest.appHost');
-var railsAppHost = config.get('endToEndTest.railsAppHost');
+const appHost = config.get('endToEndTest.appHost');
+const railsAppHost = config.get('endToEndTest.railsAppHost');
 
 function getResultsCount() {
-  return request.get('http://' + appHost + '/results.json').then(function(response) {
+  return request.get('http://' + appHost + '/results.json').then((response) => {
     return JSON.parse(response).count;
   });
 }
@@ -24,30 +22,28 @@ function randomEventId() {
   if (config.has('endToEndTest.eventId')) {
     return config.get('endToEndTest.eventId');
   }
-  else {
-    return Math.round(Math.random() * 10000);
-  }
+  return Math.round(Math.random() * 10000);
 }
 
 function requestResultsJSON(eventId) {
   return request.get(`http://${railsAppHost}/events/${eventId}/results.json`);
 }
 
-describe('end to end system', function() {
-  before(function() {
+describe('end to end system', () => {
+  before(() => {
     return request.del('http://' + appHost + '/results.json');
   });
 
-  it('should store, forward, and cache Rails API requests', function() {
+  it('should store, forward, and cache Rails API requests', () => {
     this.timeout(10000);
 
-    var eventId = randomEventId();
+    const eventId = randomEventId();
     return expect(getResultsCount()).to.eventually.equal(0)
-      .then(function() {
-        return retry(function () {
+      .then(() => {
+        return retry(() => {
           return requestResultsJSON(eventId).then(
-            function(response) {
-              var json = JSON.parse(response);
+            (response) => {
+              const json = JSON.parse(response);
               expect(json.length).to.equal(3);
               expect(json[0]).to.contain.any.keys('event_id');
               return expect(getResultsCount()).to.eventually.equal(3);
@@ -55,17 +51,17 @@ describe('end to end system', function() {
           );
         }, { interval: 100, timeout: 10000 });
       })
-      .then(function() {
-        return retry(function () {
+      .then(() => {
+        return retry(() => {
           return requestResultsJSON(eventId).then(
-            function(response) {
-              var json = JSON.parse(response);
+            (response) => {
+              const json = JSON.parse(response);
               expect(json.length).to.equal(3);
               expect(json[0]).to.contain.any.keys('event_id');
               return expect(getResultsCount()).to.eventually.equal(3);
             }
           );
         }, { interval: 100, timeout: 10000 });
-    });
+      });
   });
 });

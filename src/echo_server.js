@@ -1,9 +1,7 @@
-'use strict';
-
-var config = require('config');
-var fs = require('fs');
-var http = require('http');
-var Tail = require('always-tail');
+const config = require('config');
+const fs = require('fs');
+const http = require('http');
+const Tail = require('always-tail');
 
 function log(text) {
   if (process.env.NODE_ENV !== 'test') {
@@ -12,43 +10,42 @@ function log(text) {
 }
 
 log(`start: ${process.env.NODE_ENV}`);
-var path = config.get('echoServer.webServerLogFilePath');
-var fileSize = fs.statSync(path).size;
-var tail = new Tail(path, '\n', { start: fileSize });
+const path = config.get('echoServer.webServerLogFilePath');
+const fileSize = fs.statSync(path).size;
+const tail = new Tail(path, '\n', { start: fileSize });
 log('tail: ' + path);
 
-tail.isDawnPatrolRequest = function(line) {
+tail.isDawnPatrolRequest = (line) => {
   return line.indexOf('dawn-patrol') > -1;
 };
 
-tail.eventId = function(line) {
-  var matches = /events\/(\d+)\/results.json/g.exec(line);
+tail.eventId = (line) => {
+  const matches = /events\/(\d+)\/results.json/g.exec(line);
   if (matches === null) {
     return null;
-  } else {
-    return matches[1];
   }
+  return matches[1];
 };
 
-tail.echoRequest = function(eventId) {
-  http.get(`http://0.0.0.0:3000/events/${eventId}/results.json`, function(res) {
+tail.echoRequest = (eventId) => {
+  http.get(`http://0.0.0.0:3000/events/${eventId}/results.json`, (res) => {
     log('app: ' + res.statusCode);
-  }).on('error', function(e) {
+  }).on('error', (e) => {
     log('app error: ' + e.message);
   });
 };
 
-tail.on('line', function(data) {
+tail.on('line', (data) => {
   log('url: ' + data);
-  if (!this.isDawnPatrolRequest(data)) {
-    var eventId = this.eventId(data);
+  if (!tail.isDawnPatrolRequest(data)) {
+    const eventId = tail.eventId(data);
     if (eventId !== null) {
-      this.echoRequest(eventId);
+      tail.echoRequest(eventId);
     }
   }
 });
 
-tail.on('error', function(error) {
+tail.on('error', (error) => {
   log('error: ', error);
 });
 

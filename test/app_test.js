@@ -1,64 +1,59 @@
-'use strict';
-
 process.env.NODE_ENV = 'test';
 
-var app = require('../src/app').app;
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
-var config = require('config');
-var expect = chai.expect;
-var nock = require('nock');
-var pgpLib = require('pg-promise');
-var Promise = require('bluebird');
-var request = require('supertest-as-promised');
+const app = require('../src/app').app;
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+const config = require('config');
+const expect = chai.expect;
+const nock = require('nock');
+const pgpLib = require('pg-promise');
+const Promise = require('bluebird');
+const request = require('supertest-as-promised');
 
 chai.use(chaiAsPromised);
 
-var pgp = pgpLib({ promiseLib: Promise });
-var db = pgp(config.get('database.connection'));
+const pgp = pgpLib({ promiseLib: Promise });
+const db = pgp(config.get('database.connection'));
 
-var railsAppHost = config.get('endToEndTest.railsAppHost');
+const railsAppHost = config.get('endToEndTest.railsAppHost');
 
 function resultsCount() {
   return db.one('select count(*) from results')
-    .then(function(result) {
+    .then((result) => {
       return parseInt(result.count);
     });
 }
 
 function eventResultsCount(eventId) {
   return db.one('select count(*) from results where event_id=$1', [eventId])
-    .then(function(result) {
+    .then((result) => {
       return parseInt(result.count);
     });
 }
 
 function eventResult(railsId) {
   return db.oneOrNone('select * from results where rails_id=$1', [railsId])
-  .then(function(result) {
+  .then((result) => {
     if (result) {
       return result;
     }
-    else {
-      return [];
-    }
+    return [];
   });
-
 }
 
 function insertResult() {
   return db.none('insert into results (id, event_id, rails_id) values (0, 0, 0)');
 }
 
-describe('app', function() {
-  beforeEach('truncate DB', function() {
+describe('app', () => {
+  beforeEach('truncate DB', () => {
     return db.none('truncate results');
   });
 
-  describe('GET /events/:id/results.json for a new event ID', function() {
-    var railsAppServer;
+  describe('GET /events/:id/results.json for a new event ID', () => {
+    var railsAppServer = null;
 
-    before(function() {
+    before(() => {
       railsAppServer = nock('http://' + railsAppHost)
         .get('/events/23594/results.json')
         .reply(200, [
@@ -118,62 +113,63 @@ describe('app', function() {
             'year': 2015,
             'non_member_result_id': null,
             'single_event_license': false,
-            'team_member': true
-          }
+            'team_member': true,
+          },
         ])
         .matchHeader('User-Agent', 'dawn-patrol');
       return railsAppServer;
     });
 
-    it('creates a new result in the DB', function() {
+    it('creates a new result in the DB', () => {
       return expect(resultsCount()).to.eventually.eq(0)
-        .then(function() { return expect(eventResultsCount(23594)).to.eventually.eq(0); })
-        .then(function() {
+        .then(() => { return expect(eventResultsCount(23594)).to.eventually.eq(0); })
+        .then(() => {
           return request(app)
             .get('/events/23594/results.json')
             .set('Accept', 'application/json')
             .expect(200);
         })
-        .then(function() { return expect(eventResultsCount(23594)).to.eventually.eq(1); })
-        .then(function() { return expect(eventResult(31168421)).to.eventually.include({
+        .then(() => { return expect(eventResultsCount(23594)).to.eventually.eq(1); })
+        .then(() => {
+          return expect(eventResult(31168421)).to.eventually.include({
             event_id: 23594,
             person_id: 119267,
-            rails_id: 31168421
+            rails_id: 31168421,
           });
         });
     });
 
-    after(function() {
+    after(() => {
       return railsAppServer.done();
     });
   });
 
-  describe('GET /events/:id/results.json for existing ID', function() {
-    var railsAppServer;
+  describe('GET /events/:id/results.json for existing ID', () => {
+    var railsAppServer = null;
 
-    beforeEach('insert existing result', function() {
+    beforeEach('insert existing result', () => {
       railsAppServer = nock('http://' + railsAppHost);
       return insertResult();
     });
 
-    it('returns stored result without calling Rails app', function() {
-        return expect(resultsCount()).to.eventually.eq(1)
-        .then(function() {
-          return request(app)
-            .get('/events/0/results.json')
-            .set('Accept', 'application/json')
-            .expect(200);
-        })
-        .then(function() { return expect(resultsCount()).to.eventually.eq(1); });
+    it('returns stored result without calling Rails app', () => {
+      return expect(resultsCount()).to.eventually.eq(1)
+      .then(() => {
+        return request(app)
+          .get('/events/0/results.json')
+          .set('Accept', 'application/json')
+          .expect(200);
+      })
+      .then(() => { return expect(resultsCount()).to.eventually.eq(1); });
     });
 
-    after(function() {
+    after(() => {
       return railsAppServer.done();
     });
   });
 
-  describe('GET /results.json', function() {
-    it('responds with count json', function() {
+  describe('GET /results.json', () => {
+    it('responds with count json', () => {
       return request(app)
         .get('/results.json')
         .set('Accept', 'application/json')
@@ -182,29 +178,29 @@ describe('app', function() {
     });
   });
 
-  describe('DELETE /results', function() {
-    before(function() {
+  describe('DELETE /results', () => {
+    before(() => {
       return insertResult();
     });
 
-    it('deletes all results', function() {
+    it('deletes all results', () => {
       return request(app)
         .delete('/results.json')
         .set('Accept', 'application/json')
         .expect(200)
-        .then(function() {
+        .then(() => {
           return expect(resultsCount()).to.eventually.eq(0);
         });
     });
   });
 
-  describe('#insertResults', function() {
-    it('does not insert duplicates', function() {
+  describe('#insertResults', () => {
+    it('does not insert duplicates', () => {
       return expect(resultsCount()).to.eventually.eq(0)
-        .then(function() { return app.insertResults([{ event_id: 0, person_id: 0, id: 0 }]); })
-        .then(function() { return expect(resultsCount()).to.eventually.eq(1); })
-        .then(function() { return app.insertResults([{ event_id: 0, person_id: 0, id: 0 }]); })
-        .then(function() { return expect(resultsCount()).to.eventually.eq(1); });
+        .then(() => { return app.insertResults([{ event_id: 0, person_id: 0, id: 0 }]); })
+        .then(() => { return expect(resultsCount()).to.eventually.eq(1); })
+        .then(() => { return app.insertResults([{ event_id: 0, person_id: 0, id: 0 }]); })
+        .then(() => { return expect(resultsCount()).to.eventually.eq(1); });
     });
   });
 });

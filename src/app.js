@@ -1,28 +1,26 @@
-'use strict';
+const config = require('config');
+const express = require('express');
+const morgan = require('morgan');
+const Promise = require('bluebird');
+const pgpLib = require('pg-promise');
+const request = require('request-promise');
 
-var config = require('config');
-var express = require('express');
-var morgan = require('morgan');
-var Promise = require('bluebird');
-var pgpLib = require('pg-promise');
-var request = require('request-promise');
+const pgp = pgpLib({ promiseLib: Promise });
+const db = pgp(config.get('database.connection'));
 
-var pgp = pgpLib({ promiseLib: Promise });
-var db = pgp(config.get('database.connection'));
+const railsAppHost = config.get('endToEndTest.railsAppHost');
 
-var railsAppHost = config.get('endToEndTest.railsAppHost');
-
-var app = express();
+const app = express();
 
 if (process.env.NODE_ENV !== 'test') {
   require('pmx').init();
   app.use(morgan('combined'));
 }
 
-app.insertResults = function(results) {
-  return results.forEach(function (result) {
+app.insertResults = (results) => {
+  return results.forEach((result) => {
     return db.none('insert into results (event_id, person_id, rails_id) values ($1, $2, $3)', [result.event_id, result.person_id, result.id])
-    .catch(function (error) {
+    .catch((error) => {
       // duplicate key (make a method for this)
       if (error.code !== '23505') {
         throw error;
@@ -31,53 +29,44 @@ app.insertResults = function(results) {
   });
 };
 
-app.getResponseFromRailsServer = function(eventId) {
-  var url = 'http://' + railsAppHost + '/events/' + eventId + '/results.json';
-  var options = {
+app.getResponseFromRailsServer = (eventId) => {
+  const url = 'http://' + railsAppHost + '/events/' + eventId + '/results.json';
+  const options = {
     url: url,
     headers: {
-      'User-Agent': 'dawn-patrol'
-    }
+      'User-Agent': 'dawn-patrol',
+    },
   };
 
   return request.get(options)
-    .then(function(response) {
-      return JSON.parse(response);
-    })
-    .then(function(response) {
-      return app.insertResults(response);
-    })
-    .catch(function(e) {
-      console.error(e + ' getting results from ' + url);
-  });
+    .then((response) => { return JSON.parse(response); })
+    .then((response) => { return app.insertResults(response); })
+    .catch((e) => { console.error(e + ' getting results from ' + url); });
 };
 
-app.get('/events/:id/results.json', function (req, res) {
-  var eventId = req.params.id;
+app.get('/events/:id/results.json', (req, res) => {
+  const eventId = req.params.id;
   return db.manyOrNone('select * from results where event_id=$1', [eventId])
-    .then(function(result) {
+    .then((result) => {
       if (result.length > 0) {
-        res.json(result);
-        return true;
+        return res.json(result);
       }
-      else {
-        return app.getResponseFromRailsServer(eventId);
-      }
+      return app.getResponseFromRailsServer(eventId);
     })
-    .then(function() {
+    .then(() => {
       return res.end();
     })
-    .catch(function(e) {
+    .catch((e) => {
       console.error(e + ' getting results for event ID ' + eventId);
     });
 });
 
-app.get('/results.json', function (req, res) {
-  db.one('select count(*) from results').then(function(data) { res.json({ count: parseInt(data.count) }); });
+app.get('/results.json', (req, res) => {
+  db.one('select count(*) from results').then((data) => { res.json({ count: parseInt(data.count) }); });
 });
 
 if (process.env.NODE_ENV !== 'production') {
-  app.delete('/results.json', function (req, res) {
+  app.delete('/results.json', (req, res) => {
     db.none('delete from results').then(res.end());
   });
 }

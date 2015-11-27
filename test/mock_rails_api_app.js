@@ -1,9 +1,7 @@
-'use strict';
+const express = require('express');
+const morgan = require('morgan');
 
-var express = require('express');
-var morgan = require('morgan');
-
-var app = express();
+const app = express();
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
@@ -188,8 +186,6 @@ function json(eventId) {
     }  ]`;
 }
 
-app.get('/events/:id/results.json', function (req, res) {
-  res.send(json(req.params.id));
-});
+app.get('/events/:id/results.json', (req, res) => res.send(json(req.params.id)));
 
 module.exports.app = app;
