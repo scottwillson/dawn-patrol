@@ -123,7 +123,10 @@ describe('app', function () {
       }).then(function () {
         return expect(eventResultsCount(23594)).to.eventually.eq(1);
       }).then(function () {
-        return expect(eventResult(31168421)).to.eventually.contain.any.keys({ 'event_id': 23594 });
+        return expect(eventResult(31168421)).to.eventually.include({
+          event_id: 23594,
+          rails_id: 31168421
+        });
       });
     });
 
