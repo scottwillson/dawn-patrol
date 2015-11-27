@@ -29,6 +29,10 @@ function eventId() {
   }
 }
 
+function requestResultsJSON() {
+  return request.get(`http://${railsAppHost}/events/${eventId()}/results.json`);
+}
+
 describe('end to end system', function() {
   before(function() {
     return request.del('http://' + appHost + '/results.json');
@@ -37,7 +41,7 @@ describe('end to end system', function() {
   it('should store, forward, and cache Rails API requests', function() {
     this.timeout(10000);
     return expect(getResultsCount()).to.eventually.equal(0)
-    .then(function() { return request.get(`http://${railsAppHost}/events/${eventId()}/results.json`); })
+    .then(requestResultsJSON)
     .then(function(response) {
       return retry(function () {
         var json = JSON.parse(response);
@@ -46,7 +50,7 @@ describe('end to end system', function() {
         return expect(getResultsCount()).to.eventually.equal(3);
       }, { interval: 100, timeout: 10000 });
     })
-    .then(function() { return request.get(`http://${railsAppHost}/events/${eventId()}/results.json`); })
+    .then(requestResultsJSON)
     .then(function(response) {
       return retry(function () {
         var json = JSON.parse(response);
