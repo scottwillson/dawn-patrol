@@ -18,7 +18,7 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.insertResults = (results) => {
-  return results.forEach((result) => {
+  return Promise.each(results, (result) => {
     return db.none('insert into results (event_id, person_id, rails_id) values ($1, $2, $3)', [result.event_id, result.person_id, result.id])
     .catch((error) => {
       // duplicate key (make a method for this)
