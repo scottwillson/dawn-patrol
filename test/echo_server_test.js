@@ -15,7 +15,7 @@ describe('echoServer', function() {
   var echoServer;
 
   before(function() {
-    echoServer = require('./echo_server').echoServer;
+    echoServer = require('../src/echo_server').echoServer;
     return echoServer;
   });
 

@@ -19,12 +19,10 @@
     "request-promise": "^0.4.2"
   },
   "devDependencies": {
-    "babel-eslint": "^3.1.17",
     "chai": "^3.0.0",
     "chai-as-promised": "^5.1.0",
     "eslint": "^0.23.0",
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.1.0",
     "mocha": "^2.3.4",
     "nock": "^2.6.0",
     "supertest": "^1.1.0",
@@ -32,7 +30,7 @@
     "trytryagain": "^1.1.0"
   },
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "node src/server.js",
     "test": "mocha"
   },
   "repository": {
@@ -44,5 +42,8 @@
   "bugs": {
     "url": "https://github.com/scottwillson/dawn-patrol/issues"
   },
-  "homepage": "https://github.com/scottwillson/dawn-patrol#readme"
+  "homepage": "https://github.com/scottwillson/dawn-patrol#readme",
+  "engines": {
+    "node": "5.1.0"
+  }
 }

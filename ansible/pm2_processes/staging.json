@@ -2,7 +2,7 @@
   "apps": [
     {
       "name"        : "app",
-      "script"      : "dist/server.js",
+      "script"      : "src/server.js",
       "cwd"         : "/var/www/dawn-patrol",
       "instances"   : 0,
       "exec_mode"   : "cluster_mode",
@@ -13,7 +13,7 @@
     },
     {
       "name"        : "echo_server",
-      "script"      : "dist/echo_server.js",
+      "script"      : "src/echo_server.js",
       "cwd"         : "/var/www/dawn-patrol",
       "instances"   : 1,
       "exec_mode"   : "cluster_mode",

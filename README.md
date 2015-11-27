@@ -13,8 +13,7 @@ Getting started
 install Node.js, npm
 
     npm install
-    gulp
-    node dist/server.js
+    node src/server.js
 
 Create DBs
 
@@ -28,17 +27,15 @@ Create DBs
 
     db-migrate up
 
-Start gulp to transpile: ```gulp```
-
 Add ./node_modules to $PATH
 
 Tests
 -----
     db-migrate up -e test
-    mocha dist/app_test.js
-    mocha dist/echo_server_test.js
+    mocha test/app_test.js
+    mocha test/echo_server_test.js
 
-    mocha -w dist/app_test.js dist/echo_server_test.js
+    mocha -w test/app_test.js src/echo_server_test.js
 
 Local virtual test server
 -------------------------
@@ -77,27 +74,27 @@ End to end test
 ---------------
 Development:
 
-    node dist/server.js
-    node dist/mock_rails_api_server.js > tmp/nginx.log
-    node dist/echo_server.js
-    node dist/end_to_end_test.js
+    node src/server.js
+    node src/mock_rails_api_server.js > tmp/nginx.log
+    node src/echo_server.js
+    node test/end_to_end_test.js
 
 Vagrant:
 
     vagrant up
     ./bin/deploy vagrant
-    NODE_CONFIG='{"endToEndTest": {"appHost": "0.0.0.0:3001", "railsAppHost": "0.0.0.0:4001"}}' ./node_modules/mocha/bin/mocha dist/end_to_end_test.js
+    NODE_CONFIG='{"endToEndTest": {"appHost": "0.0.0.0:3001", "railsAppHost": "0.0.0.0:4001"}}' mocha test/end_to_end_test.js
 
 Staging:
 
     ./bin/provision staging
     ./bin/deploy staging
-    NODE_CONFIG='{"endToEndTest": {"appHost": "dawnpatrol.staging.rocketsurgeryllc.com", "railsAppHost": "staging.obra.org"}}' ./node_modules/mocha/bin/mocha dist/end_to_end_test.js
+    NODE_CONFIG='{"endToEndTest": {"appHost": "dawnpatrol.staging.rocketsurgeryllc.com", "railsAppHost": "staging.obra.org"}}' mocha test/end_to_end_test.js
 
 Performance Test
 ----------------
 
-    ./node_modules/loadtest/bin/loadtest.js -c 8 -n 1000 http://dawnpatrol.staging.rocketsurgeryllc.com/events/0/results.json
+    loadtest.js -c 8 -n 1000 http://dawnpatrol.staging.rocketsurgeryllc.com/events/0/results.json
 
 Roadmap
 -------
