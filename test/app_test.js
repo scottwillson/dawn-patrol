@@ -46,7 +46,7 @@ function insertResult() {
 }
 
 describe('app', function() {
-  beforeEach(function() {
+  beforeEach('truncate DB', function() {
     return db.none('truncate results');
   });
 
@@ -131,6 +131,32 @@ describe('app', function() {
         .then(function() { return expect(resultsCount()).to.eventually.eq(1); })
         .then(function() { return expect(eventResultsCount(23594)).to.eventually.eq(1); })
         .then(function() { return expect(eventResult(31168421)).to.eventually.contain.any.keys({'event_id': 23594}); });
+    });
+
+    after(function() {
+      return railsAppServer.done();
+    });
+  });
+
+  describe('GET /events/:id/results.json for existing ID', function() {
+    var railsAppServer;
+
+    beforeEach('insert existing result', function() {
+      railsAppServer = nock('http://' + railsAppHost);
+      return insertResult();
+    });
+
+    it('returns stored result without calling Rails app', function() {
+        return expect(resultsCount()).to.eventually.eq(1)
+        .then(function() {
+          return request(app)
+          .get('/events/0/results.json')
+          .set('Accept', 'application/json')
+          .expect(200);
+        })
+        .then(function() { return expect(resultsCount()).to.eventually.eq(1); })
+        .then(function() { return expect(eventResultsCount(0)).to.eventually.eq(1); })
+        .then(function() { return expect(eventResult(0)).to.eventually.contain.any.keys({'event_id': 0}); });
     });
 
     after(function() {
