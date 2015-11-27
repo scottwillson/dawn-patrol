@@ -12,14 +12,32 @@ const railsAppHost = config.get('endToEndTest.railsAppHost');
 
 const app = express();
 
+const resultColumns = [
+  'event_id',
+  'person_id',
+  'rails_id',
+];
+
 if (process.env.NODE_ENV !== 'test') {
   require('pmx').init();
   app.use(morgan('combined'));
 }
 
+app.resultValues = (result) => {
+  return resultColumns.map(c => {
+    if (c === 'rails_id') {
+      return result.id;
+    }
+    return result[c];
+  });
+};
+
 app.insertResults = (results) => {
   return Promise.each(results, (result) => {
-    return db.none('insert into results (event_id, person_id, rails_id) values ($1, $2, $3)', [result.event_id, result.person_id, result.id])
+    return db.none(
+      `insert into results (${resultColumns}) values ($1, $2, $3)`,
+      app.resultValues(result)
+    )
     .catch((error) => {
       // duplicate key (make a method for this)
       if (error.code !== '23505') {
