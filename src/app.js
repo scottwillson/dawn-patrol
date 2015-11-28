@@ -63,9 +63,9 @@ app.getResponseFromRailsServer = eventId => {
   };
 
   return request.get(options)
-    .then(response => { return JSON.parse(response); })
-    .then(response => { return app.insertResults(response); })
-    .catch(e => { console.error(e + ' getting results from ' + url); });
+    .then(response => JSON.parse(response))
+    .then(response => app.insertResults(response))
+    .catch(e => console.error(e + ' getting results from ' + url));
 };
 
 app.get('/events/:id/results.json', (req, res) => {
@@ -77,22 +77,19 @@ app.get('/events/:id/results.json', (req, res) => {
       }
       return app.getResponseFromRailsServer(eventId);
     })
-    .then(() => {
-      return res.end();
-    })
-    .catch(e => {
-      console.error(e + ' getting results for event ID ' + eventId);
-    });
+    .then(() => res.end())
+    .catch(e => console.error(e + ' getting results for event ID ' + eventId));
 });
 
-app.get('/results.json', (req, res) => {
-  db.one('select count(*) from results').then(data => { res.json({ count: parseInt(data.count) }); });
-});
+app.get('/results.json', (req, res) =>
+  db.one('select count(*) from results')
+    .then(data => res.json({ count: parseInt(data.count) }))
+);
 
 if (process.env.NODE_ENV !== 'production') {
-  app.delete('/results.json', (req, res) => {
-    db.none('delete from results').then(res.end());
-  });
+  app.delete('/results.json', (req, res) =>
+    db.none('delete from results')
+      .then(res.end()));
 }
 
 module.exports.app = app;
