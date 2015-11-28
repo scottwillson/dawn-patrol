@@ -26,7 +26,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
 }
 
-app.resultValues = (result) => {
+app.resultValues = result => {
   return resultColumns.map(c => {
     if (c === 'rails_id') {
       return result.id;
@@ -38,13 +38,13 @@ app.resultValues = (result) => {
   });
 };
 
-app.insertResults = (results) => {
-  return Promise.each(results, (result) => {
+app.insertResults = results => {
+  return Promise.each(results, result => {
     return db.none(
       `insert into results (${resultColumns}) values (${valueArguments})`,
       app.resultValues(result)
     )
-    .catch((error) => {
+    .catch(error => {
       // duplicate key (make a method for this)
       if (error.code !== '23505') {
         throw error;
@@ -53,7 +53,7 @@ app.insertResults = (results) => {
   });
 };
 
-app.getResponseFromRailsServer = (eventId) => {
+app.getResponseFromRailsServer = eventId => {
   const url = 'http://' + railsAppHost + '/events/' + eventId + '/results.json';
   const options = {
     url: url,
@@ -63,15 +63,15 @@ app.getResponseFromRailsServer = (eventId) => {
   };
 
   return request.get(options)
-    .then((response) => { return JSON.parse(response); })
-    .then((response) => { return app.insertResults(response); })
-    .catch((e) => { console.error(e + ' getting results from ' + url); });
+    .then(response => { return JSON.parse(response); })
+    .then(response => { return app.insertResults(response); })
+    .catch(e => { console.error(e + ' getting results from ' + url); });
 };
 
 app.get('/events/:id/results.json', (req, res) => {
   const eventId = req.params.id;
   return db.manyOrNone('select * from results where event_id=$1', [eventId])
-    .then((result) => {
+    .then(result => {
       if (result.length > 0) {
         return res.json(result);
       }
@@ -80,13 +80,13 @@ app.get('/events/:id/results.json', (req, res) => {
     .then(() => {
       return res.end();
     })
-    .catch((e) => {
+    .catch(e => {
       console.error(e + ' getting results for event ID ' + eventId);
     });
 });
 
 app.get('/results.json', (req, res) => {
-  db.one('select count(*) from results').then((data) => { res.json({ count: parseInt(data.count) }); });
+  db.one('select count(*) from results').then(data => { res.json({ count: parseInt(data.count) }); });
 });
 
 if (process.env.NODE_ENV !== 'production') {

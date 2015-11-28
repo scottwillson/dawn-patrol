@@ -15,11 +15,11 @@ const fileSize = fs.statSync(path).size;
 const tail = new Tail(path, '\n', { start: fileSize });
 log('tail: ' + path);
 
-tail.isDawnPatrolRequest = (line) => {
+tail.isDawnPatrolRequest = line => {
   return line.indexOf('dawn-patrol') > -1;
 };
 
-tail.eventId = (line) => {
+tail.eventId = line => {
   const matches = /events\/(\d+)\/results.json/g.exec(line);
   if (matches === null) {
     return null;
@@ -27,15 +27,15 @@ tail.eventId = (line) => {
   return matches[1];
 };
 
-tail.echoRequest = (eventId) => {
-  http.get(`http://0.0.0.0:3000/events/${eventId}/results.json`, (res) => {
+tail.echoRequest = eventId => {
+  http.get(`http://0.0.0.0:3000/events/${eventId}/results.json`, res => {
     log('app: ' + res.statusCode);
-  }).on('error', (e) => {
+  }).on('error', e => {
     log('app error: ' + e.message);
   });
 };
 
-tail.on('line', (data) => {
+tail.on('line', data => {
   log('url: ' + data);
   if (!tail.isDawnPatrolRequest(data)) {
     const eventId = tail.eventId(data);
@@ -45,7 +45,7 @@ tail.on('line', (data) => {
   }
 });
 
-tail.on('error', (error) => {
+tail.on('error', error => {
   log('error: ', error);
 });
 

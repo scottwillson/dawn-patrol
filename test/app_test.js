@@ -19,21 +19,21 @@ const railsAppHost = config.get('endToEndTest.railsAppHost');
 
 function resultsCount() {
   return db.one('select count(*) from results')
-    .then((result) => {
+    .then(result => {
       return parseInt(result.count);
     });
 }
 
 function eventResultsCount(eventId) {
   return db.one('select count(*) from results where event_id=$1', [eventId])
-    .then((result) => {
+    .then(result => {
       return parseInt(result.count);
     });
 }
 
 function eventResult(railsId) {
   return db.oneOrNone('select * from results where rails_id=$1', [railsId])
-  .then((result) => {
+  .then(result => {
     if (result) {
       return result;
     }

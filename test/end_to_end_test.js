@@ -13,7 +13,7 @@ const appHost = config.get('endToEndTest.appHost');
 const railsAppHost = config.get('endToEndTest.railsAppHost');
 
 function getResultsCount() {
-  return request.get('http://' + appHost + '/results.json').then((response) => {
+  return request.get('http://' + appHost + '/results.json').then(response => {
     return JSON.parse(response).count;
   });
 }
@@ -52,7 +52,7 @@ describe('end to end system', () => {
       .then(() => {
         return retry(() => {
           return requestResultsJSON(eventId).then(
-            (response) => {
+            response => {
               const json = JSON.parse(response);
               expect(json.length).to.equal(3);
               expect(json[0]).to.contain.any.keys('event_id');
