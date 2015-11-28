@@ -98,8 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* Decompose app and unit test
-* Split database.js into database.js and results.js
 * DRY up test
 * byEventId should re-raise exceptions
 * Assert integration test response more thoroughly
@@ -138,3 +136,4 @@ Roadmap
 * consider batching duplicate API requests
 * Default node env to dev? Seems to be undefined.
 * Add to CI
+* Echo Rails JSON response without parsing and reformatting it?

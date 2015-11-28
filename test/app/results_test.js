@@ -29,15 +29,6 @@ function resultsCount() {
 describe('results', () => {
   beforeEach('truncate DB', () => db.none('truncate results'));
 
-  describe('#byEventId', () => {
-    beforeEach('insert existing result', () => insertResult());
-
-    it('returns results', () => {
-      return results.byEventId(0)
-        .then(eventResults => expect(eventResults.length).to.eq(1));
-    });
-  });
-
   describe('#count', () => {
     context('no results', () => {
       it('counts results', () =>

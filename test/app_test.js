@@ -157,9 +157,7 @@ describe('app', () => {
       .then(() => { return expect(resultsCount()).to.eventually.eq(1); });
     });
 
-    after(() => {
-      return railsAppServer.done();
-    });
+    after(() => railsAppServer.done());
   });
 
   describe('GET /results.json', () => {

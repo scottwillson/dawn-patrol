@@ -3,10 +3,7 @@ const Promise = require('bluebird');
 const pgpLib = require('pg-promise');
 const pgp = pgpLib({ promiseLib: Promise });
 const db = pgp(config.get('database.connection'));
-
-const railsAppHost = config.get('integrationTest.railsAppHost');
-
-const request = require('request-promise');
+const railsServer = require('./rails_server');
 
 const resultColumns = [
   'category_id',
@@ -22,7 +19,7 @@ exports.byEventId = (eventId) => {
     .then(results => {
       if (results.length) return results;
 
-      return this.getResponseFromRailsServer(eventId)
+      return railsServer.byEventId(eventId)
         .then(response => this.insertResults(response));
     })
     .catch(e => console.error(e + ' getting results for event ID ' + eventId));
@@ -33,18 +30,6 @@ exports.count = () => db
   .then(data => Number(data.count));
 
 exports.deleteAll = () => db.none('delete from results');
-
-exports.getResponseFromRailsServer = eventId => {
-  const url = 'http://' + railsAppHost + '/events/' + eventId + '/results.json';
-  const options = {
-    url: url,
-    headers: {'User-Agent': 'dawn-patrol'},
-  };
-
-  return request.get(options)
-    .then(response => JSON.parse(response))
-    .catch(e => console.error(e + ' getting results from ' + url));
-};
 
 exports.resultValues = result => {
   return resultColumns.map(c => {
