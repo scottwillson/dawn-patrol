@@ -99,6 +99,7 @@ Performance Test
 Roadmap
 -------
 * Decompose app and unit test
+* DRY up test
 * Assert end-to-end test response more thoroughly
 * Test response body more thoroughly
 * Store normalized data

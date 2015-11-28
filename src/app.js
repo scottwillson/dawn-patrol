@@ -7,6 +7,7 @@ const request = require('request-promise');
 
 const pgp = pgpLib({ promiseLib: Promise });
 const db = pgp(config.get('database.connection'));
+const database = require('./app/database');
 
 const railsAppHost = config.get('endToEndTest.railsAppHost');
 
@@ -81,10 +82,9 @@ app.get('/events/:id/results.json', (req, res) => {
     .catch(e => console.error(e + ' getting results for event ID ' + eventId));
 });
 
-app.get('/results.json', (req, res) =>
-  db.one('select count(*) from results')
-    .then(data => res.json({ count: Number(data.count) }))
-);
+app.get('/results.json', (req, res) => {
+  return database.count().then(count => res.json({count: count}));
+});
 
 if (process.env.NODE_ENV !== 'production') {
   app.delete('/results.json', (req, res) =>
