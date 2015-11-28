@@ -31,7 +31,10 @@ app.resultValues = (result) => {
     if (c === 'rails_id') {
       return result.id;
     }
-    return result[c];
+    if (result.hasOwnProperty(c)) {
+      return result[c];
+    }
+    return null;
   });
 };
 

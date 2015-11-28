@@ -197,4 +197,11 @@ describe('app', () => {
         .then(() => { return expect(resultsCount()).to.eventually.eq(1); });
     });
   });
+
+  describe('#resultValues', () => {
+    it('returns nil for empty results', () => {
+      const result = { id: 9 };
+      return expect(app.resultValues(result)).to.eql([ null, null, null, 9 ]);
+    });
+  });
 });
