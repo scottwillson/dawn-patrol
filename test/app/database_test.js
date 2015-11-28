@@ -24,16 +24,6 @@ function insertResult(railsId) {
 describe('app', () => {
   beforeEach('truncate DB', () => db.none('truncate results'));
 
-  describe('#deleteAll', () => {
-    beforeEach('insert existing result', () => insertResult());
-
-    it('deletes all results', () => {
-      expect(database.count()).to.eventually.eq(1)
-      .then(database.deleteAll())
-      .then(expect(database.count()).to.eventually.eq(0));
-    });
-  });
-
   describe('#count', () => {
     context('no results', () => {
       it('counts results', () =>
@@ -59,6 +49,16 @@ describe('app', () => {
       it('counts results', () =>
         expect(database.count()).to.eventually.eq(3)
       );
+    });
+  });
+
+  describe('#deleteAll', () => {
+    beforeEach('insert existing result', () => insertResult());
+
+    it('deletes all results', () => {
+      expect(database.count()).to.eventually.eq(1)
+      .then(database.deleteAll())
+      .then(expect(database.count()).to.eventually.eq(0));
     });
   });
 });
