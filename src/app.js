@@ -9,7 +9,7 @@ const pgp = pgpLib({ promiseLib: Promise });
 const db = pgp(config.get('database.connection'));
 const database = require('./app/database');
 
-const railsAppHost = config.get('endToEndTest.railsAppHost');
+const railsAppHost = config.get('integrationTest.railsAppHost');
 
 const app = express();
 

@@ -32,10 +32,10 @@ Add ./node_modules to $PATH
 Tests
 -----
     db-migrate up -e test
-    mocha test/app_test.js
-    mocha test/echo_server_test.js
+    mocha
 
-    mocha -w test/app_test.js src/echo_server_test.js
+    # Or:
+    mocha -w
 
 Local virtual test server
 -------------------------
@@ -70,26 +70,26 @@ Create ansible/staging inventory file with hostname or IP of staging server
     ./bin/deploy staging
 
 
-End to end test
----------------
+Integration test
+----------------
 Development:
 
     node src/server.js
-    node src/mock_rails_api_server.js > tmp/nginx.log
+    node integration_test/mock_rails_api_server.js > tmp/nginx.log
     node src/echo_server.js
-    node test/end_to_end_test.js
+    mocha integration_test/test.js
 
 Vagrant:
 
     vagrant up
     ./bin/deploy vagrant
-    NODE_CONFIG='{"endToEndTest": {"appHost": "0.0.0.0:3001", "railsAppHost": "0.0.0.0:4001"}}' mocha test/end_to_end_test.js
+    NODE_CONFIG='{"integrationTest": {"appHost": "0.0.0.0:3001", "railsAppHost": "0.0.0.0:4001"}}' mocha integration_test/test.js
 
 Staging:
 
     ./bin/provision staging
     ./bin/deploy staging
-    NODE_CONFIG='{"endToEndTest": {"appHost": "dawnpatrol.staging.rocketsurgeryllc.com", "railsAppHost": "staging.obra.org"}}' mocha test/end_to_end_test.js
+    NODE_CONFIG='{"integrationTest": {"appHost": "dawnpatrol.staging.rocketsurgeryllc.com", "railsAppHost": "staging.obra.org"}}' mocha integration_test/test.js
 
 Performance Test
 ----------------
@@ -100,11 +100,11 @@ Roadmap
 -------
 * Decompose app and unit test
 * DRY up test
-* Assert end-to-end test response more thoroughly
+* Assert integration test response more thoroughly
 * Test response body more thoroughly
 * Store normalized data
 * Store data in Postgres denormalized (should be able to fulfill any request by 1-2 selects)
-* Drop 'endToEndTest' from config
+* Drop 'integrationTest' from config
 * de-dupe DB config (migrations use separate file)
 * Add nginx
 * check for outstanding DB migrations before running tests
@@ -125,8 +125,8 @@ Roadmap
 * Actually return JSON, not strings
 * Separate each service into separate project?
 * Move DB creds to more secure spot
-* Encapsulate end-to-end test running in a simple script
-* staging end to end test needs to fetch real event ID and expect correct count
+* Encapsulate integration test running in a simple script
+* staging integration test needs to fetch real event ID and expect correct count
 * Ensure EchoServer event emitters are cleaned up in tests
 * Batch inserts from Rails server response
 * add racing_association_id
@@ -134,3 +134,4 @@ Roadmap
 * Need updated_at and created_at from source and self
 * consider updating DB, etc in background, preferably after responding to request
 * consider batching duplicate API requests
+* Default node env to dev? Seems to be undefined.

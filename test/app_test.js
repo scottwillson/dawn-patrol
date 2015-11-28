@@ -15,7 +15,7 @@ chai.use(chaiAsPromised);
 const pgp = pgpLib({ promiseLib: Promise });
 const db = pgp(config.get('database.connection'));
 
-const railsAppHost = config.get('endToEndTest.railsAppHost');
+const railsAppHost = config.get('integrationTest.railsAppHost');
 
 function resultsCount() {
   return db.one('select count(*) from results')

@@ -9,8 +9,8 @@ const retry = require('trytryagain');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-const appHost = config.get('endToEndTest.appHost');
-const railsAppHost = config.get('endToEndTest.railsAppHost');
+const appHost = config.get('integrationTest.appHost');
+const railsAppHost = config.get('integrationTest.railsAppHost');
 
 function getResultsCount() {
   return request.get('http://' + appHost + '/results.json').then(response => {
@@ -19,8 +19,8 @@ function getResultsCount() {
 }
 
 function randomEventId() {
-  if (config.has('endToEndTest.eventId')) {
-    return config.get('endToEndTest.eventId');
+  if (config.has('integrationTest.eventId')) {
+    return config.get('integrationTest.eventId');
   }
   return Math.round(Math.random() * 10000);
 }
@@ -29,7 +29,7 @@ function requestResultsJSON(eventId) {
   return request.get(`http://${railsAppHost}/events/${eventId}/results.json`);
 }
 
-describe('end to end system', () => {
+describe('system', () => {
   before(() => {
     return request.del('http://' + appHost + '/results.json');
   });
