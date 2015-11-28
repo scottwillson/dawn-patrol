@@ -83,7 +83,7 @@ app.get('/events/:id/results.json', (req, res) => {
 
 app.get('/results.json', (req, res) =>
   db.one('select count(*) from results')
-    .then(data => res.json({ count: parseInt(data.count) }))
+    .then(data => res.json({ count: Number(data.count) }))
 );
 
 if (process.env.NODE_ENV !== 'production') {
