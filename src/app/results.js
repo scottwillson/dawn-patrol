@@ -22,7 +22,8 @@ exports.byEventId = (eventId) => {
     .then(results => {
       if (results.length) return results;
 
-      return this.getResponseFromRailsServer(eventId);
+      return this.getResponseFromRailsServer(eventId)
+        .then(response => this.insertResults(response));
     })
     .catch(e => console.error(e + ' getting results for event ID ' + eventId));
 };
@@ -42,7 +43,6 @@ exports.getResponseFromRailsServer = eventId => {
 
   return request.get(options)
     .then(response => JSON.parse(response))
-    .then(response => this.insertResults(response))
     .catch(e => console.error(e + ' getting results from ' + url));
 };
 
