@@ -15,12 +15,24 @@ const pgp = pgpLib({ promiseLib: Promise });
 const db = pgp(config.get('database.connection'));
 
 function insertResult(railsId) {
-  if (!railsId) railsId = 0;
-  return db.none(`insert into results (event_id, rails_id) values (0, ${railsId})`);
+  if (railsId) {
+    return db.none(`insert into results (event_id, rails_id) values (0, ${railsId})`);
+  }
+  return db.none(`insert into results (event_id, rails_id) values (0, 0)`);
 }
 
 describe('app', () => {
   beforeEach('truncate DB', () => db.none('truncate results'));
+
+  describe('#deleteAll', () => {
+    beforeEach('insert existing result', () => insertResult());
+
+    it('deletes all results', () => {
+      expect(database.count()).to.eventually.eq(1)
+      .then(database.deleteAll())
+      .then(expect(database.count()).to.eventually.eq(0));
+    });
+  });
 
   describe('#count', () => {
     context('no results', () => {

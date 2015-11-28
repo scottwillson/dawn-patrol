@@ -82,14 +82,13 @@ app.get('/events/:id/results.json', (req, res) => {
     .catch(e => console.error(e + ' getting results for event ID ' + eventId));
 });
 
-app.get('/results.json', (req, res) => {
-  return database.count().then(count => res.json({count: count}));
-});
+app.get('/results.json', (req, res) => database.count().then(count => res.json({count: count})));
 
 if (process.env.NODE_ENV !== 'production') {
-  app.delete('/results.json', (req, res) =>
-    db.none('delete from results')
-      .then(res.end()));
+  app.delete('/results.json', (req, res) => database.deleteAll().then(res.end()));
+  // app.delete('/results.json', (req, res) =>
+  //   db.none('delete from results')
+  //     .then(res.end()));
 }
 
 module.exports.app = app;

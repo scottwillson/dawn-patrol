@@ -9,3 +9,5 @@ exports.count = () => {
     .one('select count(*) from results')
     .then(data => Number(data.count));
 };
+
+exports.deleteAll = () => db.none('delete from results');
