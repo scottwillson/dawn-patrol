@@ -72,7 +72,7 @@ app.get('/events/:id/results.json', (req, res) => {
   const eventId = req.params.id;
   return db.manyOrNone('select * from results where event_id=$1', [eventId])
     .then(result => {
-      if (result.length > 0) {
+      if (result.length) {
         return res.json(result);
       }
       return app.getResponseFromRailsServer(eventId);
