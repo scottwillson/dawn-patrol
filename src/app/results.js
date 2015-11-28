@@ -17,15 +17,7 @@ const resultColumns = [
 
 const valueArguments = resultColumns.map((_, index) => `$${index + 1}`);
 
-exports.count = () => {
-  return db
-    .one('select count(*) from results')
-    .then(data => Number(data.count));
-};
-
-exports.deleteAll = () => db.none('delete from results');
-
-exports.allEventResults = (eventId) => {
+exports.byEventId = (eventId) => {
   return db.manyOrNone('select * from results where event_id=$1', [eventId])
     .then(results => {
       if (results.length) return results;
@@ -34,6 +26,12 @@ exports.allEventResults = (eventId) => {
     })
     .catch(e => console.error(e + ' getting results for event ID ' + eventId));
 };
+
+exports.count = () => db
+  .one('select count(*) from results')
+  .then(data => Number(data.count));
+
+exports.deleteAll = () => db.none('delete from results');
 
 exports.getResponseFromRailsServer = eventId => {
   const url = 'http://' + railsAppHost + '/events/' + eventId + '/results.json';

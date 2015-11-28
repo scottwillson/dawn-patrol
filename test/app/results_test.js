@@ -1,6 +1,6 @@
 process.env.NODE_ENV = 'test';
 
-const database = require('../../src/app/database');
+const results = require('../../src/app/results');
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -26,22 +26,22 @@ function resultsCount() {
     .then(result => Number(result.count));
 }
 
-describe('database', () => {
+describe('results', () => {
   beforeEach('truncate DB', () => db.none('truncate results'));
 
-  describe('#allEventResults', () => {
+  describe('#byEventId', () => {
     beforeEach('insert existing result', () => insertResult());
 
     it('returns results', () => {
-      return database.allEventResults(0)
-        .then(results => expect(results.length).to.eq(1));
+      return results.byEventId(0)
+        .then(eventResults => expect(eventResults.length).to.eq(1));
     });
   });
 
   describe('#count', () => {
     context('no results', () => {
       it('counts results', () =>
-        expect(database.count()).to.eventually.eq(0)
+        expect(results.count()).to.eventually.eq(0)
       );
     });
 
@@ -49,7 +49,7 @@ describe('database', () => {
       beforeEach('insert existing result', () => insertResult());
 
       it('counts results', () =>
-        expect(database.count()).to.eventually.eq(1)
+        expect(results.count()).to.eventually.eq(1)
       );
     });
 
@@ -61,7 +61,7 @@ describe('database', () => {
       });
 
       it('counts results', () =>
-        expect(database.count()).to.eventually.eq(3)
+        expect(results.count()).to.eventually.eq(3)
       );
     });
   });
@@ -71,7 +71,7 @@ describe('database', () => {
 
     it('deletes all results', () => {
       expect(resultsCount()).to.eventually.eq(1)
-      .then(database.deleteAll())
+      .then(results.deleteAll())
       .then(expect(resultsCount()).to.eventually.eq(0));
     });
   });
@@ -79,9 +79,9 @@ describe('database', () => {
   describe('#insertResults', () => {
     it('does not insert duplicates', () => {
       return expect(resultsCount()).to.eventually.eq(0)
-        .then(() => database.insertResults([{ event_id: 0, person_id: 0, id: 0 }]))
+        .then(() => results.insertResults([{ event_id: 0, person_id: 0, id: 0 }]))
         .then(() => expect(resultsCount()).to.eventually.eq(1))
-        .then(() => database.insertResults([{ event_id: 0, person_id: 0, id: 0 }]))
+        .then(() => results.insertResults([{ event_id: 0, person_id: 0, id: 0 }]))
         .then(() => expect(resultsCount()).to.eventually.eq(1));
     });
   });
@@ -89,7 +89,7 @@ describe('database', () => {
   describe('#resultValues', () => {
     it('returns nil for empty results', () => {
       const result = { id: 9 };
-      return expect(database.resultValues(result)).to.eql([ null, null, null, 9 ]);
+      return expect(results.resultValues(result)).to.eql([ null, null, null, 9 ]);
     });
   });
 });
