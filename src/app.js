@@ -13,10 +13,13 @@ const railsAppHost = config.get('endToEndTest.railsAppHost');
 const app = express();
 
 const resultColumns = [
+  'category_id',
   'event_id',
   'person_id',
   'rails_id',
 ];
+
+const valueArguments = resultColumns.map((_, index) => `$${index + 1}`);
 
 if (process.env.NODE_ENV !== 'test') {
   require('pmx').init();
@@ -35,7 +38,7 @@ app.resultValues = (result) => {
 app.insertResults = (results) => {
   return Promise.each(results, (result) => {
     return db.none(
-      `insert into results (${resultColumns}) values ($1, $2, $3)`,
+      `insert into results (${resultColumns}) values (${valueArguments})`,
       app.resultValues(result)
     )
     .catch((error) => {

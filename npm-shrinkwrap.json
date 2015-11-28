@@ -288,6 +288,29 @@
         }
       }
     },
+    "db-migrate-base": {
+      "version": "1.2.2",
+      "from": "db-migrate-base@>=1.2.1 <2.0.0",
+      "resolved": "https://registry.npmjs.org/db-migrate-base/-/db-migrate-base-1.2.2.tgz",
+      "dependencies": {
+        "bluebird": {
+          "version": "2.10.2",
+          "from": "bluebird@>=2.9.34 <3.0.0"
+        }
+      }
+    },
+    "db-migrate-pg": {
+      "version": "0.1.6",
+      "from": "db-migrate-pg@*",
+      "resolved": "https://registry.npmjs.org/db-migrate-pg/-/db-migrate-pg-0.1.6.tgz",
+      "dependencies": {
+        "bluebird": {
+          "version": "2.10.2",
+          "from": "bluebird@>=2.10.0 <3.0.0",
+          "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.10.2.tgz"
+        }
+      }
+    },
     "debug": {
       "version": "0.7.4",
       "from": "debug@>=0.7.2 <0.8.0",
