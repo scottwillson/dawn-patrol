@@ -60,4 +60,4 @@ exports.up = (db, callback) => {
   }, callback);
 };
 
-exports.down = (db, callback) => db.dropTable('results', callback)
+exports.down = (db, callback) => db.dropTable('results', callback);
