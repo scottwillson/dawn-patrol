@@ -2,7 +2,7 @@ const config = require('config');
 const railsAppHost = config.get('integrationTest.railsAppHost');
 const request = require('request-promise');
 
-exports.byEventId = eventId => {
+exports.resultsForEvent = eventId => {
   const url = 'http://' + railsAppHost + '/events/' + eventId + '/results.json';
   const options = {
     url: url,

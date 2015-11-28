@@ -98,8 +98,8 @@ Performance Test
 
 Roadmap
 -------
+* results##insertResults spec has a promise logic error
 * DRY up test
-* byEventId should re-raise exceptions
 * Assert integration test response more thoroughly
 * Test response body more thoroughly
 * Store normalized data

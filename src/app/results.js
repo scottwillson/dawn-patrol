@@ -14,12 +14,12 @@ const resultColumns = [
 
 const valueArguments = resultColumns.map((_, index) => `$${index + 1}`);
 
-exports.byEventId = (eventId) => {
+exports.forEvent = (eventId) => {
   return db.manyOrNone('select * from results where event_id=$1', [eventId])
     .then(results => {
       if (results.length) return results;
 
-      return railsServer.byEventId(eventId)
+      return railsServer.resultsForEvent(eventId)
         .then(response => this.insertResults(response));
     })
     .catch(e => console.error(e + ' getting results for event ID ' + eventId));

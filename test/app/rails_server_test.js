@@ -25,7 +25,7 @@ function insertResult(railsId) {
 describe('railsServer', () => {
   beforeEach('truncate DB', () => db.none('truncate results'));
 
-  describe('#byEventId', () => {
+  describe('#resultsForEvent', () => {
     const railsAppServer = nock('http://' + railsAppHost)
       .get('/events/0/results.json')
       .reply(200, [
@@ -41,8 +41,8 @@ describe('railsServer', () => {
 
     beforeEach('insert existing result', () => insertResult());
 
-    it('returns results', () => {
-      return railsServer.byEventId(0)
+    it('returns event results', () => {
+      return railsServer.resultsForEvent(0)
         .then(eventResults => expect(eventResults.length).to.eq(1));
     });
 

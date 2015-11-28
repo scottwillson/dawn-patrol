@@ -8,7 +8,7 @@ engines:
   coffeelint:
     enabled: false
   duplication:
-    enabled: false
+    enabled: true
     config:
       languages:
       - javascript
@@ -29,6 +29,9 @@ ratings:
   - "**.js"
 exclude_paths:
 - .codeclimate.yml
+- .vagrant
 - bin/**/*
 - config/**/*
+- node_modules
 - sql/**/*
+- tmp

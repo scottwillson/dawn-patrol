@@ -10,7 +10,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.get('/events/:id/results.json', (req, res) => {
   const eventId = req.params.id;
-  return results.byEventId(eventId).then(eventResults => res.json(eventResults));
+  return results.forEvent(eventId).then(eventResults => res.json(eventResults));
 });
 
 app.get('/results.json', (req, res) => results.count().then(count => res.json({count: count})));
