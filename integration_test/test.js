@@ -29,7 +29,9 @@ function requestResultsJSON(eventId) {
   return request.get(`http://${railsAppHost}/events/${eventId}/results.json`);
 }
 
-describe('system', () => {
+describe('system', function describeSystem() {
+  this.timeout(10000);
+
   before(() => {
     return request.del('http://' + appHost + '/results.json');
   });

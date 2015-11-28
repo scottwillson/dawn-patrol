@@ -137,3 +137,4 @@ Roadmap
 * consider updating DB, etc in background, preferably after responding to request
 * consider batching duplicate API requests
 * Default node env to dev? Seems to be undefined.
+* Add to CI
