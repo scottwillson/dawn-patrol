@@ -98,8 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* Don't repeat attribute lists
-* Really need promises?
 * Decompose app and unit test
 * Assert end-to-end test response more thoroughly
 * Test response body more thoroughly
@@ -137,3 +135,4 @@ Roadmap
 * 'use strict' at build time
 * add racing_association_id
 * consider timestamp on inserts (do update if newer)
+* Need updated_at and created_at from source and self
