@@ -101,29 +101,25 @@ Roadmap
 * Decompose app and unit test
 * Assert end-to-end test response more thoroughly
 * Test response body more thoroughly
+* Store normalized data
 * Store data in Postgres denormalized (should be able to fulfill any request by 1-2 selects)
-* Fetch data from Postgres
 * Drop 'endToEndTest' from config
 * de-dupe DB config (migrations use separate file)
 * Add nginx
-* Add uniqueness constraints
 * check for outstanding DB migrations before running tests
 * Add memcached (with memory limit)
 * configure nginx to use memcached
 * Have node.js update memcached
-* Apply https://github.com/airbnb/javascript
 * proper response headers for caching
-* Store normalized data
 * All https
 * Add ember.js front end for fun
-* Use hash-like logging
+* Use hash-like logging for all apps
 * Move cache updating to separate service?
 * Try other data storage/servers and compare performance
 * Multiplex requests from production
 * Redirect production requests to here
 * Docker?
 * Use PM2 'ecosystem'?
-* Ensure app server throw exceptions
 * Authorization for admin actions would be nice!
 * Actually return JSON, not strings
 * Separate each service into separate project?
@@ -132,7 +128,8 @@ Roadmap
 * staging end to end test needs to fetch real event ID and expect correct count
 * Ensure EchoServer event emitters are cleaned up in tests
 * Batch inserts from Rails server response
-* 'use strict' at build time
 * add racing_association_id
 * consider timestamp on inserts (do update if newer)
 * Need updated_at and created_at from source and self
+* consider updating DB, etc in background, preferably after responding to request
+* consider batching duplicate API requests
