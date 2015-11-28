@@ -187,21 +187,4 @@ describe('app', () => {
         });
     });
   });
-
-  describe('#insertResults', () => {
-    it('does not insert duplicates', () => {
-      return expect(resultsCount()).to.eventually.eq(0)
-        .then(() => { return app.insertResults([{ event_id: 0, person_id: 0, id: 0 }]); })
-        .then(() => { return expect(resultsCount()).to.eventually.eq(1); })
-        .then(() => { return app.insertResults([{ event_id: 0, person_id: 0, id: 0 }]); })
-        .then(() => { return expect(resultsCount()).to.eventually.eq(1); });
-    });
-  });
-
-  describe('#resultValues', () => {
-    it('returns nil for empty results', () => {
-      const result = { id: 9 };
-      return expect(app.resultValues(result)).to.eql([ null, null, null, 9 ]);
-    });
-  });
 });

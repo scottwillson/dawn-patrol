@@ -99,7 +99,9 @@ Performance Test
 Roadmap
 -------
 * Decompose app and unit test
+* Split database.js into database.js and results.js
 * DRY up test
+* allEventResults should re-raise exceptions
 * Assert integration test response more thoroughly
 * Test response body more thoroughly
 * Store normalized data
