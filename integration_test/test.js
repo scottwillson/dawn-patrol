@@ -12,10 +12,14 @@ const expect = chai.expect;
 const appHost = config.get('integrationTest.appHost');
 const railsAppHost = config.get('integrationTest.railsAppHost');
 
-function getResultsCount() {
+function resultsCount() {
   return request.get('http://' + appHost + '/results.json').then(response => {
     return JSON.parse(response).count;
   });
+}
+
+function deletelAllResults() {
+  return request.del('http://' + appHost + '/results.json');
 }
 
 function randomEventId() {
@@ -25,43 +29,32 @@ function randomEventId() {
   return Math.round(Math.random() * 10000);
 }
 
-function requestResultsJSON(eventId) {
+function getResultsJSONFromRails(eventId) {
   return request.get(`http://${railsAppHost}/events/${eventId}/results.json`);
+}
+
+function expectRailsToReturnResultsJSON(eventId) {
+  return retry(() => {
+    return getResultsJSONFromRails(eventId).then(
+      (response) => {
+        const json = JSON.parse(response);
+        expect(json.length).to.equal(3);
+        return expect(json[0]).to.contain.any.keys('event_id');
+      }
+    );
+  }, { interval: 100, timeout: 10000 });
 }
 
 describe('system', function describeSystem() {
   this.timeout(10000);
 
-  before(() => {
-    return request.del('http://' + appHost + '/results.json');
-  });
+  before(() => deletelAllResults());
 
   it('should store, forward, and cache Rails API requests', () => {
     const eventId = randomEventId();
-    return expect(getResultsCount()).to.eventually.equal(0)
-      .then(() => {
-        return retry(() => {
-          return requestResultsJSON(eventId).then(
-            (response) => {
-              const json = JSON.parse(response);
-              expect(json.length).to.equal(3);
-              expect(json[0]).to.contain.any.keys('event_id');
-              return expect(getResultsCount()).to.eventually.equal(3);
-            }
-          );
-        }, { interval: 100, timeout: 10000 });
-      })
-      .then(() => {
-        return retry(() => {
-          return requestResultsJSON(eventId).then(
-            response => {
-              const json = JSON.parse(response);
-              expect(json.length).to.equal(3);
-              expect(json[0]).to.contain.any.keys('event_id');
-              return expect(getResultsCount()).to.eventually.equal(3);
-            }
-          );
-        }, { interval: 100, timeout: 10000 });
-      });
+    return expect(resultsCount()).to.eventually.equal(0)
+      .then(() => expectRailsToReturnResultsJSON(eventId))
+      .then(() => expect(resultsCount()).to.eventually.equal(3))
+      .then(() => expectRailsToReturnResultsJSON(eventId));
   });
 });

@@ -98,14 +98,17 @@ Performance Test
 
 Roadmap
 -------
-* results##insertResults spec has a promise logic error
+* Ensure we're using bluebird throughout and not mixing promise libraries
+* how to handle expiration? app only checks that results exist, not that they're up to date
 * DRY up test
 * Assert integration test response more thoroughly
 * Test response body more thoroughly
+* Replace 'Rails' with 'master'?
 * Store normalized data
 * Store data in Postgres denormalized (should be able to fulfill any request by 1-2 selects)
 * Drop 'integrationTest' from config
 * de-dupe DB config (migrations use separate file)
+* apply https://devcenter.heroku.com/articles/node-best-practices
 * Add nginx
 * check for outstanding DB migrations before running tests
 * Add memcached (with memory limit)
@@ -119,6 +122,7 @@ Roadmap
 * Try other data storage/servers and compare performance
 * Multiplex requests from production
 * Redirect production requests to here
+* replace shrinkrwap with exact versions?
 * Docker?
 * Use PM2 'ecosystem'?
 * Authorization for admin actions would be nice!

@@ -1,6 +1,6 @@
 const config = require('config');
-const Promise = require('bluebird');
 const pgpLib = require('pg-promise');
+const Promise = require('bluebird');
 const pgp = pgpLib({ promiseLib: Promise });
 const db = pgp(config.get('database.connection'));
 const railsServer = require('./rails_server');

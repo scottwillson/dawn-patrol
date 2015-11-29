@@ -1,54 +1,20 @@
 process.env.NODE_ENV = 'test';
 
-const app = require('../src/app').app;
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const config = require('config');
 const expect = chai.expect;
-const nock = require('nock');
-const pgpLib = require('pg-promise');
-const Promise = require('bluebird');
-const request = require('supertest-as-promised');
-
 chai.use(chaiAsPromised);
 
-const pgp = pgpLib({ promiseLib: Promise });
-const db = pgp(config.get('database.connection'));
-
+const app = require('../src/app').app;
+const config = require('config');
+const db = require('./db');
+const nock = require('nock');
 const railsAppHost = config.get('integrationTest.railsAppHost');
-
-function resultsCount() {
-  return db.one('select count(*) from results')
-    .then(result => {
-      return Number(result.count);
-    });
-}
-
-function eventResultsCount(eventId) {
-  return db.one('select count(*) from results where event_id=$1', [eventId])
-    .then(result => {
-      return Number(result.count);
-    });
-}
-
-function eventResult(railsId) {
-  return db.oneOrNone('select * from results where rails_id=$1', [railsId])
-  .then(result => {
-    if (result) {
-      return result;
-    }
-    return [];
-  });
-}
-
-function insertResult() {
-  return db.none('insert into results (id, event_id, rails_id) values (0, 0, 0)');
-}
+const request = require('supertest-as-promised');
+const results = require('./app/results');
 
 describe('app', () => {
-  beforeEach('truncate DB', () => {
-    return db.none('truncate results');
-  });
+  beforeEach('truncate DB', () => db.truncate());
 
   describe('GET /events/:id/results.json for a new event ID', () => {
     const railsAppServer = nock('http://' + railsAppHost)
@@ -116,17 +82,17 @@ describe('app', () => {
       .matchHeader('User-Agent', 'dawn-patrol');
 
     it('creates a new result in the DB', () => {
-      return expect(resultsCount()).to.eventually.eq(0)
-        .then(() => { return expect(eventResultsCount(23594)).to.eventually.eq(0); })
+      return expect(results.count()).to.eventually.eq(0)
+        .then(() => { return expect(results.countByEvent(23594)).to.eventually.eq(0); })
         .then(() => {
           return request(app)
             .get('/events/23594/results.json')
             .set('Accept', 'application/json')
             .expect(200);
         })
-        .then(() => { return expect(eventResultsCount(23594)).to.eventually.eq(1); })
+        .then(() => { return expect(results.countByEvent(23594)).to.eventually.eq(1); })
         .then(() => {
-          return expect(eventResult(31168421)).to.eventually.include({
+          return expect(results.byRailsID(31168421)).to.eventually.include({
             event_id: 23594,
             person_id: 119267,
             rails_id: 31168421,
@@ -134,27 +100,23 @@ describe('app', () => {
         });
     });
 
-    after(() => {
-      return railsAppServer.done();
-    });
+    after(() => railsAppServer.done());
   });
 
   describe('GET /events/:id/results.json for existing ID', () => {
     const railsAppServer = nock('http://' + railsAppHost);
 
-    beforeEach('insert existing result', () => {
-      return insertResult();
-    });
+    beforeEach('insert existing result', () => results.insert());
 
     it('returns stored result without calling Rails app', () => {
-      return expect(resultsCount()).to.eventually.eq(1)
+      return expect(results.count()).to.eventually.eq(1)
       .then(() => {
         return request(app)
           .get('/events/0/results.json')
           .set('Accept', 'application/json')
           .expect(200);
       })
-      .then(() => { return expect(resultsCount()).to.eventually.eq(1); });
+      .then(() => expect(results.count()).to.eventually.eq(1));
     });
 
     after(() => railsAppServer.done());
@@ -171,18 +133,14 @@ describe('app', () => {
   });
 
   describe('DELETE /results', () => {
-    before(() => {
-      return insertResult();
-    });
+    before(() => results.insert());
 
     it('deletes all results', () => {
       return request(app)
         .delete('/results.json')
         .set('Accept', 'application/json')
         .expect(200)
-        .then(() => {
-          return expect(resultsCount()).to.eventually.eq(0);
-        });
+        .then(() => expect(results.count()).to.eventually.eq(0));
     });
   });
 });

@@ -1,33 +1,16 @@
 process.env.NODE_ENV = 'test';
 
-const results = require('../../src/app/results');
-
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const config = require('config');
 const expect = chai.expect;
-const pgpLib = require('pg-promise');
-const Promise = require('bluebird');
-
 chai.use(chaiAsPromised);
 
-const pgp = pgpLib({ promiseLib: Promise });
-const db = pgp(config.get('database.connection'));
-
-function insertResult(railsId) {
-  if (railsId) {
-    return db.none(`insert into results (event_id, rails_id) values (0, ${railsId})`);
-  }
-  return db.none(`insert into results (event_id, rails_id) values (0, 0)`);
-}
-
-function resultsCount() {
-  return db.one('select count(*) from results')
-    .then(result => Number(result.count));
-}
+const db = require('../db');
+const results = require('../../src/app/results');
+const testResults = require('./results');
 
 describe('results', () => {
-  beforeEach('truncate DB', () => db.none('truncate results'));
+  beforeEach('truncate DB', () => db.truncate());
 
   describe('#count', () => {
     context('no results', () => {
@@ -37,7 +20,7 @@ describe('results', () => {
     });
 
     context('single results', () => {
-      beforeEach('insert existing result', () => insertResult());
+      beforeEach('insert existing result', () => testResults.insert());
 
       it('counts results', () =>
         expect(results.count()).to.eventually.eq(1)
@@ -46,9 +29,9 @@ describe('results', () => {
 
     context('many results', () => {
       beforeEach('insert existing results', () => {
-        insertResult();
-        insertResult(1);
-        return insertResult(2);
+        return testResults.insert()
+          .then(() => testResults.insert(1))
+          .then(() => testResults.insert(2));
       });
 
       it('counts results', () =>
@@ -58,22 +41,22 @@ describe('results', () => {
   });
 
   describe('#deleteAll', () => {
-    beforeEach('insert existing result', () => insertResult());
+    beforeEach('insert existing result', () => testResults.insert());
 
     it('deletes all results', () => {
-      expect(resultsCount()).to.eventually.eq(1)
+      return expect(results.count()).to.eventually.eq(1)
       .then(results.deleteAll())
-      .then(expect(resultsCount()).to.eventually.eq(0));
+      .then(expect(results.count()).to.eventually.eq(0));
     });
   });
 
   describe('#insertResults', () => {
     it('does not insert duplicates', () => {
-      return expect(resultsCount()).to.eventually.eq(0)
+      return expect(results.count()).to.eventually.eq(0)
         .then(() => results.insertResults([{ event_id: 0, person_id: 0, id: 0 }]))
-        .then(() => expect(resultsCount()).to.eventually.eq(1))
+        .then(() => expect(results.count()).to.eventually.eq(1))
         .then(() => results.insertResults([{ event_id: 0, person_id: 0, id: 0 }]))
-        .then(() => expect(resultsCount()).to.eventually.eq(1));
+        .then(() => expect(results.count()).to.eventually.eq(1));
     });
   });
 

@@ -7,13 +7,9 @@ engines:
     enabled: false
   coffeelint:
     enabled: false
+  # Fails locally
   duplication:
     enabled: true
-    config:
-      languages:
-      - javascript
-    # Fails with: comparison of Fixnum with String failed
-    #       mass_threshold: 20
   eslint:
     enabled: true
   fixme:
@@ -32,6 +28,6 @@ exclude_paths:
 - .vagrant
 - bin/**/*
 - config/**/*
-- node_modules
+- node_modules/**/*
 - sql/**/*
 - tmp
