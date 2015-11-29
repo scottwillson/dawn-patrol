@@ -18,7 +18,7 @@ function resultsCount() {
   });
 }
 
-function deletelAllResults() {
+function deleteAllResults() {
   return request.del('http://' + appHost + '/results.json');
 }
 
@@ -34,27 +34,30 @@ function getResultsJSONFromRails(eventId) {
 }
 
 function expectRailsToReturnResultsJSON(eventId) {
+  return getResultsJSONFromRails(eventId)
+    .then((response) => {
+      const json = JSON.parse(response);
+      expect(json.length).to.equal(3);
+      return expect(json[0]).to.contain.any.keys('event_id');
+    });
+}
+
+function expectResultsCountToEventuallyEqual(count) {
   return retry(() => {
-    return getResultsJSONFromRails(eventId).then(
-      (response) => {
-        const json = JSON.parse(response);
-        expect(json.length).to.equal(3);
-        return expect(json[0]).to.contain.any.keys('event_id');
-      }
-    );
-  }, { interval: 100, timeout: 10000 });
+    return expect(resultsCount()).to.eventually.equal(count);
+  }, { interval: 400, timeout: 10000 });
 }
 
 describe('system', function describeSystem() {
   this.timeout(10000);
 
-  before(() => deletelAllResults());
+  before(() => deleteAllResults());
 
   it('should store, forward, and cache Rails API requests', () => {
     const eventId = randomEventId();
     return expect(resultsCount()).to.eventually.equal(0)
       .then(() => expectRailsToReturnResultsJSON(eventId))
-      .then(() => expect(resultsCount()).to.eventually.equal(3))
+      .then(() => expectResultsCountToEventuallyEqual(3))
       .then(() => expectRailsToReturnResultsJSON(eventId));
   });
 });
