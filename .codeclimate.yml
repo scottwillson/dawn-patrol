@@ -10,6 +10,9 @@ engines:
   # Fails locally
   duplication:
     enabled: true
+    config:
+      languages:
+        - javascript
   eslint:
     enabled: true
   fixme:
@@ -22,12 +25,12 @@ engines:
     enabled: false
 ratings:
   paths:
-  - "**.js"
+    - "**.js"
 exclude_paths:
-- .codeclimate.yml
-- .vagrant
-- bin/**/*
-- config/**/*
-- node_modules/**/*
-- sql/**/*
-- tmp
+  - .codeclimate.yml
+  - .vagrant
+  - bin/**/*
+  - config/**/*
+  - node_modules/**/*
+  - sql/**/*
+  - tmp
