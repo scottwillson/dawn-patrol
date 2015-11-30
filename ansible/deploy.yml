@@ -9,6 +9,8 @@
 
     - npm: path=/var/www/dawn-patrol production=yes
 
+    - file: path=/home/dawn-patrol/.pm2/logs/mock-rails-api-server-out.log state=touch
+
     - command: node /var/www/dawn-patrol/node_modules/db-migrate/bin/db-migrate up --config /var/www/dawn-patrol/database.json
       args:
         chdir: /var/www/dawn-patrol
