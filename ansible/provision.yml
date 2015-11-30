@@ -43,12 +43,6 @@
     - name: install custom pm2 startup script
       copy: src=pm2 dest=/etc/init.d/pm2 mode=0755
 
-    - name: Start pm2 service
-      service:
-        name: pm2
-        state: started
-        enabled: yes
-
   handlers:
     - name: reload nginx
       service: name=nginx state=reloaded
@@ -58,6 +52,23 @@
   sudo_user: postgres
 
   tasks:
-    - postgresql_db: name=dawn-patrol owner=dawn-patrol state=absent
+    # - postgresql_db: name=dawn-patrol owner=dawn-patrol state=absent
     - postgresql_user: name=dawn-patrol password=dawn-patrol
     - postgresql_db: name=dawn-patrol owner=dawn-patrol
+
+- hosts: all
+  sudo: yes
+  sudo_user: dawn-patrol
+
+  tasks:
+    - command: pm2 save
+
+- hosts: all
+  sudo: yes
+
+  tasks:
+    - name: Start pm2 service
+      service:
+        name: pm2
+        state: started
+        enabled: yes
