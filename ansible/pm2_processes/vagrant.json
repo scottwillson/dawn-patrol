@@ -10,7 +10,18 @@
       "env": {
         "NODE_ENV": "vagrant"
       }
-
+    },
+    {
+      "name"        : "mock_rails_api_server",
+      "script"      : "integration_test/mock_rails_api_server.js",
+      "cwd"         : "/var/www/dawn-patrol",
+      "instances"   : 1,
+      "exec_mode"   : "cluster_mode",
+      "merge_logs"  : true,
+      "out_file"    : "/home/dawn-patrol/.pm2/logs/mock-rails-api-server-out.log",
+      "env": {
+        "NODE_ENV": "vagrant"
+      }
     },
     {
       "name"        : "echo_server",
@@ -22,19 +33,6 @@
       "env": {
         "NODE_ENV": "vagrant"
       }
-    },
-    {
-      "name"        : "mock_rails_api_server",
-      "script"      : "src/mock_rails_api_server.js",
-      "cwd"         : "/var/www/dawn-patrol",
-      "instances"   : 1,
-      "exec_mode"   : "cluster_mode",
-      "merge_logs"  : true,
-      "out_file"    : "/home/dawn-patrol/.pm2/logs/mock-rails-api-server-out.log",
-      "env": {
-        "NODE_ENV": "vagrant"
-      }
-
     }
   ]
 }
