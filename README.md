@@ -147,3 +147,4 @@ Roadmap
   6. Consider probabilistic cache updates
 * Need to clear out local vagrant pub key after recreating Vagrant instance
 * Ensure cold vagrant start really wokrs
+* Create server-specific log file
