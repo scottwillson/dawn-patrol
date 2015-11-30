@@ -98,9 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* Ensure we're using bluebird throughout and not mixing promise libraries
-* how to handle expiration? app only checks that results exist, not that they're up to date
-* DRY up test
 * Assert integration test response more thoroughly
 * Test response body more thoroughly
 * Replace 'Rails' with 'master'?
@@ -118,9 +115,9 @@ Roadmap
 * All https
 * Add ember.js front end for fun
 * Use hash-like logging for all apps
-* Move cache updating to separate service?
 * Try other data storage/servers and compare performance
 * Multiplex requests from production
+* Add fetched_at timestamp. If fetched_at > 10 minutes, get updated copy.
 * Redirect production requests to here
 * replace shrinkrwap with exact versions?
 * Docker?
@@ -141,3 +138,12 @@ Roadmap
 * Default node env to dev? Seems to be undefined.
 * Add to CI
 * Echo Rails JSON response without parsing and reformatting it?
+* Add expired event listener
+  1. Direct call from Rails (UDP?). Delete expired results.
+  2. Use message queue
+  3. Mark results as stale (don't delete). Queue update.
+  4. Queue expiration check on successful requests? (Would generate many requests.)
+  5. Do updates in a separate locking process
+  6. Consider probabilistic cache updates
+* Need to clear out local vagrant pub key after recreating Vagrant instance
+* Ensure cold vagrant start really wokrs
