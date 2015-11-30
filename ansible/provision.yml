@@ -3,7 +3,7 @@
   sudo: yes
 
   tasks:
-    - shell: curl -sL https://deb.nodesource.com/setup_dev | bash creates=/usr/bin/node
+    - shell: curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - creates=/usr/bin/node
     - apt: name=nodejs state=latest
     - apt: name=git state=latest
     - apt: name=nginx state=latest
