@@ -2,7 +2,7 @@ dawn-patrol
 ===========
 Spike on fast event results API. Use several caching layers.
 
-Also migrate Racing on Rails data to a better, shared-tenancy data model on Postgres.
+Also migrate Racing on Master data to a better, shared-tenancy data model on Postgres.
 
 Status
 ------
@@ -75,7 +75,7 @@ Integration test
 Development:
 
     node src/server.js
-    node integration_test/mock_rails_api_server.js > tmp/nginx.log
+    node integration_test/mock_master_api_server.js > tmp/nginx.log
     node src/echo_server.js
     mocha integration_test/test.js
 
@@ -83,13 +83,13 @@ Vagrant:
 
     vagrant up
     ./bin/deploy vagrant
-    NODE_CONFIG='{"integrationTest": {"appHost": "0.0.0.0:3001", "railsAppHost": "0.0.0.0:4001"}}' mocha integration_test/test.js
+    NODE_CONFIG='{"integrationTest": {"appHost": "0.0.0.0:3001", "masterAppHost": "0.0.0.0:4001"}}' mocha integration_test/test.js
 
 Staging:
 
     ./bin/provision staging
     ./bin/deploy staging
-    NODE_CONFIG='{"integrationTest": {"appHost": "dawnpatrol.staging.rocketsurgeryllc.com", "railsAppHost": "staging.obra.org"}}' mocha integration_test/test.js
+    NODE_CONFIG='{"integrationTest": {"appHost": "dawnpatrol.staging.rocketsurgeryllc.com", "masterAppHost": "staging.obra.org"}}' mocha integration_test/test.js
 
 Performance Test
 ----------------
@@ -98,7 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* Replace 'Rails' with 'master'?
 * Store normalized data
 * Store data in Postgres denormalized (should be able to fulfill any request by 1-2 selects)
 * Drop 'integrationTest' from config
@@ -127,7 +126,7 @@ Roadmap
 * Encapsulate integration test running in a simple script
 * staging integration test needs to fetch real event ID and expect correct count
 * Ensure EchoServer event emitters are cleaned up in tests
-* Batch inserts from Rails server response
+* Batch inserts from Master server response
 * add racing_association_id
 * consider timestamp on inserts (do update if newer)
 * Need updated_at and created_at from source and self
@@ -135,9 +134,9 @@ Roadmap
 * consider batching duplicate API requests
 * Default node env to dev? Seems to be undefined.
 * Add to CI
-* Echo Rails JSON response without parsing and reformatting it?
+* Echo Master JSON response without parsing and reformatting it?
 * Add expired event listener
-  1. Direct call from Rails (UDP?). Delete expired results.
+  1. Direct call from Master (UDP?). Delete expired results.
   2. Use message queue
   3. Mark results as stale (don't delete). Queue update.
   4. Queue expiration check on successful requests? (Would generate many requests.)

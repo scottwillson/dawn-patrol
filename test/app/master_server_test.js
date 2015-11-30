@@ -9,15 +9,15 @@ const config = require('config');
 const nock = require('nock');
 
 const db = require('../db');
-const railsAppHost = config.get('integrationTest.railsAppHost');
-const railsServer = require('../../src/app/rails_server');
+const masterAppHost = config.get('integrationTest.masterAppHost');
+const masterServer = require('../../src/app/master_server');
 const results = require('./results');
 
-describe('railsServer', () => {
+describe('masterServer', () => {
   beforeEach('truncate DB', () => db.truncate());
 
   describe('#resultsForEvent', () => {
-    const railsAppServer = nock('http://' + railsAppHost)
+    const masterAppServer = nock('http://' + masterAppHost)
       .get('/events/0/results.json')
       .reply(200, [
         {
@@ -32,9 +32,9 @@ describe('railsServer', () => {
 
     beforeEach('insert existing result', () => results.insert());
 
-    it('returns event results', () => railsServer.resultsForEvent(0)
+    it('returns event results', () => masterServer.resultsForEvent(0)
         .then(eventResults => expect(eventResults.length).to.eq(1)));
 
-    after(() => railsAppServer.done());
+    after(() => masterAppServer.done());
   });
 });

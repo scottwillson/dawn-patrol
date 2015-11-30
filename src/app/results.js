@@ -3,13 +3,13 @@ const pgpLib = require('pg-promise');
 const Promise = require('bluebird');
 const pgp = pgpLib({ promiseLib: Promise });
 const db = pgp(config.get('database.connection'));
-const railsServer = require('./rails_server');
+const masterServer = require('./master_server');
 
 const resultColumns = [
   'category_id',
   'event_id',
   'person_id',
-  'rails_id',
+  'master_id',
 ];
 
 const valueArguments = resultColumns.map((_, index) => `$${index + 1}`);
@@ -19,7 +19,7 @@ exports.forEvent = (eventId) => {
     .then(results => {
       if (results.length) return results;
 
-      return railsServer.resultsForEvent(eventId)
+      return masterServer.resultsForEvent(eventId)
         .then(response => this.insertResults(response));
     })
     .catch(e => console.error(e + ' getting results for event ID ' + eventId));
@@ -33,7 +33,7 @@ exports.deleteAll = () => db.none('delete from results');
 
 exports.resultValues = result => {
   return resultColumns.map(c => {
-    if (c === 'rails_id') {
+    if (c === 'master_id') {
       return result.id;
     }
     if (result.hasOwnProperty(c)) {

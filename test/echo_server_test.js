@@ -17,7 +17,7 @@ describe('echoServer', () => {
 
     before(() => fs.closeSync(fs.openSync(config.get('echoServer.webServerLogFilePath'), 'a')));
 
-    it('echoes Rails API requests from nginx log to app', () => {
+    it('echoes Master API requests from nginx log to app', () => {
       return echoServer.emit('line', '::ffff:127.0.0.1 - - [25/Jun/2015:20:21:21 +0000] "GET /events/0/results.json HTTP/1.1" 200 5013 "-" "-"');
     });
 

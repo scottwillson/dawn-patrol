@@ -7,6 +7,6 @@
   },
   "integrationTest": {
     "appHost": "0.0.0.0:3000",
-    "railsAppHost": "0.0.0.0:4000"
+    "masterAppHost": "0.0.0.0:4000"
   }
 }

@@ -10,7 +10,7 @@ chai.use(chaiAsPromised);
 const expect = chai.expect;
 
 const appHost = config.get('integrationTest.appHost');
-const railsAppHost = config.get('integrationTest.railsAppHost');
+const masterAppHost = config.get('integrationTest.masterAppHost');
 
 function resultsCount() {
   return request.get('http://' + appHost + '/results.json').then(response => {
@@ -29,12 +29,12 @@ function randomEventId() {
   return Math.round(Math.random() * 10000);
 }
 
-function getResultsJSONFromRails(eventId) {
-  return request.get(`http://${railsAppHost}/events/${eventId}/results.json`);
+function getResultsJSONFromMaster(eventId) {
+  return request.get(`http://${masterAppHost}/events/${eventId}/results.json`);
 }
 
-function expectRailsToReturnResultsJSON(eventId) {
-  return getResultsJSONFromRails(eventId)
+function expectMasterToReturnResultsJSON(eventId) {
+  return getResultsJSONFromMaster(eventId)
     .then((response) => {
       const json = JSON.parse(response);
       expect(json.length).to.equal(3);
@@ -60,11 +60,11 @@ describe('system', function describeSystem() {
 
   before(() => deleteAllResults());
 
-  it('should store, forward, and cache Rails API requests', () => {
+  it('should store, forward, and cache Master API requests', () => {
     const eventId = randomEventId();
     return expect(resultsCount()).to.eventually.equal(0)
-      .then(() => expectRailsToReturnResultsJSON(eventId))
+      .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectResultsCountToEventuallyEqual(3))
-      .then(() => expectRailsToReturnResultsJSON(eventId));
+      .then(() => expectMasterToReturnResultsJSON(eventId));
   });
 });

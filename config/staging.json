@@ -4,6 +4,6 @@
   },
   "integrationTest": {
     "appHost": "0.0.0.0:3000",
-    "railsAppHost": "staging.obra.org"
+    "masterAppHost": "staging.obra.org"
   }
 }

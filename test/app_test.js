@@ -9,7 +9,7 @@ const app = require('../src/app').app;
 const config = require('config');
 const db = require('./db');
 const nock = require('nock');
-const railsAppHost = config.get('integrationTest.railsAppHost');
+const masterAppHost = config.get('integrationTest.masterAppHost');
 const request = require('supertest-as-promised');
 const results = require('./app/results');
 
@@ -17,7 +17,7 @@ describe('app', () => {
   beforeEach('truncate DB', () => db.truncate());
 
   describe('GET /events/:id/results.json for a new event ID', () => {
-    const railsAppServer = nock('http://' + railsAppHost)
+    const masterAppServer = nock('http://' + masterAppHost)
       .get('/events/23594/results.json')
       .reply(200, [
         {
@@ -92,23 +92,23 @@ describe('app', () => {
         })
         .then(() => { return expect(results.countByEvent(23594)).to.eventually.eq(1); })
         .then(() => {
-          return expect(results.byRailsID(31168421)).to.eventually.include({
+          return expect(results.byMasterID(31168421)).to.eventually.include({
             event_id: 23594,
             person_id: 119267,
-            rails_id: 31168421,
+            master_id: 31168421,
           });
         });
     });
 
-    after(() => railsAppServer.done());
+    after(() => masterAppServer.done());
   });
 
   describe('GET /events/:id/results.json for existing ID', () => {
-    const railsAppServer = nock('http://' + railsAppHost);
+    const masterAppServer = nock('http://' + masterAppHost);
 
     beforeEach('insert existing result', () => results.insert());
 
-    it('returns stored result without calling Rails app', () => {
+    it('returns stored result without calling Master app', () => {
       return expect(results.count()).to.eventually.eq(1)
       .then(() => {
         return request(app)
@@ -119,7 +119,7 @@ describe('app', () => {
       .then(() => expect(results.count()).to.eventually.eq(1));
     });
 
-    after(() => railsAppServer.done());
+    after(() => masterAppServer.done());
   });
 
   describe('GET /results.json', () => {

@@ -41,7 +41,7 @@ exports.up = (db, callback) => {
     'race_full_name': { type: 'string' },
     'race_id': { type: 'int' },
     'race_name': { type: 'string' },
-    'rails_id': { type: 'int', notNull: true },
+    'master_id': { type: 'int', notNull: true },
     'single_event_license': { type: 'boolean' },
     'state': { type: 'string' },
     'status': { type: 'string' },
