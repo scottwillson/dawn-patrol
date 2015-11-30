@@ -38,7 +38,7 @@ function expectRailsToReturnResultsJSON(eventId) {
     .then((response) => {
       const json = JSON.parse(response);
       expect(json.length).to.equal(3);
-      return expect(json[0]).to.contain.any.keys('event_id');
+      return expect(json[0].event_id).to.equal(eventId);
     });
 }
 
