@@ -98,8 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* Assert integration test response more thoroughly
-* Test response body more thoroughly
 * Replace 'Rails' with 'master'?
 * Store normalized data
 * Store data in Postgres denormalized (should be able to fulfill any request by 1-2 selects)
