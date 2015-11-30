@@ -94,7 +94,7 @@ Staging:
 Performance Test
 ----------------
 
-    loadtest.js -c 8 -n 1000 http://dawnpatrol.staging.rocketsurgeryllc.com/events/0/results.json
+    loadtest -c 8 -n 1000 http://dawnpatrol.staging.rocketsurgeryllc.com/events/0/results.json
 
 Roadmap
 -------
