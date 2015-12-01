@@ -16,13 +16,15 @@
         state: started
         enabled: yes
 
+    - name: remove nginx default site
+      file: path=/etc/nginx/sites-enabled/default state=absent
+      notify:
+        - reload nginx
+
     - name: install nginx config
       template: src=dawn-patrol.conf dest=/etc/nginx/sites-enabled/dawn-patrol.conf
       notify:
         - reload nginx
-
-    - name: remove nginx default site
-      file: path=/etc/nginx/sites-enabled/default state=absent
 
     - user: name=dawn-patrol groups=adm
 
@@ -52,7 +54,6 @@
   sudo_user: postgres
 
   tasks:
-    # - postgresql_db: name=dawn-patrol owner=dawn-patrol state=absent
     - postgresql_user: name=dawn-patrol password=dawn-patrol
     - postgresql_db: name=dawn-patrol owner=dawn-patrol
 
