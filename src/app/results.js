@@ -22,7 +22,7 @@ exports.forEvent = (eventId) => {
       return masterServer.resultsForEvent(eventId)
         .then(response => this.insertResults(response));
     })
-    .catch(e => console.error(e + ' getting results for event ID ' + eventId));
+    .catch(e => console.error(`${e} getting results for event ID ${eventId}`));
 };
 
 exports.count = () => db

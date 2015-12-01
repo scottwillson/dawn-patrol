@@ -17,7 +17,7 @@ describe('app', () => {
   beforeEach('truncate DB', () => db.truncate());
 
   describe('GET /events/:id/results.json for a new event ID', () => {
-    const masterAppServer = nock('http://' + masterAppHost)
+    const masterAppServer = nock(`http://${masterAppHost}`)
       .get('/events/23594/results.json')
       .reply(200, [
         {
@@ -104,7 +104,7 @@ describe('app', () => {
   });
 
   describe('GET /events/:id/results.json for existing ID', () => {
-    const masterAppServer = nock('http://' + masterAppHost);
+    const masterAppServer = nock(`http://${masterAppHost}`);
 
     beforeEach('insert existing result', () => results.insert());
 

@@ -17,7 +17,7 @@ describe('masterServer', () => {
   beforeEach('truncate DB', () => db.truncate());
 
   describe('#resultsForEvent', () => {
-    const masterAppServer = nock('http://' + masterAppHost)
+    const masterAppServer = nock(`http://${masterAppHost}`)
       .get('/events/0/results.json')
       .reply(200, [
         {

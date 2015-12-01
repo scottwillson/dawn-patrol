@@ -8,14 +8,14 @@ function targetHost() {
 
 const loadtest = require('loadtest');
 const options = {
-  url: 'http://' + targetHost() + '/events/0/results.json',
+  url: `http://${targetHost()}/events/0/results.json`,
   maxRequests: 1000,
   concurrency: 4,
 };
 
 loadtest.loadTest(options, (error, result) => {
   if (error) {
-    return console.error('Got an error: %s', error);
+    return console.error(`Got an error: ${error}`);
   }
   console.log(require('util').inspect(result));
 
@@ -23,6 +23,6 @@ loadtest.loadTest(options, (error, result) => {
     return 0;
   }
 
-  console.log('Failed. ' + result.rps + ' requests/sec.');
+  console.log(`Failed. ${result.rps} requests/sec.`);
   return 1;
 });

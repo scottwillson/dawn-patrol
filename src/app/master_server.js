@@ -3,7 +3,7 @@ const masterAppHost = config.get('masterAppHost');
 const request = require('request-promise');
 
 exports.resultsForEvent = eventId => {
-  const url = 'http://' + masterAppHost + '/events/' + eventId + '/results.json';
+  const url = `http://${masterAppHost}/events/${eventId}/results.json`;
   const options = {
     url: url,
     headers: {'User-Agent': 'dawn-patrol'},
@@ -12,7 +12,7 @@ exports.resultsForEvent = eventId => {
   return request.get(options)
     .then(response => JSON.parse(response))
     .catch(e => {
-      console.error(e + ' getting results from ' + url);
+      console.error(`${e} getting results from ${url}`);
       throw e;
     });
 };

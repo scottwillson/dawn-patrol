@@ -13,13 +13,13 @@ const appHost = config.get('appHost');
 const masterAppHost = config.get('masterAppHost');
 
 function resultsCount() {
-  return request.get('http://' + appHost + '/results.json').then(response => {
+  return request.get(`http://${appHost}/results.json`).then(response => {
     return JSON.parse(response).count;
   });
 }
 
 function deleteAllResults() {
-  return request.del('http://' + appHost + '/results.json');
+  return request.del(`http://${appHost}/results.json`);
 }
 
 function randomEventId() {
@@ -33,6 +33,10 @@ function getResultsJSONFromMaster(eventId) {
   return request.get(`http://${masterAppHost}/events/${eventId}/results.json`);
 }
 
+function getResultsJSONFromApp(eventId) {
+  return request.get(`http://${appHost}/events/${eventId}/results.json`);
+}
+
 function expectMasterToReturnResultsJSON(eventId) {
   return getResultsJSONFromMaster(eventId)
     .then((response) => {
@@ -41,6 +45,23 @@ function expectMasterToReturnResultsJSON(eventId) {
       return expect(json[0]).to.include({
         event_id: eventId,
         id: 119686,
+        name: 'Nick Skenzick',
+        person_id: 52,
+        place: '1',
+        team_id: 29,
+      });
+    });
+}
+
+function expectAppToReturnResultsJSON(eventId) {
+  return getResultsJSONFromApp(eventId)
+    .then((response) => {
+      const json = JSON.parse(response);
+      expect(json.length).to.equal(3);
+      console.log(json[0]);
+      return expect(json[0]).to.include({
+        event_id: eventId,
+        master_id: 119686,
         name: 'Nick Skenzick',
         person_id: 52,
         place: '1',
@@ -65,6 +86,7 @@ describe('system', function describeSystem() {
     return expect(resultsCount()).to.eventually.equal(0)
       .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectResultsCountToEventuallyEqual(3))
-      .then(() => expectMasterToReturnResultsJSON(eventId));
+      .then(() => expectMasterToReturnResultsJSON(eventId))
+      .then(() => expectAppToReturnResultsJSON(eventId));
   });
 });
