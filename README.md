@@ -98,7 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* check for outstanding DB migrations before running tests
 * Add memcached (with memory limit)
 * configure nginx to use memcached
 * Have node.js update memcached

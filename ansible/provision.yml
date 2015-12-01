@@ -6,6 +6,7 @@
     - shell: curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - creates=/usr/bin/node
     - apt: name=nodejs state=latest
     - apt: name=git state=latest
+    - apt: name=memcached state=latest
     - apt: name=nginx state=latest
     - apt: name=postgresql state=latest
     - apt: name=python-psycopg2 state=latest
