@@ -31,12 +31,11 @@ Create DBs
 
 Tests
 -----
-    db-migrate up -e test
-    mocha
+    npm test
 
     # Or:
+    db-migrate up -e test
     mocha -w
-    npm test
 
 Local virtual test server
 -------------------------
@@ -99,7 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* Add nginx
 * check for outstanding DB migrations before running tests
 * Add memcached (with memory limit)
 * configure nginx to use memcached

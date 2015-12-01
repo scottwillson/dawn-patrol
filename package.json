@@ -35,6 +35,7 @@
   },
   "scripts": {
     "start": "node src/server.js",
+    "pretest": "db-migrate up -e test",
     "test": "mocha"
   },
   "repository": {
