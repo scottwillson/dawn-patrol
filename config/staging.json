@@ -1,5 +1,5 @@
 {
-  "appHost": "0.0.0.0:3000",
+  "appHost": "dawnpatrol.staging.rocketsurgeryllc.com",
   "echoServer": {
     "webServerLogFilePath": "/var/log/nginx/obra.access.log"
   },

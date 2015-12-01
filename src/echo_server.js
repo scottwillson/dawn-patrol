@@ -10,6 +10,7 @@ function log(text) {
 }
 
 log(`start: ${process.env.NODE_ENV}`);
+const appHost = config.get('appHost');
 const path = config.get('echoServer.webServerLogFilePath');
 const fileSize = fs.statSync(path).size;
 const tail = new Tail(path, '\n', { start: fileSize });
@@ -28,7 +29,7 @@ tail.eventId = line => {
 };
 
 tail.echoRequest = eventId => {
-  http.get(`http://0.0.0.0:3000/events/${eventId}/results.json`, res => {
+  http.get(`http://${appHost}/events/${eventId}/results.json`, res => {
     log('app: ' + res.statusCode);
   }).on('error', e => {
     log('app error: ' + e.message);

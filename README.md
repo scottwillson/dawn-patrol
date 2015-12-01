@@ -84,7 +84,7 @@ Vagrant:
 
     vagrant up
     ./bin/deploy vagrant
-    NODE_CONFIG='{"appHost": "0.0.0.0:3001", "masterAppHost": "0.0.0.0:4001"}' mocha integration_test/test.js
+    NODE_CONFIG='{"appHost": "0.0.0.0:8001", "masterAppHost": "0.0.0.0:4001"}' mocha integration_test/test.js
 
 Staging:
 
