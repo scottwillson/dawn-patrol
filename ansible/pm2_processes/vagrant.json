@@ -12,13 +12,13 @@
       }
     },
     {
-      "name"        : "mock_master_api_server",
-      "script"      : "integration_test/mock_master_api_server.js",
+      "name"        : "mock_master_server",
+      "script"      : "integration_test/mock_master_server.js",
       "cwd"         : "/var/www/dawn-patrol",
       "instances"   : 1,
       "exec_mode"   : "cluster_mode",
       "merge_logs"  : true,
-      "out_file"    : "/home/dawn-patrol/.pm2/logs/mock-master-api-server-out.log",
+      "out_file"    : "/home/dawn-patrol/.pm2/logs/mock-master-server-out.log",
       "env": {
         "NODE_ENV": "vagrant"
       }

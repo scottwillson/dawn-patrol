@@ -1,5 +1,5 @@
 {
   "echoServer": {
-    "webServerLogFilePath": "/home/dawn-patrol/.pm2/logs/mock-master-api-server-out.log"
+    "webServerLogFilePath": "/home/dawn-patrol/.pm2/logs/mock-master-server-out.log"
   }
 }

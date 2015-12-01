@@ -75,7 +75,7 @@ Integration test
 Development:
 
     node src/server.js
-    node integration_test/mock_master_api_server.js > tmp/nginx.log
+    node integration_test/mock_master_server.js > tmp/nginx.log
     node src/echo_server.js
     mocha integration_test/test.js
 
@@ -98,7 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* Rename master API to master
 * de-dupe DB config (migrations use separate file)
 * apply https://devcenter.heroku.com/articles/node-best-practices
 * Add nginx

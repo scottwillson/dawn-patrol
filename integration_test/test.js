@@ -60,7 +60,7 @@ describe('system', function describeSystem() {
 
   before(() => deleteAllResults());
 
-  it('should store, forward, and cache Master API requests', () => {
+  it('should store, forward, and cache master requests', () => {
     const eventId = randomEventId();
     return expect(resultsCount()).to.eventually.equal(0)
       .then(() => expectMasterToReturnResultsJSON(eventId))
