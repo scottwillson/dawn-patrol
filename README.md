@@ -11,6 +11,7 @@ Alpha/half-baked. Pushing to Github now get deployments working early.
 Getting started
 ---------------
 install Node.js, npm
+add ./node_modules to $PATH
 
     npm install
     node src/server.js
@@ -26,8 +27,7 @@ Create DBs
     psql postgres -f sql/setup_development.sql
 
     db-migrate up
-
-Add ./node_modules to $PATH
+    node src/server.js
 
 Tests
 -----
@@ -75,7 +75,7 @@ Integration test
 ----------------
 Development:
 
-    node src/server.js
+    npm start
     node integration_test/mock_master_server.js > tmp/nginx.log
     node src/echo_server.js
     mocha integration_test/test.js
@@ -99,7 +99,6 @@ Performance Test
 
 Roadmap
 -------
-* apply https://devcenter.heroku.com/articles/node-best-practices
 * Add nginx
 * check for outstanding DB migrations before running tests
 * Add memcached (with memory limit)
