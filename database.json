@@ -1,16 +1,4 @@
 {
-  "dev": {
-    "driver": "pg",
-    "user": "dawn-patrol",
-    "password": "dawn-patrol",
-    "host": "localhost",
-    "database": "dawn-patrol"
-  },
-  "test": {
-    "driver": "pg",
-    "user": "dawn-patrol-test",
-    "password": "dawn-patrol-test",
-    "host": "localhost",
-    "database": "dawn-patrol-test"
-  }
+  "dev": "postgres://dawn-patrol:dawn-patrol@localhost/dawn-patrol",
+  "test": "postgres://dawn-patrol-test:dawn-patrol-test@localhost/dawn-patrol-test"
 }

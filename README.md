@@ -98,7 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* de-dupe DB config (migrations use separate file)
 * apply https://devcenter.heroku.com/articles/node-best-practices
 * Add nginx
 * check for outstanding DB migrations before running tests
