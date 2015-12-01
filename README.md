@@ -36,6 +36,7 @@ Tests
 
     # Or:
     mocha -w
+    npm test
 
 Local virtual test server
 -------------------------
