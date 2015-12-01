@@ -58,14 +58,10 @@ function expectAppToReturnResultsJSON(eventId) {
     .then((response) => {
       const json = JSON.parse(response);
       expect(json.length).to.equal(3);
-      console.log(json[0]);
       return expect(json[0]).to.include({
         event_id: eventId,
         master_id: 119686,
-        name: 'Nick Skenzick',
         person_id: 52,
-        place: '1',
-        team_id: 29,
       });
     });
 }
