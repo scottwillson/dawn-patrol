@@ -83,13 +83,13 @@ Vagrant:
 
     vagrant up
     ./bin/deploy vagrant
-    NODE_CONFIG='{"integrationTest": {"appHost": "0.0.0.0:3001", "masterAppHost": "0.0.0.0:4001"}}' mocha integration_test/test.js
+    NODE_CONFIG='{"appHost": "0.0.0.0:3001", "masterAppHost": "0.0.0.0:4001"}' mocha integration_test/test.js
 
 Staging:
 
     ./bin/provision staging
     ./bin/deploy staging
-    NODE_CONFIG='{"integrationTest": {"appHost": "dawnpatrol.staging.rocketsurgeryllc.com", "masterAppHost": "staging.obra.org"}}' mocha integration_test/test.js
+    NODE_CONFIG='{"appHost": "dawnpatrol.staging.rocketsurgeryllc.com", "masterAppHost": "staging.obra.org"}' mocha integration_test/test.js
 
 Performance Test
 ----------------
@@ -98,9 +98,7 @@ Performance Test
 
 Roadmap
 -------
-* Store normalized data
-* Store data in Postgres denormalized (should be able to fulfill any request by 1-2 selects)
-* Drop 'integrationTest' from config
+* Rename master API to master
 * de-dupe DB config (migrations use separate file)
 * apply https://devcenter.heroku.com/articles/node-best-practices
 * Add nginx
@@ -121,6 +119,7 @@ Roadmap
 * Use PM2 'ecosystem'?
 * Authorization for admin actions would be nice!
 * Actually return JSON, not strings
+* Store normalized data
 * Separate each service into separate project?
 * Move DB creds to more secure spot
 * Encapsulate integration test running in a simple script

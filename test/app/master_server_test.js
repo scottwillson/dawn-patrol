@@ -9,7 +9,7 @@ const config = require('config');
 const nock = require('nock');
 
 const db = require('../db');
-const masterAppHost = config.get('integrationTest.masterAppHost');
+const masterAppHost = config.get('masterAppHost');
 const masterServer = require('../../src/app/master_server');
 const results = require('./results');
 

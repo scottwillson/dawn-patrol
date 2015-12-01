@@ -9,7 +9,7 @@ const app = require('../src/app').app;
 const config = require('config');
 const db = require('./db');
 const nock = require('nock');
-const masterAppHost = config.get('integrationTest.masterAppHost');
+const masterAppHost = config.get('masterAppHost');
 const request = require('supertest-as-promised');
 const results = require('./app/results');
 

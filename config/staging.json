@@ -1,9 +1,7 @@
 {
+  "appHost": "0.0.0.0:3000",
   "echoServer": {
     "webServerLogFilePath": "/var/log/nginx/obra.access.log"
   },
-  "integrationTest": {
-    "appHost": "0.0.0.0:3000",
-    "masterAppHost": "staging.obra.org"
-  }
+  "masterAppHost": "staging.obra.org"
 }

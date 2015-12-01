@@ -9,8 +9,8 @@ const retry = require('trytryagain');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-const appHost = config.get('integrationTest.appHost');
-const masterAppHost = config.get('integrationTest.masterAppHost');
+const appHost = config.get('appHost');
+const masterAppHost = config.get('masterAppHost');
 
 function resultsCount() {
   return request.get('http://' + appHost + '/results.json').then(response => {

@@ -1,5 +1,5 @@
 const config = require('config');
-const masterAppHost = config.get('integrationTest.masterAppHost');
+const masterAppHost = config.get('masterAppHost');
 const request = require('request-promise');
 
 exports.resultsForEvent = eventId => {
