@@ -37,7 +37,7 @@ tail.echoRequest = eventId => {
 };
 
 tail.on('line', data => {
-  log(`url: data`);
+  log(`url: ${data}`);
   if (!tail.isDawnPatrolRequest(data)) {
     const eventId = tail.eventId(data);
     if (eventId !== null) {
