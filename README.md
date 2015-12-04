@@ -83,7 +83,7 @@ Vagrant:
 
     vagrant up
     ./bin/deploy vagrant
-    NODE_CONFIG='{"appHost": "0.0.0.0:8001", "masterAppHost": "0.0.0.0:4001"}' mocha integration_test/test.js
+    NODE_CONFIG='{"appHost": "0.0.0.0:8001", "masterAppHost": "0.0.0.0:4001", "memcachedHost": "0.0.0.0:11212"}' mocha integration_test/test.js
 
 Staging:
 
@@ -98,7 +98,9 @@ Performance Test
 
 Roadmap
 -------
+* Improve integration test assertions (more)
 * proper response headers for caching
+  * Also in cached nginx responses
 * All https
 * Add URLs like /people/2709/2014.json as those are the ones bots actually hit
   * Change to /people/2709.json?year=2014 ?
@@ -138,3 +140,4 @@ Roadmap
 * Need to clear out local vagrant pub key after recreating Vagrant instance
 * Ensure cold vagrant start really wokrs
 * Create server-specific log file
+* Ensure PM2 starts up on restart

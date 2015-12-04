@@ -11,6 +11,10 @@
     - apt: name=postgresql state=latest
     - apt: name=python-psycopg2 state=latest
 
+    - lineinfile: dest=/etc/memcached.conf regexp='^-l 127\.0\.0\.1' line='-l 0.0.0.0'
+      notify:
+        - restart memcached
+
     - name: Start memcached service
       service:
         name: memcached
@@ -55,6 +59,9 @@
   handlers:
     - name: reload nginx
       service: name=nginx state=reloaded
+
+    - name: restart memcached
+      service: name=memcached state=restarted
 
 - hosts: all
   sudo: yes

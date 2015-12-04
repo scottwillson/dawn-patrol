@@ -84,7 +84,7 @@ describe('system', function describeSystem() {
       .then(() => expect(webCache.get(eventId)).to.eventually.be.undefined)
       .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectResultsCountToEventuallyEqual(3))
-      .then(() => expect(webCache.get(eventId)).to.eventually.have.length(3))
+      .then(() => expect(webCache.get(eventId)).to.eventually.not.be.undefined)
       .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectAppToReturnResultsJSON(eventId));
   });
