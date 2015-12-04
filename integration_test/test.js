@@ -1,5 +1,4 @@
-process.env.NODE_ENV = 'test';
-
+const _ = require('lodash');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const config = require('config');
@@ -8,6 +7,8 @@ const retry = require('trytryagain');
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
+
+const webCache = require('../src/app/web_cache');
 
 const appHost = config.get('appHost');
 const masterAppHost = config.get('masterAppHost');
@@ -58,9 +59,9 @@ function expectAppToReturnResultsJSON(eventId) {
     .then((response) => {
       const json = JSON.parse(response);
       expect(json.length).to.equal(3);
-      return expect(json[0]).to.include({
+      const result = _.find(json, (r) => r.master_id === 119686);
+      return expect(result).to.include({
         event_id: eventId,
-        master_id: 119686,
         person_id: 52,
       });
     });
@@ -74,14 +75,16 @@ function expectResultsCountToEventuallyEqual(count) {
 
 describe('system', function describeSystem() {
   this.timeout(10000);
+  const eventId = randomEventId();
 
-  before(() => deleteAllResults());
+  before(() => webCache.del(eventId).then(() => deleteAllResults()));
 
   it('should store, forward, and cache master requests', () => {
-    const eventId = randomEventId();
     return expect(resultsCount()).to.eventually.equal(0)
+      .then(() => expect(webCache.get(eventId)).to.eventually.be.undefined)
       .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectResultsCountToEventuallyEqual(3))
+      .then(() => expect(webCache.get(eventId)).to.eventually.have.length(3))
       .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectAppToReturnResultsJSON(eventId));
   });

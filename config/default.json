@@ -6,5 +6,6 @@
   "echoServer": {
     "webServerLogFilePath": "tmp/nginx.log"
   },
-  "masterAppHost": "0.0.0.0:4000"
+  "masterAppHost": "0.0.0.0:4000",
+  "memcachedHost": "0.0.0.0:11211"
 }

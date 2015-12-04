@@ -243,6 +243,11 @@
       "from": "config@1.17.1",
       "resolved": "https://registry.npmjs.org/config/-/config-1.17.1.tgz"
     },
+    "connection-parse": {
+      "version": "0.0.7",
+      "from": "connection-parse@>=0.0.0 <0.1.0",
+      "resolved": "https://registry.npmjs.org/connection-parse/-/connection-parse-0.0.7.tgz"
+    },
     "content-disposition": {
       "version": "0.5.0",
       "from": "content-disposition@0.5.0",
@@ -699,6 +704,11 @@
       "from": "has-ansi@>=2.0.0 <3.0.0",
       "resolved": "https://registry.npmjs.org/has-ansi/-/has-ansi-2.0.0.tgz"
     },
+    "hashring": {
+      "version": "3.2.0",
+      "from": "hashring@>=3.2.0 <3.3.0",
+      "resolved": "https://registry.npmjs.org/hashring/-/hashring-3.2.0.tgz"
+    },
     "hawk": {
       "version": "3.1.2",
       "from": "hawk@>=3.1.0 <3.2.0",
@@ -793,6 +803,11 @@
       "version": "0.1.2",
       "from": "isstream@>=0.1.2 <0.2.0",
       "resolved": "https://registry.npmjs.org/isstream/-/isstream-0.1.2.tgz"
+    },
+    "jackpot": {
+      "version": "0.0.6",
+      "from": "jackpot@>=0.0.6",
+      "resolved": "https://registry.npmjs.org/jackpot/-/jackpot-0.0.6.tgz"
     },
     "jade": {
       "version": "0.26.3",
@@ -1047,6 +1062,28 @@
       "version": "0.3.0",
       "from": "media-typer@0.3.0",
       "resolved": "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz"
+    },
+    "memcached": {
+      "version": "2.2.1",
+      "from": "memcached@>=2.1.0 <3.0.0",
+      "resolved": "https://registry.npmjs.org/memcached/-/memcached-2.2.1.tgz"
+    },
+    "memcached-mock": {
+      "version": "0.1.0",
+      "from": "memcached-mock@>=0.1.0 <0.2.0",
+      "resolved": "https://registry.npmjs.org/memcached-mock/-/memcached-mock-0.1.0.tgz"
+    },
+    "memcached-promisify": {
+      "version": "1.0.3",
+      "from": "memcached-promisify@>=1.0.3 <2.0.0",
+      "resolved": "https://registry.npmjs.org/memcached-promisify/-/memcached-promisify-1.0.3.tgz",
+      "dependencies": {
+        "bluebird": {
+          "version": "2.10.2",
+          "from": "bluebird@>=2.9.34 <3.0.0",
+          "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.10.2.tgz"
+        }
+      }
     },
     "merge-descriptors": {
       "version": "1.0.0",
@@ -1388,6 +1425,11 @@
       "from": "restore-cursor@>=1.0.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/restore-cursor/-/restore-cursor-1.0.1.tgz"
     },
+    "retry": {
+      "version": "0.6.0",
+      "from": "retry@0.6.0",
+      "resolved": "https://registry.npmjs.org/retry/-/retry-0.6.0.tgz"
+    },
     "right-align": {
       "version": "0.1.3",
       "from": "right-align@>=0.1.1 <0.2.0",
@@ -1443,6 +1485,11 @@
       "version": "1.0.1",
       "from": "sigmund@>=1.0.0 <1.1.0",
       "resolved": "https://registry.npmjs.org/sigmund/-/sigmund-1.0.1.tgz"
+    },
+    "simple-lru-cache": {
+      "version": "0.0.2",
+      "from": "simple-lru-cache@>=0.0.0 <0.1.0",
+      "resolved": "https://registry.npmjs.org/simple-lru-cache/-/simple-lru-cache-0.0.2.tgz"
     },
     "sntp": {
       "version": "1.0.9",

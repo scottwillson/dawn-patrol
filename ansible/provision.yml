@@ -11,6 +11,12 @@
     - apt: name=postgresql state=latest
     - apt: name=python-psycopg2 state=latest
 
+    - name: Start memcached service
+      service:
+        name: memcached
+        state: started
+        enabled: yes
+
     - name: Start nginx service
       service:
         name: nginx

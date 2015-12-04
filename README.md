@@ -10,7 +10,7 @@ Alpha/half-baked. Pushing to Github now get deployments working early.
 
 Getting started
 ---------------
-install Node.js, npm
+install Node.js, npm, memcached
 add ./node_modules to $PATH
 
     npm install
@@ -98,22 +98,21 @@ Performance Test
 
 Roadmap
 -------
-* Add memcached (with memory limit)
-* configure nginx to use memcached
-* Have node.js update memcached
 * proper response headers for caching
 * All https
+* Add URLs like /people/2709/2014.json as those are the ones bots actually hit
+  * Change to /people/2709.json?year=2014 ?
+  * Need to think about caching
 * Add ember.js front end for fun
 * Use hash-like logging for all apps
 * Try other data storage/servers and compare performance
 * Multiplex requests from production
-* Add fetched_at timestamp. If fetched_at > 10 minutes, get updated copy.
+* Add fetched_at timestamp. If fetched_at > 10 minutes, check for newer version
+  * Would never check if in memcached
 * Redirect production requests to here
-* replace shrinkrwap with exact versions?
 * Docker?
 * Use PM2 'ecosystem'?
 * Authorization for admin actions would be nice!
-* Actually return JSON, not strings
 * Store normalized data
 * Separate each service into separate project?
 * Move DB creds to more secure spot
