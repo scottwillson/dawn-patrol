@@ -14,8 +14,17 @@ const resultColumns = [
 
 const valueArguments = resultColumns.map((_, index) => `$${index + 1}`);
 
+// Make response look like it came from master
+// ID needs to be master_id, not 'our' ID
+function mapToMasterColumns(result) {
+  result.id = result.master_id;
+  delete result.master_id;
+  return result;
+}
+
 exports.forEvent = (eventId) => {
   return db.manyOrNone('select * from results where event_id=$1', [eventId])
+    .then(results => results.map(r => mapToMasterColumns(r)))
     .then(results => {
       if (results.length) return results;
 

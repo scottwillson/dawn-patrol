@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const config = require('config');
@@ -59,7 +58,9 @@ function expectAppToReturnResultsJSON(eventId) {
     .then((response) => {
       const json = JSON.parse(response);
       expect(json.length).to.equal(3);
-      const result = _.find(json, (r) => r.master_id === 119686);
+      const result = json.find(r => r.id === 119686);
+      expect(result).to.not.have.any.keys('master_id');
+
       return expect(result).to.include({
         event_id: eventId,
         person_id: 52,
