@@ -13,9 +13,7 @@ const appHost = config.get('appHost');
 const masterAppHost = config.get('masterAppHost');
 
 function resultsCount() {
-  return request.get(`http://${appHost}/results.json`).then(response => {
-    return JSON.parse(response).count;
-  });
+  return request.get(`http://${appHost}/results.json`).then(response => JSON.parse(response).count);
 }
 
 function deleteAllResults() {
@@ -34,7 +32,15 @@ function getResultsJSONFromMaster(eventId) {
 }
 
 function getResultsJSONFromApp(eventId) {
-  return request.get(`http://${appHost}/events/${eventId}/results.json`);
+  return request.get({uri: `http://${appHost}/events/${eventId}/results.json`, resolveWithFullResponse: true});
+}
+
+function expectHeaders(response) {
+  expect(response.headers).to.have.any.keys('content-length');
+  expect(response.headers).to.have.any.keys('etag');
+  expect(response.headers['cache-control']).to.eq('public, max-age=31536000');
+  expect(response.headers['content-type']).to.eq('application/json; charset=utf-8');
+  expect(response.headers['last-modified']).to.eq('Tue, 25 Nov 2014 10:08:28 GMT');
 }
 
 function expectMasterToReturnResultsJSON(eventId) {
@@ -56,7 +62,9 @@ function expectMasterToReturnResultsJSON(eventId) {
 function expectAppToReturnResultsJSON(eventId) {
   return getResultsJSONFromApp(eventId)
     .then((response) => {
-      const json = JSON.parse(response);
+      expectHeaders(response);
+
+      const json = JSON.parse(response.body);
       expect(json.length).to.equal(3);
       const result = json.find(r => r.id === 119686);
       expect(result).to.not.have.any.keys('master_id');

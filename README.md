@@ -99,12 +99,7 @@ Performance Test
 Roadmap
 -------
 * proper response headers for caching
-  * Cache-Control:public, max-age=31536000
-  * ETag (looks like express adds these)
-  * Last-Modified: Mon, 03 Jan 2011 17:45:57 GMT
   * Also in cached nginx responses
-* All dates and times should be in proper formats
-* Ensure time zones handled correctly when reading requests from master
 * All https
 * Add URLs like /people/2709/2014.json as those are the ones bots actually hit
   * Change to /people/2709.json?year=2014 ?
@@ -146,3 +141,6 @@ Roadmap
 * Ensure cold vagrant start really wokrs
 * Create server-specific log file
 * Ensure PM2 starts up on restart
+* Drop keys with null values in response
+* mock server should set content type to json
+* integration test requests should ask for JSON

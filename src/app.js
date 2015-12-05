@@ -21,13 +21,17 @@ function respondWithJSON(res, eventResults) {
   return res.json(eventResults);
 }
 
+function cache(eventId, response) {
+  webCache.cache(eventId, app.responseWithWebCacheHeaders(response));
+}
+
 app.get('/events/:id/results.json', (req, res) => {
   const eventId = req.params.id;
 
   return results.forEvent(eventId)
     .then(eventResults => Promise.all([
       respondWithJSON(res, eventResults),
-      webCache.cache(eventId, eventResults),
+      cache(eventId, res),
     ]));
 });
 
@@ -36,5 +40,16 @@ app.get('/results.json', (req, res) => results.count().then(count => res.json({c
 if (process.env.NODE_ENV !== 'production') {
   app.delete('/results.json', (req, res) => results.deleteAll().then(res.end()));
 }
+
+app.responseWithWebCacheHeaders = (response) => {
+  return 'EXTRACT_HEADERS\n'
+    + `Cache-Control: ${response.get('Cache-Control')}\n`
+    + `Content-Length: ${response.get('Content-Length')}\n`
+    + `Content-Type: ${response.get('Content-Type')}\n`
+    + `ETag: ${response.get('etag')}\n`
+    + `Last-Modified: ${response.get('Last-Modified')}\n`
+    + '\n'
+    + response.body;
+};
 
 module.exports.app = app;

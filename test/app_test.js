@@ -125,6 +125,27 @@ describe('app', () => {
       .then(() => expect(results.count()).to.eventually.eq(1));
     });
 
+    describe('#responseWithWebCacheHeaders', () => {
+      it('caches headers', () => {
+        const response = request(app).get('/events/0/results.json');
+        const responseWithWebCacheHeaders = app.responseWithWebCacheHeaders(response);
+        expect(responseWithWebCacheHeaders).to.contain('EXTRACT_HEADERS\n');
+        expect(responseWithWebCacheHeaders).to.contain('Accept: application/json\n');
+        expect(responseWithWebCacheHeaders).to.contain('Cache-Control: public, max-age=31536000\n');
+        expect(responseWithWebCacheHeaders).to.contain('ETag');
+        expect(responseWithWebCacheHeaders).to.contain('Last-Modified');
+        return expect(responseWithWebCacheHeaders).to.not.contain('undefined');
+      });
+
+      it('adds no headers for empty responses', () => {
+        const response = request(app).get('/events/1999/results.json');
+        const responseWithWebCacheHeaders = app.responseWithWebCacheHeaders(response);
+        expect(responseWithWebCacheHeaders).to.contain('EXTRACT_HEADERS');
+        expect(responseWithWebCacheHeaders).to.not.contain('undefined');
+        return expect(responseWithWebCacheHeaders).to.not.contain('ETag');
+      });
+    });
+
     after(() => masterAppServer.done());
   });
 
