@@ -10,6 +10,10 @@ const resultColumns = [
   'event_id',
   'person_id',
   'master_id',
+  'name',
+  'place',
+  'team_id',
+  'updated_at',
 ];
 
 const valueArguments = resultColumns.map((_, index) => `$${index + 1}`);

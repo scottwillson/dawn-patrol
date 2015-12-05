@@ -88,6 +88,9 @@ describe('app', () => {
           return request(app)
             .get('/events/23594/results.json')
             .set('Accept', 'application/json')
+            .expect('Cache-Control', 'public, max-age=31536000')
+            .expect('ETag', /.+/)
+            .expect('Last-Modified', 'Tue, 09 Jun 2015 15:24:00 GMT')
             .expect(200);
         })
         .then(() => { return expect(results.countByEvent(23594)).to.eventually.eq(1); })
@@ -114,6 +117,9 @@ describe('app', () => {
         return request(app)
           .get('/events/0/results.json')
           .set('Accept', 'application/json')
+          .expect('Cache-Control', 'public, max-age=31536000')
+          .expect('ETag', /.+/)
+          .expect('Last-Modified', 'Fri, 17 Nov 1995 18:24:00 GMT')
           .expect(200);
       })
       .then(() => expect(results.count()).to.eventually.eq(1));

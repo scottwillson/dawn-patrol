@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
@@ -11,12 +12,21 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
 }
 
+function respondWithJSON(res, eventResults) {
+  res.append('Cache-Control', 'public, max-age=31536000');
+  const updatedAt = _.max(eventResults, 'updated_at').updated_at;
+  if (updatedAt) {
+    res.append('Last-Modified', updatedAt.toUTCString());
+  }
+  return res.json(eventResults);
+}
+
 app.get('/events/:id/results.json', (req, res) => {
   const eventId = req.params.id;
 
   return results.forEvent(eventId)
-    .then((eventResults) => Promise.all([
-      res.json(eventResults),
+    .then(eventResults => Promise.all([
+      respondWithJSON(res, eventResults),
       webCache.cache(eventId, eventResults),
     ]));
 });

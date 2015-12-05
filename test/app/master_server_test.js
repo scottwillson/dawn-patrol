@@ -26,6 +26,7 @@ describe('masterServer', () => {
           'person_id': 119267,
           'race_id': 564366,
           'event_id': 0,
+          'updated_at': '2014-06-25T13:00:00.000-07:00',
         },
       ])
       .matchHeader('User-Agent', 'dawn-patrol');
@@ -33,7 +34,10 @@ describe('masterServer', () => {
     beforeEach('insert existing result', () => results.insert());
 
     it('returns event results', () => masterServer.resultsForEvent(0)
-        .then(eventResults => expect(eventResults.length).to.eq(1)));
+        .then(eventResults => {
+          expect(eventResults.length).to.eq(1);
+          return expect(eventResults[0].updated_at).to.eql(new Date('Mon, 25 Jun 14 13:00:00 -0700'));
+        }));
 
     after(() => masterAppServer.done());
   });

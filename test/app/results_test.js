@@ -74,7 +74,7 @@ describe('results', () => {
   describe('#resultValues', () => {
     it('returns nil for empty results', () => {
       const result = { id: 9 };
-      return expect(results.resultValues(result)).to.eql([ null, null, null, 9 ]);
+      return expect(results.resultValues(result)).to.eql([ null, null, null, 9, null, null, null, null ]);
     });
   });
 });
