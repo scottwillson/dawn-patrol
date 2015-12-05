@@ -7,11 +7,10 @@
     - apt: name=nodejs state=latest
     - apt: name=git state=latest
     - apt: name=memcached state=latest
-    - apt: name=nginx state=latest
     - apt: name=postgresql state=latest
     - apt: name=python-psycopg2 state=latest
 
-    - lineinfile: dest=/etc/memcached.conf regexp='^-l 127\.0\.0\.1' line='-l 0.0.0.0'
+    - lineinfile: dest=/etc/memcached.conf regexp='\A-l 127\.0\.0\.1' line='-l 0.0.0.0'
       notify:
         - restart memcached
 
@@ -20,6 +19,33 @@
         name: memcached
         state: started
         enabled: yes
+
+    - apt: name=nginx state=absent
+
+    - file: path=src state=directory
+
+    # Move to separate task file
+    - apt: name=libpcre3 state=latest
+    - apt: name=libpcre3-dev state=latest
+    - apt: name=zlib1g-dev state=latest
+
+    - name: download nginx source
+      get_url: url=http://nginx.org/download/nginx-1.8.0.tar.gz dest=src/nginx-1.8.0.tar.gz
+
+    - name: extract nginx source
+      command: chdir=src creates=src/nginx-1.8.0 tar -xf nginx-1.8.0.tar.gz
+
+    - git: repo=https://github.com/bpaquet/ngx_http_enhanced_memcached_module.git
+           dest=src/ngx_http_enhanced_memcached_module
+           update=no
+
+    - command: ./configure --add-module=../ngx_http_enhanced_memcached_module --sbin-path=/usr/local/sbin # --with-http_ssl_module
+      args:
+        chdir: src/nginx-1.8.0
+        creates: src/nginx-1.8.0/auto
+
+    - command: make chdir=src/nginx-1.8.0 creates=src/nginx-1.8.0/objs/nginx
+    - command: make install chdir=src/nginx-1.8.0 creates=/usr/local/sbin/nginx
 
     - name: Start nginx service
       service:
