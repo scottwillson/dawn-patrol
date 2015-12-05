@@ -98,7 +98,6 @@ Performance Test
 
 Roadmap
 -------
-* Improve integration test assertions (more)
 * proper response headers for caching
   * Also in cached nginx responses
 * All https

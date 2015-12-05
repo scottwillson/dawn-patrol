@@ -63,7 +63,10 @@ function expectAppToReturnResultsJSON(eventId) {
 
       return expect(result).to.include({
         event_id: eventId,
+        name: 'Nick Skenzick',
         person_id: 52,
+        place: '1',
+        team_id: 29,
       });
     });
 }
