@@ -13,6 +13,27 @@ const masterAppHost = config.get('masterAppHost');
 const request = require('supertest-as-promised');
 const results = require('./app/results');
 
+function mockResponse() {
+  return {
+    get: (key) => {
+      switch (key) {
+      case 'Content-Type':
+        return 'application/json';
+      case 'Cache-Control':
+        return 'public, max-age=31536000';
+      case 'Content-Length':
+        return 19;
+      case 'ETag':
+        return 'ASFG123';
+      case 'Last-Modified':
+        return 'Tue, 25 Nov 2014 10:08:28 GMT';
+      default:
+        return undefined;
+      }
+    },
+  };
+}
+
 describe('app', () => {
   beforeEach('truncate DB', () => db.truncate());
 
@@ -127,22 +148,14 @@ describe('app', () => {
 
     describe('#responseWithWebCacheHeaders', () => {
       it('caches headers', () => {
-        const response = request(app).get('/events/0/results.json');
-        const responseWithWebCacheHeaders = app.responseWithWebCacheHeaders(response);
+        const response = mockResponse();
+        const responseWithWebCacheHeaders = app.responseWithWebCacheHeaders(response, [{updated_at: new Date('2015-06-09T08:24:00.000-07:00')}]);
         expect(responseWithWebCacheHeaders).to.contain('EXTRACT_HEADERS\n');
-        expect(responseWithWebCacheHeaders).to.contain('Accept: application/json\n');
+        expect(responseWithWebCacheHeaders).to.contain('Content-Type: application/json\n');
         expect(responseWithWebCacheHeaders).to.contain('Cache-Control: public, max-age=31536000\n');
         expect(responseWithWebCacheHeaders).to.contain('ETag');
         expect(responseWithWebCacheHeaders).to.contain('Last-Modified');
         return expect(responseWithWebCacheHeaders).to.not.contain('undefined');
-      });
-
-      it('adds no headers for empty responses', () => {
-        const response = request(app).get('/events/1999/results.json');
-        const responseWithWebCacheHeaders = app.responseWithWebCacheHeaders(response);
-        expect(responseWithWebCacheHeaders).to.contain('EXTRACT_HEADERS');
-        expect(responseWithWebCacheHeaders).to.not.contain('undefined');
-        return expect(responseWithWebCacheHeaders).to.not.contain('ETag');
       });
     });
 

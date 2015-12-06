@@ -100,6 +100,11 @@ Roadmap
 -------
 * proper response headers for caching
   * Also in cached nginx responses
+* Test 404s
+  * test what happens with master
+  * mock in mock master
+  * ensure headers are correct
+* Test 500, 503, 302 as well
 * All https
 * Add URLs like /people/2709/2014.json as those are the ones bots actually hit
   * Change to /people/2709.json?year=2014 ?
