@@ -98,8 +98,11 @@ Performance Test
 
 Roadmap
 -------
+* fix nginx install
+  * fix nginx log locations to match Ubuntu
 * proper response headers for caching
   * Also in cached nginx responses
+* Fix memcached config dupe lines
 * Test 404s
   * test what happens with master
   * mock in mock master
