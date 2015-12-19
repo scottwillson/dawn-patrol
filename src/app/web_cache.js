@@ -15,7 +15,7 @@ function cacheClient() {
   if (process.env.NODE_ENV === 'test') {
     this.cacheClient = mockMemcached();
   } else {
-    this.cacheClient = new Memcached({'cacheHost': config.get('memcachedHost')});
+    this.cacheClient = new Memcached({ 'cacheHost': config.get('memcachedHost') });
   }
   return this.cacheClient;
 }

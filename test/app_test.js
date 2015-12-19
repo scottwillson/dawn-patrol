@@ -17,18 +17,18 @@ function mockResponse() {
   return {
     get: (key) => {
       switch (key) {
-      case 'Content-Type':
-        return 'application/json';
-      case 'Cache-Control':
-        return 'public, max-age=31536000';
-      case 'Content-Length':
-        return 19;
-      case 'ETag':
-        return 'ASFG123';
-      case 'Last-Modified':
-        return 'Tue, 25 Nov 2014 10:08:28 GMT';
-      default:
-        return undefined;
+        case 'Content-Type':
+          return 'application/json';
+        case 'Cache-Control':
+          return 'public, max-age=31536000';
+        case 'Content-Length':
+          return 19;
+        case 'ETag':
+          return 'ASFG123';
+        case 'Last-Modified':
+          return 'Tue, 25 Nov 2014 10:08:28 GMT';
+        default:
+          return undefined;
       }
     },
   };
@@ -149,7 +149,7 @@ describe('app', () => {
     describe('#responseWithWebCacheHeaders', () => {
       it('caches headers', () => {
         const response = mockResponse();
-        const responseWithWebCacheHeaders = app.responseWithWebCacheHeaders(response, [{updated_at: new Date('2015-06-09T08:24:00.000-07:00')}]);
+        const responseWithWebCacheHeaders = app.responseWithWebCacheHeaders(response, [{ updated_at: new Date('2015-06-09T08:24:00.000-07:00') }]);
         expect(responseWithWebCacheHeaders).to.contain('EXTRACT_HEADERS\n');
         expect(responseWithWebCacheHeaders).to.contain('Content-Type: application/json\n');
         expect(responseWithWebCacheHeaders).to.contain('Cache-Control: public, max-age=31536000\n');

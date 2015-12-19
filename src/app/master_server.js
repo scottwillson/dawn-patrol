@@ -14,8 +14,8 @@ function parseResponse(response) {
 exports.resultsForEvent = eventId => {
   const url = `http://${masterAppHost}/events/${eventId}/results.json`;
   const options = {
-    url: url,
-    headers: {'User-Agent': 'dawn-patrol'},
+    url,
+    headers: { 'User-Agent': 'dawn-patrol' },
   };
 
   return request.get(options)

@@ -32,7 +32,7 @@ function getResultsJSONFromMaster(eventId) {
 }
 
 function getResultsJSONFromApp(eventId) {
-  return request.get({uri: `http://${appHost}/events/${eventId}/results.json`, resolveWithFullResponse: true});
+  return request.get({ uri: `http://${appHost}/events/${eventId}/results.json`, resolveWithFullResponse: true });
 }
 
 function expectHeaders(response) {

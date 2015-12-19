@@ -34,7 +34,7 @@ app.get('/events/:id/results.json', (req, res) => {
     });
 });
 
-app.get('/results.json', (req, res) => results.count().then(count => res.json({count: count})));
+app.get('/results.json', (req, res) => results.count().then(count => res.json({ count })));
 
 if (process.env.NODE_ENV !== 'production') {
   app.delete('/results.json', (req, res) => results.deleteAll().then(res.end()));
@@ -42,7 +42,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.responseWithWebCacheHeaders = (response, eventResults) => {
   var responseWithHeaders = 'EXTRACT_HEADERS\n';
-  _.each([ 'Cache-Control', 'Content-Length', 'Content-Type', 'ETag', 'Last-Modified'], header => {
+  _.each(['Cache-Control', 'Content-Length', 'Content-Type', 'ETag', 'Last-Modified'], header => {
     if (response.get(header)) {
       responseWithHeaders += `${header}: ${response.get(header)}\n`;
     }
