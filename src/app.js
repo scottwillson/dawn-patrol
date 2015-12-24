@@ -24,6 +24,10 @@ function cache(eventId, response, eventResults) {
   webCache.cache(eventId, app.responseWithWebCacheHeaders(response, eventResults));
 }
 
+function headers() {
+  return ['Cache-Control', 'Content-Length', 'Content-Type', 'ETag', 'Last-Modified'];
+}
+
 app.get('/events/:id/results.json', (req, res) => {
   const eventId = req.params.id;
 
@@ -41,15 +45,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.responseWithWebCacheHeaders = (response, eventResults) => {
-  var responseWithHeaders = 'EXTRACT_HEADERS\n';
-  _.each(['Cache-Control', 'Content-Length', 'Content-Type', 'ETag', 'Last-Modified'], header => {
-    if (response.get(header)) {
-      responseWithHeaders += `${header}: ${response.get(header)}\n`;
-    }
-  });
-  responseWithHeaders += '\n';
-  responseWithHeaders += JSON.stringify(eventResults);
-  return responseWithHeaders;
+  return _
+    .reject(headers(), header => _.isUndefined(response.get(header)))
+    .reduce((responseWithHeaders, header) => `${responseWithHeaders}${header}: ${response.get(header)}\n`, 'EXTRACT_HEADERS\n') +
+    '\n' +
+    JSON.stringify(eventResults);
 };
 
 module.exports.app = app;
