@@ -47,8 +47,8 @@ if (process.env.NODE_ENV !== 'production') {
 app.responseWithWebCacheHeaders = (response, eventResults) => {
   return _
     .reject(headers(), header => _.isUndefined(response.get(header)))
-    .reduce((responseWithHeaders, header) => `${responseWithHeaders}${header}: ${response.get(header)}\r\n`, 'EXTRACT_HEADERS\r\n') +
-    '\r\n' +
+    .reduce((responseWithHeaders, header) => `${responseWithHeaders}${header}: ${response.get(header)}\n`, 'EXTRACT_HEADERS\n') +
+    '\n' +
     JSON.stringify(eventResults);
 };
 
