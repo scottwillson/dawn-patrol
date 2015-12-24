@@ -23,7 +23,7 @@ function cacheClient() {
 exports.key = eventId => `/events/${eventId}/results.json`;
 
 exports.cache = (eventId, response) => {
-  return cacheClient().set(this.key(eventId), JSON.stringify(response), 600);
+  return cacheClient().set(this.key(eventId), response, 600);
 };
 
 // Only used by tests for now
