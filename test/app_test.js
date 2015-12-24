@@ -150,9 +150,9 @@ describe('app', () => {
       it('caches headers', () => {
         const response = mockResponse();
         const responseWithWebCacheHeaders = app.responseWithWebCacheHeaders(response, [{ updated_at: new Date('2015-06-09T08:24:00.000-07:00') }]);
-        expect(responseWithWebCacheHeaders).to.contain('EXTRACT_HEADERS\n');
-        expect(responseWithWebCacheHeaders).to.contain('Content-Type: application/json\n');
-        expect(responseWithWebCacheHeaders).to.contain('Cache-Control: public, max-age=31536000\n');
+        expect(responseWithWebCacheHeaders).to.contain('EXTRACT_HEADERS\r\n');
+        expect(responseWithWebCacheHeaders).to.contain('Content-Type: application/json\r\n');
+        expect(responseWithWebCacheHeaders).to.contain('Cache-Control: public, max-age=31536000\r\n');
         expect(responseWithWebCacheHeaders).to.contain('ETag');
         expect(responseWithWebCacheHeaders).to.contain('Last-Modified');
         return expect(responseWithWebCacheHeaders).to.not.contain('undefined');
