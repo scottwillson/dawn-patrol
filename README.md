@@ -14,7 +14,7 @@ install Node.js, npm, memcached
 add ./node_modules to $PATH
 
     npm install
-    node src/server.js
+    npm start
 
 Create DBs
 
@@ -27,7 +27,7 @@ Create DBs
     psql postgres -f sql/setup_development.sql
 
     db-migrate up
-    node src/server.js
+    npm start
 
 Tests
 -----
@@ -98,6 +98,15 @@ Performance Test
 
 Roadmap
 -------
+* Rework caching
+  * ditch enchanced caching
+  * use nginx proxy_cache (with file system)
+  * tune nginx proxy cache to cache for 10s, re-use stale content, etc.
+  * cache rendered JSON in memcached
+    * add test for checking last updated_at
+    * use URL + updated_at timestamp key
+    * rename webCache?
+  * rename cache cache and get methods?
 * fix nginx install
   * fix nginx log locations to match Ubuntu
 * proper response headers for caching
@@ -152,3 +161,4 @@ Roadmap
 * Drop keys with null values in response
 * mock server should set content type to json
 * integration test requests should ask for JSON
+* move mockMemcached
