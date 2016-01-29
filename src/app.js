@@ -23,6 +23,10 @@ function findUpdatedAt(eventResults) {
   return _(eventResults).map('updated_at').max();
 }
 
+function appendLastModified(res, date) {
+  return res.append('Last-Modified', date.toUTCString());
+}
+
 app.get('/events/:id/results.json', (req, res) => {
   const eventId = req.params.id;
   res.append('Cache-Control', 'public, max-age=31536000');
@@ -30,7 +34,7 @@ app.get('/events/:id/results.json', (req, res) => {
   return results.eventUpdatedAt(eventId)
     .then(updatedAt => {
       if (updatedAt) {
-        res.append('Last-Modified', updatedAt);
+        appendLastModified(res, updatedAt);
         return getFromCache(eventId, updatedAt);
       }
       return null;
@@ -41,7 +45,7 @@ app.get('/events/:id/results.json', (req, res) => {
       return results.forEvent(eventId)
         .then(eventResults => {
           const updatedAt = findUpdatedAt(eventResults);
-          res.append('Last-Modified', updatedAt);
+          appendLastModified(res, updatedAt);
           res.json(eventResults);
           return cache(eventId, updatedAt, eventResults);
         });
