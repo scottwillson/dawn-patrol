@@ -19,7 +19,7 @@ describe('results', () => {
       );
     });
 
-    context('single results', () => {
+    context('single result', () => {
       beforeEach('insert existing result', () => testResults.insert());
 
       it('counts results', () =>
@@ -36,6 +36,39 @@ describe('results', () => {
 
       it('counts results', () =>
         expect(results.count()).to.eventually.eq(3)
+      );
+    });
+  });
+
+  describe('eventUpdatedAt', () => {
+    context('no results', () => {
+      it('returns nothing', () =>
+        expect(results.eventUpdatedAt(0)).to.eventually.eq(null)
+      );
+    });
+
+    context('single result', () => {
+      beforeEach('insert existing result', () => testResults.insert());
+
+      it('returns result updated_at', () =>
+        expect(results.eventUpdatedAt(0)).to.eventually.eql(new Date('Fri, 17 Nov 1995 18:24:00 GMT'))
+      );
+    });
+
+    context('many results', () => {
+      beforeEach('insert existing results', () => {
+        return testResults.insert()
+          .then(() => testResults.insert(1))
+          .then(() => testResults.insert(2, 'Thu Jan 28 2016 18:27:49 GMT-0800 (PST)'))
+          .then(() => testResults.insert(3));
+      });
+
+      it('finds max updated_at', () =>
+        expect(results.eventUpdatedAt(0)).to.eventually.eql(new Date('2016-01-29T10:27:49.000Z'))
+      );
+
+      it('ignores other events', () =>
+        expect(results.eventUpdatedAt(999)).to.eventually.eq(null)
       );
     });
   });

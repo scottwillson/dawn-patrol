@@ -3,7 +3,8 @@ const Memcached = require('memcached-promisify');
 
 function mockMemcached() {
   return {
-    set: () => new Promise(() => true),
+    get: () => new Promise(resolve => resolve(null)),
+    set: () => new Promise(resolve => resolve(true)),
   };
 }
 
@@ -20,12 +21,9 @@ function cacheClient() {
   return this.cacheClient;
 }
 
-exports.key = eventId => `/events/${eventId}/results.json`;
-
-exports.cache = (eventId, response) => {
-  return cacheClient().set(this.key(eventId), response, 600);
-};
+exports.cache = (eventId, updatedAt, response) => cacheClient().set(this.key(eventId, updatedAt), response, 600);
+exports.get = (eventId, updatedAt) => cacheClient().get(this.key(eventId, updatedAt));
+exports.key = (eventId, updatedAt) => `/events/${eventId}/results.json?updatedAt=${updatedAt.valueOf()}`;
 
 // Only used by tests for now
-exports.del = (eventId) => cacheClient().del(this.key(eventId));
-exports.get = (eventId) => cacheClient().get(this.key(eventId));
+exports.del = (eventId, updatedAt) => cacheClient().del(this.key(eventId, updatedAt));

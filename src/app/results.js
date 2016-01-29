@@ -38,6 +38,10 @@ exports.forEvent = (eventId) => {
     .catch(e => console.error(`${e} getting results for event ID ${eventId}`));
 };
 
+exports.eventUpdatedAt = (eventId) => db
+  .one('select max(updated_at) from results where event_id=$1', [eventId])
+  .then(data => data.max);
+
 exports.count = () => db
   .one('select count(*) from results')
   .then(data => Number(data.count));

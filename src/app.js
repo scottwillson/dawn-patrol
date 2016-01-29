@@ -1,5 +1,5 @@
-const _ = require('lodash');
 const express = require('express');
+const _ = require('lodash');
 const morgan = require('morgan');
 const app = express();
 
@@ -11,30 +11,40 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
 }
 
-function respondWithJSON(res, eventResults) {
-  res.append('Cache-Control', 'public, max-age=31536000');
-  const updatedAt = _.max(eventResults, 'updated_at').updated_at;
-  if (updatedAt) {
-    res.append('Last-Modified', updatedAt.toUTCString());
-  }
-  return res.json(eventResults);
+function getFromCache(eventId, updatedAt) {
+  return webCache.get(eventId, updatedAt);
 }
 
-function cache(eventId, response, eventResults) {
-  webCache.cache(eventId, app.responseWithWebCacheHeaders(response, eventResults));
+function cache(eventId, eventResults, response) {
+  return webCache.cache(eventId, eventResults, response);
 }
 
-function headers() {
-  return ['Cache-Control', 'Content-Length', 'Content-Type', 'ETag', 'Last-Modified'];
+function findUpdatedAt(eventResults) {
+  return _(eventResults).map('updated_at').max();
 }
 
 app.get('/events/:id/results.json', (req, res) => {
   const eventId = req.params.id;
+  res.append('Cache-Control', 'public, max-age=31536000');
 
-  return results.forEvent(eventId)
-    .then(eventResults => {
-      respondWithJSON(res, eventResults);
-      return cache(eventId, res, eventResults);
+  return results.eventUpdatedAt(eventId)
+    .then(updatedAt => {
+      if (updatedAt) {
+        res.append('Last-Modified', updatedAt);
+        return getFromCache(eventId, updatedAt);
+      }
+      return null;
+    })
+    .then(cachedResponse => {
+      if (cachedResponse) return res.json(cachedResponse);
+
+      return results.forEvent(eventId)
+        .then(eventResults => {
+          const updatedAt = findUpdatedAt(eventResults);
+          res.append('Last-Modified', updatedAt);
+          res.json(eventResults);
+          return cache(eventId, updatedAt, eventResults);
+        });
     });
 });
 
@@ -43,13 +53,5 @@ app.get('/results.json', (req, res) => results.count().then(count => res.json({ 
 if (process.env.NODE_ENV !== 'production') {
   app.delete('/results.json', (req, res) => results.deleteAll().then(res.end()));
 }
-
-app.responseWithWebCacheHeaders = (response, eventResults) => {
-  return _
-    .reject(headers(), header => _.isUndefined(response.get(header)))
-    .reduce((responseWithHeaders, header) => `${responseWithHeaders}${header}: ${response.get(header)}\r\n`, 'EXTRACT_HEADERS\r\n') +
-    '\r\n' +
-    JSON.stringify(eventResults);
-};
 
 module.exports.app = app;

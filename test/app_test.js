@@ -13,27 +13,6 @@ const masterAppHost = config.get('masterAppHost');
 const request = require('supertest-as-promised');
 const results = require('./app/results');
 
-function mockResponse() {
-  return {
-    get: (key) => {
-      switch (key) {
-        case 'Content-Type':
-          return 'application/json';
-        case 'Cache-Control':
-          return 'public, max-age=31536000';
-        case 'Content-Length':
-          return 19;
-        case 'ETag':
-          return 'ASFG123';
-        case 'Last-Modified':
-          return 'Tue, 25 Nov 2014 10:08:28 GMT';
-        default:
-          return undefined;
-      }
-    },
-  };
-}
-
 describe('app', () => {
   beforeEach('truncate DB', () => db.truncate());
 
@@ -111,7 +90,7 @@ describe('app', () => {
             .set('Accept', 'application/json')
             .expect('Cache-Control', 'public, max-age=31536000')
             .expect('ETag', /.+/)
-            .expect('Last-Modified', 'Tue, 09 Jun 2015 15:24:00 GMT')
+            .expect('Last-Modified', 'Tue Jun 09 2015 08:24:00 GMT-0700 (PDT)')
             .expect(200);
         })
         .then(() => { return expect(results.countByEvent(23594)).to.eventually.eq(1); })
@@ -134,29 +113,16 @@ describe('app', () => {
 
     it('returns stored result without calling Master app', () => {
       return expect(results.count()).to.eventually.eq(1)
-      .then(() => {
-        return request(app)
-          .get('/events/0/results.json')
-          .set('Accept', 'application/json')
-          .expect('Cache-Control', 'public, max-age=31536000')
-          .expect('ETag', /.+/)
-          .expect('Last-Modified', 'Fri, 17 Nov 1995 18:24:00 GMT')
-          .expect(200);
-      })
-      .then(() => expect(results.count()).to.eventually.eq(1));
-    });
-
-    describe('#responseWithWebCacheHeaders', () => {
-      it('caches headers', () => {
-        const response = mockResponse();
-        const responseWithWebCacheHeaders = app.responseWithWebCacheHeaders(response, [{ updated_at: new Date('2015-06-09T08:24:00.000-07:00') }]);
-        expect(responseWithWebCacheHeaders).to.contain('EXTRACT_HEADERS\r\n');
-        expect(responseWithWebCacheHeaders).to.contain('Content-Type: application/json\r\n');
-        expect(responseWithWebCacheHeaders).to.contain('Cache-Control: public, max-age=31536000\r\n');
-        expect(responseWithWebCacheHeaders).to.contain('ETag');
-        expect(responseWithWebCacheHeaders).to.contain('Last-Modified');
-        return expect(responseWithWebCacheHeaders).to.not.contain('undefined');
-      });
+        .then(() => {
+          return request(app)
+            .get('/events/0/results.json')
+            .set('Accept', 'application/json')
+            .expect('Cache-Control', 'public, max-age=31536000')
+            .expect('ETag', /.+/)
+            .expect('Last-Modified', 'Fri Nov 17 1995 10:24:00 GMT-0800 (PST)')
+            .expect(200);
+        })
+        .then(() => expect(results.count()).to.eventually.eq(1));
     });
 
     after(() => masterAppServer.done());

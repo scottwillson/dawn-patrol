@@ -9,6 +9,9 @@ const webCache = require('../../src/app/web_cache');
 
 describe('webCache', () => {
   describe('#key', () => {
-    it('returns URL with event ID', () => expect(webCache.key(42)).to.equal('/events/42/results.json'));
+    it('returns URL with event ID', () =>
+      expect(webCache.key(42, new Date(2003, 1)))
+      .to.equal('/events/42/results.json?updatedAt=1044086400000')
+    );
   });
 });
