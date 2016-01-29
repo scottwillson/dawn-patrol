@@ -11,7 +11,7 @@ function json(eventId) {
   return `
   [
     {
-      "id": 119686,
+      "id": ${eventId}1,
       "category_id": null,
       "person_id": 52,
       "race_id": 6128,
@@ -69,7 +69,7 @@ function json(eventId) {
       "team_member": true
     },
     {
-      "id": 119687,
+      "id": ${eventId}2,
       "category_id": null,
       "person_id": 43,
       "race_id": 6128,
@@ -127,7 +127,7 @@ function json(eventId) {
       "team_member": false
     },
     {
-      "id": 119688,
+      "id": ${eventId}3,
       "category_id": null,
       "person_id": 5993,
       "race_id": 6128,
