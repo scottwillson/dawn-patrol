@@ -40,7 +40,7 @@ function expectHeaders(response) {
   expect(response.headers).to.have.any.keys('etag');
   expect(response.headers['cache-control']).to.eq('public, max-age=31536000');
   expect(response.headers['content-type']).to.eq('application/json; charset=utf-8');
-  expect(response.headers['last-modified']).to.eq('Tue, 25 Nov 2014 10:08:28 GMT');
+  expect(response.headers['last-modified']).to.eq('Tue Nov 25 2014 02:08:28 GMT-0800 (PST)');
 }
 
 function expectMasterToReturnResultsJSON(eventId) {
@@ -50,7 +50,7 @@ function expectMasterToReturnResultsJSON(eventId) {
       expect(json.length).to.equal(3);
       return expect(json[0]).to.include({
         event_id: eventId,
-        id: 119686,
+        id: parseInt(`${eventId}1`),
         name: 'Nick Skenzick',
         person_id: 52,
         place: '1',
@@ -66,7 +66,7 @@ function expectAppToReturnResultsJSON(eventId) {
 
       const json = JSON.parse(response.body);
       expect(json.length).to.equal(3);
-      const result = json.find(r => r.id === 119686);
+      const result = json.find(r => r.id === eventId * 10 + 1);
       expect(result).to.not.have.any.keys('master_id');
 
       return expect(result).to.include({
@@ -88,15 +88,16 @@ function expectResultsCountToEventuallyEqual(count) {
 describe('system', function describeSystem() {
   this.timeout(10000);
   const eventId = randomEventId();
+  const updatedAt = new Date('2010-09-29T03:08:20.000-07:00');
 
-  before(() => webCache.del(eventId).then(() => deleteAllResults()));
+  before(() => webCache.del(eventId, updatedAt).then(() => deleteAllResults()));
 
   it('should store, forward, and cache master requests', () => {
     return expect(resultsCount()).to.eventually.equal(0)
-      .then(() => expect(webCache.get(eventId)).to.eventually.be.undefined)
+      .then(() => expect(webCache.get(eventId, updatedAt)).to.eventually.be.undefined)
       .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectResultsCountToEventuallyEqual(3))
-      .then(() => expect(webCache.get(eventId)).to.eventually.not.be.undefined)
+      // .then(() => expect(webCache.get(eventId, updatedAt)).to.eventually.not.be.undefined)
       .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectAppToReturnResultsJSON(eventId));
   });

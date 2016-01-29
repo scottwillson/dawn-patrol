@@ -1,4 +1,5 @@
 * Rework caching
+  * remove extra logging
   * ditch enhanced caching
   * use nginx proxy_cache (with file system)
   * tune nginx proxy cache to cache for 10s, re-use stale content, etc.
