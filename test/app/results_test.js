@@ -51,7 +51,7 @@ describe('results', () => {
       beforeEach('insert existing result', () => testResults.insert());
 
       it('returns result updated_at', () =>
-        expect(results.eventUpdatedAt(0)).to.eventually.eql(new Date('Fri, 17 Nov 1995 18:24:00 GMT'))
+        expect(results.eventUpdatedAt(0)).to.eventually.eql(new Date('Fri, 17 Nov 1995 10:24:00 UTC'))
       );
     });
 
@@ -59,12 +59,12 @@ describe('results', () => {
       beforeEach('insert existing results', () => {
         return testResults.insert()
           .then(() => testResults.insert(1))
-          .then(() => testResults.insert(2, 'Thu Jan 28 2016 18:27:49 GMT-0800 (PST)'))
+          .then(() => testResults.insert(2, 'Fri, 29 Jan 2016 02:27:49 UTC'))
           .then(() => testResults.insert(3));
       });
 
       it('finds max updated_at', () =>
-        expect(results.eventUpdatedAt(0)).to.eventually.eql(new Date('2016-01-29T10:27:49.000Z'))
+        expect(results.eventUpdatedAt(0)).to.eventually.eql(new Date('Fri, 29 Jan 2016 02:27:49 UTC'))
       );
 
       it('ignores other events', () =>

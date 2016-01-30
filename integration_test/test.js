@@ -40,7 +40,7 @@ function expectHeaders(response) {
   expect(response.headers).to.have.any.keys('etag');
   expect(response.headers['cache-control']).to.eq('public, max-age=31536000');
   expect(response.headers['content-type']).to.eq('application/json; charset=utf-8');
-  expect(response.headers['last-modified']).to.eq('Tue Nov 25 2014 02:08:28 GMT-0800 (PST)');
+  expect(response.headers['last-modified']).to.eql('Tue, 25 Nov 2014 02:08:28 GMT');
 }
 
 function expectMasterToReturnResultsJSON(eventId) {
@@ -88,7 +88,7 @@ function expectResultsCountToEventuallyEqual(count) {
 describe('system', function describeSystem() {
   this.timeout(10000);
   const eventId = randomEventId();
-  const updatedAt = new Date('2010-09-29T03:08:20.000-07:00');
+  const updatedAt = new Date('Tue, 25 Nov 2014 02:08:28 UTC');
 
   before(() => webCache.del(eventId, updatedAt).then(() => deleteAllResults()));
 
@@ -97,7 +97,7 @@ describe('system', function describeSystem() {
       .then(() => expect(webCache.get(eventId, updatedAt)).to.eventually.be.undefined)
       .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectResultsCountToEventuallyEqual(3))
-      // .then(() => expect(webCache.get(eventId, updatedAt)).to.eventually.not.be.undefined)
+      .then(() => expect(webCache.get(eventId, updatedAt)).to.eventually.not.be.undefined)
       .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectAppToReturnResultsJSON(eventId));
   });

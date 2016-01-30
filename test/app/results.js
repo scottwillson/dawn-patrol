@@ -24,7 +24,7 @@ exports.countByEvent = (eventId) => {
 };
 
 exports.insert = (masterId, updatedAt) => {
-  const _updatedAt = updatedAt || '1995-11-17 03:24:00 PDT';
+  const _updatedAt = updatedAt || 'Fri, 17 Nov 1995 10:24:00 UTC';
   return db.none(
     'insert into results (event_id, master_id, updated_at) values ($1, $2, $3)',
     [0, masterId ? masterId : 0, new Date(_updatedAt)]

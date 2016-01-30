@@ -119,7 +119,7 @@ describe('app', () => {
             .set('Accept', 'application/json')
             .expect('Cache-Control', 'public, max-age=31536000')
             .expect('ETag', /.+/)
-            .expect('Last-Modified', 'Fri, 17 Nov 1995 18:24:00 GMT')
+            .expect('Last-Modified', 'Fri, 17 Nov 1995 10:24:00 GMT')
             .expect(200);
         })
         .then(() => expect(results.count()).to.eventually.eq(1));

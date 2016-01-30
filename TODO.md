@@ -1,11 +1,9 @@
 * Rework caching
-  * remove extra logging
   * ditch enhanced caching
   * use nginx proxy_cache (with file system)
   * tune nginx proxy cache to cache for 10s, re-use stale content, etc.
   * cache rendered JSON in memcached
     * add test for checking last updated_at
-    * use URL + updated_at timestamp key
     * rename webCache?
   * rename cache cache and get methods?
   * unit test all logic branches in app#get
