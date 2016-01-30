@@ -21,14 +21,8 @@ function cacheClient() {
   return this.cacheClient;
 }
 
-exports.cache = (eventId, updatedAt, response) => {
-  console.log(`cache ${this.key(eventId, updatedAt)}`);
-  return cacheClient().set(this.key(eventId, updatedAt), response, 600);
-};
-exports.get = (eventId, updatedAt) => {
-  console.log(`get ${this.key(eventId, updatedAt)}`);
-  return cacheClient().get(this.key(eventId, updatedAt));
-};
+exports.cache = (eventId, updatedAt, response) => cacheClient().set(this.key(eventId, updatedAt), response, 600);
+exports.get = (eventId, updatedAt) => cacheClient().get(this.key(eventId, updatedAt));
 exports.key = (eventId, updatedAt) => `/events/${eventId}/results.json?updatedAt=${updatedAt.valueOf()}`;
 
 // Only used by tests for now
