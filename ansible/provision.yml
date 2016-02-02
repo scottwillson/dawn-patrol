@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  sudo: yes
+  become: yes
 
   tasks:
     - shell: curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - creates=/usr/bin/node
@@ -69,22 +69,22 @@
       service: name=memcached state=restarted
 
 - hosts: all
-  sudo: yes
-  sudo_user: postgres
+  become: yes
+  become_user: postgres
 
   tasks:
     - postgresql_user: name=dawn-patrol password=dawn-patrol
     - postgresql_db: name=dawn-patrol owner=dawn-patrol
 
 - hosts: all
-  sudo: yes
-  sudo_user: dawn-patrol
+  become: yes
+  become_user: dawn-patrol
 
   tasks:
     - command: pm2 save
 
 - hosts: all
-  sudo: yes
+  become: yes
 
   tasks:
     - name: Start pm2 service
