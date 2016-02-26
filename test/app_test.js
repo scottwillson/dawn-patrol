@@ -11,6 +11,7 @@ const db = require('./db');
 const nock = require('nock');
 const masterAppHost = config.get('masterAppHost');
 const request = require('supertest-as-promised');
+const responseCache = require('../src/app/response_cache');
 const results = require('./app/results');
 
 describe('app', () => {
@@ -123,6 +124,24 @@ describe('app', () => {
             .expect(200);
         })
         .then(() => expect(results.count()).to.eventually.eq(1));
+    });
+
+    describe('response cached', () => {
+      beforeEach('cache response', () => responseCache.cache(0, new Date('Fri Nov 17 1995 02:24:00 -0800'), [{ 'person_id': 1 }]));
+
+      it('returns rendered JSON from response cache', () => {
+        return expect(results.count()).to.eventually.eq(1)
+          .then(() => {
+            return request(app)
+              .get('/events/0/results.json')
+              .set('Accept', 'application/json')
+              .expect('Cache-Control', 'public, max-age=31536000')
+              .expect('ETag', /.+/)
+              .expect('Last-Modified', 'Fri, 17 Nov 1995 10:24:00 GMT')
+              .expect(200, '[{"person_id":1}]');
+          })
+          .then(() => expect(results.count()).to.eventually.eq(1));
+      });
     });
 
     after(() => masterAppServer.done());

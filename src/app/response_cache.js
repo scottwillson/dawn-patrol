@@ -2,9 +2,11 @@ const config = require('config');
 const Memcached = require('memcached-promisify');
 
 function mockMemcached() {
+  const data = {};
+
   return {
-    get: () => new Promise(resolve => resolve(null)),
-    set: () => new Promise(resolve => resolve(true)),
+    get: (key) => new Promise(resolve => resolve(data[key])),
+    set: (key, value) => new Promise(resolve => resolve(data[key] = value)),
   };
 }
 

@@ -1,6 +1,5 @@
 * Rework caching
   * rename cache cache and get methods?
-  * unit test all logic branches in app#get
   * validate that Tue Jun 09 2015 08:24:00 GMT-0700 (PDT) is valid for Last-Modified header
 * proper response headers for caching
   * Also in cached nginx responses
@@ -57,3 +56,4 @@
 * integration test requests should ask for JSON
 * move mockMemcached
 * gracefully handle master downtime
+* ES6 lodash?
