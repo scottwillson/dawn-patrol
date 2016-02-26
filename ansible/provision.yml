@@ -11,7 +11,7 @@
     - apt: name=python-psycopg2 state=latest
     - apt: name=nginx state=latest
 
-    - lineinfile: dest=/etc/memcached.conf regexp='\A-l 127\.0\.0\.1' line='-l 0.0.0.0'
+    - lineinfile: dest=/etc/memcached.conf regexp='\A-l 127\.0\.0\.1' line='-l 0.0.0.0' state=absent
       notify:
         - restart memcached
 
@@ -33,6 +33,8 @@
       file: path=/etc/nginx/sites-enabled/default state=absent
       notify:
         - reload nginx
+
+    - file: path=/var/www/dawn-patrol/cache owner=www-data mode=0755 state=directory
 
     - name: install nginx config
       template: src=dawn-patrol.conf dest=/etc/nginx/sites-enabled/dawn-patrol.conf
