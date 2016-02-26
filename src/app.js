@@ -11,14 +11,6 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
 }
 
-function getFromCache(eventId, updatedAt) {
-  return responseCache.get(eventId, updatedAt);
-}
-
-function cache(eventId, eventResults, response) {
-  return responseCache.cache(eventId, eventResults, response);
-}
-
 function findUpdatedAt(eventResults) {
   return _(eventResults).map('updated_at').max();
 }
@@ -35,7 +27,7 @@ app.get('/events/:id/results.json', (req, res) => {
     .then(updatedAt => {
       if (updatedAt) {
         appendLastModified(res, updatedAt);
-        return getFromCache(eventId, updatedAt);
+        return responseCache.get(eventId, updatedAt);
       }
       return null;
     })
@@ -47,7 +39,7 @@ app.get('/events/:id/results.json', (req, res) => {
           const updatedAt = findUpdatedAt(eventResults);
           appendLastModified(res, updatedAt);
           res.json(eventResults);
-          return cache(eventId, updatedAt, eventResults);
+          return responseCache.cache(eventId, updatedAt, eventResults);
         });
     });
 });
