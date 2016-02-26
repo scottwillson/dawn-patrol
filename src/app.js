@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const app = express();
 
 const results = require('./app/results');
-const webCache = require('./app/web_cache');
+const responseCache = require('./app/response_cache');
 
 if (process.env.NODE_ENV !== 'test') {
   require('pmx').init();
@@ -12,11 +12,11 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 function getFromCache(eventId, updatedAt) {
-  return webCache.get(eventId, updatedAt);
+  return responseCache.get(eventId, updatedAt);
 }
 
 function cache(eventId, eventResults, response) {
-  return webCache.cache(eventId, eventResults, response);
+  return responseCache.cache(eventId, eventResults, response);
 }
 
 function findUpdatedAt(eventResults) {

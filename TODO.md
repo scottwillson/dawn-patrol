@@ -1,7 +1,4 @@
 * Rework caching
-  * cache rendered JSON in memcached
-    * add test for checking last updated_at
-    * rename webCache?
   * rename cache cache and get methods?
   * unit test all logic branches in app#get
   * validate that Tue Jun 09 2015 08:24:00 GMT-0700 (PDT) is valid for Last-Modified header

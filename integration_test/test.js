@@ -7,7 +7,7 @@ const retry = require('trytryagain');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-const webCache = require('../src/app/web_cache');
+const responseCache = require('../src/app/response_cache');
 
 const appHost = config.get('appHost');
 const masterAppHost = config.get('masterAppHost');
@@ -90,14 +90,14 @@ describe('system', function describeSystem() {
   const eventId = randomEventId();
   const updatedAt = new Date('Tue, 25 Nov 2014 02:08:28 UTC');
 
-  before(() => webCache.del(eventId, updatedAt).then(() => deleteAllResults()));
+  before(() => responseCache.del(eventId, updatedAt).then(() => deleteAllResults()));
 
   it('should store, forward, and cache master requests', () => {
     return expect(resultsCount()).to.eventually.equal(0)
-      .then(() => expect(webCache.get(eventId, updatedAt)).to.eventually.be.undefined)
+      .then(() => expect(responseCache.get(eventId, updatedAt)).to.eventually.be.undefined)
       .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectResultsCountToEventuallyEqual(3))
-      .then(() => expect(webCache.get(eventId, updatedAt)).to.eventually.not.be.undefined)
+      .then(() => expect(responseCache.get(eventId, updatedAt)).to.eventually.not.be.undefined)
       .then(() => expectMasterToReturnResultsJSON(eventId))
       .then(() => expectAppToReturnResultsJSON(eventId));
   });
