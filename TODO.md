@@ -1,24 +1,19 @@
 * Rework caching
-  * ditch enhanced caching
-  * use nginx proxy_cache (with file system)
-  * tune nginx proxy cache to cache for 10s, re-use stale content, etc.
   * cache rendered JSON in memcached
     * add test for checking last updated_at
     * rename webCache?
   * rename cache cache and get methods?
   * unit test all logic branches in app#get
   * validate that Tue Jun 09 2015 08:24:00 GMT-0700 (PDT) is valid for Last-Modified header
-* fix nginx install
-  * fix nginx log locations to match Ubuntu
 * proper response headers for caching
   * Also in cached nginx responses
-* Fix memcached config dupe lines
 * Test 404s
   * test what happens with master
   * mock in mock master
   * ensure headers are correct
 * Test 500, 503, 302 as well
 * All https
+* upgrade vagrant box to 15.10
 * Add URLs like /people/2709/2014.json as those are the ones bots actually hit
   * Change to /people/2709.json?year=2014 ?
   * Need to think about caching
@@ -32,6 +27,7 @@
 * Redirect production requests to here
 * Docker?
 * Use PM2 'ecosystem'?
+* upgrade to newer nginx and use: use_temp_path=off
 * Authorization for admin actions would be nice!
 * Store normalized data
 * Separate each service into separate project?
