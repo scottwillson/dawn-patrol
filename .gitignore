@@ -2,6 +2,7 @@
 ansible/.ssh/*
 ansible/vagrant
 ansible/production
+ansible/provision.retry
 ansible/staging
 node_modules
 tmp/*
