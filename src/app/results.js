@@ -33,7 +33,12 @@ exports.forEvent = (eventId) => {
       if (results.length) return results;
 
       return masterServer.resultsForEvent(eventId)
-        .then(response => this.insertResults(response));
+        .then(response => {
+          if (response.error) {
+            return response;
+          }
+          return this.insertResults(response);
+        });
     })
     .catch(e => console.error(`${e} getting results for event ID ${eventId}`));
 };

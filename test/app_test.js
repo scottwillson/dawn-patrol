@@ -107,6 +107,25 @@ describe('app', () => {
     after(() => masterAppServer.done());
   });
 
+  describe('GET /events/:id/results.json for nonexistent event ID', () => {
+    const masterAppServer = nock(`http://${masterAppHost}`)
+      .get('/events/404/results.json')
+      .reply(404, '<html><body>You are being <a href="http://obra.org/schedule">redirected</a>.</body></html>');
+
+    it('returns a 404', () => {
+      return expect(results.count()).to.eventually.eq(0)
+        .then(() => expect(results.countByEvent(23594)).to.eventually.eq(0))
+        .then(() => {
+          return request(app)
+            .get('/events/404/results.json')
+            .expect(404);
+        })
+        .then(() => expect(results.count()).to.eventually.eq(0));
+    });
+
+    after(() => masterAppServer.done());
+  });
+
   describe('GET /events/:id/results.json for existing ID', () => {
     const masterAppServer = nock(`http://${masterAppHost}`);
 

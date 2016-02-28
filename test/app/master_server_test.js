@@ -41,4 +41,17 @@ describe('masterServer', () => {
 
     after(() => masterAppServer.done());
   });
+
+  describe('404', () => {
+    const masterAppServer = nock(`http://${masterAppHost}`)
+      .get('/events/404/results.json')
+      .reply(404, '<html><body>You are being <a href="http://obra.org/schedule">redirected</a>.</body></html>');
+
+    it('returns error message', () => masterServer.resultsForEvent(404)
+        .then(response => {
+          return expect(response).to.eql({ error: 404 });
+        }));
+
+    after(() => masterAppServer.done());
+  });
 });

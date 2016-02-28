@@ -186,6 +186,7 @@ function json(eventId) {
     }  ]`;
 }
 
+app.get('/events/404/results.json', (req, res) => res.status(404).send('<html><body>You are being <a href="http://obra.org/schedule">redirected</a>.</body></html>'));
 app.get('/events/:id/results.json', (req, res) => res.send(json(req.params.id)));
 
 module.exports.app = app;

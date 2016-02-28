@@ -1,12 +1,10 @@
-* Rework caching
-  * rename cache cache and get methods?
-  * validate that Tue Jun 09 2015 08:24:00 GMT-0700 (PDT) is valid for Last-Modified header
-* proper response headers for caching
-  * Also in cached nginx responses
 * Test 404s
   * test what happens with master
   * mock in mock master
   * ensure headers are correct
+  * don't add anything to DB
+  * reconsider signaling of "event does not exists" vs. "no results"
+  * use "and error?"
 * Test 500, 503, 302 as well
 * All https
 * upgrade vagrant box to 15.10

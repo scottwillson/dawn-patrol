@@ -16,10 +16,17 @@ exports.resultsForEvent = eventId => {
   const options = {
     url,
     headers: { 'User-Agent': 'dawn-patrol' },
+    resolveWithFullResponse: true,
+    simple: false,
   };
 
   return request.get(options)
-    .then(response => parseResponse(response))
+    .then(response => {
+      if (response.statusCode === 404) {
+        return { error: 404 };
+      }
+      return parseResponse(response.body);
+    })
     .catch(e => {
       console.error(`${e} getting results from ${url}`);
       throw e;
