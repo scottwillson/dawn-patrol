@@ -49,7 +49,7 @@ describe('masterServer', () => {
 
     it('returns error message', () => masterServer.resultsForEvent(404)
         .then(response => {
-          return expect(response).to.eql({ error: 404 });
+          return expect(response).to.eql({ error: 'not found' });
         }));
 
     after(() => masterAppServer.done());

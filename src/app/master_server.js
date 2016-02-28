@@ -23,7 +23,7 @@ exports.resultsForEvent = eventId => {
   return request.get(options)
     .then(response => {
       if (response.statusCode === 404) {
-        return { error: 404 };
+        return { error: 'not found' };
       }
       return parseResponse(response.body);
     })

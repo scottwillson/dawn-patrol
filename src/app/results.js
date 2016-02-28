@@ -34,9 +34,7 @@ exports.forEvent = (eventId) => {
 
       return masterServer.resultsForEvent(eventId)
         .then(response => {
-          if (response.error) {
-            return response;
-          }
+          if (response.error === 'not found') return null;
           return this.insertResults(response);
         });
     })

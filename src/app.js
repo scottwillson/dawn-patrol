@@ -36,9 +36,8 @@ app.get('/events/:id/results.json', (req, res) => {
 
       return results.forEvent(eventId)
         .then(eventResults => {
-          if (eventResults.error) {
-            return res.status(404).end();
-          }
+          if (!eventResults) return res.status(404).end();
+
           const updatedAt = findUpdatedAt(eventResults);
           appendLastModified(res, updatedAt);
           res.json(eventResults);
