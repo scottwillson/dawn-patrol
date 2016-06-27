@@ -1,6 +1,4 @@
 * Test 404s
-  * test what happens with master
-  * mock in mock master
   * ensure headers are correct
   * don't add anything to DB
   * reconsider signaling of "event does not exists" vs. "no results"
