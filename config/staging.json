@@ -1,7 +1,0 @@
-{
-  "appHost": "dawnpatrol.staging.rocketsurgeryllc.com",
-  "echoServer": {
-    "webServerLogFilePath": "/var/log/nginx/obra.access.log"
-  },
-  "masterAppHost": "staging.obra.org"
-}
