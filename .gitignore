@@ -5,6 +5,7 @@ ansible/production
 ansible/provision.retry
 ansible/staging
 node_modules
+npm-debug.log
 tmp/*
 .DS_Store
 *.swp
