@@ -28,5 +28,4 @@ ratings:
 exclude_paths:
 - config/
 - db/
-- spec/
 - vendor/
