@@ -1,0 +1,57 @@
+@import "bootstrap";
+
+$green-yellow: rgb(208, 250, 48);
+
+$highlight-color: $green-yellow;
+
+html {
+  font-size: 13px;
+}
+
+body {
+  padding: 0.618rem;
+  @include media-breakpoint-up(md) {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+  }
+}
+
+.container {
+  padding: 0;
+}
+
+a {
+  color: black;
+}
+
+a:hover {
+  background-color: $highlight-color;
+  color: black;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 1.618rem;
+  text-align: center;
+}
+
+.navbar {
+  font-weight: bold;
+  margin-bottom: 0.618rem;
+  padding-bottom: 0;
+  padding-left: 0.618rem;
+  padding-right: 0.618rem;
+  padding-top: 0;
+  text-align: center;
+  @include media-breakpoint-up(md) {
+    margin-bottom: 1.618rem;
+  }
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.date {
+  white-space: nowrap;
+}
