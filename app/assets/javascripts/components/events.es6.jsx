@@ -9,8 +9,8 @@ class Events extends React.Component {
     return (
       <div>
         <h2>2016 Schedule</h2>
-        <table className="table table-sm events">
-          <thead>
+        <table className="table table-sm table-striped events">
+          <thead className="thead-default">
             <tr>
               <th className="date">Date</th>
               <th>Name</th>

@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
-gem "rails", ">= 5.0.0.rc2", "< 5.1"
-gem "pg", "~> 0.18"
+gem "rails", ">= 5.0.0", "< 5.1"
+gem "pg"
 gem "puma", "~> 3.0"
 gem "sass-rails", "~> 5.0"
 gem "uglifier", ">= 1.3.0"
@@ -15,6 +15,7 @@ gem "jbuilder", "~> 2.5"
 gem "bcrypt", "~> 3.1.7"
 gem "react-rails"
 gem "bootstrap", "~> 4.0.0.alpha3"
+gem "mysql2"
 
 group :development, :test do
   gem "byebug", platform: :mri

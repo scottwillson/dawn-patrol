@@ -1,0 +1,13 @@
+test:
+  adapter: mysql2
+  database: dawn-patrol-racing_on_rails_test
+  username: root
+  host: localhost
+  encoding: utf8
+
+development:
+  adapter: mysql2
+  database: dawn-patrol-racing_on_rails_development
+  username: root
+  host: localhost
+  encoding: utf8

@@ -10,21 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628134129) do
+ActiveRecord::Schema.define(version: 20160705022106) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "events_events", force: :cascade do |t|
-    t.datetime "starts_at"
+  create_table "events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.date     "date"
     t.string   "discipline"
     t.string   "city"
     t.string   "name"
-    t.string   "promoter_name"
-    t.string   "phone"
     t.string   "state"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
