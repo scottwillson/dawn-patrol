@@ -16,6 +16,7 @@ gem "bcrypt", "~> 3.1.7"
 gem "react-rails"
 gem "bootstrap", "~> 4.0.0.alpha3"
 gem "mysql2"
+gem "acts_as_tenant"
 
 group :development, :test do
   gem "byebug", platform: :mri

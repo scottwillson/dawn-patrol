@@ -2,8 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "DawnPatrol", type: :feature do
   it "imports Racing on Rails data and displays it on a webpage" do
-    RacingOnRails::ImportDatabase.new.do_it!
+    travel_to 1.day.ago do
+      RacingOnRails::ImportDatabase.new(association: "atra").do_it!
+    end
+
+    RacingOnRails::ImportDatabase.new(association: "wsba").do_it!
     visit "/events/events"
-    expect(page).to have_css ".events a", text: "Banana Belt Road Race"
+    expect(page).to have_css ".events a", text: "Hellyer Challenge"
+    expect(page).to have_no_css ".events a", text: "Tahuya-Seabeck-Tahuya Road Race"
   end
 end

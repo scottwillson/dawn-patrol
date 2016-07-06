@@ -10,12 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160628134129) do
+ActiveRecord::Schema.define(version: 20160705185919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "dawn_patrol_associations", force: :cascade do |t|
+    t.string   "key",        null: false
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_dawn_patrol_associations_on_key", using: :btree
+  end
+
   create_table "events_events", force: :cascade do |t|
+    t.integer  "dawn_patrol_association_id", null: false
     t.datetime "starts_at"
     t.string   "discipline"
     t.string   "city"
@@ -23,8 +32,11 @@ ActiveRecord::Schema.define(version: 20160628134129) do
     t.string   "promoter_name"
     t.string   "phone"
     t.string   "state"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["dawn_patrol_association_id"], name: "index_events_events_on_dawn_patrol_association_id", using: :btree
+    t.index ["name"], name: "index_events_events_on_name", using: :btree
+    t.index ["starts_at"], name: "index_events_events_on_starts_at", using: :btree
   end
 
 end

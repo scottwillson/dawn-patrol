@@ -11,8 +11,7 @@ def system!(*args)
 end
 
 chdir "#{APP_ROOT}/racing_on_rails_stub" do
-  system! 'bin/rails db:setup'
-  system! 'RAILS_ENV=test bin/rails db:seed'
+  system! 'bin/setup'
 end
 
 chdir APP_ROOT do
