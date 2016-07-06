@@ -10,7 +10,7 @@ def system!(*args)
   system(*args) || abort("\n== Command #{args} failed ==")
 end
 
-chdir "#{APP_ROOT}/racing_on_rails_stub" do
+chdir "#{APP_ROOT}/racing_on_rails" do
   system! 'bin/setup'
 end
 
