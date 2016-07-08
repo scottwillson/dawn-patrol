@@ -16,11 +16,12 @@ ActiveRecord::Schema.define(version: 20160705185919) do
   enable_extension "plpgsql"
 
   create_table "dawn_patrol_associations", force: :cascade do |t|
-    t.string   "key",        null: false
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["key"], name: "index_dawn_patrol_associations_on_key", using: :btree
+    t.string   "acronym",    default: "CBRA",                                      null: false
+    t.string   "host",       default: "localhost|0.0.0.0|127.0.0.1|::1|test.host", null: false
+    t.string   "name",       default: "Cascadia Bicycle Racing Association",       null: false
+    t.datetime "created_at",                                                       null: false
+    t.datetime "updated_at",                                                       null: false
+    t.index ["acronym"], name: "index_dawn_patrol_associations_on_acronym", using: :btree
   end
 
   create_table "events_events", force: :cascade do |t|

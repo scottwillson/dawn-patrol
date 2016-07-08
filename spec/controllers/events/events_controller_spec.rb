@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Events::EventsController, type: :controller do
   before(:each) do
-    DawnPatrol::Association.create!(key: "cbra", name: "Cascadia Bicycle Racing Association")
+    DawnPatrol::Association.create!
   end
 
   describe "#index" do

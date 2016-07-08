@@ -23,7 +23,10 @@ module RacingOnRails
     def association_instance
       RacingOnRails::RacingAssociation.association = @association
       racing_on_rails_racing_association = RacingOnRails::RacingAssociation.first
-      DawnPatrol::Association.where(key: @association, name: racing_on_rails_racing_association.name).first_or_create!
+      DawnPatrol::Association.where(
+        acronym: racing_on_rails_racing_association.short_name,
+        name: racing_on_rails_racing_association.name
+      ).first_or_create!
     end
   end
 end

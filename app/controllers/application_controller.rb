@@ -5,15 +5,9 @@ class ApplicationController < ActionController::Base
   private
 
   def set_current_tenant_by_header
-    if default_to_first_association?
-      ActsAsTenant.current_tenant = DawnPatrol::Association.order(:created_at).first
-    else
-      ActsAsTenant.current_tenant = DawnPatrol::Association.where(key: headers[:association]).first
-    end
-  end
-
-  def default_to_first_association?
-    headers[:association].blank? && (Rails.env.test? || Rails.env.development?)
+    ActsAsTenant.current_tenant = DawnPatrol::Association.where("host ~ ?", request.host).first
+    logger.debug "Found association '#{current_tenant&.acronym}' for host '#{request.host}'"
+    current_tenant
   end
 
   def current_tenant

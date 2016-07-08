@@ -4,10 +4,10 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
   it "imports Racing on Rails data" do
     expect(DawnPatrol::Association.count).to eq(0)
 
-    RacingOnRails::ImportDatabase.new(association: "atra").do_it!
-    RacingOnRails::ImportDatabase.new(association: "wsba").do_it!
+    RacingOnRails::ImportDatabase.new(association: "ATRA").do_it!
+    RacingOnRails::ImportDatabase.new(association: "WSBA").do_it!
 
-    ActsAsTenant.with_tenant(DawnPatrol::Association.where(key: "atra").first!) do
+    ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "ATRA").first!) do
       expect(Events::Event.count).to eq(1)
       event = Events::Event.first
       expect(event.name).to eq("Hellyer Challenge")
@@ -17,7 +17,7 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(event.state).to eq("CA")
     end
 
-    ActsAsTenant.with_tenant(DawnPatrol::Association.where(key: "wsba").first!) do
+    ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "WSBA").first!) do
       expect(Events::Event.count).to eq(1)
       event = Events::Event.first
       expect(event.name).to eq("Tahuya-Seabeck-Tahuya Road Race")

@@ -1,4 +1,4 @@
-association = DawnPatrol::Association.create!(key: "cbra", name: "Cascadia Bicycle Racing Association")
+association = DawnPatrol::Association.create!
 
 ActsAsTenant.with_tenant(association) do
   Events::Event.create!(
