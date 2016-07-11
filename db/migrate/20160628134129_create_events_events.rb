@@ -8,6 +8,7 @@ class CreateEventsEvents < ActiveRecord::Migration[5.0]
       t.string :city
       t.string :name
       t.string :promoter_name
+      t.integer :racing_on_rails_id
       t.string :phone
       t.string :state
 

@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20160705185919) do
     t.datetime "starts_at"
     t.string   "discipline"
     t.string   "city"
+    t.integer   "racing_on_rails_id"
     t.string   "name"
     t.string   "promoter_name"
     t.string   "phone"

@@ -31,7 +31,7 @@ module RacingOnRails
     def event_attributes(racing_on_rails_event)
       attributes = racing_on_rails_event.attributes.slice(*COPIED_ATTRIBUTE_KEYS)
       attributes[:starts_at] = racing_on_rails_event.date.beginning_of_day
-      # attributes[:racing_on_rails_id] = attributes[:id]
+      attributes[:racing_on_rails_id] = racing_on_rails_event.id
       attributes
     end
   end
