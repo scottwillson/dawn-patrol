@@ -1,6 +1,7 @@
 module RacingOnRails
   class ImportDatabase
-    KEYS = %w{ city discipline name state }
+    KEYS = %w{ city date discipline id name state }
+    COPIED_ATTRIBUTE_KEYS = %w{ city discipline name state }
 
     def initialize(attributes = {})
       @association = attributes[:association]
@@ -11,10 +12,8 @@ module RacingOnRails
       RacingOnRails::Event.association = @association
       ActsAsTenant.with_tenant(association_instance) do
         RacingOnRails::Event.transaction do
-          RacingOnRails::Event.find_each do |racing_on_rails_event|
-            attributes = racing_on_rails_event.attributes.slice(*KEYS)
-            attributes[:starts_at] = racing_on_rails_event.date.beginning_of_day
-            Events::Event.create!(attributes)
+          RacingOnRails::Event.select(*KEYS).find_each do |racing_on_rails_event|
+            Events::Event.create!(event_attributes(racing_on_rails_event))
           end
         end
       end
@@ -27,6 +26,13 @@ module RacingOnRails
         acronym: racing_on_rails_racing_association.short_name,
         name: racing_on_rails_racing_association.name
       ).first_or_create!
+    end
+
+    def event_attributes(racing_on_rails_event)
+      attributes = racing_on_rails_event.attributes.slice(*COPIED_ATTRIBUTE_KEYS)
+      attributes[:starts_at] = racing_on_rails_event.date.beginning_of_day
+      # attributes[:racing_on_rails_id] = attributes[:id]
+      attributes
     end
   end
 end

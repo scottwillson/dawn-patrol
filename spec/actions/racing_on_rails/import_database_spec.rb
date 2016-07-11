@@ -18,8 +18,8 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
     end
 
     ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "WSBA").first!) do
-      expect(Events::Event.count).to eq(1)
-      event = Events::Event.first
+      expect(Events::Event.count).to eq(2)
+      event = Events::Event.order(:starts_at).first
       expect(event.name).to eq("Tahuya-Seabeck-Tahuya Road Race")
       expect(event.city).to eq("Tahuya")
       expect(event.starts_at).to eq(Time.zone.local(2004, 5, 10))
