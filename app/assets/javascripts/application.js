@@ -19,4 +19,5 @@
 //= require components
 //= require tether
 //= require bootstrap-sprockets
+//= require query
 //= require_tree .

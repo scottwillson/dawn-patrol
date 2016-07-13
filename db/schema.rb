@@ -25,17 +25,17 @@ ActiveRecord::Schema.define(version: 20160705185919) do
   end
 
   create_table "events_events", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id", null: false
-    t.datetime "starts_at"
+    t.integer  "dawn_patrol_association_id",                       null: false
+    t.datetime "starts_at",                                        null: false
     t.string   "discipline"
     t.string   "city"
-    t.integer   "racing_on_rails_id"
-    t.string   "name"
+    t.string   "name",                       default: "New Event", null: false
     t.string   "promoter_name"
+    t.integer  "racing_on_rails_id"
     t.string   "phone"
     t.string   "state"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.index ["dawn_patrol_association_id"], name: "index_events_events_on_dawn_patrol_association_id", using: :btree
     t.index ["name"], name: "index_events_events_on_name", using: :btree
     t.index ["starts_at"], name: "index_events_events_on_starts_at", using: :btree

@@ -3,6 +3,9 @@ class Events::Event < ApplicationRecord
 
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
 
+  validates :name, presence: true
+  validates :starts_at, presence: true
+
   def location
     [ city, state ].join(", ")
   end

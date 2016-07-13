@@ -1,7 +1,7 @@
 class Events extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {events: []};
+    this.state = {events: [], year: null};
     this.componentWillMount = this.componentWillMount.bind(this);
   }
 
@@ -31,8 +31,16 @@ class Events extends React.Component {
   componentWillMount() {
     superagent
       .get('/events/events.json')
+      .query(this.jsonQueryParams())
       .end(function(err, res) {
         this.setState({events: res.body});
       }.bind(this));
+  }
+
+  jsonQueryParams() {
+    if (query.get('year')) {
+      return {year: query.get('year')}
+    }
+    return {};
   }
 }
