@@ -7,7 +7,7 @@ class Event extends React.Component {
   render () {
     return (
       <tr>
-        <td className="date">Sun 11/27</td>
+        <td className="date">{moment(this.state.starts_at).format('ddd M/D')}</td>
         <td>
           <a href={`/results/event_results/${this.state.id}`}>{this.state.name}</a>
         </td>

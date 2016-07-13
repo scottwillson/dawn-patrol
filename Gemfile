@@ -41,6 +41,7 @@ end
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 source "https://rails-assets.org" do
+  gem "rails-assets-moment"
   gem "rails-assets-query"
   gem "rails-assets-tether", ">= 1.1.0"
 end

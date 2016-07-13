@@ -20,4 +20,5 @@
 //= require tether
 //= require bootstrap-sprockets
 //= require query
+//= require moment
 //= require_tree .
