@@ -24,7 +24,7 @@ a {
   color: black;
 }
 
-a:hover {
+a:hover, .navbar-dark .navbar-brand:hover {
   background-color: $highlight-color;
   color: black;
 }
