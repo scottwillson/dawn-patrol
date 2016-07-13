@@ -17,6 +17,6 @@ class ApplicationController < ActionController::Base
   end
 
   def current_tenant
-    ActsAsTenant.current_tenant
+    @association = ActsAsTenant.current_tenant
   end
 end
