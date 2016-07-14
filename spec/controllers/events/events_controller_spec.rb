@@ -1,4 +1,5 @@
-require 'rails_helper'
+require "rails_helper"
+
 
 RSpec.describe Events::EventsController, type: :controller do
   before(:each) do
@@ -23,7 +24,7 @@ RSpec.describe Events::EventsController, type: :controller do
     end
 
     it "sets current_tenant from request host" do
-      atra = DawnPatrol::Association.create!(host: "raceatra.com", acronym: "ATRA")
+      atra = DawnPatrol::Association.create!(host: "raceatra.com", acronym: "ATRA", name: "ATRA")
 
       @request.host = "staging.raceatra.com"
       get :index
@@ -32,7 +33,7 @@ RSpec.describe Events::EventsController, type: :controller do
     end
 
     it "honors X-Forwarded-For" do
-      atra = DawnPatrol::Association.create!(host: "raceatra.com", acronym: "ATRA")
+      atra = DawnPatrol::Association.create!(host: "raceatra.com", acronym: "ATRA", name: "ATRA")
 
       @request.host = "0.0.0.0"
       @request.headers["X-Forwarded-For"] = "raceatra.com"

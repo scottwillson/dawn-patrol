@@ -25,6 +25,7 @@ module RacingOnRails
       racing_on_rails_racing_association = RacingOnRails::RacingAssociation.first
       DawnPatrol::Association.where(
         acronym: racing_on_rails_racing_association.short_name,
+        host: "localhost|0.0.0.0|127.0.0.1|::1|test.host|#{racing_on_rails_racing_association.short_name.downcase}.local",
         name: racing_on_rails_racing_association.name
       ).first_or_create!
     end

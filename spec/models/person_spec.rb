@@ -1,4 +1,5 @@
-require 'rails_helper'
+require "rails_helper"
+
 
 RSpec.describe Person, type: :model do
   it "creates unamed Person" do

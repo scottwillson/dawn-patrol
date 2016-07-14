@@ -1,4 +1,5 @@
-require 'rails_helper'
+require "rails_helper"
+
 
 RSpec.describe Events::Event, type: :model do
   it "creates blank Event" do
