@@ -11,7 +11,7 @@ class Event extends React.Component {
         <td>
           <a href={`/results/event_results/${this.state.id}`}>{this.state.name}</a>
         </td>
-        <td className="hidden-sm-down">{this.state.promoter_name}</td>
+        <td className="hidden-sm-down">{this.state.promoter_names.join('<br/>')}</td>
         <td className="hidden-sm-down">{this.state.phone}</td>
         <td className="hidden-sm-down">{this.state.discipline}</td>
         <td className="hidden-sm-down">{this.state.location}</td>

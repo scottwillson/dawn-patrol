@@ -16,7 +16,7 @@ gem "bcrypt", "~> 3.1.7"
 gem "react-rails"
 gem "bootstrap", "~> 4.0.0.alpha3"
 gem "mysql2"
-gem "acts_as_tenant"
+gem "acts_as_tenant", git: "https://github.com/ErwinM/acts_as_tenant", ref: "960d3df"
 
 group :development, :test do
   gem "byebug", platform: :mri

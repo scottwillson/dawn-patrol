@@ -6,7 +6,7 @@ ActsAsTenant.with_tenant(association) do
     discipline: "Road",
     city: "Portland",
     name: "Copperopolis Road Race",
-    promoter_name: "Jeff Mitchem",
+    promoter: Events::Promoter.new(person: Person.create!(name: "Jeff Mitchem")),
     phone: "(503) 555-1212"
   )
 end

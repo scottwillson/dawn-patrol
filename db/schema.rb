@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705185919) do
+ActiveRecord::Schema.define(version: 20160713172101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,23 @@ ActiveRecord::Schema.define(version: 20160705185919) do
     t.index ["dawn_patrol_association_id"], name: "index_events_events_on_dawn_patrol_association_id", using: :btree
     t.index ["name"], name: "index_events_events_on_name", using: :btree
     t.index ["starts_at"], name: "index_events_events_on_starts_at", using: :btree
+  end
+
+  create_table "events_promoters", force: :cascade do |t|
+    t.integer  "dawn_patrol_association_id", null: false
+    t.integer  "event_id",                   null: false
+    t.integer  "person_id",                  null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["dawn_patrol_association_id"], name: "index_events_promoters_on_dawn_patrol_association_id", using: :btree
+    t.index ["event_id"], name: "index_events_promoters_on_event_id", using: :btree
+    t.index ["person_id"], name: "index_events_promoters_on_person_id", using: :btree
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.integer "dawn_patrol_association_id", null: false
+    t.string  "name"
+    t.index ["dawn_patrol_association_id"], name: "index_people_on_dawn_patrol_association_id", using: :btree
   end
 
 end

@@ -1,9 +1,12 @@
-insert into events (date, discipline, city, id, name, state, type, created_at, updated_at) values (
+insert into people (id, first_name, last_name, name) values (1, "Ryan", "Rickerts", "Ryan Rickerts");
+
+insert into events (date, discipline, city, id, name, promoter_id, state, type, created_at, updated_at) values (
   '2004-05-10',
   'Road',
   'Tahuya',
   1,
   'Tahuya-Seabeck-Tahuya Road Race',
+  1,
   'WA',
   'SingleDayEvent',
   '2004-02-07 11:34:00',

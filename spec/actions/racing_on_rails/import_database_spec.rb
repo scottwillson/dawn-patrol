@@ -16,6 +16,7 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(event.starts_at).to eq(Time.zone.local(2009, 7, 3))
       expect(event.discipline).to eq("Track")
       expect(event.state).to eq("CA")
+      expect(event.promoter_names).to contain_exactly("Mike Murray")
     end
 
     ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "WSBA").first!) do
@@ -27,6 +28,7 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(event.starts_at).to eq(Time.zone.local(2004, 5, 10))
       expect(event.discipline).to eq("Road")
       expect(event.state).to eq("WA")
+      expect(event.promoter_names).to contain_exactly("Ryan Rickerts")
     end
   end
 end

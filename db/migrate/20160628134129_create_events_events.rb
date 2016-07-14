@@ -7,7 +7,6 @@ class CreateEventsEvents < ActiveRecord::Migration[5.0]
       t.string :discipline
       t.string :city
       t.string :name, null: false, default: "New Event"
-      t.string :promoter_name
       t.integer :racing_on_rails_id
       t.string :phone
       t.string :state

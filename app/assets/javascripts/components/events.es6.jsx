@@ -33,6 +33,10 @@ class Events extends React.Component {
       .get('/events/events.json')
       .query(this.jsonQueryParams())
       .end(function(err, res) {
+        if (err) {
+          console.error(err);
+          return false;
+        }
         this.setState({events: res.body});
       }.bind(this));
   }
