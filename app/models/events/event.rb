@@ -7,6 +7,10 @@ class Events::Event < ApplicationRecord
   validates :name, presence: true
   validates :starts_at, presence: true
 
+  default_value_for :starts_at do
+    Time.current.beginning_of_day
+  end
+
   def location
     [ city, state ].join(", ")
   end
