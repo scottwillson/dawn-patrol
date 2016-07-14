@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713172101) do
+ActiveRecord::Schema.define(version: 20160714163950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,22 +21,33 @@ ActiveRecord::Schema.define(version: 20160713172101) do
     t.string   "name",       default: "Cascadia Bicycle Racing Association",       null: false
     t.datetime "created_at",                                                       null: false
     t.datetime "updated_at",                                                       null: false
-    t.index ["acronym"], name: "index_dawn_patrol_associations_on_acronym", using: :btree
+    t.index ["acronym"], name: "index_dawn_patrol_associations_on_acronym", unique: true, using: :btree
+    t.index ["host"], name: "index_dawn_patrol_associations_on_host", unique: true, using: :btree
+    t.index ["name"], name: "index_dawn_patrol_associations_on_name", unique: true, using: :btree
+  end
+
+  create_table "disciplines", force: :cascade do |t|
+    t.integer  "dawn_patrol_association_id",                  null: false
+    t.string   "name",                       default: "Road", null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.index ["dawn_patrol_association_id", "name"], name: "index_disciplines_on_dawn_patrol_association_id_and_name", unique: true, using: :btree
+    t.index ["dawn_patrol_association_id"], name: "index_disciplines_on_dawn_patrol_association_id", using: :btree
   end
 
   create_table "events_events", force: :cascade do |t|
     t.integer  "dawn_patrol_association_id",                       null: false
+    t.integer  "discipline_id",                                    null: false
     t.datetime "starts_at",                                        null: false
-    t.string   "discipline"
     t.string   "city"
     t.string   "name",                       default: "New Event", null: false
-    t.string   "promoter_name"
     t.integer  "racing_on_rails_id"
     t.string   "phone"
     t.string   "state"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.index ["dawn_patrol_association_id"], name: "index_events_events_on_dawn_patrol_association_id", using: :btree
+    t.index ["discipline_id"], name: "index_events_events_on_discipline_id", using: :btree
     t.index ["name"], name: "index_events_events_on_name", using: :btree
     t.index ["starts_at"], name: "index_events_events_on_starts_at", using: :btree
   end
@@ -53,9 +64,12 @@ ActiveRecord::Schema.define(version: 20160713172101) do
   end
 
   create_table "people", force: :cascade do |t|
-    t.integer "dawn_patrol_association_id", null: false
-    t.string  "name"
+    t.integer  "dawn_patrol_association_id", null: false
+    t.string   "name"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["dawn_patrol_association_id"], name: "index_people_on_dawn_patrol_association_id", using: :btree
+    t.index ["name"], name: "index_people_on_name", using: :btree
   end
 
 end

@@ -2,6 +2,7 @@ class Events::Event < ApplicationRecord
   acts_as_tenant :dawn_patrol_association
 
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
+  belongs_to :discipline
   has_many :promoters
 
   validates :name, presence: true
@@ -9,6 +10,10 @@ class Events::Event < ApplicationRecord
 
   default_value_for :starts_at do
     Time.current.beginning_of_day
+  end
+
+  default_value_for :discipline do
+    Discipline.where(name: "Road").first_or_create
   end
 
   def location

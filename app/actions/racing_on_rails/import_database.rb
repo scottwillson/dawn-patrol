@@ -1,6 +1,6 @@
 module RacingOnRails
   class ImportDatabase
-    COPIED_ATTRIBUTE_KEYS = %w{ city discipline name state }
+    COPIED_ATTRIBUTE_KEYS = %w{ city name state }
 
     def initialize(attributes = {})
       @association = attributes[:association]
@@ -33,6 +33,7 @@ module RacingOnRails
     def event_attributes(racing_on_rails_event)
       attributes = racing_on_rails_event.attributes .slice(*COPIED_ATTRIBUTE_KEYS)
 
+      attributes[:discipline] = Discipline.where(name: racing_on_rails_event.discipline).first_or_create!
       attributes[:promoter] = promoter(racing_on_rails_event)
       attributes[:racing_on_rails_id] = racing_on_rails_event.id
       attributes[:starts_at] = racing_on_rails_event.date.beginning_of_day

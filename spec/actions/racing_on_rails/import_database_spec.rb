@@ -14,7 +14,7 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(event.city).to eq("San Jose")
       expect(event.racing_on_rails_id).to eq(1)
       expect(event.starts_at).to eq(Time.zone.local(2009, 7, 3))
-      expect(event.discipline).to eq("Track")
+      expect(event.discipline.name).to eq("Track")
       expect(event.state).to eq("CA")
       expect(event.promoter_names).to contain_exactly("Mike Murray")
     end
@@ -26,7 +26,7 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(event.city).to eq("Tahuya")
       expect(event.racing_on_rails_id).to eq(1)
       expect(event.starts_at).to eq(Time.zone.local(2004, 5, 10))
-      expect(event.discipline).to eq("Road")
+      expect(event.discipline.name).to eq("Road")
       expect(event.state).to eq("WA")
       expect(event.promoter_names).to contain_exactly("Ryan Rickerts")
     end

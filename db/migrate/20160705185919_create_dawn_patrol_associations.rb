@@ -5,7 +5,9 @@ class CreateDawnPatrolAssociations < ActiveRecord::Migration[5.0]
       t.string :host, null: false, default: "localhost|0.0.0.0|127.0.0.1|::1|test.host", unique: true
       t.string :name, null: false, default: "Cascadia Bicycle Racing Association", unique: true
 
-      t.index :acronym
+      t.index :acronym, unique: true
+      t.index :host, unique: true
+      t.index :name, unique: true
 
       t.timestamps
     end
