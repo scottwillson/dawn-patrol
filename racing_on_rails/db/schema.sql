@@ -306,8 +306,8 @@ CREATE TABLE `events` (
   `instructional` tinyint(1) DEFAULT '0',
   `practice` tinyint(1) DEFAULT '0',
   `atra_points_series` tinyint(1) NOT NULL DEFAULT '0',
-  `bar_points` int(11) NOT NULL,
-  `ironman` tinyint(1) NOT NULL,
+  `bar_points` int(11) NOT NULL DEFAULT '0',
+  `ironman` tinyint(1) NOT NULL DEFAULT '1',
   `auto_combined_results` tinyint(1) NOT NULL DEFAULT '1',
   `team_id` int(11) DEFAULT NULL,
   `sanctioning_org_event_id` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -332,12 +332,12 @@ CREATE TABLE `events` (
   `refund_policy` text COLLATE utf8_unicode_ci,
   `refunds` tinyint(1) NOT NULL DEFAULT '1',
   `region_id` int(11) DEFAULT NULL,
-  `end_date` date NOT NULL,
+  `end_date` date,
   `registration_public` tinyint(1) NOT NULL DEFAULT '1',
   `junior_price` decimal(10,2) DEFAULT NULL,
   `suggest_membership` tinyint(1) NOT NULL DEFAULT '1',
   `slug` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `year` int(11) NOT NULL,
+  `year` int(11),
   `break_ties` tinyint(1) DEFAULT '1',
   `categories` tinyint(1) DEFAULT '0',
   `default_bar_points` int(11) DEFAULT '0',
@@ -1217,4 +1217,3 @@ CREATE TABLE `versions` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
