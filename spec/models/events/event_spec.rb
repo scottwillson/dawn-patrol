@@ -14,7 +14,7 @@ RSpec.describe Events::Event, type: :model do
     promoter = Events::Promoter.new(person: Person.create!)
     promoter_2 = Events::Promoter.new(person: Person.create!)
     event = Events::Event.create!(promoters: [ promoter, promoter_2 ])
-    expect(event.reload.promoters).to contain_exactly(promoter, promoter_2)
+    expect(event.reload.promoters.map(&:person)).to contain_exactly(promoter.person, promoter_2.person)
   end
 
   describe "#promoter=" do
@@ -44,7 +44,7 @@ RSpec.describe Events::Event, type: :model do
       event = Events::Event.create!
       event.promoters << Events::Promoter.new(person: Person.create!(name: "David Hart"))
       event.promoters << Events::Promoter.new(person: Person.create!(name: "David Saltzberg"))
-      expect(event.promoter_names).to contain_exactly("David Hart", "David Saltzberg")
+      expect(event.reload.promoter_names).to contain_exactly("David Hart", "David Saltzberg")
     end
   end
 end

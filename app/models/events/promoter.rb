@@ -7,4 +7,6 @@ class Events::Promoter < ApplicationRecord
 
   validates :event, presence: true
   validates :person, presence: true
+
+  validates_uniqueness_of :event, scope: :person
 end

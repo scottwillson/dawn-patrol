@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20160714163950) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.index ["dawn_patrol_association_id"], name: "index_events_promoters_on_dawn_patrol_association_id", using: :btree
+    t.index ["event_id", "person_id"], name: "index_events_promoters_on_event_id_and_person_id", unique: true, using: :btree
     t.index ["event_id"], name: "index_events_promoters_on_event_id", using: :btree
     t.index ["person_id"], name: "index_events_promoters_on_person_id", using: :btree
   end

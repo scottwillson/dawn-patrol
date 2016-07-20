@@ -5,6 +5,8 @@ class CreateEventsPromoters < ActiveRecord::Migration[5.0]
       t.belongs_to :event, null: false
       t.belongs_to :person, null: false
 
+      t.index [ :event_id, :person_id ], unique: true
+
       t.timestamps
     end
   end
