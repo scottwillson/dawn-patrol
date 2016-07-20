@@ -18,6 +18,7 @@ Bundler.require(*Rails.groups)
 
 module DawnPatrol
   class Application < Rails::Application
+    config.active_job.queue_adapter = :sucker_punch
     config.active_record.time_zone_aware_types = [:datetime, :time]
   end
 end

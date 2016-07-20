@@ -1,23 +1,24 @@
 source "https://rubygems.org"
 
-gem "rails", ">= 5.0.0", "< 5.1"
+gem "acts_as_tenant", git: "https://github.com/ErwinM/acts_as_tenant", ref: "960d3df"
+gem "bcrypt", "~> 3.1.7"
+gem "bootstrap", "~> 4.0.0.alpha3"
+gem "coffee-rails", "~> 4.1.0"
+gem "default_value_for", github: "FooBarWidget/default_value_for"
+gem "jbuilder", "~> 2.5"
+gem "jquery-rails"
+gem "mysql2"
 gem "pg"
 gem "puma", "~> 3.0"
+gem "rails", ">= 5.0.0", "< 5.1"
+gem "react-rails"
 gem "sass-rails", "~> 5.0"
+gem "sucker_punch"
+gem "turbolinks", "~> 5.x"
 gem "uglifier", ">= 1.3.0"
-gem "coffee-rails", "~> 4.1.0"
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem "therubyracer", platforms: :ruby
-
-gem "jquery-rails"
-gem "turbolinks", "~> 5.x"
-gem "jbuilder", "~> 2.5"
-gem "bcrypt", "~> 3.1.7"
-gem "react-rails"
-gem "bootstrap", "~> 4.0.0.alpha3"
-gem "mysql2"
-gem "acts_as_tenant", git: "https://github.com/ErwinM/acts_as_tenant", ref: "960d3df"
-gem "default_value_for", github: "FooBarWidget/default_value_for"
 
 group :development, :test do
   gem "byebug", platform: :mri

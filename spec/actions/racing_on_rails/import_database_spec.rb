@@ -30,5 +30,7 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(event.state).to eq("WA")
       expect(event.promoter_names).to contain_exactly("Ryan Rickerts")
     end
+
+    expect(DawnPatrol::Association.count).to eq(2)
   end
 end
