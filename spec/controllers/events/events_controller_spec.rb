@@ -42,6 +42,17 @@ RSpec.describe Events::EventsController, type: :controller do
       expect(ActsAsTenant.current_tenant).to eq(atra)
     end
 
+    it "honors position" do
+      atra = DawnPatrol::Association.create!(host: "raceatra.com", acronym: "ATRA", name: "ATRA")
+      atra_2 = DawnPatrol::Association.create!(host: "raceatra.com|localhost", acronym: "A2", name: "ATRA 2")
+      @default_association.move_to_bottom
+
+      @request.host = "localhost"
+      get :index
+
+      expect(ActsAsTenant.current_tenant).to eq(atra_2)
+    end
+
     it "returns 404 for no match" do
       @request.host = "usacycling.org"
       expect { get(:index) }.to raise_error(ActiveRecord::RecordNotFound)

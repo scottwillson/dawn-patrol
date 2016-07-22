@@ -3,6 +3,8 @@ class DawnPatrol::Association < ApplicationRecord
   validates :host, presence: true, uniqueness: true
   validates :name, presence: true, uniqueness: true
 
+  acts_as_list
+
   def self.table_name_prefix
     'dawn_patrol_'
   end

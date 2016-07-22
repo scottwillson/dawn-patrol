@@ -1,6 +1,5 @@
 require "rails_helper"
 
-
 module DawnPatrol
   RSpec.describe "Association" do
     it "can be created" do

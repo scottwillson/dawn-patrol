@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem "acts_as_list"
 gem "acts_as_tenant", git: "https://github.com/ErwinM/acts_as_tenant", ref: "960d3df"
 gem "bcrypt", "~> 3.1.7"
 gem "bootstrap", "~> 4.0.0.alpha3"

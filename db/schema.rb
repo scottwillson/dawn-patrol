@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714163950) do
+ActiveRecord::Schema.define(version: 20160719184348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20160714163950) do
     t.string   "name",       default: "Cascadia Bicycle Racing Association",       null: false
     t.datetime "created_at",                                                       null: false
     t.datetime "updated_at",                                                       null: false
+    t.integer  "position"
     t.index ["acronym"], name: "index_dawn_patrol_associations_on_acronym", unique: true, using: :btree
     t.index ["host"], name: "index_dawn_patrol_associations_on_host", unique: true, using: :btree
     t.index ["name"], name: "index_dawn_patrol_associations_on_name", unique: true, using: :btree
