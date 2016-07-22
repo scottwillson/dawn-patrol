@@ -1,9 +1,14 @@
 #!/usr/bin/env ruby
 
+require "erb"
 require "yaml"
 
 def system!(*args)
   system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+def database_config
+  YAML.load(ERB.new(File.read("../config/database.yml")).result)["racing_on_rails"]
 end
 
 def password_arg(config)
@@ -20,7 +25,7 @@ def database(config)
   "\`#{config['database']}\`"
 end
 
-YAML.load_file("../config/database.yml")["racing_on_rails"].each do |key, configs|
+database_config.each do |key, configs|
   %w{ development test }.each do |env|
     config = configs[env]
     system! "#{mysql_command(config)} -e 'drop database if exists \`#{config['database']}\`'"

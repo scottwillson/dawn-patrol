@@ -11,39 +11,29 @@ test:
   <<: *default
   database: dawn-patrol_test
 
-production:
-  <<: *default
-  database: dawn-patrol_production
-  username: dawn-patrol
-  password: <%= ENV['DAWN-PATROL_DATABASE_PASSWORD'] %>
+racing_on_rails_default: &racing_on_rails_default
+  username: root
+  host: localhost
+  adapter: mysql2
+  encoding: utf8
 
 racing_on_rails:
   atra:
     test:
-      adapter: mysql2
+      <<: *racing_on_rails_default
       database: dawn-patrol-atra_test
-      username: root
-      host: localhost
-      encoding: utf8
 
     development:
-      adapter: mysql2
+      <<: *racing_on_rails_default
       database: dawn-patrol-atra_development
-      username: root
-      host: localhost
-      encoding: utf8
+      url: <%= ENV["DAWN_PATROL_ATRA_URL"] || "mysql2://root@localhost/dawn-patrol-atra_development" %>
 
   wsba:
     test:
-      adapter: mysql2
+      <<: *racing_on_rails_default
       database: dawn-patrol-wsba_test
-      username: root
-      host: localhost
-      encoding: utf8
 
     development:
-      adapter: mysql2
-      database: dawn-patrol-wsba_development
-      username: root
-      host: localhost
-      encoding: utf8
+      <<: *racing_on_rails_default
+      database: dawn-patrol-wsba_test
+      url: <%= ENV["DAWN_PATROL_WSBA_URL"] || "mysql2://root@localhost/dawn-patrol-wsba_development" %>
