@@ -43,14 +43,14 @@ RSpec.describe Events::EventsController, type: :controller do
     end
 
     it "honors position" do
-      atra = DawnPatrol::Association.create!(host: "raceatra.com", acronym: "ATRA", name: "ATRA")
-      atra_2 = DawnPatrol::Association.create!(host: "raceatra.com|localhost", acronym: "A2", name: "ATRA 2")
+      DawnPatrol::Association.create!(host: "raceatra.com", acronym: "ATRA", name: "ATRA")
+      localhost_atra = DawnPatrol::Association.create!(host: "raceatra.com|localhost", acronym: "A2", name: "ATRA 2")
       @default_association.move_to_bottom
 
       @request.host = "localhost"
       get :index
 
-      expect(ActsAsTenant.current_tenant).to eq(atra_2)
+      expect(ActsAsTenant.current_tenant).to eq(localhost_atra)
     end
 
     it "returns 404 for no match" do

@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   def set_current_tenant_by_host
     host = forwarded_for_or_request_host
-    ActsAsTenant.current_tenant = DawnPatrol::Association.where("? ~ host", host).first!
+    ActsAsTenant.current_tenant = DawnPatrol::Association.where("? ~ host", host).order(:position).first!
     logger.debug "Found association '#{current_tenant&.acronym}' for '#{host}'"
     @association = current_tenant
   end
