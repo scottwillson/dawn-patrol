@@ -2,3 +2,4 @@
  * Show JS/React errors
  * import event editors as promoters
  * Improve host scheme for different environments
+ * Event start time should be in association time zone
