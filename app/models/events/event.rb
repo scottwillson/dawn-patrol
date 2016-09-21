@@ -1,6 +1,7 @@
 class Events::Event < ApplicationRecord
   acts_as_tenant :dawn_patrol_association
 
+  has_many :categories, class_name: "::Events::Category"
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
   belongs_to :discipline
   has_many :promoters
@@ -17,6 +18,10 @@ class Events::Event < ApplicationRecord
 
   default_value_for :discipline do
     Discipline.where(name: "Road").first_or_create
+  end
+
+  def calculated?
+    calculation_id.present?
   end
 
   def location

@@ -10,10 +10,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918015044) do
+ActiveRecord::Schema.define(version: 20160921152438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "calculations_calculations", force: :cascade do |t|
+    t.integer  "dawn_patrol_association_id",                             null: false
+    t.string   "name",                       default: "New Calculation", null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+    t.index ["dawn_patrol_association_id"], name: "index_calculations_calculations_on_dawn_patrol_association_id", using: :btree
+  end
+
+  create_table "calculations_rejections", force: :cascade do |t|
+    t.integer  "dawn_patrol_association_id", null: false
+    t.integer  "event_id",                   null: false
+    t.integer  "result_id",                  null: false
+    t.string   "reason"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["dawn_patrol_association_id"], name: "index_calculations_rejections_on_dawn_patrol_association_id", using: :btree
+    t.index ["event_id", "result_id"], name: "index_calculations_rejections_on_event_id_and_result_id", unique: true, using: :btree
+    t.index ["event_id"], name: "index_calculations_rejections_on_event_id", using: :btree
+    t.index ["result_id"], name: "index_calculations_rejections_on_result_id", using: :btree
+  end
+
+  create_table "calculations_selections", force: :cascade do |t|
+    t.integer  "calculated_result_id",                      null: false
+    t.integer  "dawn_patrol_association_id",                null: false
+    t.decimal  "points",                     precision: 10, null: false
+    t.integer  "source_result_id",                          null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.index ["calculated_result_id", "source_result_id"], name: "index_calculations_selections_calculated_result_source_result", unique: true, using: :btree
+    t.index ["calculated_result_id"], name: "index_calculations_selections_on_calculated_result_id", using: :btree
+    t.index ["dawn_patrol_association_id"], name: "index_calculations_selections_on_dawn_patrol_association_id", using: :btree
+    t.index ["source_result_id"], name: "index_calculations_selections_on_source_result_id", using: :btree
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.integer  "dawn_patrol_association_id",                          null: false
+    t.string   "name",                       default: "New Category", null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.index ["dawn_patrol_association_id", "name"], name: "index_categories_on_dawn_patrol_association_id_and_name", unique: true, using: :btree
+    t.index ["dawn_patrol_association_id"], name: "index_categories_on_dawn_patrol_association_id", using: :btree
+  end
 
   create_table "dawn_patrol_associations", force: :cascade do |t|
     t.string   "acronym",    default: "CBRA",                                      null: false
@@ -36,9 +79,22 @@ ActiveRecord::Schema.define(version: 20160918015044) do
     t.index ["dawn_patrol_association_id"], name: "index_disciplines_on_dawn_patrol_association_id", using: :btree
   end
 
+  create_table "events_categories", force: :cascade do |t|
+    t.integer  "category_id"
+    t.integer  "dawn_patrol_association_id", null: false
+    t.integer  "event_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["category_id", "event_id"], name: "index_events_categories_on_category_id_and_event_id", using: :btree
+    t.index ["category_id"], name: "index_events_categories_on_category_id", using: :btree
+    t.index ["dawn_patrol_association_id"], name: "index_events_categories_on_dawn_patrol_association_id", using: :btree
+    t.index ["event_id"], name: "index_events_categories_on_event_id", using: :btree
+  end
+
   create_table "events_events", force: :cascade do |t|
     t.integer  "dawn_patrol_association_id",                       null: false
     t.integer  "discipline_id",                                    null: false
+    t.integer  "calculation_id"
     t.datetime "starts_at",                                        null: false
     t.string   "city"
     t.string   "name",                       default: "New Event", null: false
@@ -47,7 +103,7 @@ ActiveRecord::Schema.define(version: 20160918015044) do
     t.string   "state"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
-    t.boolean  "calculated"
+    t.index ["calculation_id"], name: "index_events_events_on_calculation_id", using: :btree
     t.index ["dawn_patrol_association_id"], name: "index_events_events_on_dawn_patrol_association_id", using: :btree
     t.index ["discipline_id"], name: "index_events_events_on_discipline_id", using: :btree
     t.index ["name"], name: "index_events_events_on_name", using: :btree
@@ -73,6 +129,18 @@ ActiveRecord::Schema.define(version: 20160918015044) do
     t.datetime "updated_at",                 null: false
     t.index ["dawn_patrol_association_id"], name: "index_people_on_dawn_patrol_association_id", using: :btree
     t.index ["name"], name: "index_people_on_name", using: :btree
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.integer  "dawn_patrol_association_id",                            null: false
+    t.integer  "event_category_id"
+    t.integer  "person_id"
+    t.decimal  "points",                     precision: 10, default: 0, null: false
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.index ["dawn_patrol_association_id"], name: "index_results_on_dawn_patrol_association_id", using: :btree
+    t.index ["event_category_id"], name: "index_results_on_event_category_id", using: :btree
+    t.index ["person_id"], name: "index_results_on_person_id", using: :btree
   end
 
 end

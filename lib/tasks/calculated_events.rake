@@ -7,17 +7,16 @@ namespace :events do
     raise("ASSOCIATION is required") unless association
     ActsAsTenant.current_tenant = DawnPatrol::Association.where(acronym: association).first!
 
-    events = Events::Event.calculated.year(year).includes(event_categories: { category: :results }).all.order(:starts_at, :name)
+    events = Events::Event.calculated.year(year).includes(categories: { category: :results }).all.order(:starts_at, :name)
 
     events.each do |event|
-      event.races.event_categories(&:name).each do |event_category|
+      event.races.categories(&:name).each do |event_category|
         puts "#{event.full_name} #{event_category.name} #{event_category.results.count}"
       end
     end
 
-
     events.each do |event|
-      event.event_categories.sort_by(&:name).each do |event_category|
+      event.categories.sort_by(&:name).each do |event_category|
         puts "#{event.full_name} #{event_category.name} #{event_category.results.sum(:points)}"
       end
     end

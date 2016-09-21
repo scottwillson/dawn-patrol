@@ -3,6 +3,7 @@ class CreateEventsEvents < ActiveRecord::Migration[5.0]
     create_table :events_events do |t|
       t.belongs_to :dawn_patrol_association, null: false
       t.belongs_to :discipline, null: false
+      t.belongs_to :calculation
 
       t.datetime :starts_at, null: false
       t.string :city
