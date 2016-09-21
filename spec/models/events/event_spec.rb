@@ -32,6 +32,15 @@ RSpec.describe Events::Event, type: :model do
     end
   end
 
+  describe ".current_year" do
+    it "only finds events that starts_at in the current year" do
+      Events::Event.create!(starts_at: 1.year.ago.end_of_year)
+      Events::Event.create!(starts_at: 1.year.from_now.end_of_year)
+      event = Events::Event.create!(starts_at: Time.current)
+      expect(Events::Event.current_year).to eq([ event ])
+    end
+  end
+
   describe "#promoter_names" do
     it "returns array if there is no promoter" do
       ActsAsTenant.current_tenant = DawnPatrol::Association.create!

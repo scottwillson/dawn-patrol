@@ -10,6 +10,7 @@ class Events::Event < ApplicationRecord
   validates :starts_at, presence: true
 
   scope :calculated, -> { where(calculated: true) }
+  scope :current_year, -> { where(starts_at: Time.current.beginning_of_year..Time.current.end_of_year) }
   scope :year, ->(year) { where(starts_at: Time.zone.local(year).beginning_of_year..Time.zone.local(year).end_of_year) }
 
   default_value_for :starts_at do

@@ -36,18 +36,6 @@ RSpec.describe "Calculations::Calculate" do
 
     source_result.reload
     expect(source_result.calculations_rejections.count).to eq(0)
-
-    # event with results
-    # results have scores (name?)
-    # filter results
-    # report exceptions
-    # handle excluded events
-    # re-use existing events
-    # re-use categories
-    # parameterize year
-    # include year in calculation event name?
-    # check performance (DB queries) with real data
-    # assert result name and team
   end
 
   it "calculates with no results" do
