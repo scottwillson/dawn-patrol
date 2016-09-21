@@ -5,7 +5,7 @@ gem "acts_as_tenant", git: "https://github.com/ErwinM/acts_as_tenant", ref: "960
 gem "bcrypt", "~> 3.1.7"
 gem "bootstrap", "~> 4.0.0.alpha3"
 gem "coffee-rails", "~> 4.1.0"
-gem "default_value_for", github: "FooBarWidget/default_value_for"
+gem "default_value_for", git: "https://github.com/FooBarWidget/default_value_for"
 gem "jbuilder", "~> 2.5"
 gem "jquery-rails"
 gem "mysql2"
