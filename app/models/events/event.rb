@@ -1,6 +1,7 @@
 class Events::Event < ApplicationRecord
   acts_as_tenant :dawn_patrol_association
 
+  belongs_to :calculation
   has_many :categories, class_name: "::Events::Category"
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
   belongs_to :discipline
@@ -9,7 +10,7 @@ class Events::Event < ApplicationRecord
   validates :name, presence: true
   validates :starts_at, presence: true
 
-  scope :calculated, -> { where(calculated: true) }
+  scope :calculated, -> { where(calculation_id: true) }
   scope :current_year, -> { where(starts_at: Time.current.beginning_of_year..Time.current.end_of_year) }
   scope :year, ->(year) { where(starts_at: Time.zone.local(year).beginning_of_year..Time.zone.local(year).end_of_year) }
 

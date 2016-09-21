@@ -5,16 +5,21 @@ module Calculations
     end
 
     def do_it!
-      event = @calculation.events.create!(name: @calculation.name)
-      category = event.categories.create!(category: Category.create!(name: @calculation.name))
-
+      event = create_event
+      category = create_category(event)
       source_results = Result.current_year
-
-      selections = MapToSelections.map!(source_results)
-
+      selections = Steps::MapToSelections.map!(source_results)
       create_results selections, category
 
       true
+    end
+
+    def create_event
+      @calculation.events.create!(name: @calculation.name)
+    end
+
+    def create_category(event)
+      event.categories.create!(category: Category.create!(name: @calculation.name))
     end
 
     def create_results(selections, category)

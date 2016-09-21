@@ -1,4 +1,4 @@
- * remove Events#calculated?
+ * Look for and remove any DB work that occurs during calculate
  * promoter=should take just a Person, too
  * Show JS/React errors
  * import event editors as promoters
@@ -7,6 +7,8 @@
  * handle tandem results correctly
   * each person has a result
   * tandem team appears in the BAR (could just be people?)
+ * DRY up `ActsAsTenant.current_tenant = DawnPatrol::Association.create!` in tests
+ * factories?
 
  Calculations
  ============
