@@ -5,43 +5,55 @@ RSpec.describe "Calculations::Calculate" do
     ActsAsTenant.current_tenant = DawnPatrol::Association.create!
   end
 
-  it "calculates results" do
-    event = Events::Event.create!
-    category = Category.create!
-    event_category = event.categories.create!(category: category)
-    source_result = event_category.results.create!(person: Person.create!)
+  describe "default Calculation" do
+    it "calculates results" do
+      event = Events::Event.create!(starts_at: 1.year.ago)
+      category = Category.create!(name: "Senior Women")
+      event_category = event.categories.create!(category: category)
+      event_category.results.create!(person: Person.create!)
 
-    calculation = Calculations::Calculation.create!(name: "Ironman")
+      event = Events::Event.create!(starts_at: 1.year.from_now)
+      category = Category.create!(name: "Junior Men")
+      event_category = event.categories.create!(category: category)
+      event_category.results.create!(person: Person.create!)
 
-    action_result = Calculations::Calculate.new(calculation: calculation).do_it!
-    expect(action_result).to be(true)
+      event = Events::Event.create!
+      category = Category.create!
+      event_category = event.categories.create!(category: category)
+      source_result = event_category.results.create!(person: Person.create!)
 
-    expect(calculation.events.count).to eq(1)
+      calculation = Calculations::Calculation.create!(name: "Ironman")
 
-    calculated_event = calculation.events.first
-    expect(calculated_event.categories.count).to eq(1)
+      action_result = Calculations::Calculate.new(calculation: calculation).do_it!
+      expect(action_result).to be(true)
 
-    category = calculated_event.categories.first
-    expect(category.results.count).to eq(1)
+      expect(calculation.events.count).to eq(1)
 
-    result = category.results.first
-    expect(result.calculations_selections.count).to eq(1)
-    expect(result.points).to eq(1)
+      calculated_event = calculation.events.first
+      expect(calculated_event.categories.count).to eq(1)
 
-    calculation_selection = result.calculations_selections.first
-    expect(calculation_selection.points).to eq(1)
-    expect(calculation_selection.source_result).to eq(source_result)
-    expect(calculation_selection.calculated_result).to eq(result)
+      category = calculated_event.categories.first
+      expect(category.results.count).to eq(1)
 
-    source_result.reload
-    expect(source_result.calculations_rejections.count).to eq(0)
-  end
+      result = category.results.first
+      expect(result.calculations_selections.count).to eq(1)
+      expect(result.points).to eq(1)
 
-  it "calculates with no results" do
-    calculation = Calculations::Calculation.create!
+      calculation_selection = result.calculations_selections.first
+      expect(calculation_selection.points).to eq(1)
+      expect(calculation_selection.source_result).to eq(source_result)
+      expect(calculation_selection.calculated_result).to eq(result)
 
-    result = Calculations::Calculate.new(calculation: calculation).do_it!
-    expect(result).to be(true)
+      source_result.reload
+      expect(source_result.calculations_rejections.count).to eq(0)
+    end
+
+    it "calculates with no results" do
+      calculation = Calculations::Calculation.create!
+
+      result = Calculations::Calculate.new(calculation: calculation).do_it!
+      expect(result).to be(true)
+    end
   end
 
   describe "create_event" do

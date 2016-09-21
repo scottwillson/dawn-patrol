@@ -9,6 +9,7 @@
   * tandem team appears in the BAR (could just be people?)
  * DRY up `ActsAsTenant.current_tenant = DawnPatrol::Association.create!` in tests
  * factories?
+ * find_or_create category helper
 
  Calculations
  ============
