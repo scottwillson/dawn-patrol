@@ -31,6 +31,7 @@ group :development do
   gem "capistrano-rails"
   gem "web-console"
   gem "listen", "~> 3.0.5"
+  gem "rubocop"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
 end

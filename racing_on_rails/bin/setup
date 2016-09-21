@@ -32,7 +32,7 @@ database_config.each do |key, configs|
     system! "#{mysql_command(config)} -e 'create database \`#{config['database']}\`'"
     system! "#{mysql_command(config)} --database=#{config['database']} < db/schema.sql"
 
-    if File.exists?("db/#{key}.sql")
+    if File.exist?("db/#{key}.sql")
       system! "#{mysql_command(config)} --database=#{config['database']} < db/#{key}.sql"
     end
   end
