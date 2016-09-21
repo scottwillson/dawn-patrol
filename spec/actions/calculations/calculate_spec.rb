@@ -10,12 +10,12 @@ RSpec.describe "Calculations::Calculate" do
       event = Events::Event.create!(starts_at: 1.year.ago)
       category = Category.create!(name: "Senior Women")
       event_category = event.categories.create!(category: category)
-      event_category.results.create!(person: Person.create!)
+      last_year_result = event_category.results.create!(person: Person.create!)
 
       event = Events::Event.create!(starts_at: 1.year.from_now)
       category = Category.create!(name: "Junior Men")
       event_category = event.categories.create!(category: category)
-      event_category.results.create!(person: Person.create!)
+      next_year_result = event_category.results.create!(person: Person.create!)
 
       event = Events::Event.create!
       category = Category.create!
@@ -44,8 +44,14 @@ RSpec.describe "Calculations::Calculate" do
       expect(calculation_selection.source_result).to eq(source_result)
       expect(calculation_selection.calculated_result).to eq(result)
 
-      source_result.reload
-      expect(source_result.calculations_rejections.count).to eq(0)
+      expect(source_result.calculations_rejections.reload.count).to eq(0)
+      expect(last_year_result.calculations_rejections.reload.count).to eq(0)
+      expect(next_year_result.calculations_rejections.reload.count).to eq(0)
+
+      # expect(last_year_result.calculations_rejections.count).to eq(1)
+      # rejection = last_year_result.calculations_rejections.first
+      # expect(rejection.event).to eq(calculated_event)
+      # expect(rejection.reason).to eq("")
     end
 
     it "calculates with no results" do
