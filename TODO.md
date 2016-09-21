@@ -12,6 +12,11 @@
 
  Calculations
  ============
+ * Steps common methods
+  * log
+  * benchmark
+  * size change
+  * record exclusions
  * filter results
  * report exceptions
  * handle excluded events

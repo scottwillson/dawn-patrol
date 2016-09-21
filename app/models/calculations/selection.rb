@@ -6,4 +6,8 @@ class Calculations::Selection < ApplicationRecord
   belongs_to :source_result, class_name: "Result"
 
   validates_uniqueness_of :calculated_result, scope: :source_result
+
+  def person_id
+    source_result&.person_id
+  end
 end

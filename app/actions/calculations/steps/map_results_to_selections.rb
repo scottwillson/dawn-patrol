@@ -1,7 +1,7 @@
 module Calculations
   module Steps
-    class MapToSelections
-      def self.map!(source_results)
+    class MapResultsToSelections
+      def self.map(source_results)
         source_results.map do |result|
           Calculations::Selection.new(
             points: 1,

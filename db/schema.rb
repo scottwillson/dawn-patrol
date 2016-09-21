@@ -37,12 +37,12 @@ ActiveRecord::Schema.define(version: 20160921152438) do
   end
 
   create_table "calculations_selections", force: :cascade do |t|
-    t.integer  "calculated_result_id",                      null: false
-    t.integer  "dawn_patrol_association_id",                null: false
-    t.decimal  "points",                     precision: 10, null: false
-    t.integer  "source_result_id",                          null: false
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.integer  "calculated_result_id",                                  null: false
+    t.integer  "dawn_patrol_association_id",                            null: false
+    t.decimal  "points",                     precision: 10, default: 0, null: false
+    t.integer  "source_result_id",                                      null: false
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
     t.index ["calculated_result_id", "source_result_id"], name: "index_calculations_selections_calculated_result_source_result", unique: true, using: :btree
     t.index ["calculated_result_id"], name: "index_calculations_selections_on_calculated_result_id", using: :btree
     t.index ["dawn_patrol_association_id"], name: "index_calculations_selections_on_dawn_patrol_association_id", using: :btree

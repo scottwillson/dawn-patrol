@@ -70,26 +70,27 @@ RSpec.describe "Calculations::Calculate" do
     end
   end
 
-  describe "#create_results" do
-    it "persists results from selections" do
+  describe "#save_results" do
+    it "persists results" do
       event = Events::Event.create!
       category = Category.create!
       event_category = event.categories.create!(category: category)
-      source_result = event_category.results.create!(person: Person.create!)
-      source_result_2 = event_category.results.create!(person: Person.create!)
+      event_category.results.create!(person: Person.create!)
+      event_category.results.create!(person: Person.create!)
 
       calculation = Calculations::Calculation.create!
       calculate = Calculations::Calculate.new(calculation: calculation)
       calculation_event = calculate.create_event
       calculation_category = calculate.create_category(calculation_event)
 
-      selections = [
-        Calculations::Selection.new(points: 1, source_result: source_result),
-        Calculations::Selection.new(points: 1, source_result: source_result_2)
+      results = [
+        Result.new(event_category: calculation_category),
+        Result.new(event_category: calculation_category)
       ]
 
-      results = calculate.create_results(selections, calculation_category)
-      expect(results.size).to eq(2)
+      calculate.save_results results
+      expect(results).to all(be_valid)
+      expect(results).to all(be_persisted)
     end
   end
 end
