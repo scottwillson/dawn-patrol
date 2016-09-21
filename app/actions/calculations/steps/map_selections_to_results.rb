@@ -1,9 +1,11 @@
 module Calculations
   module Steps
-    class MapSelectionsToResults
-      def self.map(selections, category)
+    module MapSelectionsToResults
+      def self.do_step(selections, options)
+        category = options[:category]
+
         selections.group_by(&:person_id).map do |person_id, person_selections|
-          Result.new(
+          ::Result.new(
             calculations_selections: person_selections,
             event_category: category,
             person_id: person_id,

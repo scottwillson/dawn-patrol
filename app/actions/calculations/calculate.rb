@@ -5,16 +5,26 @@ module Calculations
     end
 
     def do_it!
-      event = create_event
-      category = create_category(event)
-      source_results = Result.current_year
+      Calculation.benchmark("#{self.class} do_it calculation: #{@calculation.name}", level: :debug) do
+        Calculation.transaction do
+          event = create_event
+          category = create_category(event)
 
-      selections = Steps::MapResultsToSelections.map(source_results)
-      results    = Steps::MapSelectionsToResults.map(selections, category)
+          result = Calculations::Steps::Result.new(source_results, category: category)
+                     .do_step(Steps::MapResultsToSelections)
+                     .do_step(Steps::MapSelectionsToResults)
 
-      save_results results
+          save_results result.results
+        end
+      end
 
       true
+    end
+
+    def source_results
+      Calculation.benchmark("#{self.class} source_results calculation: #{@calculation.name}", level: :debug) do
+        Result.current_year
+      end
     end
 
     def create_event
