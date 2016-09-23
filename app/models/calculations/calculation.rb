@@ -3,4 +3,8 @@ class Calculations::Calculation < ApplicationRecord
 
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
   has_many :events, class_name: "Events::Event"
+
+  def categories
+    @categories ||= [ Category.new(name: name) ]
+  end
 end

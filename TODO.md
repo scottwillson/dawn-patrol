@@ -10,6 +10,9 @@
  * DRY up `ActsAsTenant.current_tenant = DawnPatrol::Association.create!` in tests
  * factories?
  * find_or_create category helper
+ * try to create test without DB access
+ * define Calculation categories as names or Categories?
+ * consider deferring Calculate and Calculation creation methods for in-memory tests
 
  Calculations
  ============

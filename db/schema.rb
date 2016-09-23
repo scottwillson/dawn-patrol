@@ -16,10 +16,11 @@ ActiveRecord::Schema.define(version: 20160921152438) do
   enable_extension "plpgsql"
 
   create_table "calculations_calculations", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id",                             null: false
-    t.string   "name",                       default: "New Calculation", null: false
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
+    t.integer  "dawn_patrol_association_id",                                            null: false
+    t.decimal  "dnf_points",                 precision: 10, default: 0,                 null: false
+    t.string   "name",                                      default: "New Calculation", null: false
+    t.datetime "created_at",                                                            null: false
+    t.datetime "updated_at",                                                            null: false
     t.index ["dawn_patrol_association_id"], name: "index_calculations_calculations_on_dawn_patrol_association_id", using: :btree
   end
 

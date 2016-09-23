@@ -25,6 +25,7 @@ RSpec.describe "Calculations::Calculate" do
       event_category.results.create!(person: Person.create!, place: "")
       event_category.results.create!(person: Person.create!, place: "DQ")
       event_category.results.create!(person: Person.create!, place: "DNS")
+      event_category.results.create!(person: Person.create!, place: "DNF")
 
       calculation = Calculations::Calculation.create!(name: "Ironman")
 
@@ -80,15 +81,15 @@ RSpec.describe "Calculations::Calculate" do
     end
   end
 
-  describe "create_category" do
+  describe "create_categories" do
     it "creates an event category" do
       calculation = Calculations::Calculation.create!(name: "Ironman")
       calculate = Calculations::Calculate.new(calculation: calculation)
 
       event = calculate.create_event
-      category = calculate.create_category(event)
-      expect(category).to be_valid
-      expect(category.name).to eq("Ironman")
+      categories = calculate.create_categories(event)
+      expect(categories).to all(be_valid)
+      expect(categories.first.name).to eq("Ironman")
     end
   end
 
@@ -103,14 +104,14 @@ RSpec.describe "Calculations::Calculate" do
       calculation = Calculations::Calculation.create!
       calculate = Calculations::Calculate.new(calculation: calculation)
       calculation_event = calculate.create_event
-      calculation_category = calculate.create_category(calculation_event)
+      calculate.create_categories(calculation_event)
 
       results = [
-        Result.new(event_category: calculation_category),
-        Result.new(event_category: calculation_category)
+        Result.new,
+        Result.new
       ]
 
-      calculate.save_results results
+      calculate.save_results results, calculation_event
       expect(results).to all(be_valid)
       expect(results).to all(be_persisted)
     end

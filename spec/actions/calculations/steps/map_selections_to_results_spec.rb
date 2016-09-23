@@ -4,15 +4,16 @@ RSpec.describe "Calculations::Steps::MapSelectionsToResults" do
   describe ".do_step" do
     it "accepts empty collection" do
       ActsAsTenant.current_tenant = DawnPatrol::Association.create!
-      Calculations::Steps::MapSelectionsToResults.do_step([], category: Events::Category.new)
+      calculation = Calculations::Calculation.new
+      Calculations::Steps::MapSelectionsToResults.do_step([], calculation)
     end
 
     it "maps selections to results" do
       ActsAsTenant.current_tenant = DawnPatrol::Association.create!
-      category = Events::Category.new
+      calculation = Calculations::Calculation.new
       results = Calculations::Steps::MapSelectionsToResults.do_step(
         [ Calculations::Selection.new, Calculations::Selection.new ],
-        category: category
+        calculation
       )
       expect(results.size).to eq(1)
     end

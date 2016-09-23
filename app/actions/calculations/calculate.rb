@@ -8,15 +8,16 @@ module Calculations
       Calculation.benchmark("#{self.class} do_it calculation: #{@calculation.name}", level: :debug) do
         Calculation.transaction do
           event = create_event
-          category = create_category(event)
+          create_categories event
 
-          result = Steps::Result.new(source_results, [], category: category)
+          result = Steps::Result.new(source_results, [], @calculation)
                      .do_step(Steps::SelectParticipants)
                      .do_step(Steps::SelectPlaced)
+                     .do_step(Steps::RejectDnfs)
                      .do_step(Steps::MapResultsToSelections)
                      .do_step(Steps::MapSelectionsToResults)
 
-          save_results result.results
+          save_results result.results, event
           save_rejections result.rejections, event
         end
       end
@@ -34,13 +35,17 @@ module Calculations
       @calculation.events.create!(name: @calculation.name)
     end
 
-    def create_category(event)
-      event.categories.create!(category: Category.create!(name: @calculation.name))
+    def create_categories(event)
+      @calculation.categories.each do |category|
+        event.categories.create!(category: category)
+      end
     end
 
-    def save_results(results)
+    def save_results(results, event)
       Calculation.benchmark("#{self.class} save_results calculation: #{@calculation.name}", level: :debug) do
-        results.each(&:save!)
+        results.each do |result|
+          event.categories.first.results << result
+        end
       end
     end
 

@@ -4,11 +4,12 @@ module Calculations
       attr_reader :rejections
       attr_reader :results
 
-      def initialize(results, rejections, options)
+      def initialize(results, rejections, calculation)
         raise(ArgumentError, "rejections cannot be nil") unless rejections
         raise(ArgumentError, "results cannot be nil") unless results
+        raise(ArgumentError, "calculation cannot be nil") unless calculation
 
-        @options = options
+        @calculation = calculation
         @rejections = rejections
         @results = results
       end
@@ -16,10 +17,10 @@ module Calculations
       def do_step(step_class)
         Calculation.benchmark("Calculations::Steps::#{step_class} do_step", level: :debug) do
           before = @results.dup
-          results = step_class.do_step(@results, @options)
+          results = step_class.do_step(@results, @calculation)
           @rejections = @rejections + new_rejections(before, results, step_class)
 
-          Steps::Result.new(results, @rejections, @options)
+          Steps::Result.new(results, @rejections, @calculation)
         end
       end
 
