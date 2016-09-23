@@ -21,6 +21,7 @@ RSpec.describe "Calculations::Calculate" do
       category = Category.create!
       event_category = event.categories.create!(category: category)
       source_result = event_category.results.create!(person: Person.create!)
+      result_without_participant = event_category.results.create!
 
       calculation = Calculations::Calculation.create!(name: "Ironman")
 
@@ -39,7 +40,7 @@ RSpec.describe "Calculations::Calculate" do
       expect(result.calculations_selections.count).to eq(1)
       expect(result.points).to eq(1)
 
-      calculation_selection = result.calculations_selections.first
+      calculation_selection = result.calculations_selections.reload.first
       expect(calculation_selection.points).to eq(1)
       expect(calculation_selection.source_result).to eq(source_result)
       expect(calculation_selection.calculated_result).to eq(result)
@@ -48,10 +49,10 @@ RSpec.describe "Calculations::Calculate" do
       expect(last_year_result.calculations_rejections.reload.count).to eq(0)
       expect(next_year_result.calculations_rejections.reload.count).to eq(0)
 
-      # expect(last_year_result.calculations_rejections.count).to eq(1)
-      # rejection = last_year_result.calculations_rejections.first
-      # expect(rejection.event).to eq(calculated_event)
-      # expect(rejection.reason).to eq("")
+      expect(result_without_participant.calculations_rejections.reload.count).to eq(1)
+      rejection = result_without_participant.calculations_rejections.first
+      expect(rejection.event).to eq(calculated_event)
+      expect(rejection.reason).to eq("no_person")
     end
 
     it "calculates with no results" do

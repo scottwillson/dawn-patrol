@@ -10,11 +10,13 @@ module Calculations
           event = create_event
           category = create_category(event)
 
-          result = Calculations::Steps::Result.new(source_results, category: category)
+          result = Steps::Result.new(source_results, [], category: category)
+                     .do_step(Steps::SelectParticipants)
                      .do_step(Steps::MapResultsToSelections)
                      .do_step(Steps::MapSelectionsToResults)
 
           save_results result.results
+          save_rejections result.rejections, event
         end
       end
 
@@ -36,7 +38,18 @@ module Calculations
     end
 
     def save_results(results)
-      results.each(&:save!)
+      Calculation.benchmark("#{self.class} save_results calculation: #{@calculation.name}", level: :debug) do
+        results.each(&:save!)
+      end
+    end
+
+    def save_rejections(rejections, event)
+      Calculation.benchmark("#{self.class} save_rejections calculation: #{@calculation.name}", level: :debug) do
+        rejections.each do |rejection|
+          rejection.event = event
+          rejection.save!
+        end
+      end
     end
   end
 end

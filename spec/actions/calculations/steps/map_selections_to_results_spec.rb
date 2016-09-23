@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Calculations::Steps::MapSelectionsToResults" do
-  describe ".map" do
+  describe ".do_step" do
     it "accepts empty collection" do
       ActsAsTenant.current_tenant = DawnPatrol::Association.create!
       Calculations::Steps::MapSelectionsToResults.do_step([], category: Events::Category.new)
