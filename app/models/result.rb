@@ -22,4 +22,12 @@ class Result < ApplicationRecord
     joins(event_category: :event).
     where("events_events.starts_at" => Time.current.beginning_of_year..Time.current.end_of_year)
   end
+
+  def dnf?
+    "DNF".casecmp(place) == 0
+  end
+
+  def placed?
+    place.to_i > 0 || dnf?
+  end
 end

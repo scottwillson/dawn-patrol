@@ -16,4 +16,25 @@ RSpec.describe Result, type: :model do
       expect(Result.current_year).to eq([ result ])
     end
   end
+
+  describe ".dnf?" do
+    it "checks for 'DNF'" do
+      expect(Result.new(place: "DNF").dnf?).to be(true)
+      expect(Result.new(place: "dnf").dnf?).to be(true)
+      expect(Result.new(place: "DQ").dnf?).to be(false)
+      expect(Result.new(place: "1").dnf?).to be(false)
+      expect(Result.new(place: "99").dnf?).to be(false)
+    end
+  end
+
+  describe ".placed?" do
+    it "numeral or DNF" do
+      expect(Result.new(place: "DNF").placed?).to be(true)
+      expect(Result.new(place: "DQ").placed?).to be(false)
+      expect(Result.new(place: "DNS").placed?).to be(false)
+      expect(Result.new(place: "").placed?).to be(false)
+      expect(Result.new(place: "1").placed?).to be(true)
+      expect(Result.new(place: "99").placed?).to be(true)
+    end
+  end
 end

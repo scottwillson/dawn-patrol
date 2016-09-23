@@ -10,18 +10,21 @@ RSpec.describe "Calculations::Calculate" do
       event = Events::Event.create!(starts_at: 1.year.ago)
       category = Category.create!(name: "Senior Women")
       event_category = event.categories.create!(category: category)
-      last_year_result = event_category.results.create!(person: Person.create!)
+      last_year_result = event_category.results.create!(person: Person.create!, place: "1")
 
       event = Events::Event.create!(starts_at: 1.year.from_now)
       category = Category.create!(name: "Junior Men")
       event_category = event.categories.create!(category: category)
-      next_year_result = event_category.results.create!(person: Person.create!)
+      next_year_result = event_category.results.create!(person: Person.create!, place: "2")
 
       event = Events::Event.create!
       category = Category.create!
       event_category = event.categories.create!(category: category)
-      source_result = event_category.results.create!(person: Person.create!)
-      result_without_participant = event_category.results.create!
+      source_result = event_category.results.create!(person: Person.create!, place: "3")
+      result_without_participant = event_category.results.create!(place: "4")
+      event_category.results.create!(person: Person.create!, place: "")
+      event_category.results.create!(person: Person.create!, place: "DQ")
+      event_category.results.create!(person: Person.create!, place: "DNS")
 
       calculation = Calculations::Calculation.create!(name: "Ironman")
 

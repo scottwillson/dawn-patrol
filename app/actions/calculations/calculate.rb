@@ -12,6 +12,7 @@ module Calculations
 
           result = Steps::Result.new(source_results, [], category: category)
                      .do_step(Steps::SelectParticipants)
+                     .do_step(Steps::SelectPlaced)
                      .do_step(Steps::MapResultsToSelections)
                      .do_step(Steps::MapSelectionsToResults)
 

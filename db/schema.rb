@@ -132,12 +132,13 @@ ActiveRecord::Schema.define(version: 20160921152438) do
   end
 
   create_table "results", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id",                            null: false
+    t.integer  "dawn_patrol_association_id",                             null: false
     t.integer  "event_category_id"
     t.integer  "person_id"
-    t.decimal  "points",                     precision: 10, default: 0, null: false
-    t.datetime "created_at",                                            null: false
-    t.datetime "updated_at",                                            null: false
+    t.string   "place",                                     default: "", null: false
+    t.decimal  "points",                     precision: 10, default: 0,  null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.index ["dawn_patrol_association_id"], name: "index_results_on_dawn_patrol_association_id", using: :btree
     t.index ["event_category_id"], name: "index_results_on_event_category_id", using: :btree
     t.index ["person_id"], name: "index_results_on_person_id", using: :btree
