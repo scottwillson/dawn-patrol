@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921152438) do
+ActiveRecord::Schema.define(version: 20160924014406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20160921152438) do
   create_table "calculations_calculations", force: :cascade do |t|
     t.integer  "dawn_patrol_association_id",                                            null: false
     t.decimal  "dnf_points",                 precision: 10, default: 0,                 null: false
+    t.boolean  "members_only",                              default: false,             null: false
     t.string   "name",                                      default: "New Calculation", null: false
     t.datetime "created_at",                                                            null: false
     t.datetime "updated_at",                                                            null: false
@@ -121,6 +122,17 @@ ActiveRecord::Schema.define(version: 20160921152438) do
     t.index ["event_id", "person_id"], name: "index_events_promoters_on_event_id_and_person_id", unique: true, using: :btree
     t.index ["event_id"], name: "index_events_promoters_on_event_id", using: :btree
     t.index ["person_id"], name: "index_events_promoters_on_person_id", using: :btree
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer  "dawn_patrol_association_id", null: false
+    t.integer  "person_id"
+    t.datetime "start_at",                   null: false
+    t.datetime "end_at",                     null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["dawn_patrol_association_id"], name: "index_memberships_on_dawn_patrol_association_id", using: :btree
+    t.index ["person_id"], name: "index_memberships_on_person_id", using: :btree
   end
 
   create_table "people", force: :cascade do |t|

@@ -14,6 +14,7 @@ module Calculations
                      .do_step(Steps::SelectParticipants)
                      .do_step(Steps::SelectPlaced)
                      .do_step(Steps::RejectDnfs)
+                     .do_step(Steps::SelectMembers)
                      .do_step(Steps::MapResultsToSelections)
                      .do_step(Steps::MapSelectionsToResults)
 

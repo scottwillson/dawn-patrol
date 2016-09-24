@@ -27,6 +27,10 @@ class Result < ApplicationRecord
     "DNF".casecmp(place) == 0
   end
 
+  def member?
+    person&.member?
+  end
+
   def placed?
     place.to_i > 0 || dnf?
   end
