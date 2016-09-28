@@ -61,9 +61,21 @@ RSpec.describe "Calculations::Calculate" do
 
     it "calculates with no results" do
       calculation = Calculations::Calculation.create!
-
       result = Calculations::Calculate.new(calculation: calculation).do_it!
       expect(result).to be(true)
+    end
+  end
+
+  describe "#source_events" do
+    it "defaults to all events in year" do
+
+      calculation = Calculations::Calculation.create!
+
+      Events::Event.create!(starts_at: 1.year.ago.end_of_year)
+      Events::Event.create!(starts_at: 1.year.from_now.end_of_year)
+      event = Events::Event.create!(starts_at: Time.current)
+
+      expect(calculation.source_events(Time.current.year)).to eq([ event ])
     end
   end
 

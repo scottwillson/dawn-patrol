@@ -6,6 +6,15 @@ RSpec.describe Result, type: :model do
     Events::Event.create!.categories.create!(category: Category.create!).results.create! person: Person.create!
   end
 
+  describe "#event" do
+    it "returns the owning event" do
+      ActsAsTenant.current_tenant = DawnPatrol::Association.create!
+      event = Events::Event.create!
+      result = event.categories.create!(category: Category.create!).results.create!
+      expect(result.event).to eq(event)
+    end
+  end
+
   describe ".current_year" do
     it "only finds results from current year" do
       ActsAsTenant.current_tenant = DawnPatrol::Association.create!

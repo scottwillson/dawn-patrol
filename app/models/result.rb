@@ -27,6 +27,10 @@ class Result < ApplicationRecord
     "DNF".casecmp(place) == 0
   end
 
+  def event
+    event_category&.event
+  end
+
   def member?
     person&.member?
   end
