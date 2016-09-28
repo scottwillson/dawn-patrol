@@ -6,6 +6,10 @@ class RacingOnRails::Event < ApplicationRecord
   end
 
   def discipline
-    self[:discipline] || "Road"
+    if self[:discipline].present?
+      self[:discipline]
+    else
+      "Road"
+    end
   end
 end

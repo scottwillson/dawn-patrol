@@ -13,6 +13,11 @@
  * try to create test without DB access (.readonly!)
  * define Calculation categories as names or Categories?
  * consider deferring Calculate and Calculation creation methods for in-memory tests
+ * Calculation source events: add attribute like source_events_strategy?
+   * all (default)
+   * children of single parent event
+   * specific set of parents
+ * Add CreateEvent and UpdateEvent action that ensure correct state
 
  Calculations
  ============
@@ -30,3 +35,6 @@
  * include year in calculation event name?
  * check performance (DB queries) with real data
  * assert result name and team
+ * reject_upgrade_only (should just be source results all from self?)
+ * results_per_event, use_source_result_points
+ * results_per_race, use_source_result_points
