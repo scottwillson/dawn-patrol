@@ -29,3 +29,21 @@ insert into racing_associations (name, short_name) values (
   'Washington State Bicycling Association',
   'WSBA'
 );
+
+insert into categories (id, name) values (
+  1,
+  "Senior Men"
+);
+
+insert into races (id, category_id, event_id) values (
+  1,
+  1,
+  1
+);
+
+insert into results (event_id, race_id, person_id, place) values (
+  1,
+  1,
+  1,
+  "1"
+);
