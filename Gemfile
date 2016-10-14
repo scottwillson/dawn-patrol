@@ -29,6 +29,7 @@ end
 
 group :development do
   gem "capistrano-rails"
+  gem "faker"
   gem "web-console"
   gem "listen", "~> 3.0.5"
   gem "rubocop"
@@ -40,6 +41,7 @@ group :test do
   gem "capybara"
   gem "database_cleaner"
   gem "poltergeist"
+  gem "rails-controller-testing"
 end
 
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -18,6 +18,11 @@
    * children of single parent event
    * specific set of parents
  * Add CreateEvent and UpdateEvent action that ensure correct state
+ * Need query params in JSX?
+ * Use namespaces for React components
+ * move *_attributes methods to RacingOnRails models
+ * DB import needs to match by external ID not name
+ * use react-rails camelcase option
 
  Calculations
  ============

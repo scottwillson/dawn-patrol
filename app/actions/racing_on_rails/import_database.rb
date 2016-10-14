@@ -1,6 +1,6 @@
 module RacingOnRails
   class ImportDatabase
-    COPIED_ATTRIBUTE_KEYS = %w{ city name state }
+    EVENT_ATTRIBUTE_KEYS = %w{ city name state }.freeze
 
     def initialize(attributes = {})
       @association = attributes[:association]
@@ -8,12 +8,23 @@ module RacingOnRails
     end
 
     def do_it!
+      RacingOnRails::Category.association = @association
       RacingOnRails::Event.association = @association
+      RacingOnRails::Race.association = @association
+      RacingOnRails::Result.association = @association
+
       Events::Event.transaction do
         ActsAsTenant.without_tenant do
-          RacingOnRails::Event.select("city", "date", "discipline", "name", "id", "people.name as promoter_name", "state").left_outer_joins(:promoter).find_each do |racing_on_rails_event|
+          racing_on_rails_events.find_each do |racing_on_rails_event|
             ActsAsTenant.with_tenant(association_instance) do
-              Events::Event.create!(event_attributes(racing_on_rails_event))
+              event = Events::Event.create!(event_attributes(racing_on_rails_event))
+              racing_on_rails_races(racing_on_rails_event).find_each do |racing_on_rails_race|
+                category = Categories::Create.new(name: racing_on_rails_race.attributes["category_name"]).do_it!
+                event_category = event.categories.create!(category: category)
+                racing_on_rails_results(racing_on_rails_race).find_each do |racing_on_rails_result|
+                  create_result(event_category, racing_on_rails_result)
+                end
+              end
             end
           end
         end
@@ -30,8 +41,14 @@ module RacingOnRails
       ).first_or_create!
     end
 
+    def racing_on_rails_events
+      RacingOnRails::Event
+        .select("city", "date", "discipline", "name", "id", "people.name as promoter_name", "state")
+        .left_outer_joins(:promoter)
+    end
+
     def event_attributes(racing_on_rails_event)
-      attributes = racing_on_rails_event.attributes .slice(*COPIED_ATTRIBUTE_KEYS)
+      attributes = racing_on_rails_event.attributes.slice(*EVENT_ATTRIBUTE_KEYS)
 
       attributes[:discipline] = Discipline.where(name: racing_on_rails_event.discipline).first_or_create!
       attributes[:promoter] = promoter(racing_on_rails_event)
@@ -46,6 +63,26 @@ module RacingOnRails
         person = Person.where(name: racing_on_rails_event.promoter_name).first_or_create!
         Events::Promoter.new(person: person)
       end
+    end
+
+    def racing_on_rails_races(event)
+      RacingOnRails::Race
+        .select("id", "categories.name as category_name")
+        .left_outer_joins(:category)
+        .where(event_id: event.id)
+    end
+
+    def racing_on_rails_results(race)
+      RacingOnRails::Result
+        .select("id", "name", "place")
+        .where(race_id: race.id)
+    end
+
+    def create_result(event_category, result)
+      name = result.attributes["name"]
+      person = Person.where(name: name).first_or_create!
+      attributes = result.attributes.slice(%w{ id place })
+      event_category.results.create!(attributes.merge(person_id: person.id))
     end
   end
 end

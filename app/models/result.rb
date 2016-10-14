@@ -35,6 +35,10 @@ class Result < ApplicationRecord
     person&.member?
   end
 
+  def name
+    person&.name
+  end
+
   def placed?
     place.to_i > 0 || dnf?
   end

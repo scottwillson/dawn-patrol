@@ -1,23 +1,16 @@
-class Event extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {...props};
-  }
-
-  render () {
-    return (
-      <tr>
-        <td className="date">{moment(this.state.starts_at).format('ddd M/D')}</td>
-        <td>
-          <a href={`/results/event_results/${this.state.id}`}>{this.state.name}</a>
-        </td>
-        <td className="hidden-sm-down">{this.state.promoter_names.join('<br/>')}</td>
-        <td className="hidden-sm-down">{this.state.phone}</td>
-        <td className="hidden-sm-down">{this.state.discipline}</td>
-        <td className="hidden-sm-down">{this.state.location}</td>
-      </tr>
-    );
-  }
+function Event(props) {
+  return (
+    <tr>
+      <td className="date">{moment(props.starts_at).format('ddd M/D')}</td>
+      <td>
+        <a href={`/events/events/${props.id}/results`}>{props.name}</a>
+      </td>
+      <td className="hidden-sm-down">{props.promoter_names.join('<br/>')}</td>
+      <td className="hidden-sm-down">{props.phone}</td>
+      <td className="hidden-sm-down">{props.discipline}</td>
+      <td className="hidden-sm-down">{props.location}</td>
+    </tr>
+  );
 }
 
 Event.propTypes = {
