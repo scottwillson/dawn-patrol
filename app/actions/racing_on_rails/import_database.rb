@@ -81,7 +81,7 @@ module RacingOnRails
     def create_result(event_category, result)
       name = result.attributes["name"]
       person = Person.where(name: name).first_or_create!
-      attributes = result.attributes.slice(%w{ id place })
+      attributes = result.attributes.slice(*%w{ place })
       event_category.results.create!(attributes.merge(person_id: person.id))
     end
   end

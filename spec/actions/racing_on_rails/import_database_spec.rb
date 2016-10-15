@@ -20,6 +20,7 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(Person.count).to eq(2)
       expect(Result.count).to eq(1)
       expect(Result.first.person.name).to eq("Jame Carney")
+      expect(Result.first.place).to eq("1")
     end
 
     ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "WSBA").first!) do
