@@ -27,7 +27,7 @@ module RacingOnRails
           event = Events::Event.create!(event_attributes(racing_on_rails_event))
           racing_on_rails_races(racing_on_rails_event).find_each do |racing_on_rails_race|
             category = Categories::Create.new(name: racing_on_rails_race.attributes["category_name"]).do_it!
-            event_category = event.categories.create!(category: category)
+            event_category = event.categories.create!(category: category, created_at: racing_on_rails_race.created_at, updated_at: racing_on_rails_race.updated_at)
             racing_on_rails_results(racing_on_rails_race).find_each do |racing_on_rails_result|
               create_result(event_category, racing_on_rails_result)
             end
@@ -81,21 +81,21 @@ module RacingOnRails
 
     def racing_on_rails_races(event)
       RacingOnRails::Race
-        .select("id", "categories.name as category_name")
+        .select("id", "created_at", "categories.name as category_name", "updated_at")
         .left_outer_joins(:category)
         .where(event_id: event.id)
     end
 
     def racing_on_rails_results(race)
       RacingOnRails::Result
-        .select("id", "name", "place")
+        .select("id", "created_at", "name", "place", "updated_at")
         .where(race_id: race.id)
     end
 
     def create_result(event_category, result)
       name = result.attributes["name"]
       person = Person.where(name: name).first_or_create!
-      attributes = result.attributes.slice(*%w{ place })
+      attributes = result.attributes.slice(*%w{ created_at place updated_at })
       event_category.results.create!(attributes.merge(person_id: person.id))
     end
   end
