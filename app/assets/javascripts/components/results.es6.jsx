@@ -12,6 +12,7 @@ class Results extends React.Component {
         <h2>{this.state.name}</h2>
         {this.cityState(this.state.city, this.state.state)}
         {this.parent(this.state.parent)}
+        <div className='starts-at'>{moment(this.state.startsAt).format('MMMM D, YYYY')}</div>
         {this.state.categories.map(category => <Category key={category.id} {...category} />)}
       </div>
     );
@@ -31,7 +32,7 @@ class Results extends React.Component {
 
   cityState(city, state) {
     if (city || state) {
-      return (<div>{R.join(', ', [city, state])}</div>);
+      return (<div className='city-state'>{R.join(', ', [city, state])}</div>);
     }
     return null;
   }
