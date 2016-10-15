@@ -13,6 +13,7 @@ class Results extends React.Component {
         {this.cityState(this.state.city, this.state.state)}
         {this.parent(this.state.parent)}
         <div className='starts-at'>{moment(this.state.startsAt).format('MMMM D, YYYY')}</div>
+        <Children children={this.state.children}/>
         {this.state.categories.map(category => <Category key={category.id} {...category} />)}
       </div>
     );

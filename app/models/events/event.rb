@@ -3,10 +3,10 @@ class Events::Event < ApplicationRecord
 
   belongs_to :calculation
   has_many :categories, class_name: "::Events::Category"
-  has_many :children, class_name: "::Events::Event"
+  has_many :children, class_name: "::Events::Event", foreign_key: :parent_id, inverse_of: :parent
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
   belongs_to :discipline
-  belongs_to :parent, class_name: "::Events::Event"
+  belongs_to :parent, class_name: "::Events::Event", inverse_of: :children
   has_many :promoters
 
   validates :name, presence: true

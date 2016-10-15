@@ -1,1 +1,1 @@
-<%= react_component("Results", event: @event.as_json({ include: :parent })) %>
+<%= react_component("Results", event: @event.as_json({ include: [ :children, :parent ] })) %>
