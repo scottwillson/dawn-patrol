@@ -4,6 +4,7 @@ class CreateEventsEvents < ActiveRecord::Migration[5.0]
       t.belongs_to :dawn_patrol_association, null: false
       t.belongs_to :discipline, null: false
       t.belongs_to :calculation
+      t.belongs_to :parent
 
       t.datetime :starts_at, null: false
       t.string :city

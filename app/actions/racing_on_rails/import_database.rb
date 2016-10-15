@@ -27,6 +27,13 @@ module RacingOnRails
               end
             end
           end
+
+          RacingOnRails::Event.select("id", "parent_id").where.not(parent_id: nil).find_each do |racing_on_rails_event|
+            ActsAsTenant.with_tenant(association_instance) do
+              parent_id = Events::Event.where(racing_on_rails_id: racing_on_rails_event.parent_id).ids.first
+              Events::Event.where(racing_on_rails_id: racing_on_rails_event.id).update_all(parent_id: parent_id)
+            end
+          end
         end
       end
     end

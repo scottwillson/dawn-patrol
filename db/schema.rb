@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20160924014406) do
     t.integer  "dawn_patrol_association_id",                       null: false
     t.integer  "discipline_id",                                    null: false
     t.integer  "calculation_id"
+    t.integer  "parent_id"
     t.datetime "starts_at",                                        null: false
     t.string   "city"
     t.string   "name",                       default: "New Event", null: false
@@ -109,6 +110,7 @@ ActiveRecord::Schema.define(version: 20160924014406) do
     t.index ["dawn_patrol_association_id"], name: "index_events_events_on_dawn_patrol_association_id", using: :btree
     t.index ["discipline_id"], name: "index_events_events_on_discipline_id", using: :btree
     t.index ["name"], name: "index_events_events_on_name", using: :btree
+    t.index ["parent_id"], name: "index_events_events_on_parent_id", using: :btree
     t.index ["starts_at"], name: "index_events_events_on_starts_at", using: :btree
   end
 
