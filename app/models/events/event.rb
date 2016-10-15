@@ -19,7 +19,7 @@ class Events::Event < ApplicationRecord
   end
 
   default_value_for :discipline do
-    Discipline.where(name: "Road").first_or_create
+    Discipline.where(name: "Road").first_or_initialize
   end
 
   def calculated?
