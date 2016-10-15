@@ -10,6 +10,7 @@ class Results extends React.Component {
     return (
       <div>
         <h2>{this.state.name}</h2>
+        {this.cityState(this.state.city, this.state.state)}
         {this.state.categories.map(category => <Category key={category.id} {...category} />)}
       </div>
     );
@@ -25,5 +26,12 @@ class Results extends React.Component {
         }
         this.setState({categories: res.body});
       }.bind(this));
+  }
+
+  cityState(city, state) {
+    if (city || state) {
+      return (<div>{R.join(', ', [city, state])}</div>)
+    }
+    return null;
   }
 }
