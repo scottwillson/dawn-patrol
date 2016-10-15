@@ -17,6 +17,9 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(event.discipline.name).to eq("Track")
       expect(event.state).to eq("CA")
       expect(event.promoter_names).to contain_exactly("Mike Murray")
+      expect(event.created_at).to eq(Time.zone.local(2009, 1, 7, 11, 34))
+      expect(event.updated_at).to eq(Time.zone.local(2009, 1, 7, 11, 34))
+
       expect(Person.count).to eq(2)
       expect(Result.count).to eq(1)
       expect(Result.first.person.name).to eq("Jame Carney")

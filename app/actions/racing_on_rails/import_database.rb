@@ -1,6 +1,6 @@
 module RacingOnRails
   class ImportDatabase
-    EVENT_ATTRIBUTE_KEYS = %w{ city name state }.freeze
+    EVENT_ATTRIBUTE_KEYS = %w{ city created_at name state updated_at }.freeze
 
     def initialize(attributes = {})
       @association = attributes[:association]
@@ -57,7 +57,7 @@ module RacingOnRails
 
     def racing_on_rails_events
       RacingOnRails::Event
-        .select("city", "date", "discipline", "name", "id", "people.name as promoter_name", "state")
+        .select("city", "created_at", "date", "discipline", "name", "id", "people.name as promoter_name", "state", "updated_at")
         .left_outer_joins(:promoter)
     end
 
