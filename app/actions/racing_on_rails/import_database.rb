@@ -15,25 +15,32 @@ module RacingOnRails
 
       Events::Event.transaction do
         ActsAsTenant.without_tenant do
-          racing_on_rails_events.find_each do |racing_on_rails_event|
-            ActsAsTenant.with_tenant(association_instance) do
-              event = Events::Event.create!(event_attributes(racing_on_rails_event))
-              racing_on_rails_races(racing_on_rails_event).find_each do |racing_on_rails_race|
-                category = Categories::Create.new(name: racing_on_rails_race.attributes["category_name"]).do_it!
-                event_category = event.categories.create!(category: category)
-                racing_on_rails_results(racing_on_rails_race).find_each do |racing_on_rails_result|
-                  create_result(event_category, racing_on_rails_result)
-                end
-              end
-            end
-          end
+          import_events_and_results
+          set_parents
+        end
+      end
+    end
 
-          RacingOnRails::Event.select("id", "parent_id").where.not(parent_id: nil).find_each do |racing_on_rails_event|
-            ActsAsTenant.with_tenant(association_instance) do
-              parent_id = Events::Event.where(racing_on_rails_id: racing_on_rails_event.parent_id).ids.first
-              Events::Event.where(racing_on_rails_id: racing_on_rails_event.id).update_all(parent_id: parent_id)
+    def import_events_and_results
+      racing_on_rails_events.find_each do |racing_on_rails_event|
+        ActsAsTenant.with_tenant(association_instance) do
+          event = Events::Event.create!(event_attributes(racing_on_rails_event))
+          racing_on_rails_races(racing_on_rails_event).find_each do |racing_on_rails_race|
+            category = Categories::Create.new(name: racing_on_rails_race.attributes["category_name"]).do_it!
+            event_category = event.categories.create!(category: category)
+            racing_on_rails_results(racing_on_rails_race).find_each do |racing_on_rails_result|
+              create_result(event_category, racing_on_rails_result)
             end
           end
+        end
+      end
+    end
+
+    def set_parents
+      RacingOnRails::Event.select("id", "parent_id").where.not(parent_id: nil).find_each do |racing_on_rails_event|
+        ActsAsTenant.with_tenant(association_instance) do
+          parent_id = Events::Event.where(racing_on_rails_id: racing_on_rails_event.parent_id).ids.first
+          Events::Event.where(racing_on_rails_id: racing_on_rails_event.id).update_all(parent_id: parent_id)
         end
       end
     end
