@@ -1,4 +1,7 @@
 class Result < ApplicationRecord
+  # 999_999_999_999, not Float::INFINITY for JSON serialization
+  PLACE_MAX = 999_999_999_999
+
   acts_as_tenant :dawn_patrol_association
 
   has_many :calculations_selections,
@@ -37,6 +40,14 @@ class Result < ApplicationRecord
 
   def name
     person&.name
+  end
+
+  def numeric_place
+    if place.to_i > 0
+      place.to_i
+    else
+      PLACE_MAX
+    end
   end
 
   def placed?

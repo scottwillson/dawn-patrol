@@ -21,4 +21,5 @@
 //= require bootstrap-sprockets
 //= require query
 //= require moment
+//= require ramda
 //= require_tree .

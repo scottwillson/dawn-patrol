@@ -46,4 +46,14 @@ RSpec.describe Result, type: :model do
       expect(Result.new(place: "99").placed?).to be(true)
     end
   end
+
+  describe ".numeric_place" do
+    it "gives non-numeric places a high numeric value" do
+      ActsAsTenant.current_tenant = DawnPatrol::Association.new
+      expect(Result.new(place: "1").numeric_place).to eq(1)
+      expect(Result.new(place: "99").numeric_place).to eq(99)
+      expect(Result.new(place: "DNF").numeric_place).to eq(999_999_999_999)
+      expect(Result.new(place: "DQ").numeric_place).to eq(999_999_999_999)
+    end
+  end
 end

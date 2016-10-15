@@ -5,7 +5,7 @@ class Events::ResultsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        render json: results.as_json(include: { categories: { include: [ :category, { results: { include: :person } } ] } })
+        render json: results.as_json(include: { categories: { include: [ :category, { results: { include: :person, methods: :numeric_place } } ] } })
       end
     end
   end

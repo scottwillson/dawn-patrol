@@ -23,6 +23,7 @@
  * move *_attributes methods to RacingOnRails models
  * DB import needs to match by external ID not name
  * use react-rails camelcase option
+ * Use import not application.js require?
 
  Calculations
  ============

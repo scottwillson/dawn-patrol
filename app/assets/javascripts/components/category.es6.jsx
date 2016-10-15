@@ -10,7 +10,7 @@ function Category(props) {
           </tr>
         </thead>
         <tbody>
-          {props.results.map(result => <Result key={result.id} {...result} />)}
+          {R.sortBy(R.prop('numeric_place'))(props.results).map(result => <Result key={result.id} {...result} />)}
         </tbody>
       </table>
     </div>
