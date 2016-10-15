@@ -1,11 +1,11 @@
 module Events
   class FindResults
     def initialize(attributes = {})
-      @id = attributes[:id]
+      @event_id = attributes[:event_id]
     end
 
     def do_it!
-      Events::Event.where(id: @id).includes(categories: { results: :person }).includes(categories: :category).first!
+      ::Events::Category.where(event_id: @event_id).includes(results: :person).includes(:category)
     end
   end
 end
