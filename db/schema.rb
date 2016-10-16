@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(version: 20160924014406) do
     t.integer  "person_id"
     t.string   "place",                                     default: "", null: false
     t.decimal  "points",                     precision: 10, default: 0,  null: false
+    t.decimal  "time",                       precision: 10
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
     t.index ["dawn_patrol_association_id"], name: "index_results_on_dawn_patrol_association_id", using: :btree

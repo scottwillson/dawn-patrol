@@ -6,7 +6,9 @@ function Category(props) {
         <thead className="thead-default">
           <tr>
             <th className="place"></th>
-            <th className="name"></th>
+            <th className="name">Name</th>
+            <th className="points">Points</th>
+            <th className="time">Time</th>
           </tr>
         </thead>
         <tbody>
