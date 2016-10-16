@@ -1,7 +1,7 @@
 function Category(props) {
   return (
     <div>
-      <h3>{props.category.name}</h3>
+      <h3 id={`event-category-${props.id}`}>{props.category.name}</h3>
       <table className="table table-sm table-striped results">
         <thead className="thead-default">
           <tr>

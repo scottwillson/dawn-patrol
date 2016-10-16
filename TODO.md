@@ -24,6 +24,7 @@
  * DB import needs to match by external ID not name
  * use react-rails camelcase option
  * Use import not application.js require?
+ * add category slugs and use them for anchor links
 
  Calculations
  ============

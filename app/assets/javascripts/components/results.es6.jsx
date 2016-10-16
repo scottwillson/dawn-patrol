@@ -14,6 +14,7 @@ class Results extends React.Component {
         {this.parent(this.state.parent)}
         <div className='starts-at'>{this.dates(this.state.starts_at, this.state.children)}</div>
         <Children children={this.state.children}/>
+        <CategoryLinks categories={this.state.categories}/>
         {this.state.categories.map(category => <Category key={category.id} {...category} />)}
         <div className='updated-at'>Updated {moment(this.state.updatedAt).format('MMMM D, YYYY')}</div>
       </div>
