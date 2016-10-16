@@ -35,8 +35,15 @@ class Events::Event < ApplicationRecord
   def promoter=(promoter)
     self.promoters.clear
 
-    if promoter
+    case promoter
+    when Events::Promoter
       self.promoters << promoter
+    when Person
+      self.promoters << Events::Promoter.new(person: promoter)
+    when NilClass
+      # OK, just remove all promoters
+    else
+      raise IllegalArgumentError, "promoter must be Promoter, Person or nil, but was #{promoter.class}"
     end
   end
 

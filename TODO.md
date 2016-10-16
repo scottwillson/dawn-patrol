@@ -1,5 +1,3 @@
- * Look for and remove any DB work that occurs during calculate
- * promoter=should take just a Person, too
  * Show JS/React errors
  * import event editors as promoters
  * Improve host scheme for different environments
@@ -25,6 +23,9 @@
  * use react-rails camelcase option
  * Use import not application.js require?
  * add category slugs and use them for anchor links
+ * consistently use module names for things like Events::Event
+ * Add reactjs component tests
+ * ditch Actions and just use methods?
 
  Calculations
  ============

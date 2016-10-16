@@ -1,6 +1,5 @@
 require "rails_helper"
 
-
 RSpec.describe Events::Event, type: :model do
   it "creates blank Event" do
     ActsAsTenant.current_tenant = DawnPatrol::Association.create!
@@ -18,11 +17,19 @@ RSpec.describe Events::Event, type: :model do
   end
 
   describe "#promoter=" do
-    it "add person as promoter" do
+    it "adds promoter" do
       ActsAsTenant.current_tenant = DawnPatrol::Association.create!
       promoter = Events::Promoter.new(person: Person.create!)
       event = Events::Event.create!(promoter: promoter)
       expect(event.reload.promoters).to contain_exactly(promoter)
+    end
+
+    it "add person as promoter" do
+      ActsAsTenant.current_tenant = DawnPatrol::Association.create!
+      person = Person.create!
+      event = Events::Event.create!(promoter: person)
+      expect(event.promoters.reload.size).to eq(1)
+      expect(event.promoters.first.person).to eq(person)
     end
 
     it "accepts nil" do
