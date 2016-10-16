@@ -34,7 +34,7 @@ class Results extends React.Component {
 
   cityState(city, state) {
     if (city || state) {
-      return (<div className='city-state'>{R.join(', ', [city, state])}</div>);
+      return (<div className='city-state'>{[city, state].join(', ')}</div>);
     }
     return null;
   }
