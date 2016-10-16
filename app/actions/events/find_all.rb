@@ -5,7 +5,7 @@ module Events
     end
 
     def do_it!
-      Event.where(starts_at: starts_at_range)
+      Event.includes(promoters: :person).where(starts_at: starts_at_range)
     end
 
     def starts_at_range
