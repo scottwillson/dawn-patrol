@@ -8,6 +8,7 @@ class Events extends React.Component {
   render() {
     return (
       <div>
+        <AlertMessage error={this.state.error}/>
         <h2>2016 Schedule</h2>
         <table className="table table-sm table-striped events">
           <thead className="thead-default">
@@ -34,7 +35,7 @@ class Events extends React.Component {
       .query(this.jsonQueryParams())
       .end(function(err, res) {
         if (err) {
-          console.error(err);
+          this.setState({error: err});
           return false;
         }
         this.setState({events: res.body});

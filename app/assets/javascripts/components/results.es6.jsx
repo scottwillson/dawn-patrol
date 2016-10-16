@@ -9,6 +9,7 @@ class Results extends React.Component {
   render() {
     return (
       <div>
+        <AlertMessage error={this.state.error}/>
         <h2>{this.state.name}</h2>
         {this.cityState(this.state.city, this.state.state)}
         {this.parent(this.state.parent)}
@@ -26,7 +27,7 @@ class Results extends React.Component {
       .get(`/events/events/${this.state.id}/results.json`)
       .end(function(err, res) {
         if (err) {
-          console.error(err);
+          this.setState({error: err});
           return false;
         }
         this.setState({categories: res.body});
