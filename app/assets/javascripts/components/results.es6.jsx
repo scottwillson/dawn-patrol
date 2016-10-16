@@ -40,11 +40,22 @@ class Results extends React.Component {
   }
 
   dates(startsAt, children) {
-    if (children.length > 1) {
-      const sortByStartsAt = R.sortBy(R.prop(['starts_at']));
-      const sortedChildren = sortByStartsAt(children);
-      return `${moment(sortedChildren[0].starts_at).format('MMMM D, YYYY')}-${moment(sortedChildren[sortedChildren.length - 1].starts_at).format('MMMM D, YYYY')}`;
+    if (children.length < 2) {
+      return this.singleDay(startsAt);
     }
+
+    const startsAts = children.map(c => c.starts_at).sort();
+    const firstStartsAt = moment(startsAts[0]);
+    const lastStartsAt = moment(startsAts[startsAts.length - 1]);
+
+    if (firstStartsAt.diff(lastStartsAt) == 0) {
+      return this.singleDay(startsAt);
+    }
+
+    return `${firstStartsAt.format('MMMM D')} to ${lastStartsAt.format('MMMM D, YYYY')}`;
+  }
+
+  singleDay(startsAt) {
     return moment(startsAt).format('MMMM D, YYYY');
   }
 
