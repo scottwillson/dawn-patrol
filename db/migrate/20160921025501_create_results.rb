@@ -7,7 +7,10 @@ class CreateResults < ActiveRecord::Migration[5.0]
 
       t.string :place, default: "", null: false
       t.decimal :points, precision: 10, scale: 0, null: false, default: 0
+      t.integer :racing_on_rails_id
       t.decimal :time, precision: 10, scale: 0
+
+      t.index :racing_on_rails_id
 
       t.timestamps
     end

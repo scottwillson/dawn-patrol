@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20160924014406) do
   create_table "people", force: :cascade do |t|
     t.integer  "dawn_patrol_association_id", null: false
     t.string   "name"
+    t.integer  "racing_on_rails_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.index ["dawn_patrol_association_id"], name: "index_people_on_dawn_patrol_association_id", using: :btree

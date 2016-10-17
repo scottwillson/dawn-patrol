@@ -4,6 +4,7 @@ class CreateDawnPatrolAssociations < ActiveRecord::Migration[5.0]
       t.string :acronym, null: false, default: "CBRA", unique: true
       t.string :host, null: false, default: "localhost|0.0.0.0|127.0.0.1|::1|test.host", unique: true
       t.string :name, null: false, default: "Cascadia Bicycle Racing Association", unique: true
+      t.string :time_zone, null: false, default: "Pacific Time (US & Canada)"
 
       t.index :acronym, unique: true
       t.index :host, unique: true

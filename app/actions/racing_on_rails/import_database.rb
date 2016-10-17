@@ -10,12 +10,15 @@ module RacingOnRails
     def do_it!
       RacingOnRails::Category.association = @association
       RacingOnRails::Event.association = @association
+      RacingOnRails::EventEditor.association = @association
+      RacingOnRails::Person.association = @association
       RacingOnRails::Race.association = @association
       RacingOnRails::Result.association = @association
 
       Events::Event.transaction do
         ActsAsTenant.without_tenant do
           import_events_and_results
+          import_event_editors
           set_parents
         end
       end
@@ -32,6 +35,22 @@ module RacingOnRails
               create_result(event_category, racing_on_rails_result)
             end
           end
+        end
+      end
+    end
+
+    def import_event_editors
+      RacingOnRails::EventEditor.select("editor_id", "event_id").each do |editor|
+        ActsAsTenant.with_tenant(association_instance) do
+          person = ::Person.where(racing_on_rails_id: editor.editor_id).first
+
+          if person.nil?
+            racing_on_rails_person = RacingOnRails::Person.find(editor.editor_id)
+            person = ::Person.create!(name: racing_on_rails_person.name, racing_on_rails_id: editor.editor_id)
+          end
+
+          event = Events::Event.where(racing_on_rails_id: editor.event_id).first!
+          Events::Promoter.create!(event: event, person: person)
         end
       end
     end
@@ -57,7 +76,7 @@ module RacingOnRails
 
     def racing_on_rails_events
       RacingOnRails::Event
-        .select("city", "created_at", "date", "discipline", "name", "id", "people.name as promoter_name", "state", "updated_at")
+        .select("city", "created_at", "date", "discipline", "name", "id", "promoter_id", "people.name as promoter_name", "state", "updated_at")
         .left_outer_joins(:promoter)
     end
 
@@ -73,8 +92,8 @@ module RacingOnRails
     end
 
     def promoter(racing_on_rails_event)
-      if racing_on_rails_event.promoter_name.present?
-        person = Person.where(name: racing_on_rails_event.promoter_name).first_or_create!
+      if racing_on_rails_event.promoter_id
+        person = ::Person.where(racing_on_rails_id: racing_on_rails_event.promoter_id, name: racing_on_rails_event.promoter_name).first_or_create!
         Events::Promoter.new(person: person)
       end
     end
@@ -88,16 +107,21 @@ module RacingOnRails
 
     def racing_on_rails_results(race)
       RacingOnRails::Result
-        .select("id", "created_at", "name", "points", "place", "time", "updated_at")
+        .select("id", "created_at", "name", "person_id", "points", "place", "time", "updated_at")
         .where(race_id: race.id)
     end
 
     def create_result(event_category, result)
-      name = result.attributes["name"]
-      person = Person.where(name: name).first_or_create!
+      person = nil
+
+      if result.attributes["person_id"]
+        name = result.attributes["name"]
+        person = ::Person.where(racing_on_rails_id: result.attributes["person_id"], name: name).first_or_create!
+      end
+
       attributes = result.attributes.slice(*%w{ created_at place points time updated_at })
       attributes[:points] = attributes[:points] || 0
-      event_category.results.create!(attributes.merge(person_id: person.id))
+      event_category.results.create!(attributes.merge(person_id: person&.id))
     end
   end
 end

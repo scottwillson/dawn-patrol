@@ -13,8 +13,9 @@ class CreateEventsEvents < ActiveRecord::Migration[5.0]
       t.string :phone
       t.string :state
 
-      t.index :starts_at
       t.index :name
+      t.index :racing_on_rails_id
+      t.index :starts_at
 
       t.timestamps
     end

@@ -35,7 +35,7 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(event.starts_at).to eq(Time.zone.local(2004, 5, 10))
       expect(event.discipline.name).to eq("Road")
       expect(event.state).to eq("WA")
-      expect(event.promoter_names).to contain_exactly("Ryan Rickerts")
+      expect(event.promoter_names).to contain_exactly("Ryan Rickerts", "Martha Walsh")
       expect(Result.count).to eq(0)
 
       parent = Events::Event.where(racing_on_rails_id: 2).first!
