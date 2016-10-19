@@ -13,8 +13,8 @@ class Events::Event < ApplicationRecord
   validates :starts_at, presence: true
 
   scope :calculated, -> { where(calculation_id: true) }
-  scope :current_year, -> { where(starts_at: DawnPatrol::Association.current.beginning_of_year..DawnPatrol::Association.current.end_of_year) }
-  scope :year, ->(year) { where(starts_at: DawnPatrol::Association.current.beginning_of_year(year)..DawnPatrol::Association.current.end_of_year(year)) }
+  scope :current_year, -> { where(starts_at: DawnPatrol::Association.current.year_range) }
+  scope :year, ->(year) { where(starts_at: DawnPatrol::Association.current.year_range(year)) }
 
   default_value_for :discipline do
     Discipline.where(name: "Road").first_or_initialize

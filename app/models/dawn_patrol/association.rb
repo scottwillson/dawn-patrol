@@ -26,4 +26,8 @@ class DawnPatrol::Association < ApplicationRecord
     current_time = Time.zone.local(year || Time.current.year)
     current_time.end_of_year.in_time_zone(time_zone)
   end
+
+  def year_range(year = Time.current.year)
+    beginning_of_year(year)..end_of_year(year)
+  end
 end

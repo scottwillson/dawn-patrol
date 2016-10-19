@@ -23,7 +23,7 @@ class Result < ApplicationRecord
 
   scope :current_year, -> do
     joins(event_category: :event).
-    where("events_events.starts_at" => DawnPatrol::Association.current.beginning_of_year..DawnPatrol::Association.current.end_of_year)
+    where("events_events.starts_at" => DawnPatrol::Association.current.year_range)
   end
 
   def dnf?

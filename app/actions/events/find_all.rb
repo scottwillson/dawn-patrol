@@ -5,15 +5,9 @@ module Events
     end
 
     def do_it!
-      Event.includes(promoters: :person).where(starts_at: starts_at_range)
-    end
-
-    def starts_at_range
-      if @year
-        DawnPatrol::Association.current.beginning_of_year(@year)..DawnPatrol::Association.current.end_of_year(@year)
-      else
-        DawnPatrol::Association.current.beginning_of_year..DawnPatrol::Association.current.end_of_year
-      end
+      Event
+        .includes(promoters: :person)
+        .where(starts_at: DawnPatrol::Association.current.year_range(@year))
     end
   end
 end

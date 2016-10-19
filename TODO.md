@@ -1,4 +1,3 @@
- * add Association.year_range
  * handle tandem results correctly
   * each person has a result
   * tandem team appears in the BAR (could just be people?)
