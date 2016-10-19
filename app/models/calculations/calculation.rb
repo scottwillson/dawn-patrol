@@ -8,7 +8,7 @@ class Calculations::Calculation < ApplicationRecord
     @categories ||= [ Category.new(name: name) ]
   end
 
-  def source_events(year)
-    Events::Event.year(year)
+  def source_events
+    Events::Event.all
   end
 end

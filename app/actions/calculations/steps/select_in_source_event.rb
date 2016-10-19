@@ -3,7 +3,7 @@ module Calculations
     module SelectInSourceEvent
       def self.do_step(results, calculation)
         results.select do |result|
-          result.event.in?(calculation.source_events(Time.current.year))
+          result.event.in?(calculation.source_events)
         end
       end
 

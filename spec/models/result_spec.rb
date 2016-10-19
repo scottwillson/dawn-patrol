@@ -56,4 +56,17 @@ RSpec.describe Result, type: :model do
       expect(Result.new(place: "DQ").numeric_place).to eq(999_999_999_999)
     end
   end
+
+  describe ".year" do
+    it "only finds results for year" do
+      category = Category.create!
+      last_year_result = Events::Create.new(starts_at: 1.year.ago.end_of_year).do_it!.categories.create!(category: category).results.create!
+      current_result = Events::Create.new(starts_at: Time.current).do_it!.categories.create!(category: category).results.create!
+      next_year_result = Events::Create.new(starts_at: 1.year.from_now.end_of_year).do_it!.categories.create!(category: category).results.create!
+
+      expect(Result.year(1.year.ago.end_of_year.year)).to eq([ last_year_result ])
+      expect(Result.year(Time.current.year)).to eq([ current_result ])
+      expect(Result.year(1.year.from_now.year)).to eq([ next_year_result ])
+    end
+  end
 end

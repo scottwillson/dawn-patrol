@@ -59,6 +59,25 @@ RSpec.describe "Calculations::Calculate" do
       expect(rejection.reason).to eq("no_person")
     end
 
+    it "calculates results from previous year" do
+      event = Events::Create.new(starts_at: 1.year.ago).do_it!
+      category = Category.create!
+      event_category = event.categories.create!(category: category)
+      source_result = event_category.results.create!(person: Person.create!, place: "3")
+
+      calculation = Calculations::Calculation.create!(name: "Ironman")
+
+      action_result = Calculations::Calculate.new(calculation: calculation, year: 1.year.ago.year).do_it!
+      expect(action_result).to be(true)
+
+      expect(calculation.events.count).to eq(1)
+      calculated_event = calculation.events.first
+      category = calculated_event.categories.first
+      result = category.results.first
+      calculation_selection = result.calculations_selections.reload.first
+      expect(calculation_selection.source_result).to eq(source_result)
+    end
+
     it "calculates with no results" do
       calculation = Calculations::Calculation.create!
       result = Calculations::Calculate.new(calculation: calculation).do_it!
@@ -67,15 +86,17 @@ RSpec.describe "Calculations::Calculate" do
   end
 
   describe "#source_events" do
-    it "defaults to all events in year" do
+    it "defaults to all events" do
 
       calculation = Calculations::Calculation.create!
 
-      Events::Create.new(starts_at: 1.year.ago.end_of_year).do_it!
-      Events::Create.new(starts_at: 1.year.from_now.end_of_year).do_it!
-      event = Events::Create.new(starts_at: Time.current).do_it!
+      events = [
+        Events::Create.new(starts_at: 1.year.ago.end_of_year).do_it!,
+        Events::Create.new(starts_at: 1.year.from_now.end_of_year).do_it!,
+        Events::Create.new(starts_at: Time.current).do_it!
+      ]
 
-      expect(calculation.source_events(Time.current.year)).to eq([ event ])
+      expect(calculation.source_events).to eq(events)
     end
   end
 

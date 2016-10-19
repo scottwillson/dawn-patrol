@@ -2,6 +2,7 @@ module Calculations
   class Calculate
     def initialize(attributes = {})
       @calculation = attributes[:calculation]
+      @year = attributes[:year]
     end
 
     def do_it!
@@ -29,7 +30,7 @@ module Calculations
 
     def source_results
       Calculation.benchmark("#{self.class} source_results calculation: #{@calculation.name}", level: :debug) do
-        Result.current_year.readonly!
+        Result.year(@year).readonly!
       end
     end
 
