@@ -8,7 +8,7 @@ module Calculations
     def do_it!
       Calculation.benchmark("#{self.class} do_it calculation: #{@calculation.name}", level: :debug) do
         Calculation.transaction do
-          event = create_event
+          event = find_or_create_event
           create_categories event
 
           result = Steps::Result.new(source_results, [], @calculation)
@@ -34,8 +34,13 @@ module Calculations
       end
     end
 
-    def create_event
-      Events::Create.new(calculation: @calculation, name: @calculation.name).do_it!
+    def find_or_create_event
+      @calculation.events.where(starts_at: DawnPatrol::Association.current.year_range(@year)).first ||
+        Events::Create.new(
+          calculation: @calculation,
+          name: @calculation.name,
+          starts_at: DawnPatrol::Association.current.beginning_of_year(@year)
+        ).do_it!
     end
 
     def create_categories(event)

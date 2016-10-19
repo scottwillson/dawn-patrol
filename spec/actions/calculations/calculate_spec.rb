@@ -100,17 +100,33 @@ RSpec.describe "Calculations::Calculate" do
     end
   end
 
-  describe "create_event" do
+  describe "find_or_create_event" do
     it "creates a calculated Event" do
       calculation = Calculations::Calculation.create!(name: "Ironman")
       calculate = Calculations::Calculate.new(calculation: calculation)
 
-      event = calculate.create_event
+      event = calculate.find_or_create_event
 
       expect(event.calculation).to eq(calculation)
       expect(event.calculated?).to be(true)
       expect(event.name).to eq("Ironman")
       expect(event).to be_valid
+    end
+
+    it "creates a calculated Event in different year" do
+      calculation = Calculations::Calculation.create!(name: "Ironman")
+
+      calculate = Calculations::Calculate.new(calculation: calculation)
+      calculate.find_or_create_event
+
+      calculate = Calculations::Calculate.new(calculation: calculation, year: 2014)
+      event = calculate.find_or_create_event
+      event_2 = calculate.find_or_create_event
+
+      expect(event).to eq(event_2)
+
+      expect(calculation.events.reload.size).to eq(2)
+      expect(calculation.events.map { |e| e.starts_at.year }).to match_array([ 2014, Time.current.year ])
     end
   end
 
@@ -119,7 +135,7 @@ RSpec.describe "Calculations::Calculate" do
       calculation = Calculations::Calculation.create!(name: "Ironman")
       calculate = Calculations::Calculate.new(calculation: calculation)
 
-      event = calculate.create_event
+      event = calculate.find_or_create_event
       categories = calculate.create_categories(event)
       expect(categories).to all(be_valid)
       expect(categories.first.name).to eq("Ironman")
@@ -136,7 +152,7 @@ RSpec.describe "Calculations::Calculate" do
 
       calculation = Calculations::Calculation.create!
       calculate = Calculations::Calculate.new(calculation: calculation)
-      calculation_event = calculate.create_event
+      calculation_event = calculate.find_or_create_event
       calculate.create_categories(calculation_event)
 
       results = [

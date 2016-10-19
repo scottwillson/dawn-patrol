@@ -9,6 +9,7 @@ class Events::Event < ApplicationRecord
   belongs_to :parent, class_name: "::Events::Event", inverse_of: :children
   has_many :promoters
 
+  validate :unique_calculated_event
   validates :name, presence: true
   validates :starts_at, presence: true
 
@@ -45,5 +46,11 @@ class Events::Event < ApplicationRecord
 
   def promoter_names
     promoters.map(&:person).map(&:name)
+  end
+
+  def unique_calculated_event
+    if calculation && calculation.events.year(starts_at.year).where.not(id: id).exists?
+      errors.add(:calculation, "already has calculated event for #{starts_at.year}")
+    end
   end
 end
