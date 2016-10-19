@@ -1,14 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :set_current_tenant_by_host
+  before_action :set_current_association_by_host
 
   private
 
-  def set_current_tenant_by_host
+  def set_current_association_by_host
     host = forwarded_for_or_request_host
-    ActsAsTenant.current_tenant = DawnPatrol::Association.where("? ~ host", host).order(:position).first!
-    logger.debug "Found association '#{current_tenant&.acronym}' for '#{host}'"
-    @association = current_tenant
+    DawnPatrol::Association.current = DawnPatrol::Association.where("? ~ host", host).order(:position).first!
+    logger.debug "Found association '#{current_association&.acronym}' for '#{host}'"
+    @association = current_association
   end
 
   def forwarded_for_or_request_host
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     request.headers["X-Forwarded-For"] || request.host
   end
 
-  def current_tenant
-    ActsAsTenant.current_tenant
+  def current_association
+    DawnPatrol::Association.current
   end
 end

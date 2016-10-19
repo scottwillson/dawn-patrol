@@ -5,6 +5,14 @@ class DawnPatrol::Association < ApplicationRecord
 
   acts_as_list
 
+  def self.current
+    ActsAsTenant.current_tenant
+  end
+
+  def self.current=(value)
+    ActsAsTenant.current_tenant = value
+  end
+
   def self.table_name_prefix
     'dawn_patrol_'
   end

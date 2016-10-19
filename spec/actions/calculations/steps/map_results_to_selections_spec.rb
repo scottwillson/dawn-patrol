@@ -7,7 +7,7 @@ RSpec.describe "Calculations::Steps::MapResultsToSelections" do
     end
 
     it "maps results" do
-      ActsAsTenant.current_tenant = DawnPatrol::Association.create!
+      DawnPatrol::Association.current = DawnPatrol::Association.create!
       selections = Calculations::Steps::MapResultsToSelections.do_step([ Result.new, Result.new ], {})
       expect(selections.size).to eq(2)
     end

@@ -10,9 +10,9 @@ module Events
 
     def starts_at_range
       if @year
-        ActsAsTenant.current_tenant.beginning_of_year(@year)..ActsAsTenant.current_tenant.end_of_year(@year)
+        DawnPatrol::Association.current.beginning_of_year(@year)..DawnPatrol::Association.current.end_of_year(@year)
       else
-        ActsAsTenant.current_tenant.beginning_of_year..ActsAsTenant.current_tenant.end_of_year
+        DawnPatrol::Association.current.beginning_of_year..DawnPatrol::Association.current.end_of_year
       end
     end
   end

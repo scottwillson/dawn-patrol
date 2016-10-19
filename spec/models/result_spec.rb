@@ -2,13 +2,13 @@ require "rails_helper"
 
 RSpec.describe Result, type: :model do
   it "has person" do
-    ActsAsTenant.current_tenant = DawnPatrol::Association.create!
+    DawnPatrol::Association.current = DawnPatrol::Association.create!
     Events::Create.new.do_it!.categories.create!(category: Category.create!).results.create! person: Person.create!
   end
 
   describe "#event" do
     it "returns the owning event" do
-      ActsAsTenant.current_tenant = DawnPatrol::Association.create!
+      DawnPatrol::Association.current = DawnPatrol::Association.create!
       event = Events::Create.new.do_it!
       result = event.categories.create!(category: Category.create!).results.create!
       expect(result.event).to eq(event)
@@ -17,7 +17,7 @@ RSpec.describe Result, type: :model do
 
   describe ".current_year" do
     it "only finds results from current year" do
-      ActsAsTenant.current_tenant = DawnPatrol::Association.create!
+      DawnPatrol::Association.current = DawnPatrol::Association.create!
       category = Category.create!
       Events::Create.new(starts_at: 1.year.ago.end_of_year).do_it!.categories.create!(category: category).results.create!
       Events::Create.new(starts_at: 1.year.from_now.end_of_year).do_it!.categories.create!(category: category).results.create!
@@ -49,7 +49,7 @@ RSpec.describe Result, type: :model do
 
   describe ".numeric_place" do
     it "gives non-numeric places a high numeric value" do
-      ActsAsTenant.current_tenant = DawnPatrol::Association.new
+      DawnPatrol::Association.current = DawnPatrol::Association.new
       expect(Result.new(place: "1").numeric_place).to eq(1)
       expect(Result.new(place: "99").numeric_place).to eq(99)
       expect(Result.new(place: "DNF").numeric_place).to eq(999_999_999_999)

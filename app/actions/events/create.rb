@@ -5,7 +5,7 @@ module Events
     end
 
     def do_it!
-      @attributes[:starts_at] ||= Time.current.in_time_zone(ActsAsTenant.current_tenant.time_zone).beginning_of_day
+      @attributes[:starts_at] ||= Time.current.in_time_zone(DawnPatrol::Association.current.time_zone).beginning_of_day
       Event.create! @attributes
     end
   end

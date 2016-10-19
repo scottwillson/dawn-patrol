@@ -15,20 +15,20 @@ RSpec.describe Events::EventsController, type: :controller do
     end
   end
 
-  describe "#set_current_tenant_by_host" do
+  describe "#set_current_association_by_host" do
     it "defaults" do
       @request.host = "localhost"
       get :index
-      expect(ActsAsTenant.current_tenant).to eq(@default_association)
+      expect(DawnPatrol::Association.current).to eq(@default_association)
     end
 
-    it "sets current_tenant from request host" do
+    it "sets current_association from request host" do
       atra = DawnPatrol::Association.create!(host: "raceatra.com", acronym: "ATRA", name: "ATRA")
 
       @request.host = "staging.raceatra.com"
       get :index
 
-      expect(ActsAsTenant.current_tenant).to eq(atra)
+      expect(DawnPatrol::Association.current).to eq(atra)
     end
 
     it "honors X-Forwarded-For" do
@@ -38,7 +38,7 @@ RSpec.describe Events::EventsController, type: :controller do
       @request.headers["X-Forwarded-For"] = "raceatra.com"
       get :index
 
-      expect(ActsAsTenant.current_tenant).to eq(atra)
+      expect(DawnPatrol::Association.current).to eq(atra)
     end
 
     it "honors position" do
@@ -49,7 +49,7 @@ RSpec.describe Events::EventsController, type: :controller do
       @request.host = "localhost"
       get :index
 
-      expect(ActsAsTenant.current_tenant).to eq(localhost_atra)
+      expect(DawnPatrol::Association.current).to eq(localhost_atra)
     end
 
     it "returns 404 for no match" do

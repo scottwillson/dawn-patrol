@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Categories::Create" do
   it "creates a new category" do
-    ActsAsTenant.current_tenant = DawnPatrol::Association.create!
+    DawnPatrol::Association.current = DawnPatrol::Association.create!
 
     category = Categories::Create.new(name: "Women 4/5").do_it!
 
@@ -10,7 +10,7 @@ RSpec.describe "Categories::Create" do
   end
 
   it "reues existing category" do
-    ActsAsTenant.current_tenant = DawnPatrol::Association.create!
+    DawnPatrol::Association.current = DawnPatrol::Association.create!
 
     category = Categories::Create.new(name: "Women 4/5").do_it!
     category_2 = Categories::Create.new(name: "Women 4/5").do_it!

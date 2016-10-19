@@ -5,7 +5,7 @@ namespace :events do
 
     association = ENV["ASSOCIATION"]
     raise("ASSOCIATION is required") unless association
-    ActsAsTenant.current_tenant = DawnPatrol::Association.where(acronym: association).first!
+    DawnPatrol::Association.current = DawnPatrol::Association.where(acronym: association).first!
 
     events = Events::Event.calculated.year(year).includes(categories: { category: :results }).all.order(:starts_at, :name)
 

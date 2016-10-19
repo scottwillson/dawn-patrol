@@ -1,9 +1,8 @@
- * add domain-specific alias for ActsAsTenant.current_tenant.time_zone
  * add Association.year_range
  * handle tandem results correctly
   * each person has a result
   * tandem team appears in the BAR (could just be people?)
- * DRY up `ActsAsTenant.current_tenant = DawnPatrol::Association.create!` in tests
+ * DRY up `DawnPatrol::Association.current = DawnPatrol::Association.create!` in tests
  * factories?
  * find_or_create category helper
  * try to create test without DB access (.readonly!)

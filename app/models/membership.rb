@@ -7,11 +7,11 @@ class Membership < ApplicationRecord
   validates :person, presence: true
 
   default_value_for :start_at do
-    ActsAsTenant.current_tenant.beginning_of_year
+    DawnPatrol::Association.current.beginning_of_year
   end
 
   default_value_for :end_at do
-    ActsAsTenant.current_tenant.end_of_year
+    DawnPatrol::Association.current.end_of_year
   end 
 
   def current?
