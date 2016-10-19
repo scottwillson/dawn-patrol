@@ -1,7 +1,7 @@
 class Events::Event < ApplicationRecord
   acts_as_tenant :dawn_patrol_association
 
-  belongs_to :calculation
+  belongs_to :calculation, class_name: "Calculations::Calculation"
   has_many :categories, class_name: "::Events::Category"
   has_many :children, class_name: "::Events::Event", foreign_key: :parent_id, inverse_of: :parent
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
@@ -13,12 +13,8 @@ class Events::Event < ApplicationRecord
   validates :starts_at, presence: true
 
   scope :calculated, -> { where(calculation_id: true) }
-  scope :current_year, -> { where(starts_at: Time.current.beginning_of_year..Time.current.end_of_year) }
-  scope :year, ->(year) { where(starts_at: Time.zone.local(year).beginning_of_year..Time.zone.local(year).end_of_year) }
-
-  default_value_for :starts_at do
-    Time.current.beginning_of_day
-  end
+  scope :current_year, -> { where(starts_at: ActsAsTenant.current_tenant.beginning_of_year..ActsAsTenant.current_tenant.end_of_year) }
+  scope :year, ->(year) { where(starts_at: ActsAsTenant.current_tenant.beginning_of_year(year)..ActsAsTenant.current_tenant.end_of_year(year)) }
 
   default_value_for :discipline do
     Discipline.where(name: "Road").first_or_initialize

@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20160924014406) do
     t.string   "acronym",    default: "CBRA",                                      null: false
     t.string   "host",       default: "localhost|0.0.0.0|127.0.0.1|::1|test.host", null: false
     t.string   "name",       default: "Cascadia Bicycle Racing Association",       null: false
+    t.string   "time_zone",  default: "Pacific Time (US & Canada)",                null: false
     t.datetime "created_at",                                                       null: false
     t.datetime "updated_at",                                                       null: false
     t.integer  "position"
@@ -111,6 +112,7 @@ ActiveRecord::Schema.define(version: 20160924014406) do
     t.index ["discipline_id"], name: "index_events_events_on_discipline_id", using: :btree
     t.index ["name"], name: "index_events_events_on_name", using: :btree
     t.index ["parent_id"], name: "index_events_events_on_parent_id", using: :btree
+    t.index ["racing_on_rails_id"], name: "index_events_events_on_racing_on_rails_id", using: :btree
     t.index ["starts_at"], name: "index_events_events_on_starts_at", using: :btree
   end
 
@@ -145,6 +147,7 @@ ActiveRecord::Schema.define(version: 20160924014406) do
     t.datetime "updated_at",                 null: false
     t.index ["dawn_patrol_association_id"], name: "index_people_on_dawn_patrol_association_id", using: :btree
     t.index ["name"], name: "index_people_on_name", using: :btree
+    t.index ["racing_on_rails_id"], name: "index_people_on_racing_on_rails_id", using: :btree
   end
 
   create_table "results", force: :cascade do |t|
@@ -153,12 +156,14 @@ ActiveRecord::Schema.define(version: 20160924014406) do
     t.integer  "person_id"
     t.string   "place",                                     default: "", null: false
     t.decimal  "points",                     precision: 10, default: 0,  null: false
+    t.integer  "racing_on_rails_id"
     t.decimal  "time",                       precision: 10
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
     t.index ["dawn_patrol_association_id"], name: "index_results_on_dawn_patrol_association_id", using: :btree
     t.index ["event_category_id"], name: "index_results_on_event_category_id", using: :btree
     t.index ["person_id"], name: "index_results_on_person_id", using: :btree
+    t.index ["racing_on_rails_id"], name: "index_results_on_racing_on_rails_id", using: :btree
   end
 
 end

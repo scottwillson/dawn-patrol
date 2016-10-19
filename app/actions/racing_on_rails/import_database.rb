@@ -4,6 +4,7 @@ module RacingOnRails
 
     def initialize(attributes = {})
       @association = attributes[:association]
+      @time_zone = attributes[:time_zone]
       raise(ArgumentError, "association must be present") unless @association.present?
     end
 
@@ -27,7 +28,7 @@ module RacingOnRails
     def import_events_and_results
       racing_on_rails_events.find_each do |racing_on_rails_event|
         ActsAsTenant.with_tenant(association_instance) do
-          event = Events::Event.create!(event_attributes(racing_on_rails_event))
+          event = Events::Create.new(event_attributes(racing_on_rails_event)).do_it!
           racing_on_rails_races(racing_on_rails_event).find_each do |racing_on_rails_race|
             category = Categories::Create.new(name: racing_on_rails_race.attributes["category_name"]).do_it!
             event_category = event.categories.create!(category: category, created_at: racing_on_rails_race.created_at, updated_at: racing_on_rails_race.updated_at)
@@ -67,11 +68,13 @@ module RacingOnRails
     def association_instance
       RacingOnRails::RacingAssociation.association = @association
       racing_on_rails_racing_association = RacingOnRails::RacingAssociation.first
-      DawnPatrol::Association.where(
-        acronym: racing_on_rails_racing_association.short_name,
+      association = DawnPatrol::Association.where(acronym: racing_on_rails_racing_association.short_name).first_or_create!
+      association.update!(
         host: "localhost|0.0.0.0|127.0.0.1|::1|test.host|#{racing_on_rails_racing_association.short_name.downcase}.local",
-        name: racing_on_rails_racing_association.name
-      ).first_or_create!
+        name: racing_on_rails_racing_association.name,
+        time_zone: @time_zone || "Pacific Time (US & Canada)"
+      )
+      association
     end
 
     def racing_on_rails_events

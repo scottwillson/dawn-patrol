@@ -9,7 +9,7 @@ RSpec.describe Calculations::Calculation, type: :model do
   it "has events" do
     ActsAsTenant.current_tenant = DawnPatrol::Association.create!
     calculation = Calculations::Calculation.create!
-    event = Events::Event.create!
+    event = Events::Create.new.do_it!
     calculation.events << event
     expect(calculation.events.reload).to eq([ event ])
   end

@@ -23,7 +23,7 @@ class Result < ApplicationRecord
 
   scope :current_year, -> do
     joins(event_category: :event).
-    where("events_events.starts_at" => Time.current.beginning_of_year..Time.current.end_of_year)
+    where("events_events.starts_at" => ActsAsTenant.current_tenant.beginning_of_year..ActsAsTenant.current_tenant.end_of_year)
   end
 
   def dnf?

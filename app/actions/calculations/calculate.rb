@@ -34,7 +34,7 @@ module Calculations
     end
 
     def create_event
-      @calculation.events.create!(name: @calculation.name)
+      Events::Create.new(calculation: @calculation, name: @calculation.name).do_it!
     end
 
     def create_categories(event)

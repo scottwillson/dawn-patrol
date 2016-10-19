@@ -1,4 +1,5 @@
- * Event start time should be in association time zone
+ * add domain-specific alias for ActsAsTenant.current_tenant.time_zone
+ * add Association.year_range
  * handle tandem results correctly
   * each person has a result
   * tandem team appears in the BAR (could just be people?)
@@ -16,13 +17,13 @@
  * Need query params in JSX?
  * Use namespaces for React components
  * move *_attributes methods to RacingOnRails models
- * DB import needs to match by external ID not name
  * use react-rails camelcase option
  * Use import not application.js require?
  * add category slugs and use them for anchor links
  * consistently use module names for things like Events::Event
  * Add reactjs component tests
  * ditch Actions and just use methods?
+ * events should set start time based on city, state time zone
 
  Calculations
  ============

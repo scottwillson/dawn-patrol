@@ -10,10 +10,9 @@ module Events
 
     def starts_at_range
       if @year
-        beginning_of_year = Time.zone.local(@year).beginning_of_year
-        beginning_of_year..beginning_of_year.end_of_year
+        ActsAsTenant.current_tenant.beginning_of_year(@year)..ActsAsTenant.current_tenant.end_of_year(@year)
       else
-        Time.current.beginning_of_year..Time.current.end_of_year
+        ActsAsTenant.current_tenant.beginning_of_year..ActsAsTenant.current_tenant.end_of_year
       end
     end
   end
