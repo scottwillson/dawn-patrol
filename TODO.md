@@ -1,6 +1,3 @@
- * factories?
- * find_or_create category helper
- * try to create test without DB access (.readonly!)
  * define Calculation categories as names or Categories?
  * consider deferring Calculate and Calculation creation methods for in-memory tests
  * Calculation source events: add attribute like source_events_strategy?
@@ -21,6 +18,7 @@
  * handle tandem results correctly
   * each person has a result
   * tandem team appears in the BAR (could just be people?)
+ * show rejections on calculation results pages
 
  Calculations
  ============

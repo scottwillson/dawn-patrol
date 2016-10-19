@@ -29,7 +29,7 @@ module Calculations
 
     def source_results
       Calculation.benchmark("#{self.class} source_results calculation: #{@calculation.name}", level: :debug) do
-        Result.current_year
+        Result.current_year.readonly!
       end
     end
 
