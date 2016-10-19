@@ -1,7 +1,3 @@
- * handle tandem results correctly
-  * each person has a result
-  * tandem team appears in the BAR (could just be people?)
- * DRY up `DawnPatrol::Association.current = DawnPatrol::Association.create!` in tests
  * factories?
  * find_or_create category helper
  * try to create test without DB access (.readonly!)
@@ -22,6 +18,9 @@
  * Add reactjs component tests
  * ditch Actions and just use methods?
  * events should set start time based on city, state time zone
+ * handle tandem results correctly
+  * each person has a result
+  * tandem team appears in the BAR (could just be people?)
 
  Calculations
  ============

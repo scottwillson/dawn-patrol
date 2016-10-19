@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Calculations::Calculate" do
   before(:each) do
-    DawnPatrol::Association.current = DawnPatrol::Association.create!
+    save_default_current_association!
   end
 
   describe "default Calculation" do

@@ -3,8 +3,6 @@ require "rails_helper"
 RSpec.describe "Calculations::Steps::SelectMembers" do
   describe "default" do
     it "rejects no one" do
-      DawnPatrol::Association.current = DawnPatrol::Association.new
-
       result = ::Result.new
       source_results = [ result ]
 
@@ -17,8 +15,6 @@ RSpec.describe "Calculations::Steps::SelectMembers" do
 
   describe "members_only" do
     it "only selects members" do
-      DawnPatrol::Association.current = DawnPatrol::Association.new
-
       non_member_result = ::Result.new
       member = Person.new
       member.memberships << Membership.new

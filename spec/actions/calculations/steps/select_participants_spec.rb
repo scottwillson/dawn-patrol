@@ -3,8 +3,6 @@ require "rails_helper"
 RSpec.describe "Calculations::Steps::SelectParticipants" do
   describe ".do_step" do
     it "only selects results with participants" do
-      DawnPatrol::Association.current = DawnPatrol::Association.create!
-
       result_without_participant = ::Result.new
       result_with_participant = ::Result.new(person_id: 0)
 

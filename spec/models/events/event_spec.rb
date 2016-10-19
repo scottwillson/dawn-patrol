@@ -1,8 +1,11 @@
 require "rails_helper"
 
 RSpec.describe Events::Event, type: :model do
+  before(:each) do
+    save_default_current_association!
+  end
+
   it "has many promoters" do
-    DawnPatrol::Association.current = DawnPatrol::Association.create!
     promoter = Events::Promoter.new(person: Person.create!)
     promoter_2 = Events::Promoter.new(person: Person.create!)
     event = Events::Create.new(promoters: [ promoter, promoter_2 ]).do_it!
@@ -11,14 +14,12 @@ RSpec.describe Events::Event, type: :model do
 
   describe "#promoter=" do
     it "adds promoter" do
-      DawnPatrol::Association.current = DawnPatrol::Association.create!
       promoter = Events::Promoter.new(person: Person.create!)
       event = Events::Create.new(promoter: promoter).do_it!
       expect(event.reload.promoters).to contain_exactly(promoter)
     end
 
     it "add person as promoter" do
-      DawnPatrol::Association.current = DawnPatrol::Association.create!
       person = Person.create!
       event = Events::Create.new(promoter: person).do_it!
       expect(event.promoters.reload.size).to eq(1)
@@ -26,7 +27,6 @@ RSpec.describe Events::Event, type: :model do
     end
 
     it "accepts nil" do
-      DawnPatrol::Association.current = DawnPatrol::Association.create!
       event = Events::Create.new(promoter: nil).do_it!
       expect(event.reload.promoters).to be_empty
     end
@@ -43,13 +43,11 @@ RSpec.describe Events::Event, type: :model do
 
   describe "#promoter_names" do
     it "returns array if there is no promoter" do
-      DawnPatrol::Association.current = DawnPatrol::Association.create!
       event = Events::Create.new.do_it!
       expect(event.promoter_names).to eq([])
     end
 
     it "returns promoter names" do
-      DawnPatrol::Association.current = DawnPatrol::Association.create!
       event = Events::Create.new.do_it!
       event.promoters << Events::Promoter.new(person: Person.create!(name: "David Hart"))
       event.promoters << Events::Promoter.new(person: Person.create!(name: "David Saltzberg"))

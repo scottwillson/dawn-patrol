@@ -1,15 +1,17 @@
 require "rails_helper"
 
 RSpec.describe Person, type: :model do
+  before(:each) do
+    save_default_current_association!
+  end
+
   it "creates unamed Person" do
-    DawnPatrol::Association.current = DawnPatrol::Association.create!
     person = Person.create!
     expect(person.name).to eq(nil)
   end
 
   describe "#member?" do
     it "considers memberships" do
-      DawnPatrol::Association.current = DawnPatrol::Association.create!
       person = Person.new
       expect(person.member?).to be(false)
 
