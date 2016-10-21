@@ -1,4 +1,4 @@
-function Category(props) {
+Events.Results.Category = function Category(props) {
   return (
     <div>
       <h3 id={`event-category-${props.id}`}>{props.category.name}</h3>
@@ -12,7 +12,7 @@ function Category(props) {
           </tr>
         </thead>
         <tbody>
-          {R.sortBy(R.prop('numeric_place'))(props.results).map(result => <Result key={result.id} {...result} />)}
+          {R.sortBy(R.prop('numeric_place'))(props.results).map(result => <Events.Results.Result key={result.id} {...result} />)}
         </tbody>
       </table>
     </div>

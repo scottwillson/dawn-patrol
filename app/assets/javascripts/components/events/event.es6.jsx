@@ -1,4 +1,4 @@
-function Event(props) {
+Events.Event = function Event(props) {
   return (
     <tr>
       <td className="date">{moment(props.starts_at).format('ddd M/D')}</td>

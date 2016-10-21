@@ -4,7 +4,6 @@
    * children of single parent event
    * specific set of parents
  * Add CreateEvent and UpdateEvent action that ensure correct state
- * Use namespaces for React components
  * move *_attributes methods to RacingOnRails models
  * use react-rails camelcase option
  * Use import not application.js require?

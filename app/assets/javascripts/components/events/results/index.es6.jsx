@@ -1,4 +1,4 @@
-class Results extends React.Component {
+Events.Results.Index = class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = props.event;
@@ -14,9 +14,9 @@ class Results extends React.Component {
         {this.cityState(this.state.city, this.state.state)}
         {this.parent(this.state.parent)}
         <div className='starts-at'>{this.dates(this.state.starts_at, this.state.children)}</div>
-        <Children children={this.state.children}/>
-        <CategoryLinks categories={this.state.categories}/>
-        {this.state.categories.map(category => <Category key={category.id} {...category} />)}
+        <Events.Results.Children children={this.state.children}/>
+        <Events.Results.CategoryLinks categories={this.state.categories}/>
+        {this.state.categories.map(category => <Events.Results.Category key={category.id} {...category} />)}
         <div className='updated-at'>Updated {moment(this.state.updatedAt).format('MMMM D, YYYY')}</div>
       </div>
     );

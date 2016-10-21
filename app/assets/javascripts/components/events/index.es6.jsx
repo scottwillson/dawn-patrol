@@ -1,4 +1,4 @@
-class Events extends React.Component {
+Events.Index = class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {events: [], year: props.year};
@@ -22,7 +22,7 @@ class Events extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.events.map(event => <Event key={event.id} {...event} />) }
+            {this.state.events.map(event => <Events.Event key={event.id} {...event} />) }
           </tbody>
         </table>
       </div>
