@@ -12,6 +12,10 @@ module Calculations
       def self.rejection_reason
         :not_a_member
       end
+
+      def self.type
+        :select
+      end
     end
   end
 end

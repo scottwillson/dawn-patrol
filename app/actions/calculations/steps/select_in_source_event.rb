@@ -10,6 +10,10 @@ module Calculations
       def self.rejection_reason
         :not_a_source_event
       end
+
+      def self.type
+        :select
+      end
     end
   end
 end

@@ -12,6 +12,10 @@ module Calculations
       def self.rejection_reason
         :dnf
       end
+
+      def self.type
+        :reject
+      end
     end
   end
 end

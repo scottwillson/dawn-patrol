@@ -8,6 +8,10 @@ module Calculations
       def self.rejection_reason
         :no_person
       end
+
+      def self.type
+        :select
+      end
     end
   end
 end

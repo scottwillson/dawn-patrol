@@ -27,7 +27,7 @@ module Calculations
       def new_rejections(before, after, step_class)
         Rails.logger.debug("Calculations::Steps::#{step_class} results: #{before.size} -> #{after.size}")
 
-        return [] if before.size == after.size
+        return [] if step_class.type == :map || before.size == after.size
 
         rejected_results(before, after).map do |result|
           Calculations::Rejection.new(reason: step_class.rejection_reason, result: result)

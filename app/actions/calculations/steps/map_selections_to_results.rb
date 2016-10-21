@@ -10,6 +10,10 @@ module Calculations
           )
         end
       end
+
+      def self.type
+        :map
+      end
     end
   end
 end

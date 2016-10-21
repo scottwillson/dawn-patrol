@@ -1,5 +1,3 @@
- * reuse calculated event from same year
- * define Calculation categories as names or Categories?
  * consider deferring Calculate and Calculation creation methods for in-memory tests
  * Calculation source events: add attribute like source_events_strategy?
    * all (default)

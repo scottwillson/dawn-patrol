@@ -83,6 +83,25 @@ RSpec.describe "Calculations::Calculate" do
       result = Calculations::Calculate.new(calculation: calculation).do_it!
       expect(result).to be(true)
     end
+
+    it "calculates with multiple results for same person" do
+      event = Events::Create.new.do_it!
+      category = Category.create!
+      event_category = event.categories.create!(category: category)
+      person = Person.create!
+      event_category.results.create!(person: person, place: "3")
+      event_category.results.create!(person: Person.create!, place: "4")
+
+      event = Events::Create.new.do_it!
+      category = Category.create!(name: "Men 4/5")
+      event_category = event.categories.create!(category: category)
+      event_category.results.create!(person: person, place: "1")
+
+      calculation = Calculations::Calculation.create!(name: "Ironman")
+
+      action_result = Calculations::Calculate.new(calculation: calculation).do_it!
+      expect(action_result).to be(true)
+    end
   end
 
   describe "#source_events" do
