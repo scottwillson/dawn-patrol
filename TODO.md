@@ -5,12 +5,9 @@
    * specific set of parents
  * Add CreateEvent and UpdateEvent action that ensure correct state
  * move *_attributes methods to RacingOnRails models
- * use react-rails camelcase option
- * Use import not application.js require?
  * add category slugs and use them for anchor links
  * consistently use module names for things like Events::Event
  * Add reactjs component tests
- * ditch Actions and just use methods?
  * events should set start time based on city, state time zone
  * handle tandem results correctly
   * each person has a result
@@ -18,7 +15,6 @@
  * show rejections on calculation results pages
  * consider replacing Actions with methods
  * make Action attributes declarative
- * Test React code
 
  Calculations
  ============
