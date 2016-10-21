@@ -4,7 +4,6 @@
    * children of single parent event
    * specific set of parents
  * Add CreateEvent and UpdateEvent action that ensure correct state
- * Need query params in JSX?
  * Use namespaces for React components
  * move *_attributes methods to RacingOnRails models
  * use react-rails camelcase option
@@ -20,6 +19,7 @@
  * show rejections on calculation results pages
  * consider replacing Actions with methods
  * make Action attributes declarative
+ * Test React code
 
  Calculations
  ============

@@ -1,7 +1,7 @@
 class Events extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {events: [], year: null};
+    this.state = {events: [], year: props.year};
     this.componentWillMount = this.componentWillMount.bind(this);
   }
 
@@ -9,7 +9,7 @@ class Events extends React.Component {
     return (
       <div>
         <AlertMessage error={this.state.error}/>
-        <h2>2016 Schedule</h2>
+        <h2>{this.state.year} Schedule</h2>
         <table className="table table-sm table-striped events">
           <thead className="thead-default">
             <tr>

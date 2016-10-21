@@ -1,6 +1,6 @@
 class Events::EventsController < ApplicationController
   def index
-    @year = params[:year]
+    @year = params[:year] || DawnPatrol::Association.current.year
 
     respond_to do |format|
       format.html
