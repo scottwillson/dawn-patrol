@@ -39,6 +39,10 @@ class Result < ApplicationRecord
     event_category&.event
   end
 
+  def event_id
+    event_category&.event_id
+  end
+
   def member?
     person&.member?
   end

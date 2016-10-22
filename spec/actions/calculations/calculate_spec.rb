@@ -104,7 +104,7 @@ RSpec.describe "Calculations::Calculate" do
     end
   end
 
-  describe "#source_events" do
+  describe "#source_event_ids" do
     it "defaults to all events" do
 
       calculation = Calculations::Calculation.create!
@@ -115,7 +115,7 @@ RSpec.describe "Calculations::Calculate" do
         Events::Create.new(starts_at: Time.current).do_it!
       ]
 
-      expect(calculation.source_events).to eq(events)
+      expect(calculation.source_event_ids).to eq(events.map(&:id))
     end
   end
 

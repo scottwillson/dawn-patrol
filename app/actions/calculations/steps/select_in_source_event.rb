@@ -3,7 +3,7 @@ module Calculations
     module SelectInSourceEvent
       def self.do_step(results, calculation)
         results.select do |result|
-          result.event.in?(calculation.source_events)
+          result.event_id.in?(calculation.source_event_ids)
         end
       end
 

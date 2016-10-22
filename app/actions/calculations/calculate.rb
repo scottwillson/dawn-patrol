@@ -30,7 +30,10 @@ module Calculations
 
     def source_results
       Calculation.benchmark("#{self.class} source_results calculation: #{@calculation.name}", level: :debug) do
-        Result.year(@year).readonly!
+        Result
+          .includes(event_category: :event)
+          .year(@year)
+          .readonly!
       end
     end
 
