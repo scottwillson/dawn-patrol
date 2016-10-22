@@ -1,4 +1,3 @@
- * Events::Category should require category
  * Calculate should set category on Events::Category
  * Calculate should sort results
  * Calculate should assign places
@@ -20,6 +19,8 @@
  * consider replacing Actions with methods
  * make Action attributes declarative
  * result pagination?
+ * ensure proper cascading deletes/prevention
+ * versioning
 
  Calculations
  ============
@@ -42,3 +43,4 @@
  * results_per_event, use_source_result_points
  * results_per_race, use_source_result_points
  * can recalculate many times
+ * set dates to something consistent

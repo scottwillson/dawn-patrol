@@ -47,6 +47,10 @@ module Calculations
     end
 
     def create_categories(event)
+      if @calculation.categories.empty?
+        @calculation.categories.create!(name: @calculation.name)
+      end
+
       @calculation.categories.each do |category|
         event.categories.create!(category: category)
       end
