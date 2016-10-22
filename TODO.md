@@ -1,4 +1,3 @@
- * Calculate should sort results
  * Calculate should assign places
  * consider deferring Calculate and Calculation creation methods for in-memory tests
  * Calculation source events: add attribute like source_events_strategy?
@@ -43,3 +42,4 @@
  * results_per_race, use_source_result_points
  * can recalculate many times
  * set dates to something consistent
+ * validate that :map Steps maintain collection size (and groups/reduce may change size)

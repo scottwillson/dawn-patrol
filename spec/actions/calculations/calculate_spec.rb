@@ -43,6 +43,7 @@ RSpec.describe "Calculations::Calculate" do
       result = category.results.first
       expect(result.calculations_selections.count).to eq(1)
       expect(result.points).to eq(1)
+      expect(result.place).to eq("1")
 
       calculation_selection = result.calculations_selections.reload.first
       expect(calculation_selection.points).to eq(1)
