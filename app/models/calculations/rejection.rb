@@ -5,5 +5,5 @@ class Calculations::Rejection < ApplicationRecord
   belongs_to :event, class_name: "Events::Event"
   belongs_to :result
 
-  validates_uniqueness_of :result, scope: :event
+  validates_uniqueness_to_tenant :result, scope: :event, message: "Duplicate rejection for this result and calculation event"
 end

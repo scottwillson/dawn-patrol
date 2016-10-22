@@ -1,4 +1,3 @@
- * Calculate should set category on Events::Category
  * Calculate should sort results
  * Calculate should assign places
  * consider deferring Calculate and Calculation creation methods for in-memory tests

@@ -19,6 +19,7 @@ module Calculations
                      .do_step(Steps::SelectInSourceEvent)
                      .do_step(Steps::MapResultsToSelections)
                      .do_step(Steps::MapSelectionsToResults)
+                     .do_step(Steps::Sort)
 
           save_results result.results, event
           save_rejections result.rejections, event
