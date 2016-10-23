@@ -6,7 +6,7 @@ Results.EventCategoryLinks =function EventCategoryLinks(props) {
   return (
     <table>
       <tbody>
-        {eventCategoryRows(props).map(row => <Results.EventCategoryLinkRow row={row} />)}
+        {eventCategoryRows(props).map((row, index) => <Results.EventCategoryLinkRow row={row} key={index} />)}
       </tbody>
     </table>
   );

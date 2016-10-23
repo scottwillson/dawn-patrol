@@ -1,5 +1,3 @@
- * consistently use module names for things like Event
- * fix Reactjs warnings
  * Add reactjs component tests
  * format more like existing site
  * add custom color overrides
