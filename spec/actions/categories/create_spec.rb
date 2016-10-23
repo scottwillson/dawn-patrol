@@ -8,6 +8,7 @@ RSpec.describe "Categories::Create" do
   it "creates a new category" do
     category = Categories::Create.new(name: "Women 4/5").do_it!
     expect(category.name).to eq("Women 4/5")
+    expect(category.slug).to eq("women-4-5")
   end
 
   it "reues existing category" do
