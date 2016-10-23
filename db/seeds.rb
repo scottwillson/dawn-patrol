@@ -1,7 +1,7 @@
 association = DawnPatrol::Association.first_or_create!
 
 ActsAsTenant.with_tenant(association) do
-  Events::Event.transaction do
+  Event.transaction do
     city = Faker::Address.city
     event = Events::Create.new(
       starts_at: 1.month.from_now,

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Events::Event, type: :model do
+RSpec.describe Event, type: :model do
   before(:each) do
     save_default_current_association!
   end
@@ -37,7 +37,7 @@ RSpec.describe Events::Event, type: :model do
       Events::Create.new(starts_at: 1.year.ago.end_of_year).do_it!
       Events::Create.new(starts_at: 1.year.from_now.end_of_year).do_it!
       event = Events::Create.new(starts_at: Time.current).do_it!
-      expect(Events::Event.current_year).to eq([ event ])
+      expect(Event.current_year).to eq([ event ])
     end
   end
 

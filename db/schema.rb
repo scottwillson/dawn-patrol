@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20161023002304) do
     t.index ["event_id"], name: "index_event_categories_on_event_id", using: :btree
   end
 
-  create_table "events_events", force: :cascade do |t|
+  create_table "events", force: :cascade do |t|
     t.integer  "dawn_patrol_association_id",                       null: false
     t.integer  "discipline_id",                                    null: false
     t.integer  "calculation_id"
@@ -122,14 +122,14 @@ ActiveRecord::Schema.define(version: 20161023002304) do
     t.string   "state"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
-    t.index ["calculation_id"], name: "index_events_events_on_calculation_id", using: :btree
-    t.index ["dawn_patrol_association_id", "slug"], name: "index_events_events_on_dawn_patrol_association_id_and_slug", unique: true, using: :btree
-    t.index ["dawn_patrol_association_id"], name: "index_events_events_on_dawn_patrol_association_id", using: :btree
-    t.index ["discipline_id"], name: "index_events_events_on_discipline_id", using: :btree
-    t.index ["name"], name: "index_events_events_on_name", using: :btree
-    t.index ["parent_id"], name: "index_events_events_on_parent_id", using: :btree
-    t.index ["racing_on_rails_id"], name: "index_events_events_on_racing_on_rails_id", using: :btree
-    t.index ["starts_at"], name: "index_events_events_on_starts_at", using: :btree
+    t.index ["calculation_id"], name: "index_events_on_calculation_id", using: :btree
+    t.index ["dawn_patrol_association_id", "slug"], name: "index_events_on_dawn_patrol_association_id_and_slug", unique: true, using: :btree
+    t.index ["dawn_patrol_association_id"], name: "index_events_on_dawn_patrol_association_id", using: :btree
+    t.index ["discipline_id"], name: "index_events_on_discipline_id", using: :btree
+    t.index ["name"], name: "index_events_on_name", using: :btree
+    t.index ["parent_id"], name: "index_events_on_parent_id", using: :btree
+    t.index ["racing_on_rails_id"], name: "index_events_on_racing_on_rails_id", using: :btree
+    t.index ["starts_at"], name: "index_events_on_starts_at", using: :btree
   end
 
   create_table "events_promoters", force: :cascade do |t|

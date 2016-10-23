@@ -1,16 +1,16 @@
-class Events::Event < ApplicationRecord
+class Event < ApplicationRecord
   extend FriendlyId
 
   acts_as_tenant :dawn_patrol_association
   friendly_id :name_and_year, use: :scoped, scope: :dawn_patrol_association_id
 
   belongs_to :calculation, class_name: "Calculations::Calculation"
-  has_many :children, class_name: "::Events::Event", foreign_key: :parent_id, inverse_of: :parent
+  has_many :children, class_name: "::Event", foreign_key: :parent_id, inverse_of: :parent
   has_many :event_categories
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
   belongs_to :discipline
-  belongs_to :parent, class_name: "::Events::Event", inverse_of: :children
-  has_many :promoters
+  belongs_to :parent, class_name: "::Event", inverse_of: :children
+  has_many :promoters, class_name: "Events::Promoter"
   has_many :rejections, class_name: "Calculations::Rejection"
 
   validate :unique_calculated_event

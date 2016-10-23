@@ -1,4 +1,4 @@
-class Events::EventsController < ApplicationController
+class EventsController < ApplicationController
   def index
     @year = params[:year] || DawnPatrol::Association.current.year
 

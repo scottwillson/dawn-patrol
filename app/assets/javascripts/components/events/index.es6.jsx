@@ -31,7 +31,7 @@ Events.Index = class Index extends React.Component {
 
   componentWillMount() {
     superagent
-      .get('/events/events.json')
+      .get('/events.json')
       .query(this.jsonQueryParams())
       .end(function(err, res) {
         if (err) {

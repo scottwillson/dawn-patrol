@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Events::ResultsController, type: :controller do
+RSpec.describe ResultsController, type: :controller do
   before(:each) do
     save_default_current_association!
   end

@@ -8,11 +8,11 @@ RSpec.describe "DawnPatrol", type: :feature do
 
     RacingOnRails::ImportDatabase.new(association: "WSBA").do_it!
 
-    visit "/events/events"
+    visit "/events"
     expect(page).to have_no_css ".events a", text: "Hellyer Challenge"
     expect(page).to have_no_css ".events a", text: "Tahuya-Seabeck-Tahuya Road Race"
 
-    visit "/events/events?year=2009"
+    visit "/events?year=2009"
     expect(page).to have_css ".events a", text: "Hellyer Challenge"
     expect(page).to have_no_css ".events a", text: "Tahuya-Seabeck-Tahuya Road Race"
 

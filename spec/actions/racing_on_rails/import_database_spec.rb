@@ -8,8 +8,8 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
     RacingOnRails::ImportDatabase.new(association: "WSBA").do_it!
 
     ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "ATRA").first!) do
-      expect(Events::Event.count).to eq(1)
-      event = Events::Event.first
+      expect(Event.count).to eq(1)
+      event = Event.first
       expect(event.name).to eq("Hellyer Challenge")
       expect(event.city).to eq("San Jose")
       expect(event.racing_on_rails_id).to eq(1)
@@ -27,8 +27,8 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
     end
 
     ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "WSBA").first!) do
-      expect(Events::Event.count).to eq(3)
-      event = Events::Event.order(:starts_at).first
+      expect(Event.count).to eq(3)
+      event = Event.order(:starts_at).first
       expect(event.name).to eq("Tahuya-Seabeck-Tahuya Road Race")
       expect(event.city).to eq("Tahuya")
       expect(event.racing_on_rails_id).to eq(1)
@@ -38,8 +38,8 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(event.promoter_names).to contain_exactly("Ryan Rickerts", "Martha Walsh")
       expect(Result.count).to eq(0)
 
-      parent = Events::Event.where(racing_on_rails_id: 2).first!
-      child = Events::Event.where(racing_on_rails_id: 3).first!
+      parent = Event.where(racing_on_rails_id: 2).first!
+      child = Event.where(racing_on_rails_id: 3).first!
       expect(child.parent).to eq(parent)
     end
 

@@ -6,7 +6,7 @@ class EventCategory < ApplicationRecord
 
   belongs_to :category
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
-  belongs_to :event, class_name: "Events::Event"
+  belongs_to :event
   has_many :results
 
   validates :category, :event, presence: true

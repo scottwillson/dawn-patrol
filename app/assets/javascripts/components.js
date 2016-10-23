@@ -1,5 +1,4 @@
-Events = {
-  Results: {}
-};
+Events = {};
+Results = {};
 
 //= require_tree ./components

@@ -14,7 +14,7 @@ module RacingOnRails
       RacingOnRails::Race.association = @association
       RacingOnRails::Result.association = @association
 
-      Events::Event.transaction do
+      Event.transaction do
         ActsAsTenant.without_tenant do
           import_events_and_results
           import_event_editors
@@ -48,7 +48,7 @@ module RacingOnRails
             person = ::Person.create!(name: racing_on_rails_person.name, racing_on_rails_id: editor.editor_id)
           end
 
-          event = Events::Event.where(racing_on_rails_id: editor.event_id).first!
+          event = ::Event.where(racing_on_rails_id: editor.event_id).first!
           Events::Promoter.create!(event: event, person: person)
         end
       end
@@ -57,8 +57,8 @@ module RacingOnRails
     def set_parents
       RacingOnRails::Event.select("id", "parent_id").where.not(parent_id: nil).find_each do |racing_on_rails_event|
         ActsAsTenant.with_tenant(association_instance) do
-          parent_id = Events::Event.where(racing_on_rails_id: racing_on_rails_event.parent_id).ids.first
-          Events::Event.where(racing_on_rails_id: racing_on_rails_event.id).update_all(parent_id: parent_id)
+          parent_id = ::Event.where(racing_on_rails_id: racing_on_rails_event.parent_id).ids.first
+          ::Event.where(racing_on_rails_id: racing_on_rails_event.id).update_all(parent_id: parent_id)
         end
       end
     end

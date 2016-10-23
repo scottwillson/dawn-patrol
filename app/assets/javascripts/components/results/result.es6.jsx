@@ -1,4 +1,4 @@
-Events.Results.Result = function Result(props) {
+Results.Result = function Result(props) {
   return (
     <tr>
       <td className="hidden-sm-down place">{props.place}</td>
@@ -9,6 +9,6 @@ Events.Results.Result = function Result(props) {
   );
 }
 
-Events.Results.Result.propTypes = {
+Results.Result.propTypes = {
   place: React.PropTypes.string
 };

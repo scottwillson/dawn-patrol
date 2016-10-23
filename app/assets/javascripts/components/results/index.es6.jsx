@@ -1,4 +1,4 @@
-Events.Results.Index = class Index extends React.Component {
+Results.Index = class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = props.event;
@@ -14,9 +14,9 @@ Events.Results.Index = class Index extends React.Component {
         {this.cityState(this.state.city, this.state.state)}
         {this.parent(this.state.parent)}
         <div className='starts-at'>{this.dates(this.state.starts_at, this.state.children)}</div>
-        <Events.Results.Children children={this.state.children}/>
-        <Events.Results.EventCategoryLinks eventCategories={this.state.eventCategories}/>
-        {this.state.eventCategories.map(eventCategory => <Events.Results.EventCategory key={eventCategory.id} {...eventCategory} />)}
+        <Results.Children children={this.state.children}/>
+        <Results.EventCategoryLinks eventCategories={this.state.eventCategories}/>
+        {this.state.eventCategories.map(eventCategory => <Results.EventCategory key={eventCategory.id} {...eventCategory} />)}
         <div className='updated-at'>Updated {moment(this.state.updatedAt).format('MMMM D, YYYY')}</div>
       </div>
     );
@@ -24,7 +24,7 @@ Events.Results.Index = class Index extends React.Component {
 
   componentWillMount() {
     superagent
-      .get(`/events/events/${this.state.id}/results.json`)
+      .get(`/events/${this.state.id}/results.json`)
       .end(function(err, res) {
         if (err) {
           this.setState({error: err});
@@ -63,7 +63,7 @@ Events.Results.Index = class Index extends React.Component {
 
   parent(parent) {
     if (parent) {
-      return(<div>Part of the <a href={`/events/events/${parent.id}/results`}>{parent.name}</a></div>);
+      return(<div>Part of the <a href={`/events/${parent.id}/results`}>{parent.name}</a></div>);
     }
     return null;
   }

@@ -1,4 +1,4 @@
-Events.Results.EventCategoryLinks =function EventCategoryLinks(props) {
+Results.EventCategoryLinks =function EventCategoryLinks(props) {
   if (props.eventCategories.length < 2) {
     return null;
   }
@@ -6,7 +6,7 @@ Events.Results.EventCategoryLinks =function EventCategoryLinks(props) {
   return (
     <table>
       <tbody>
-        {eventCategoryRows(props).map(row => <Events.Results.EventCategoryLinkRow row={row} />)}
+        {eventCategoryRows(props).map(row => <Results.EventCategoryLinkRow row={row} />)}
       </tbody>
     </table>
   );

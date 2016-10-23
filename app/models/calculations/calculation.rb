@@ -3,9 +3,9 @@ class Calculations::Calculation < ApplicationRecord
 
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
   has_and_belongs_to_many :categories
-  has_many :events, class_name: "Events::Event"
+  has_many :events
 
   def source_event_ids
-    @source_event_ids ||= Events::Event.ids
+    @source_event_ids ||= Event.ids
   end
 end

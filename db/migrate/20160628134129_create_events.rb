@@ -1,6 +1,6 @@
-class CreateEventsEvents < ActiveRecord::Migration[5.0]
+class CreateEvents < ActiveRecord::Migration[5.0]
   def change
-    create_table :events_events do |t|
+    create_table :events do |t|
       t.belongs_to :dawn_patrol_association, null: false
       t.belongs_to :discipline, null: false
       t.belongs_to :calculation

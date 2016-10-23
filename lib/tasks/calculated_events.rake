@@ -7,7 +7,7 @@ namespace :events do
     raise("ASSOCIATION is required") unless association
     DawnPatrol::Association.current = DawnPatrol::Association.where(acronym: association).first!
 
-    events = Events::Event.calculated.year(year).includes(categories: { category: :results }).all.order(:starts_at, :name)
+    events = Event.calculated.year(year).includes(categories: { category: :results }).all.order(:starts_at, :name)
 
     events.each do |event|
       event.races.categories(&:name).each do |event_category|

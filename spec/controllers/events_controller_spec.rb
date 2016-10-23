@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Events::EventsController, type: :controller do
+RSpec.describe EventsController, type: :controller do
   before(:each) do
     @default_association = DawnPatrol::Association.create!
   end

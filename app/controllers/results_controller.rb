@@ -1,6 +1,6 @@
-class Events::ResultsController < ApplicationController
+class ResultsController < ApplicationController
   def index
-    @event = Events::Event.includes(:children, :parent).find(params[:event_id])
+    @event = Event.includes(:children, :parent).find(params[:event_id])
 
     respond_to do |format|
       format.html

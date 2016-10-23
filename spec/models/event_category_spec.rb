@@ -18,7 +18,7 @@ RSpec.describe EventCategory, type: :model do
   end
 
   it "requires category" do
-    event_category = EventCategory.new(event: Events::Event.new)
+    event_category = EventCategory.new(event: Event.new)
     expect { event_category.save! }.to raise_error(ActiveRecord::RecordInvalid)
   end
 end
