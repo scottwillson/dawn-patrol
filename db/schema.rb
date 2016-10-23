@@ -132,18 +132,6 @@ ActiveRecord::Schema.define(version: 20161023002304) do
     t.index ["starts_at"], name: "index_events_on_starts_at", using: :btree
   end
 
-  create_table "events_promoters", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id", null: false
-    t.integer  "event_id",                   null: false
-    t.integer  "person_id",                  null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["dawn_patrol_association_id"], name: "index_events_promoters_on_dawn_patrol_association_id", using: :btree
-    t.index ["event_id", "person_id"], name: "index_events_promoters_on_event_id_and_person_id", unique: true, using: :btree
-    t.index ["event_id"], name: "index_events_promoters_on_event_id", using: :btree
-    t.index ["person_id"], name: "index_events_promoters_on_person_id", using: :btree
-  end
-
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
     t.integer  "sluggable_id",              null: false
@@ -176,6 +164,18 @@ ActiveRecord::Schema.define(version: 20161023002304) do
     t.index ["dawn_patrol_association_id"], name: "index_people_on_dawn_patrol_association_id", using: :btree
     t.index ["name"], name: "index_people_on_name", using: :btree
     t.index ["racing_on_rails_id"], name: "index_people_on_racing_on_rails_id", using: :btree
+  end
+
+  create_table "promoters", force: :cascade do |t|
+    t.integer  "dawn_patrol_association_id", null: false
+    t.integer  "event_id",                   null: false
+    t.integer  "person_id",                  null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["dawn_patrol_association_id"], name: "index_promoters_on_dawn_patrol_association_id", using: :btree
+    t.index ["event_id", "person_id"], name: "index_promoters_on_event_id_and_person_id", unique: true, using: :btree
+    t.index ["event_id"], name: "index_promoters_on_event_id", using: :btree
+    t.index ["person_id"], name: "index_promoters_on_person_id", using: :btree
   end
 
   create_table "results", force: :cascade do |t|

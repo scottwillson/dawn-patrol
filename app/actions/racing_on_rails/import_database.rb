@@ -49,7 +49,7 @@ module RacingOnRails
           end
 
           event = ::Event.where(racing_on_rails_id: editor.event_id).first!
-          Events::Promoter.create!(event: event, person: person)
+          Promoter.create!(event: event, person: person)
         end
       end
     end

@@ -27,7 +27,7 @@ class RacingOnRails::Event < ApplicationRecord
   def imported_promoter
     if promoter_id
       person = ::Person.where(racing_on_rails_id: promoter_id, name: promoter_name).first_or_create!
-      Events::Promoter.new(person: person)
+      Promoter.new(person: person)
     end
   end
 end

@@ -6,6 +6,8 @@
  * deploy to staging
  * import data
  * performance test
+ * only show non-empty column in results
+ * show custom columns
  * Add CreateCategory (Save?) action that ensures correct state
  * add inverse for all associations?
  * ensure proper cascading deletes/prevention

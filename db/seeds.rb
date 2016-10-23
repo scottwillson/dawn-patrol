@@ -7,7 +7,7 @@ ActsAsTenant.with_tenant(association) do
       starts_at: 1.month.from_now,
       city: city,
       name: "#{city} Road Race",
-      promoter: Events::Promoter.new(person: Person.create!(name: "Jeff Mitchem")),
+      promoter: Promoter.new(person: Person.create!(name: "Jeff Mitchem")),
       phone: "(503) 555-1212"
     ).do_it!
 

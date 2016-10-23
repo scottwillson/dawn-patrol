@@ -10,7 +10,7 @@ class Event < ApplicationRecord
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
   belongs_to :discipline
   belongs_to :parent, class_name: "::Event", inverse_of: :children
-  has_many :promoters, class_name: "Events::Promoter"
+  has_many :promoters, class_name: "Promoter"
   has_many :rejections, class_name: "Calculations::Rejection"
 
   validate :unique_calculated_event
@@ -41,10 +41,10 @@ class Event < ApplicationRecord
     self.promoters.clear
 
     case promoter
-    when Events::Promoter
+    when Promoter
       self.promoters << promoter
     when Person
-      self.promoters << Events::Promoter.new(person: promoter)
+      self.promoters << Promoter.new(person: promoter)
     when NilClass
       # OK, just remove all promoters
     else
