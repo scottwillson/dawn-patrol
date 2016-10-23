@@ -1,4 +1,3 @@
- * add category slugs and use them for anchor links
  * consistently use module names for things like Events::Event
  * Add reactjs component tests
  * events should set start time based on city, state time zone

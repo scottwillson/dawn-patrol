@@ -103,8 +103,8 @@ ActiveRecord::Schema.define(version: 20161023002304) do
     t.datetime "updated_at",                 null: false
     t.index ["category_id", "event_id"], name: "index_events_categories_on_category_id_and_event_id", using: :btree
     t.index ["category_id"], name: "index_events_categories_on_category_id", using: :btree
-    t.index ["dawn_patrol_association_id", "slug"], name: "index_events_categories_on_dawn_patrol_association_id_and_slug", unique: true, using: :btree
     t.index ["dawn_patrol_association_id"], name: "index_events_categories_on_dawn_patrol_association_id", using: :btree
+    t.index ["event_id", "slug"], name: "index_events_categories_on_event_id_and_slug", unique: true, using: :btree
     t.index ["event_id"], name: "index_events_categories_on_event_id", using: :btree
   end
 
@@ -118,10 +118,12 @@ ActiveRecord::Schema.define(version: 20161023002304) do
     t.string   "name",                       default: "New Event", null: false
     t.integer  "racing_on_rails_id"
     t.string   "phone"
+    t.string   "slug",                                             null: false
     t.string   "state"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.index ["calculation_id"], name: "index_events_events_on_calculation_id", using: :btree
+    t.index ["dawn_patrol_association_id", "slug"], name: "index_events_events_on_dawn_patrol_association_id_and_slug", unique: true, using: :btree
     t.index ["dawn_patrol_association_id"], name: "index_events_events_on_dawn_patrol_association_id", using: :btree
     t.index ["discipline_id"], name: "index_events_events_on_discipline_id", using: :btree
     t.index ["name"], name: "index_events_events_on_name", using: :btree

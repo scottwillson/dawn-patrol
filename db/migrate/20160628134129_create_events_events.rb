@@ -11,8 +11,10 @@ class CreateEventsEvents < ActiveRecord::Migration[5.0]
       t.string :name, null: false, default: "New Event"
       t.integer :racing_on_rails_id
       t.string :phone
+      t.string :slug, null: false
       t.string :state
 
+      t.index [ :dawn_patrol_association_id, :slug ], unique: true
       t.index :name
       t.index :racing_on_rails_id
       t.index :starts_at

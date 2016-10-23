@@ -2,7 +2,7 @@ class Category < ApplicationRecord
   extend FriendlyId
 
   acts_as_tenant :dawn_patrol_association
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: :scoped, scope: :dawn_patrol_association_id
 
   has_and_belongs_to_many :calculations
 

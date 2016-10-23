@@ -1,5 +1,8 @@
 class Events::Event < ApplicationRecord
+  extend FriendlyId
+
   acts_as_tenant :dawn_patrol_association
+  friendly_id :name_and_year, use: :scoped, scope: :dawn_patrol_association_id
 
   belongs_to :calculation, class_name: "Calculations::Calculation"
   has_many :categories, class_name: "::Events::Category"
@@ -30,6 +33,10 @@ class Events::Event < ApplicationRecord
     [ city, state ].join(", ")
   end
 
+  def name_and_year
+    "#{name}-#{year}"
+  end
+
   def promoter=(promoter)
     self.promoters.clear
 
@@ -53,5 +60,9 @@ class Events::Event < ApplicationRecord
     if calculation && calculation.events.year(starts_at.year).where.not(id: id).exists?
       errors.add(:calculation, "already has calculated event for #{starts_at.year}")
     end
+  end
+
+  def year
+    DawnPatrol::Association.current.year(starts_at)
   end
 end

@@ -2,7 +2,7 @@ class Events::Category < ApplicationRecord
   extend FriendlyId
 
   acts_as_tenant :dawn_patrol_association
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: :scoped, scope: :event_id
 
   belongs_to :category, class_name: "::Category"
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
