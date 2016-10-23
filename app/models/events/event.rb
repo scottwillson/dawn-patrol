@@ -8,6 +8,7 @@ class Events::Event < ApplicationRecord
   belongs_to :discipline
   belongs_to :parent, class_name: "::Events::Event", inverse_of: :children
   has_many :promoters
+  has_many :rejections, class_name: "Calculations::Rejection"
 
   validate :unique_calculated_event
   validates :name, presence: true

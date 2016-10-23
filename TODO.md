@@ -1,4 +1,3 @@
- * Calculate should assign places
  * consider deferring Calculate and Calculation creation methods for in-memory tests
  * Calculation source events: add attribute like source_events_strategy?
    * all (default)
@@ -40,6 +39,7 @@
  * reject_upgrade_only (should just be source results all from self?)
  * results_per_event, use_source_result_points
  * results_per_race, use_source_result_points
- * can recalculate many times
  * set dates to something consistent
  * validate that :map Steps maintain collection size (and groups/reduce may change size)
+ * only calculated events can have rejections
+ * batch result, category, event_category updates for speed

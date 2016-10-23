@@ -58,6 +58,19 @@ RSpec.describe "Calculations::Calculate" do
       rejection = result_without_participant.calculations_rejections.first
       expect(rejection.event).to eq(calculated_event)
       expect(rejection.reason).to eq("no_person")
+
+      # idempotent
+      calculation.reload
+      action_result = Calculations::Calculate.new(calculation: calculation).do_it!
+      expect(action_result).to be(true)
+      calculation.reload
+      expect(calculation.events.count).to eq(1)
+
+      calculated_event = calculation.events.first
+      expect(calculated_event.categories.count).to eq(1)
+
+      category = calculated_event.categories.first
+      expect(category.results.count).to eq(1)
     end
 
     it "calculates results from previous year" do
@@ -167,22 +180,111 @@ RSpec.describe "Calculations::Calculate" do
       event = Events::Create.new.do_it!
       category = Category.create!
       event_category = event.categories.create!(category: category)
-      event_category.results.create!(person: Person.create!)
-      event_category.results.create!(person: Person.create!)
+      source_result_1 = event_category.results.create!(person: Person.create!)
+      source_result_2 = event_category.results.create!(person: Person.create!)
 
       calculation = Calculations::Calculation.create!
       calculate = Calculations::Calculate.new(calculation: calculation)
       calculation_event = calculate.find_or_create_event
       calculate.create_categories(calculation_event)
+      calculation_event_category = calculation_event.categories.reload.first
 
-      results = [
-        Result.new,
-        Result.new
-      ]
+      selection_1 = Calculations::Selection.new(
+        points: 1,
+        source_result: source_result_1
+      )
+
+      selection_2 = Calculations::Selection.new(
+        points: 1,
+        source_result: source_result_2
+      )
+
+      result_1 = ::Result.new(
+        calculations_selections: [ selection_1 ],
+        person_id: source_result_1.person_id,
+        points: 1
+      )
+
+      result_2 = ::Result.new(
+        calculations_selections: [ selection_2 ],
+        person_id: source_result_2.person_id,
+        points: 1
+      )
+
+      results = [ result_1, result_2 ]
 
       calculate.save_results results, calculation_event
-      expect(results).to all(be_valid)
-      expect(results).to all(be_persisted)
+      expect(calculation_event_category.results.reload.count).to eq(2)
+    end
+
+    it "re-uses existing results" do
+      event = Events::Create.new.do_it!
+      category = Category.create!
+      event_category = event.categories.create!(category: category)
+      source_result_1 = event_category.results.create!(person: Person.create!)
+      source_result_2 = event_category.results.create!(person: Person.create!)
+
+      calculation = Calculations::Calculation.create!
+      calculate = Calculations::Calculate.new(calculation: calculation)
+      calculation_event = calculate.find_or_create_event
+      calculate.create_categories(calculation_event)
+      calculation_event_category = calculation_event.categories.reload.first
+
+      calculation_event_category.results.create!(
+        calculations_selections: [  Calculations::Selection.new(points: 1, source_result: source_result_2) ],
+        person_id: source_result_2.person_id,
+        points: 1
+      )
+
+      selection_1 = Calculations::Selection.new(
+        points: 1,
+        source_result: source_result_1
+      )
+
+      selection_2 = Calculations::Selection.new(
+        points: 1,
+        source_result: source_result_2
+      )
+
+      result_1 = ::Result.new(
+        calculations_selections: [ selection_1 ],
+        person_id: source_result_1.person_id,
+        points: 1
+      )
+
+      result_2 = ::Result.new(
+        calculations_selections: [ selection_2 ],
+        person_id: source_result_2.person_id,
+        points: 1
+      )
+
+      results = [ result_1, result_2 ]
+
+      calculate.save_results results, calculation_event
+      expect(calculation_event_category.results.reload.count).to eq(2)
+    end
+  end
+
+  describe "#save_rejections" do
+    it "saves and updates rejections" do
+      source_event = Events::Create.new.do_it!
+      event_category = source_event.categories.create!(category: Category.create!)
+      result_1 = event_category.results.create!
+      result_2 = event_category.results.create!
+
+      calculation = Calculations::Calculation.create!
+      calculated_event = Events::Create.new(calculation: calculation).do_it!
+      existing_rejection = calculated_event.rejections.create!(result: result_1)
+
+      calculate = Calculations::Calculate.new(calculation: calculation)
+      rejections = [
+        Calculations::Rejection.new(reason: :no_place, result: result_1),
+        Calculations::Rejection.new(reason: :no_place, result: result_2),
+      ]
+      calculate.save_rejections(rejections, calculated_event)
+
+      expect(Calculations::Rejection.exists?(existing_rejection.id)).to eq(true)
+      expect(calculated_event.rejections.reload.count).to eq(2)
     end
   end
 end

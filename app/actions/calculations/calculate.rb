@@ -53,15 +53,23 @@ module Calculations
         @calculation.categories.create!(name: @calculation.name)
       end
 
-      @calculation.categories.each do |category|
-        event.categories.create!(category: category)
+      if event.categories.empty?
+        @calculation.categories.each do |category|
+          event.categories.create!(category: category)
+        end
       end
     end
 
     def save_results(results, event)
       Calculation.benchmark("#{self.class} save_results calculation: #{@calculation.name}", level: :debug) do
         results.each do |result|
-          event.categories.first.results << result
+          existing_result = event.categories.first.results.where(person_id: result.person_id).first
+
+          if existing_result
+            existing_result.update!(points: result.points, place: result.place)
+          else
+            event.categories.first.results << result
+          end
         end
       end
     end
@@ -69,8 +77,15 @@ module Calculations
     def save_rejections(rejections, event)
       Calculation.benchmark("#{self.class} save_rejections calculation: #{@calculation.name}", level: :debug) do
         rejections.each do |rejection|
-          rejection.event = event
-          rejection.save!
+          existing_rejection = event.rejections.where(result: rejection.result).first
+
+          if existing_rejection
+            existing_rejection.reason = rejection.reason
+            existing_rejection.save!
+          else
+            rejection.event = event
+            rejection.save!
+          end
         end
       end
     end
