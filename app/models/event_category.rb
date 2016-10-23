@@ -1,13 +1,13 @@
-class Events::Category < ApplicationRecord
+class EventCategory < ApplicationRecord
   extend FriendlyId
 
   acts_as_tenant :dawn_patrol_association
   friendly_id :name, use: :scoped, scope: :event_id
 
-  belongs_to :category, class_name: "::Category"
+  belongs_to :category
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
-  belongs_to :event
-  has_many :results, foreign_key: :event_category_id
+  belongs_to :event, class_name: "Events::Event"
+  has_many :results
 
   validates :category, :event, presence: true
 

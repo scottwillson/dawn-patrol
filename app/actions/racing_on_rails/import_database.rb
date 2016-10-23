@@ -29,7 +29,7 @@ module RacingOnRails
           event = Events::Create.new(racing_on_rails_event.imported_attributes).do_it!
           racing_on_rails_races(racing_on_rails_event).find_each do |racing_on_rails_race|
             category = Categories::Create.new(name: racing_on_rails_race.attributes["category_name"]).do_it!
-            event_category = event.categories.create!(category: category, created_at: racing_on_rails_race.created_at, updated_at: racing_on_rails_race.updated_at)
+            event_category = event.event_categories.create!(category: category, created_at: racing_on_rails_race.created_at, updated_at: racing_on_rails_race.updated_at)
             racing_on_rails_results(racing_on_rails_race).find_each do |racing_on_rails_result|
               create_result(event_category, racing_on_rails_result)
             end

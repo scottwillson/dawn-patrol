@@ -6,13 +6,13 @@ RSpec.describe Result, type: :model do
   end
 
   it "has person" do
-    Events::Create.new.do_it!.categories.create!(category: Category.create!).results.create! person: Person.create!
+    Events::Create.new.do_it!.event_categories.create!(category: Category.create!).results.create! person: Person.create!
   end
 
   describe "#event" do
     it "returns the owning event" do
       event = Events::Create.new.do_it!
-      result = event.categories.create!(category: Category.create!).results.create!
+      result = event.event_categories.create!(category: Category.create!).results.create!
       expect(result.event).to eq(event)
     end
   end
@@ -20,9 +20,9 @@ RSpec.describe Result, type: :model do
   describe ".current_year" do
     it "only finds results from current year" do
       category = Category.create!
-      Events::Create.new(starts_at: 1.year.ago.end_of_year).do_it!.categories.create!(category: category).results.create!
-      Events::Create.new(starts_at: 1.year.from_now.end_of_year).do_it!.categories.create!(category: category).results.create!
-      result = Events::Create.new(starts_at: Time.current).do_it!.categories.create!(category: category).results.create!
+      Events::Create.new(starts_at: 1.year.ago.end_of_year).do_it!.event_categories.create!(category: category).results.create!
+      Events::Create.new(starts_at: 1.year.from_now.end_of_year).do_it!.event_categories.create!(category: category).results.create!
+      result = Events::Create.new(starts_at: Time.current).do_it!.event_categories.create!(category: category).results.create!
       expect(Result.current_year).to eq([ result ])
     end
   end
@@ -60,9 +60,9 @@ RSpec.describe Result, type: :model do
   describe ".year" do
     it "only finds results for year" do
       category = Category.create!
-      last_year_result = Events::Create.new(starts_at: 1.year.ago.end_of_year).do_it!.categories.create!(category: category).results.create!
-      current_result = Events::Create.new(starts_at: Time.current).do_it!.categories.create!(category: category).results.create!
-      next_year_result = Events::Create.new(starts_at: 1.year.from_now.end_of_year).do_it!.categories.create!(category: category).results.create!
+      last_year_result = Events::Create.new(starts_at: 1.year.ago.end_of_year).do_it!.event_categories.create!(category: category).results.create!
+      current_result = Events::Create.new(starts_at: Time.current).do_it!.event_categories.create!(category: category).results.create!
+      next_year_result = Events::Create.new(starts_at: 1.year.from_now.end_of_year).do_it!.event_categories.create!(category: category).results.create!
 
       expect(Result.year(1.year.ago.end_of_year.year)).to eq([ last_year_result ])
       expect(Result.year(Time.current.year)).to eq([ current_result ])

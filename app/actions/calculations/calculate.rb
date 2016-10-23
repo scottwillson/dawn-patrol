@@ -53,9 +53,9 @@ module Calculations
         @calculation.categories.create!(name: @calculation.name)
       end
 
-      if event.categories.empty?
+      if event.event_categories.empty?
         @calculation.categories.each do |category|
-          event.categories.create!(category: category)
+          event.event_categories.create!(category: category)
         end
       end
     end
@@ -63,12 +63,12 @@ module Calculations
     def save_results(results, event)
       Calculation.benchmark("#{self.class} save_results calculation: #{@calculation.name}", level: :debug) do
         results.each do |result|
-          existing_result = event.categories.first.results.where(person_id: result.person_id).first
+          existing_result = event.event_categories.first.results.where(person_id: result.person_id).first
 
           if existing_result
             existing_result.update!(points: result.points, place: result.place)
           else
-            event.categories.first.results << result
+            event.event_categories.first.results << result
           end
         end
       end

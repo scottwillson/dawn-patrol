@@ -5,7 +5,7 @@ module Events
     end
 
     def do_it!
-      ::Events::Category.where(event_id: @event_id).includes(results: :person).includes(:category)
+      ::EventCategory.where(event_id: @event_id).includes(results: :person).includes(:category)
     end
   end
 end

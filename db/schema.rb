@@ -94,18 +94,18 @@ ActiveRecord::Schema.define(version: 20161023002304) do
     t.index ["dawn_patrol_association_id"], name: "index_disciplines_on_dawn_patrol_association_id", using: :btree
   end
 
-  create_table "events_categories", force: :cascade do |t|
+  create_table "event_categories", force: :cascade do |t|
     t.integer  "category_id"
     t.integer  "dawn_patrol_association_id", null: false
     t.integer  "event_id"
     t.string   "slug",                       null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.index ["category_id", "event_id"], name: "index_events_categories_on_category_id_and_event_id", using: :btree
-    t.index ["category_id"], name: "index_events_categories_on_category_id", using: :btree
-    t.index ["dawn_patrol_association_id"], name: "index_events_categories_on_dawn_patrol_association_id", using: :btree
-    t.index ["event_id", "slug"], name: "index_events_categories_on_event_id_and_slug", unique: true, using: :btree
-    t.index ["event_id"], name: "index_events_categories_on_event_id", using: :btree
+    t.index ["category_id", "event_id"], name: "index_event_categories_on_category_id_and_event_id", using: :btree
+    t.index ["category_id"], name: "index_event_categories_on_category_id", using: :btree
+    t.index ["dawn_patrol_association_id"], name: "index_event_categories_on_dawn_patrol_association_id", using: :btree
+    t.index ["event_id", "slug"], name: "index_event_categories_on_event_id_and_slug", unique: true, using: :btree
+    t.index ["event_id"], name: "index_event_categories_on_event_id", using: :btree
   end
 
   create_table "events_events", force: :cascade do |t|

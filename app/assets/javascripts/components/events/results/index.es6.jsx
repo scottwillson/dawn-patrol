@@ -2,7 +2,7 @@ Events.Results.Index = class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = props.event;
-    this.state.categories = [];
+    this.state.eventCategories = [];
     this.componentWillMount = this.componentWillMount.bind(this);
   }
 
@@ -15,8 +15,8 @@ Events.Results.Index = class Index extends React.Component {
         {this.parent(this.state.parent)}
         <div className='starts-at'>{this.dates(this.state.starts_at, this.state.children)}</div>
         <Events.Results.Children children={this.state.children}/>
-        <Events.Results.CategoryLinks categories={this.state.categories}/>
-        {this.state.categories.map(category => <Events.Results.Category key={category.id} {...category} />)}
+        <Events.Results.EventCategoryLinks eventCategories={this.state.eventCategories}/>
+        {this.state.eventCategories.map(eventCategory => <Events.Results.EventCategory key={eventCategory.id} {...eventCategory} />)}
         <div className='updated-at'>Updated {moment(this.state.updatedAt).format('MMMM D, YYYY')}</div>
       </div>
     );
@@ -30,7 +30,7 @@ Events.Results.Index = class Index extends React.Component {
           this.setState({error: err});
           return false;
         }
-        this.setState({categories: res.body});
+        this.setState({eventCategories: res.body});
       }.bind(this));
   }
 

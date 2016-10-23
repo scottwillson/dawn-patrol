@@ -1,4 +1,4 @@
-Events.Results.Category = function Category(props) {
+Events.Results.EventCategory = function EventCategory(props) {
   return (
     <div>
       <h3 id={`${props.slug}`}>{props.category.name}</h3>

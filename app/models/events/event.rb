@@ -5,8 +5,8 @@ class Events::Event < ApplicationRecord
   friendly_id :name_and_year, use: :scoped, scope: :dawn_patrol_association_id
 
   belongs_to :calculation, class_name: "Calculations::Calculation"
-  has_many :categories, class_name: "::Events::Category"
   has_many :children, class_name: "::Events::Event", foreign_key: :parent_id, inverse_of: :parent
+  has_many :event_categories
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
   belongs_to :discipline
   belongs_to :parent, class_name: "::Events::Event", inverse_of: :children

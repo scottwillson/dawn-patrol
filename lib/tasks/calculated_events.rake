@@ -16,7 +16,7 @@ namespace :events do
     end
 
     events.each do |event|
-      event.categories.sort_by(&:name).each do |event_category|
+      event.event_categories.sort_by(&:name).each do |event_category|
         puts "#{event.full_name} #{event_category.name} #{event_category.results.sum(:points)}"
       end
     end

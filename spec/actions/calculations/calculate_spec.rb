@@ -9,17 +9,17 @@ RSpec.describe "Calculations::Calculate" do
     it "calculates results" do
       event = Events::Create.new(starts_at: 1.year.ago).do_it!
       category = Category.create!(name: "Senior Women")
-      event_category = event.categories.create!(category: category)
+      event_category = event.event_categories.create!(category: category)
       last_year_result = event_category.results.create!(person: Person.create!, place: "1")
 
       event = Events::Create.new(starts_at: 1.year.from_now).do_it!
       category = Category.create!(name: "Junior Men")
-      event_category = event.categories.create!(category: category)
+      event_category = event.event_categories.create!(category: category)
       next_year_result = event_category.results.create!(person: Person.create!, place: "2")
 
       event = Events::Create.new.do_it!
       category = Category.create!
-      event_category = event.categories.create!(category: category)
+      event_category = event.event_categories.create!(category: category)
       source_result = event_category.results.create!(person: Person.create!, place: "3")
       result_without_participant = event_category.results.create!(place: "4")
       event_category.results.create!(person: Person.create!, place: "")
@@ -35,9 +35,9 @@ RSpec.describe "Calculations::Calculate" do
       expect(calculation.events.count).to eq(1)
 
       calculated_event = calculation.events.first
-      expect(calculated_event.categories.count).to eq(1)
+      expect(calculated_event.event_categories.count).to eq(1)
 
-      category = calculated_event.categories.first
+      category = calculated_event.event_categories.first
       expect(category.results.count).to eq(1)
 
       result = category.results.first
@@ -67,16 +67,16 @@ RSpec.describe "Calculations::Calculate" do
       expect(calculation.events.count).to eq(1)
 
       calculated_event = calculation.events.first
-      expect(calculated_event.categories.count).to eq(1)
+      expect(calculated_event.event_categories.count).to eq(1)
 
-      category = calculated_event.categories.first
+      category = calculated_event.event_categories.first
       expect(category.results.count).to eq(1)
     end
 
     it "calculates results from previous year" do
       event = Events::Create.new(starts_at: 1.year.ago).do_it!
       category = Category.create!
-      event_category = event.categories.create!(category: category)
+      event_category = event.event_categories.create!(category: category)
       source_result = event_category.results.create!(person: Person.create!, place: "3")
 
       calculation = Calculations::Calculation.create!(name: "Ironman")
@@ -86,7 +86,7 @@ RSpec.describe "Calculations::Calculate" do
 
       expect(calculation.events.count).to eq(1)
       calculated_event = calculation.events.first
-      category = calculated_event.categories.first
+      category = calculated_event.event_categories.first
       result = category.results.first
       calculation_selection = result.calculations_selections.reload.first
       expect(calculation_selection.source_result).to eq(source_result)
@@ -101,14 +101,14 @@ RSpec.describe "Calculations::Calculate" do
     it "calculates with multiple results for same person" do
       event = Events::Create.new.do_it!
       category = Category.create!
-      event_category = event.categories.create!(category: category)
+      event_category = event.event_categories.create!(category: category)
       person = Person.create!
       event_category.results.create!(person: person, place: "3")
       event_category.results.create!(person: Person.create!, place: "4")
 
       event = Events::Create.new.do_it!
       category = Category.create!(name: "Men 4/5")
-      event_category = event.categories.create!(category: category)
+      event_category = event.event_categories.create!(category: category)
       event_category.results.create!(person: person, place: "1")
 
       calculation = Calculations::Calculation.create!(name: "Ironman")
@@ -179,7 +179,7 @@ RSpec.describe "Calculations::Calculate" do
     it "persists results" do
       event = Events::Create.new.do_it!
       category = Category.create!
-      event_category = event.categories.create!(category: category)
+      event_category = event.event_categories.create!(category: category)
       source_result_1 = event_category.results.create!(person: Person.create!)
       source_result_2 = event_category.results.create!(person: Person.create!)
 
@@ -187,7 +187,7 @@ RSpec.describe "Calculations::Calculate" do
       calculate = Calculations::Calculate.new(calculation: calculation)
       calculation_event = calculate.find_or_create_event
       calculate.create_categories(calculation_event)
-      calculation_event_category = calculation_event.categories.reload.first
+      calculation_event_category = calculation_event.event_categories.reload.first
 
       selection_1 = Calculations::Selection.new(
         points: 1,
@@ -220,7 +220,7 @@ RSpec.describe "Calculations::Calculate" do
     it "re-uses existing results" do
       event = Events::Create.new.do_it!
       category = Category.create!
-      event_category = event.categories.create!(category: category)
+      event_category = event.event_categories.create!(category: category)
       source_result_1 = event_category.results.create!(person: Person.create!)
       source_result_2 = event_category.results.create!(person: Person.create!)
 
@@ -228,7 +228,7 @@ RSpec.describe "Calculations::Calculate" do
       calculate = Calculations::Calculate.new(calculation: calculation)
       calculation_event = calculate.find_or_create_event
       calculate.create_categories(calculation_event)
-      calculation_event_category = calculation_event.categories.reload.first
+      calculation_event_category = calculation_event.event_categories.reload.first
 
       calculation_event_category.results.create!(
         calculations_selections: [  Calculations::Selection.new(points: 1, source_result: source_result_2) ],
@@ -268,7 +268,7 @@ RSpec.describe "Calculations::Calculate" do
   describe "#save_rejections" do
     it "saves and updates rejections" do
       source_event = Events::Create.new.do_it!
-      event_category = source_event.categories.create!(category: Category.create!)
+      event_category = source_event.event_categories.create!(category: Category.create!)
       result_1 = event_category.results.create!
       result_2 = event_category.results.create!
 

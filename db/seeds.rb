@@ -13,7 +13,7 @@ ActsAsTenant.with_tenant(association) do
 
     [ "Category 1/2", "Category 3", "Category 4", "Women 1/2/3", "Women 4" ].each do |category_name|
       category = Category.create!(name: category_name)
-      event_category = event.categories.create!(category: category)
+      event_category = event.event_categories.create!(category: category)
 
       results_count = (rand * 20 + 3).to_i
       (1..results_count).each do |place|
