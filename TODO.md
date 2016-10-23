@@ -1,10 +1,3 @@
- * consider deferring Calculate and Calculation creation methods for in-memory tests
- * Calculation source events: add attribute like source_events_strategy?
-   * all (default)
-   * children of single parent event
-   * specific set of parents
- * Add CreateEvent and UpdateEvent action that ensure correct state
- * move *_attributes methods to RacingOnRails models
  * add category slugs and use them for anchor links
  * consistently use module names for things like Events::Event
  * Add reactjs component tests
@@ -18,6 +11,7 @@
  * result pagination?
  * ensure proper cascading deletes/prevention
  * versioning
+ * Add CreateCategory (Save?) action that ensures correct state
 
  Calculations
  ============
@@ -43,3 +37,7 @@
  * validate that :map Steps maintain collection size (and groups/reduce may change size)
  * only calculated events can have rejections
  * batch result, category, event_category updates for speed
+ * source events: add attribute like source_events_strategy?
+   * all (default)
+   * children of single parent event
+   * specific set of parents

@@ -1,7 +1,5 @@
 module RacingOnRails
   class ImportDatabase
-    EVENT_ATTRIBUTE_KEYS = %w{ city created_at name state updated_at }.freeze
-
     def initialize(attributes = {})
       @association = attributes[:association]
       @time_zone = attributes[:time_zone]
@@ -28,7 +26,7 @@ module RacingOnRails
     def import_events_and_results
       racing_on_rails_events.find_each do |racing_on_rails_event|
         ActsAsTenant.with_tenant(association_instance) do
-          event = Events::Create.new(event_attributes(racing_on_rails_event)).do_it!
+          event = Events::Create.new(racing_on_rails_event.imported_attributes).do_it!
           racing_on_rails_races(racing_on_rails_event).find_each do |racing_on_rails_race|
             category = Categories::Create.new(name: racing_on_rails_race.attributes["category_name"]).do_it!
             event_category = event.categories.create!(category: category, created_at: racing_on_rails_race.created_at, updated_at: racing_on_rails_race.updated_at)
@@ -81,24 +79,6 @@ module RacingOnRails
       RacingOnRails::Event
         .select("city", "created_at", "date", "discipline", "name", "id", "promoter_id", "people.name as promoter_name", "state", "updated_at")
         .left_outer_joins(:promoter)
-    end
-
-    def event_attributes(racing_on_rails_event)
-      attributes = racing_on_rails_event.attributes.slice(*EVENT_ATTRIBUTE_KEYS)
-
-      attributes[:discipline] = Discipline.where(name: racing_on_rails_event.discipline).first_or_create!
-      attributes[:promoter] = promoter(racing_on_rails_event)
-      attributes[:racing_on_rails_id] = racing_on_rails_event.id
-      attributes[:starts_at] = racing_on_rails_event.date.beginning_of_day
-
-      attributes
-    end
-
-    def promoter(racing_on_rails_event)
-      if racing_on_rails_event.promoter_id
-        person = ::Person.where(racing_on_rails_id: racing_on_rails_event.promoter_id, name: racing_on_rails_event.promoter_name).first_or_create!
-        Events::Promoter.new(person: person)
-      end
     end
 
     def racing_on_rails_races(event)
