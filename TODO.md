@@ -18,6 +18,8 @@
  * handle tandem results correctly
   * each person has a result
   * tandem team appears in the BAR (could just be people?)
+ * update README with running and testing steps. Test.
+ * ensure React.js is configured for prod
 
  Calculations
  ============
