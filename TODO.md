@@ -1,4 +1,3 @@
- * Add reactjs component tests
  * format more like existing site
  * add custom color overrides
  * deploy to staging
@@ -20,6 +19,7 @@
   * tandem team appears in the BAR (could just be people?)
  * update README with running and testing steps. Test.
  * ensure React.js is configured for prod
+ * replace react-rails so we can unit-test components
 
  Calculations
  ============

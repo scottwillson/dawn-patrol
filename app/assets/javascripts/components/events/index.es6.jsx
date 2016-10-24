@@ -1,7 +1,7 @@
 Events.Index = class Index extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {events: [], year: props.year};
+    this.state = {...props};
     this.componentWillMount = this.componentWillMount.bind(this);
   }
 
@@ -49,3 +49,8 @@ Events.Index = class Index extends React.Component {
     return {};
   }
 }
+
+Events.Index.propTypes = {
+  events: React.PropTypes.array.isRequired,
+  year: React.PropTypes.number.isRequired
+};

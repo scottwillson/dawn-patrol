@@ -68,3 +68,8 @@ Results.Index = class Index extends React.Component {
     return null;
   }
 }
+
+Results.Index.propTypes = {
+  event: React.PropTypes.object.isRequired,
+  eventCategories: React.PropTypes.array.isRequired
+};

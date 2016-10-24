@@ -13,6 +13,7 @@ Events.Event = function Event(props) {
   );
 }
 
-Event.propTypes = {
-  name: React.PropTypes.string
+Events.Event.propTypes = {
+  name: React.PropTypes.string.isRequired,
+  starts_at: React.PropTypes.string
 };

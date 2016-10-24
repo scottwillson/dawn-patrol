@@ -1,2 +1,2 @@
 <% @title = "#{@event.dawn_patrol_association.acronym}: #{@event.starts_at.year} Results: #{@event.name}" %>
-<%= react_component("Results.Index", event: @event.as_json({ include: [ :children, :parent ] })) %>
+<%= react_component("Results.Index", event: @event.as_json({ include: [ :children, :parent ] }), eventCategories: []) %>
