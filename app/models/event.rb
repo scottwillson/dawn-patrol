@@ -25,6 +25,10 @@ class Event < ApplicationRecord
     Discipline.where(name: "Road").first_or_initialize
   end
 
+  def self.years
+    Event.pluck("distinct date_part('year', starts_at)")
+  end
+
   def calculated?
     calculation_id.present?
   end

@@ -10,6 +10,7 @@ Events.Index = class Index extends React.Component {
       <div>
         <AlertMessage error={this.state.error}/>
         <h2>{this.state.year} Schedule</h2>
+        <Years selected={this.state.year} years={this.state.years}/>
         <table className="table table-sm table-striped events">
           <thead className="thead-default">
             <tr>
@@ -38,7 +39,7 @@ Events.Index = class Index extends React.Component {
           this.setState({error: err});
           return false;
         }
-        this.setState({events: res.body});
+        this.setState(res.body);
       }.bind(this));
   }
 
