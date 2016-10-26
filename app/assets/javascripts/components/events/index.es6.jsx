@@ -11,6 +11,7 @@ Events.Index = class Index extends React.Component {
         <AlertMessage error={this.state.error}/>
         <h2>{this.state.year} Schedule</h2>
         <Years selected={this.state.year} years={this.state.years}/>
+        <Disciplines selected={this.state.discipline} disciplines={this.state.disciplines}/>
         <table className="table table-sm table-striped events">
           <thead className="thead-default">
             <tr>
@@ -44,10 +45,17 @@ Events.Index = class Index extends React.Component {
   }
 
   jsonQueryParams() {
-    if (query.get('year')) {
-      return {year: query.get('year')}
+    const params = {};
+
+    if (query.get('discipline')) {
+      params.discipline = query.get('discipline')
     }
-    return {};
+
+    if (query.get('year')) {
+      params.year = query.get('year')
+    }
+
+    return params;
   }
 }
 
