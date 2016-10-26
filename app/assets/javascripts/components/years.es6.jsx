@@ -1,7 +1,7 @@
 function Years(props) {
   return (
     <div>
-      <div className="hidden-md-up">
+      <div className="hidden-md-up years">
         <button className="btn btn-secondary" type="button" data-toggle="collapse" data-target="#years" aria-label="Toggle years">
           {props.selected}
         </button>
