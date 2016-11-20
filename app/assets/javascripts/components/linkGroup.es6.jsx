@@ -6,7 +6,7 @@ function LinkGroup(props) {
   }
 
   return (
-    <div className={`btn-group ${props.slug}`} role="group">
+    <div className={`btn-group link-group ${props.slug}`} role="group">
       <button
         id={`link-group-${props.slug}`}
         className="btn btn-secondary dropdown-toggle"

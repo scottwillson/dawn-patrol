@@ -1,3 +1,5 @@
+$enable-flex: true;
+
 @import "bootstrap";
 
 $green-yellow: rgb(208, 250, 48);
@@ -64,6 +66,6 @@ h2 {
   white-space: nowrap;
 }
 
-.years {
+.link-groups {
   margin-bottom: 0.618rem;
 }
