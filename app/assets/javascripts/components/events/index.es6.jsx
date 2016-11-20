@@ -16,10 +16,10 @@ Events.Index = class Index extends React.Component {
             <tr>
               <th className="date">Date</th>
               <th>Name</th>
-              <th className="">Promoter</th>
-              <th>Phone</th>
-              <th>Discipline</th>
-              <th>Location</th>
+              <th className="hidden-sm-down">Promoter</th>
+              <th className="hidden-sm-down">Phone</th>
+              <th className="hidden-sm-down">Discipline</th>
+              <th className="hidden-sm-down">Location</th>
             </tr>
           </thead>
           <tbody>
