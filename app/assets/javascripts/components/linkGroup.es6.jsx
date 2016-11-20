@@ -17,11 +17,9 @@ function LinkGroup(props) {
         {buttonText(props.selected, props.slug, links)}
       </button>
       <div className="dropdown-menu" aria-labelledby={`link-group-${props.slug}`}>
-        {links
-            .sort()
-            .map(link =>
-              <Link linkGroupSlug={props.slug} selected={props.selected} name={link.name} slug={link.slug} key={link.slug} />
-            )}
+        {R.sortBy(R.prop('name'))(links).map(link =>
+          <Link linkGroupSlug={props.slug} selected={props.selected} name={link.name} slug={link.slug} key={link.slug} />
+        )}
       </div>
     </div>
   );
