@@ -23,6 +23,27 @@
  * check react.js best practices
  * optimize person-lookup when importing results
  * replace default_value_for with actions
+ * use react defaults; don't make view init empty data
+ * Actually exclude feature specs
+
+ Nav
+ ===
+ ```
+ discipline: {
+  selected: "road",
+  all: true,
+  links: [
+    { slug: "road", name: "Road" },
+    { slug: "track", name: "Track" }
+  ]
+ }
+
+ year: {
+   selected: "2016",
+   links: [ 2016, 2015, 2014 ],
+   sort: "reverse"
+ }
+ ```
 
  Calculations
  ============

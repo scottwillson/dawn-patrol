@@ -88,9 +88,11 @@ ActiveRecord::Schema.define(version: 20161023002304) do
   create_table "disciplines", force: :cascade do |t|
     t.integer  "dawn_patrol_association_id",                  null: false
     t.string   "name",                       default: "Road", null: false
+    t.string   "slug",                                        null: false
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
     t.index ["dawn_patrol_association_id", "name"], name: "index_disciplines_on_dawn_patrol_association_id_and_name", unique: true, using: :btree
+    t.index ["dawn_patrol_association_id", "slug"], name: "index_disciplines_on_dawn_patrol_association_id_and_slug", unique: true, using: :btree
     t.index ["dawn_patrol_association_id"], name: "index_disciplines_on_dawn_patrol_association_id", using: :btree
   end
 

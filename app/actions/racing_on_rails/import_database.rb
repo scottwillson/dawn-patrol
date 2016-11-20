@@ -66,13 +66,13 @@ module RacingOnRails
     def association_instance
       RacingOnRails::RacingAssociation.association = @association
       racing_on_rails_racing_association = RacingOnRails::RacingAssociation.first
-      association = DawnPatrol::Association.where(acronym: racing_on_rails_racing_association.short_name).first_or_create!
-      association.update!(
+
+      DawnPatrol::Association.where(
+        acronym: racing_on_rails_racing_association.short_name,
         host: "localhost|0.0.0.0|127.0.0.1|::1|test.host|#{racing_on_rails_racing_association.short_name.downcase}.local",
         name: racing_on_rails_racing_association.name,
         time_zone: @time_zone || "Pacific Time (US & Canada)"
-      )
-      association
+      ).first_or_create!
     end
 
     def racing_on_rails_events

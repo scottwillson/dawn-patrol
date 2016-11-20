@@ -5,10 +5,10 @@ Events.Event = function Event(props) {
       <td>
         <a href={`/events/${props.id}/results`}>{props.name}</a>
       </td>
-      <td className="hidden-sm-down">{props.promoter_names.join('<br/>')}</td>
-      <td className="hidden-sm-down">{props.phone}</td>
-      <td className="hidden-sm-down">{props.discipline}</td>
-      <td className="hidden-sm-down">{props.location}</td>
+      <td>{props.promoter_names.join('<br/>')}</td>
+      <td>{props.phone}</td>
+      <td>{props.discipline}</td>
+      <td>{props.location}</td>
     </tr>
   );
 }

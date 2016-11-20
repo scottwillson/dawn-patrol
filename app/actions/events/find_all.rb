@@ -7,14 +7,11 @@ module Events
 
     def do_it!
       query = Event
-        .includes(:discipline)
         .includes(promoters: :person)
         .where(starts_at: DawnPatrol::Association.current.year_range(@year))
 
-      # TODO use slugs
-      # TODO make All an option for nav?
-      if @discipline && @discipline != "All"
-        query = query.where(discipline: Discipline.where(name: @discipline).first!)
+      if @discipline && @discipline != "all"
+        query = query.where(discipline: Discipline.where(slug: @discipline).first!)
       end
 
       query
