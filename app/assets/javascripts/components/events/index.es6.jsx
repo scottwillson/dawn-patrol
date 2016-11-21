@@ -23,7 +23,7 @@ Events.Index = class Index extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.events.map(event => <Events.Event key={event.id} {...event} />) }
+            {R.sortBy(R.prop('starts_at'))(this.state.events).map(event => <Events.Event key={event.id} {...event} />) }
           </tbody>
         </table>
       </div>
