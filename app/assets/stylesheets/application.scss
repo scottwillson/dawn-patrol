@@ -71,4 +71,9 @@ h2 {
 .event-category-links {
   display: inline-flex;
   text-align: left;
+
+  td {
+    padding-left: 0.618rem;
+    padding-right: 0.618rem;    
+  }
 }
