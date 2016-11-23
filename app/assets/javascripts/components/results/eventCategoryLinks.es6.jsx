@@ -14,7 +14,7 @@ Results.EventCategoryLinks =function EventCategoryLinks(props) {
 
 function eventCategoryRows(props) {
   const rows = [];
-  const sortedEventCategories = props.eventCategories.sort();
+  const sortedEventCategories = R.sortBy(R.path(['category', 'name']))(props.eventCategories);
   const firstHalf = sortedEventCategories.slice(0, (sortedEventCategories.length / 2.0 + 0.5));
 
   firstHalf.forEach((eventCategory, index) => {
