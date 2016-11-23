@@ -32,8 +32,6 @@ a:hover, .navbar-dark .navbar-brand:hover {
 }
 
 h2 {
-  font-weight: bold;
-  font-size: 1.618rem;
   text-align: center;
 }
 
@@ -68,4 +66,9 @@ h2 {
 
 .link-groups {
   margin-bottom: 0.618rem;
+}
+
+.event-category-links {
+  display: inline-flex;
+  text-align: left;
 }

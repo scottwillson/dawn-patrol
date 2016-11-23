@@ -9,13 +9,15 @@ Results.Index = class Index extends React.Component {
   render() {
     return (
       <div>
-        <AlertMessage error={this.state.error}/>
-        <h2>{this.state.name}</h2>
-        {this.cityState(this.state.city, this.state.state)}
-        {this.parent(this.state.parent)}
-        <div className='starts-at'>{this.dates(this.state.starts_at, this.state.children)}</div>
-        <Results.Children children={this.state.children}/>
-        <Results.EventCategoryLinks eventCategories={this.state.eventCategories}/>
+        <div className="text-sm-center">
+          <AlertMessage error={this.state.error}/>
+          <h2>{this.state.name}</h2>
+          {this.cityState(this.state.city, this.state.state)}
+          {this.parent(this.state.parent)}
+          <div className='starts-at'>{this.dates(this.state.starts_at, this.state.children)}</div>
+          <Results.Children children={this.state.children}/>
+          <Results.EventCategoryLinks eventCategories={this.state.eventCategories}/>
+        </div>
         {this.state.eventCategories.map(eventCategory => <Results.EventCategory key={eventCategory.id} {...eventCategory} />)}
         <div className='updated-at'>Updated {moment(this.state.updatedAt).format('MMMM D, YYYY')}</div>
       </div>
