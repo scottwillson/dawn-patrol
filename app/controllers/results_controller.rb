@@ -2,10 +2,12 @@ class ResultsController < ApplicationController
   def index
     @event = Event.includes(:children, :parent).find(params[:event_id])
 
-    respond_to do |format|
-      format.html
-      format.json do
-        render json: results_as_json
+    if stale?(@event)
+      respond_to do |format|
+        format.html
+        format.json do
+          render json: results_as_json
+        end
       end
     end
   end
