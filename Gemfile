@@ -19,9 +19,6 @@ gem "sucker_punch"
 gem "turbolinks", "~> 5.x"
 gem "uglifier", ">= 1.3.0"
 
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem "therubyracer", platforms: :ruby
-
 group :development, :test do
   gem "byebug", platform: :mri
   gem "rspec", ">= 3.5.0.beta2"
@@ -30,6 +27,7 @@ end
 
 group :development do
   gem "capistrano-rails"
+  gem "capistrano3-puma"
   gem "faker"
   gem "web-console"
   gem "listen", "~> 3.0.5"

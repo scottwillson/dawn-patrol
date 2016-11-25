@@ -31,16 +31,6 @@ RSpec.describe EventsController, type: :controller do
       expect(DawnPatrol::Association.current).to eq(atra)
     end
 
-    it "honors X-Forwarded-For" do
-      atra = DawnPatrol::Association.create!(host: "raceatra.com", acronym: "ATRA", name: "ATRA")
-
-      @request.host = "0.0.0.0"
-      @request.headers["X-Forwarded-For"] = "raceatra.com"
-      get :index
-
-      expect(DawnPatrol::Association.current).to eq(atra)
-    end
-
     it "honors position" do
       DawnPatrol::Association.create!(host: "raceatra.com", acronym: "ATRA", name: "ATRA")
       localhost_atra = DawnPatrol::Association.create!(host: "raceatra.com|localhost", acronym: "A2", name: "ATRA 2")
