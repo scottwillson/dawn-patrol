@@ -30,6 +30,7 @@ end
 group :development do
   gem "capistrano-rails"
   gem "capistrano3-puma"
+  gem "celluloid-benchmark"
   gem "faker"
   gem "web-console"
   gem "listen", "~> 3.0.5"
