@@ -1,1 +1,2 @@
 <% @title = "#{@event.dawn_patrol_association.acronym}: #{@event.starts_at.year} Results: #{@event.name}" %>
+<%= react_component("ResultsApp", props: { event: @event.as_json({ include: [ :children, :parent ] }), eventCategories: [] }, prerender: false) %>

@@ -1,3 +1,4 @@
+ * update state from query params
  * format more like existing site (mobile first!)
  * add custom color overrides
  * deploy to staging
