@@ -27,6 +27,7 @@
  * use react defaults; don't make view init empty data
  * Actually exclude feature specs
  * imported competitions appear to be in wrong year
+ * Use React.PureComponent
 
 
  Calculations
