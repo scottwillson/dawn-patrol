@@ -7,13 +7,6 @@ GIT
       rails (>= 3.1)
       request_store (>= 1.0.5)
 
-GIT
-  remote: https://github.com/FooBarWidget/default_value_for
-  revision: b53779da93df9bfc78f1ac051d4477f8337bbe1d
-  specs:
-    default_value_for (3.0.2)
-      activerecord (>= 3.2.0, < 5.1)
-
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -347,7 +340,6 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   dalli
   database_cleaner
-  default_value_for!
   faker
   friendly_id
   jbuilder (~> 2.5)

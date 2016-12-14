@@ -17,7 +17,7 @@ RSpec.describe "Calculations::Steps::SelectMembers" do
     it "only selects members" do
       non_member_result = ::Result.new
       member = Person.new
-      member.memberships << Membership.new
+      member.memberships << Memberships::New.new.do_it!
       member_result = ::Result.new(person: member)
       source_results = [ non_member_result, member_result ]
 

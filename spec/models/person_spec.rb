@@ -15,10 +15,18 @@ RSpec.describe Person, type: :model do
       person = Person.new
       expect(person.member?).to be(false)
 
-      person.memberships << Membership.new(start_at: 2.years.ago, end_at: 1.year.ago.end_of_year)
+      person.memberships << Memberships::New.new(
+        start_at: 2.years.ago,
+        end_at: 1.year.ago.end_of_year
+      ).do_it!
+
       expect(person.member?).to be(false)
 
-      person.memberships << Membership.new(start_at: Time.current.beginning_of_year, end_at: Time.current.end_of_year)
+      person.memberships << Memberships::New.new(
+        start_at: Time.current.beginning_of_year,
+        end_at: Time.current.end_of_year
+      ).do_it!
+
       expect(person.member?).to be(true)
     end
   end

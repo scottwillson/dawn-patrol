@@ -6,14 +6,6 @@ class Membership < ApplicationRecord
 
   validates :person, presence: true
 
-  default_value_for :start_at do
-    DawnPatrol::Association.current.beginning_of_year
-  end
-
-  default_value_for :end_at do
-    DawnPatrol::Association.current.end_of_year
-  end 
-
   def current?
     Time.current.between?(start_at, end_at)
   end
