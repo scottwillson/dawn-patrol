@@ -4,7 +4,7 @@ ActsAsTenant.with_tenant(association) do
   Event.transaction do
     city = Faker::Address.city
     event = Events::Create.new(
-      starts_at: 1.month.from_now,
+      starts_at: 1.month.ago,
       city: city,
       name: "#{city} Road Race",
       promoter: Promoter.new(person: Person.create!(name: "Jeff Mitchem")),
@@ -21,5 +21,13 @@ ActsAsTenant.with_tenant(association) do
         event_category.results.create!(place: place, person: person)
       end
     end
+
+    Events::Create.new(
+      starts_at: 1.month.from_now,
+      city: city,
+      name: "#{city} Criterium",
+      promoter: Promoter.new(person: Person.create!(name: "Brad Ross")),
+      phone: "(503) 555-1212"
+    ).do_it!
   end
 end

@@ -5,7 +5,6 @@
  * performance test
  * only show non-empty column in results
  * show custom columns
- * Add CreateCategory (Save?) action that ensures correct state
  * add inverse for all associations?
  * ensure proper cascading deletes/prevention
  * events should set start time based on city, state time zone
@@ -26,6 +25,7 @@
  * use react defaults; don't make view init empty data
  * Actually exclude feature specs
  * imported competitions appear to be in wrong year
+ * Add CreateCategory (Save?) action that ensures correct state (what is correct state? normalized name?)
 
 
  Calculations
