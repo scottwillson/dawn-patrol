@@ -11,8 +11,7 @@
  * consider replacing Actions with methods
  * make Action attributes declarative
  * result pagination?
- * versioning
- * add event slug that is just name and defaults to current year's event
+ * versioning (of? events? results?)
  * handle tandem results correctly
   * each person has a result
   * tandem team appears in the BAR (could just be people?)
@@ -26,6 +25,7 @@
  * Actually exclude feature specs
  * imported competitions appear to be in wrong year
  * Add CreateCategory (Save?) action that ensures correct state (what is correct state? normalized name?)
+ * does format.html belong in stale? block?
 
 
  Calculations
