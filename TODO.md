@@ -24,12 +24,11 @@
  * imported competitions appear to be in wrong year
  * Add CreateCategory (Save?) action that ensures correct state (what is correct state? normalized name?)
  * does format.html belong in stale? block?
-
+ * report exceptions
 
  Calculations
  ============
  * filter results
- * report exceptions
  * handle excluded events
  * re-use existing events
  * re-use existing results
