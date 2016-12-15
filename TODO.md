@@ -6,15 +6,13 @@
  * performance test
  * only show non-empty column in results
  * show custom columns
- * Add CreateCategory (Save?) action that ensures correct state
  * add inverse for all associations?
  * ensure proper cascading deletes/prevention
  * events should set start time based on city, state time zone
  * consider replacing Actions with methods
  * make Action attributes declarative
  * result pagination?
- * versioning
- * add event slug that is just name and defaults to current year's event
+ * versioning (of? events? results?)
  * handle tandem results correctly
   * each person has a result
   * tandem team appears in the BAR (could just be people?)
@@ -22,18 +20,17 @@
  * ensure React.js is configured for prod
  * replace react-rails so we can unit-test components
  * check react.js best practices
- * optimize person-lookup when importing results
- * replace default_value_for with actions
  * use react defaults; don't make view init empty data
  * Actually exclude feature specs
  * imported competitions appear to be in wrong year
  * Use React.PureComponent
-
+ * Add CreateCategory (Save?) action that ensures correct state (what is correct state? normalized name?)
+ * does format.html belong in stale? block?
+ * report exceptions
 
  Calculations
  ============
  * filter results
- * report exceptions
  * handle excluded events
  * re-use existing events
  * re-use existing results

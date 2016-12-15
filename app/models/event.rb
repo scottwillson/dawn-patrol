@@ -21,10 +21,6 @@ class Event < ApplicationRecord
   scope :current_year, -> { where(starts_at: DawnPatrol::Association.current.year_range) }
   scope :year, ->(year) { where(starts_at: DawnPatrol::Association.current.year_range(year)) }
 
-  default_value_for :discipline do
-    Discipline.where(name: "Road").first_or_initialize
-  end
-
   def self.years
     Event.pluck("distinct date_part('year', starts_at)")
   end

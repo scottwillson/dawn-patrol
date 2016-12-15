@@ -2,6 +2,7 @@ module RacingOnRails
   class ImportDatabase
     def initialize(attributes = {})
       @association = attributes[:association]
+      @person_ids = []
       @time_zone = attributes[:time_zone]
       raise(ArgumentError, "association must be present") unless @association.present?
     end
@@ -97,9 +98,10 @@ module RacingOnRails
     def create_result(event_category, result)
       person = nil
 
-      if result.attributes["person_id"]
+      if result.attributes["person_id"] && !@person_ids.include?(result.attributes["person_id"])
         name = result.attributes["name"]
         person = ::Person.where(racing_on_rails_id: result.attributes["person_id"], name: name).first_or_create!
+        @person_ids << result.attributes["person_id"]
       end
 
       attributes = result.attributes.slice(*%w{ created_at place points time updated_at })
