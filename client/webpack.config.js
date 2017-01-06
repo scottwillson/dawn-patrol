@@ -9,8 +9,7 @@ const config = {
     'es5-shim/es5-shim',
     'es5-shim/es5-sham',
     'babel-polyfill',
-    './app/bundles/Events/Index/startup/IndexApp',
-    './app/bundles/Results/App'
+    './app/bundles/Public/PublicApp'
   ],
 
   output: {
@@ -25,6 +24,9 @@ const config = {
       ramda: path.resolve('./node_modules/ramda'),
       react: path.resolve('./node_modules/react'),
       'react-dom': path.resolve('./node_modules/react-dom'),
+      'react-redux': path.resolve('./node_modules/react-redux'),
+      'react-router': path.resolve('./node_modules/react-router'),
+      'react-router-redux': path.resolve('./node_modules/react-router-redux'),
       superagent: path.resolve('./node_modules/superagent')
     }
   },
