@@ -17,6 +17,8 @@ const PublicApp = (_props, _railsContext) => {
   const store = createStore(reducer);
   const history = syncHistoryWithStore(browserHistory, store);
 
+  console.log('store.getState()', store.getState());
+
   return (
     <Provider store={store}>
       <Router history={history}>

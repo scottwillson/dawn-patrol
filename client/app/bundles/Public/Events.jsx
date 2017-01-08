@@ -4,10 +4,12 @@ import LinkGroups from '../../components/LinkGroups';
 import R from 'ramda';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { setYear } from './actions/setYear';
 
 class Events extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props', props);
     this.state = {...props};
   }
 
@@ -16,7 +18,6 @@ class Events extends React.Component {
       <div>
         <AlertMessage error={this.state.error}/>
         <h2>{this.state.year} Schedule</h2>
-        <LinkGroups linkGroups={this.state.link_groups}/>
         <table className="table table-sm table-striped events">
           <thead className="thead-default">
             <tr>
@@ -29,7 +30,6 @@ class Events extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {R.sortBy(R.prop('starts_at'))(this.state.events).map(event => <Event key={event.id} {...event} />) }
           </tbody>
         </table>
       </div>
@@ -49,9 +49,9 @@ class Events extends React.Component {
 // };
 
 export default connect(
-  state => ({
-    events: state.events,
-    link_groups: state.link_groups,
-    year: state.year
-  })
+  state => ({ year: state.year }),
+  { setYear }
 )(Events);
+
+// {R.sortBy(R.prop('starts_at'))(this.state.events).map(event => <Event key={event.id} {...event} />) }
+//         <LinkGroups linkGroups={this.state.link_groups}/>

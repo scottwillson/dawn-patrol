@@ -1,1 +1,1 @@
-export setYear from './setYear';
+export year from './year';
