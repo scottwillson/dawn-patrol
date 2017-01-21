@@ -9,7 +9,7 @@ const config = {
     'es5-shim/es5-shim',
     'es5-shim/es5-sham',
     'babel-polyfill',
-    './app/bundles/Public/PublicApp'
+    './app/bundles/Test/TestApp'
   ],
 
   output: {
