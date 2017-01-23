@@ -31,6 +31,7 @@ group :development do
   gem "capistrano3-puma"
   gem "celluloid-benchmark"
   gem "faker"
+  gem "foreman"
   gem "web-console"
   gem "listen", "~> 3.0.5"
   gem "rubocop"
@@ -51,4 +52,4 @@ source "https://rails-assets.org" do
   gem "rails-assets-tether", ">= 1.1.0"
 end
 
-gem 'mini_racer', platforms: :ruby
+gem "mini_racer", platforms: :ruby
