@@ -41,7 +41,7 @@ class AsyncApp extends Component {
       <div>
         <Picker value={selectedYear}
                 onChange={this.handleChange}
-                options={['2017', '2016', '2015']} />
+                options={['2017', '2016', '2015', '2006']} />
         <p>
           {lastUpdated &&
             <span>
