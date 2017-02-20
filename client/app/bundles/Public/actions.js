@@ -45,14 +45,8 @@ function fetchEvents(year) {
 }
 
 function shouldFetchEvents(state, year) {
-  const events = state.eventsByYear[year];
-  if (!events) {
-    return true;
-  } else if (events.isFetching) {
-    return false;
-  } else {
-    return events.didInvalidate;
-  }
+  const events = state.events;
+  return !events.isFetching
 }
 
 export function fetchEventsIfNeeded(year) {

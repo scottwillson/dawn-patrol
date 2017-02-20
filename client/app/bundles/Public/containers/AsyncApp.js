@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { selectYear, fetchEventsIfNeeded, invalidateYear } from '../actions';
+import { selectYear, fetchEventsIfNeeded } from '../actions';
 import Picker from '../components/Picker';
 import Events from '../components/Events';
 
@@ -31,7 +31,6 @@ class AsyncApp extends Component {
     e.preventDefault();
 
     const { dispatch, selectedYear } = this.props;
-    dispatch(invalidateYear(selectedYear));
     dispatch(fetchEventsIfNeeded(selectedYear));
   }
 
@@ -81,15 +80,8 @@ AsyncApp.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { selectedYear, eventsByYear } = state;
-  const {
-    isFetching,
-    lastUpdated,
-    events: events
-  } = eventsByYear[selectedYear] || {
-    isFetching: true,
-    events: []
-  };
+  const { selectedYear, lastUpdated } = state;
+  const { events, isFetching } = state.events || { events: [], isFetching: true };
 
   return {
     selectedYear,
