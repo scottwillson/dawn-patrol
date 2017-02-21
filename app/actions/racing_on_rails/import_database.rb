@@ -99,7 +99,7 @@ module RacingOnRails
       person = nil
 
       if result.attributes["person_id"] && !@person_ids.include?(result.attributes["person_id"])
-        name = result.attributes["name"]
+        name = result.attributes["name"]&.delete("\u0000")&.gsub("\u0019", "'")
         person = ::Person.where(racing_on_rails_id: result.attributes["person_id"], name: name).first_or_create!
         @person_ids << result.attributes["person_id"]
       end
