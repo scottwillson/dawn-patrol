@@ -3,18 +3,10 @@ import fetch from 'isomorphic-fetch';
 export const REQUEST_EVENTS = 'REQUEST_EVENTS';
 export const RECEIVE_EVENTS = 'RECEIVE_EVENTS';
 export const SELECT_YEAR = 'SELECT_YEAR';
-export const INVALIDATE_YEAR = 'INVALIDATE_YEAR';
 
 export function selectYear(year) {
   return {
     type: SELECT_YEAR,
-    year
-  };
-}
-
-export function invalidateYear(year) {
-  return {
-    type: INVALIDATE_YEAR,
     year
   };
 }
