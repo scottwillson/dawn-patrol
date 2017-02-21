@@ -26,6 +26,7 @@ function events(state = {
     return Object.assign({}, state, {
       isFetching: false,
       events: action.events,
+      linkGroups: action.linkGroups,
       lastUpdated: action.receivedAt
     });
   default:

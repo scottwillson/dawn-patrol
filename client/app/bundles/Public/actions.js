@@ -23,6 +23,7 @@ function receiveEvents(year, json) {
     type: RECEIVE_EVENTS,
     year,
     events: json.events,
+    linkGroups: json.link_groups,
     receivedAt: Date.now()
   };
 }

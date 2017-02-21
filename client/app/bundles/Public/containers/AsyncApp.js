@@ -36,11 +36,13 @@ class AsyncApp extends Component {
 
   render () {
     const { selectedYear, events, isFetching, lastUpdated } = this.props;
+    const years = this.props.linkGroups[1].links;
+
     return (
       <div>
         <Picker value={selectedYear}
                 onChange={this.handleChange}
-                options={['2017', '2016', '2015', '2006']} />
+                options={years} />
         <p>
           {lastUpdated &&
             <span>
@@ -82,9 +84,11 @@ AsyncApp.propTypes = {
 function mapStateToProps(state) {
   const { selectedYear, lastUpdated } = state;
   const { events, isFetching } = state.events || { events: [], isFetching: true };
+  const linkGroups = state.events.linkGroups || [ { links: [] }, { links: [] }];
 
   return {
     selectedYear,
+    linkGroups,
     events,
     isFetching,
     lastUpdated
