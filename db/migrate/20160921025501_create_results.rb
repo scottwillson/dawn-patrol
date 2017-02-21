@@ -6,9 +6,9 @@ class CreateResults < ActiveRecord::Migration[5.0]
       t.belongs_to :person
 
       t.string :place, default: "", null: false
-      t.decimal :points, precision: 10, scale: 0, null: false, default: 0
+      t.float :points, null: false, default: 0
       t.integer :racing_on_rails_id
-      t.decimal :time, precision: 10, scale: 0
+      t.float :time
 
       t.index :racing_on_rails_id
 
