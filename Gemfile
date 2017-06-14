@@ -4,9 +4,9 @@ ruby "~> 2.4.1"
 
 gem "acts_as_list"
 gem "acts_as_tenant", git: "https://github.com/ErwinM/acts_as_tenant", ref: "960d3df"
-gem "bcrypt" #, "~> 3.1.7"
-gem "bootstrap", "~> 4.0.0.alpha4"
-gem "coffee-rails" #, "~> 4.1.0"
+gem "bcrypt"
+gem "bootstrap" #, "~> 4.0.0.alpha4"
+gem "coffee-rails"
 gem "dalli"
 gem "friendly_id"
 gem "jbuilder", "~> 2.5"
@@ -14,18 +14,18 @@ gem "jquery-rails"
 gem "mysql2"
 gem "oj"
 gem "pg"
-gem "puma" #, "~> 3.0"
+gem "puma"
 gem "rails", ">= 5.1.1", "< 5.2"
 gem "react_on_rails"
-gem "sass-rails" #, "~> 5.0"
+gem "sass-rails"
 gem "sucker_punch"
-gem "turbolinks" #, "~> 5.x"
+gem "turbolinks"
 gem "uglifier", ">= 1.3.0"
 
 group :development, :test do
   gem "byebug", platform: :mri
-  gem "rspec" #, ">= 3.5.0.beta2"
-  gem "rspec-rails" #, "3.5.0.beta4"
+  gem "rspec"
+  gem "rspec-rails"
 end
 
 group :development do
@@ -34,10 +34,10 @@ group :development do
   gem "celluloid-benchmark"
   gem "faker"
   gem "web-console"
-  gem "listen" #, "~> 3.0.5"
+  gem "listen"
   gem "rubocop"
   gem "spring"
-  gem "spring-watcher-listen" #, "~> 2.0.0"
+  gem "spring-watcher-listen"
 end
 
 group :test do
