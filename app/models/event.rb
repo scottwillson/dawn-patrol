@@ -4,12 +4,12 @@ class Event < ApplicationRecord
   acts_as_tenant :dawn_patrol_association
   friendly_id :name_and_year, use: :scoped, scope: :dawn_patrol_association_id
 
-  belongs_to :calculation, class_name: "Calculations::Calculation"
+  belongs_to :calculation, class_name: "Calculations::Calculation", optional: true
   has_many :children, class_name: "::Event", foreign_key: :parent_id, inverse_of: :parent
   has_many :event_categories
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
   belongs_to :discipline
-  belongs_to :parent, class_name: "::Event", inverse_of: :children
+  belongs_to :parent, class_name: "::Event", inverse_of: :children, optional: true
   has_many :promoters, class_name: "Promoter"
   has_many :rejections, class_name: "Calculations::Rejection"
 

@@ -1,9 +1,5 @@
-class RacingOnRails::Event < ApplicationRecord
-  belongs_to :promoter, class_name: "Person"
-
-  def self.association=(value)
-    establish_connection configurations["racing_on_rails"][value.downcase][Rails.env]
-  end
+class RacingOnRails::Event < RacingOnRails::ApplicationRecord
+  belongs_to :promoter, class_name: "Person", optional: true
 
   def discipline
     if self[:discipline].present?

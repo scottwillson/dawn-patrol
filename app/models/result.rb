@@ -17,7 +17,7 @@ class Result < ApplicationRecord
   has_many :calculations_rejections, class_name: "Calculations::Rejection"
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
   belongs_to :event_category
-  belongs_to :person
+  belongs_to :person, optional: true
 
   validates :event_category, presence: true
 
