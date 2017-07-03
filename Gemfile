@@ -21,6 +21,7 @@ gem "sass-rails"
 gem "sucker_punch"
 gem "turbolinks"
 gem "uglifier", ">= 1.3.0"
+gem "webpacker_lite", "2.0.4"
 
 group :development, :test do
   gem "byebug", platform: :mri
