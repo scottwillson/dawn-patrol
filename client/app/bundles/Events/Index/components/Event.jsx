@@ -1,5 +1,6 @@
 import moment from 'moment';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 const Event = props => (
   <tr>
@@ -15,8 +16,8 @@ const Event = props => (
 );
 
 Event.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  starts_at: React.PropTypes.string
+  name: PropTypes.string.isRequired,
+  starts_at: PropTypes.string
 };
 
 export default Event;

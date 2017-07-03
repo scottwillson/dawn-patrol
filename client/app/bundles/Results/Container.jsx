@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Index from './Index';
 import superagent from 'superagent';
 

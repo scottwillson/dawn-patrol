@@ -2,7 +2,7 @@ import AlertMessage from '../../../../components/AlertMessage';
 import Event from './Event';
 import LinkGroups from '../../../../components/LinkGroups';
 import R from 'ramda';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 const Index = props => (
   <div>
