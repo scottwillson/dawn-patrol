@@ -25,6 +25,7 @@ module RacingOnRails
     end
 
     def import_events_and_results
+      Rails.logger.debug "RacingOnRails::ImportDatabase import_events_and_results, association: #{@association}, events: #{RacingOnRails::Event.count}"
       racing_on_rails_events.find_each do |racing_on_rails_event|
         ActsAsTenant.with_tenant(association_instance) do
           event = Events::Create.new(racing_on_rails_event.imported_attributes).do_it!
