@@ -230,11 +230,11 @@ RSpec.describe "Calculations::Calculate" do
       calculate.create_categories(calculation_event)
       calculation_event_category = calculation_event.event_categories.reload.first
 
-      calculation_event_category.results.create!(
-        calculations_selections: [  Calculations::Selection.new(points: 1, source_result: source_result_2) ],
+      result = calculation_event_category.results.create!(
         person_id: source_result_2.person_id,
         points: 1
       )
+      result.calculations_selections.create!(points: 1, source_result: source_result_2)
 
       selection_1 = Calculations::Selection.new(
         points: 1,
