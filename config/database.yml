@@ -17,33 +17,29 @@ racing_on_rails_default: &racing_on_rails_default
   adapter: mysql2
   encoding: utf8
 
-racing_on_rails:
-  atra:
-    test:
-      <<: *racing_on_rails_default
-      database: dawn-patrol-atra_test
+racing_on_rails_atra_test:
+  <<: *racing_on_rails_default
+  database: dawn-patrol-atra_test
 
-    development:
-      <<: *racing_on_rails_default
-      database: dawn-patrol-atra_development
-      url: <%= ENV["DAWN_PATROL_ATRA_URL"] || "mysql2://root@localhost/dawn-patrol-atra_development" %>
+racing_on_rails_atra_development:
+  <<: *racing_on_rails_default
+  database: dawn-patrol-atra_development
+  url: <%= ENV["DAWN_PATROL_ATRA_URL"] || "mysql2://root@localhost/dawn-patrol-atra_development" %>
 
-  obra:
-    test:
-      <<: *racing_on_rails_default
-      database: dawn-patrol-obra_test
+racing_on_rails_obra_test:
+  <<: *racing_on_rails_default
+  database: dawn-patrol-obra_test
 
-    development:
-      <<: *racing_on_rails_default
-      database: dawn-patrol-obra_test
-      url: <%= ENV["DAWN_PATROL_OBRA_URL"] || "mysql2://root@localhost/dawn-patrol-obra_development" %>
+racing_on_rails_obra_development:
+  <<: *racing_on_rails_default
+  database: dawn-patrol-obra_development
+  url: <%= ENV["DAWN_PATROL_OBRA_URL"] || "mysql2://root@localhost/dawn-patrol-obra_development" %>
 
-  wsba:
-    test:
-      <<: *racing_on_rails_default
-      database: dawn-patrol-wsba_test
+racing_on_rails_wsba_test:
+  <<: *racing_on_rails_default
+  database: dawn-patrol-wsba_test
 
-    development:
-      <<: *racing_on_rails_default
-      database: dawn-patrol-wsba_test
-      url: <%= ENV["DAWN_PATROL_WSBA_URL"] || "mysql2://root@localhost/dawn-patrol-wsba_development" %>
+racing_on_rails_wsba_development:
+  <<: *racing_on_rails_default
+  database: dawn-patrol-wsba_development
+  url: <%= ENV["DAWN_PATROL_WSBA_URL"] || "mysql2://root@localhost/dawn-patrol-wsba_development" %>
