@@ -8,7 +8,9 @@ def system!(*args)
 end
 
 def database_config
-  YAML.load(ERB.new(File.read("../config/database.yml")).result)["racing_on_rails"]
+  YAML.load(ERB.new(File.read("../config/database.yml")).result).select do |key, config|
+    key["racing_on_rails"] && !key["racing_on_rails_default"]
+  end
 end
 
 def password_arg(config)
@@ -25,15 +27,12 @@ def database(config)
   "\`#{config['database']}\`"
 end
 
-database_config.each do |key, configs|
-  %w{ development test }.each do |env|
-    config = configs[env]
-    system! "#{mysql_command(config)} -e 'drop database if exists \`#{config['database']}\`'"
-    system! "#{mysql_command(config)} -e 'create database \`#{config['database']}\`'"
-    system! "#{mysql_command(config)} --database=#{config['database']} < db/schema.sql"
+database_config.each do |key, config|
+  system! "#{mysql_command(config)} -e 'drop database if exists \`#{config['database']}\`'"
+  system! "#{mysql_command(config)} -e 'create database \`#{config['database']}\`'"
+  system! "#{mysql_command(config)} --database=#{config['database']} < db/schema.sql"
 
-    if File.exist?("db/#{key}.sql")
-      system! "#{mysql_command(config)} --database=#{config['database']} < db/#{key}.sql"
-    end
+  if File.exist?("db/#{key}.sql")
+    system! "#{mysql_command(config)} --database=#{config['database']} < db/#{key}.sql"
   end
 end
