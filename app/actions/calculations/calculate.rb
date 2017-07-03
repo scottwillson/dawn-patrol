@@ -61,21 +61,25 @@ module Calculations
     end
 
     def save_results(results, event)
-      Calculation.benchmark("#{self.class} save_results calculation: #{@calculation.name}", level: :debug) do
+      Calculation.benchmark("#{self.class} save_results calculation: #{@calculation.name}, results: #{results.size}", level: :debug) do
         results.each do |result|
-          existing_result = event.event_categories.first.results.where(person_id: result.person_id).first
+          event_category = event.event_categories.first
+          existing_result = event_category.results.where(person_id: result.person_id).first
 
           if existing_result
             existing_result.update!(points: result.points, place: result.place)
           else
-            event.event_categories.first.results << result
+            result.event_category = event_category
+            result.calculations_selections.select(&:new_record?).each { |selection| selection.calculated_result = result }
+            # Trigger exception if invalid
+            result.save!
           end
         end
       end
     end
 
     def save_rejections(rejections, event)
-      Calculation.benchmark("#{self.class} save_rejections calculation: #{@calculation.name}", level: :debug) do
+      Calculation.benchmark("#{self.class} save_rejections calculation: #{@calculation.name}, rejections: #{rejections.size}", level: :debug) do
         rejections.each do |rejection|
           existing_rejection = event.rejections.where(result: rejection.result).first
 
