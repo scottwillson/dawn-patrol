@@ -27,6 +27,12 @@
  * Add CreateCategory (Save?) action that ensures correct state (what is correct state? normalized name?)
  * does format.html belong in stale? block?
  * report exceptions
+ * NoMethodError: undefined method `in_time_zone' for 2017:Integer
+	from app/models/dawn_patrol/association.rb:32:in `year'
+	from app/models/event.rb:66:in `year'
+	from app/models/event.rb:37:in `name_and_year'
+	from (irb):5
+
 
  Calculations
  ============
