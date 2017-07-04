@@ -32,6 +32,7 @@
 	from app/models/event.rb:66:in `year'
 	from app/models/event.rb:37:in `name_and_year'
 	from (irb):5
+ * re-use calculation selections and rejections 
 
 
  Calculations

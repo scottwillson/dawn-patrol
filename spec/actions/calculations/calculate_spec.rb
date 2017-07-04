@@ -27,7 +27,7 @@ RSpec.describe "Calculations::Calculate" do
       event_category.results.create!(person: Person.create!, place: "DNS")
       event_category.results.create!(person: Person.create!, place: "DNF")
 
-      calculation = Calculations::Calculation.create!(name: "Ironman")
+      calculation = Calculations::Calculation.create!(name: "BAR", points: [ 20, 15, 12, 10, 5, 3, 2, 1 ])
 
       action_result = Calculations::Calculate.new(calculation: calculation).do_it!
       expect(action_result).to be(true)
@@ -42,11 +42,11 @@ RSpec.describe "Calculations::Calculate" do
 
       result = category.results.first
       expect(result.calculations_selections.count).to eq(1)
-      expect(result.points).to eq(1)
+      expect(result.points).to eq(12)
       expect(result.place).to eq("1")
 
       calculation_selection = result.calculations_selections.reload.first
-      expect(calculation_selection.points).to eq(1)
+      expect(calculation_selection.points).to eq(12)
       expect(calculation_selection.source_result).to eq(source_result)
       expect(calculation_selection.calculated_result).to eq(result)
 

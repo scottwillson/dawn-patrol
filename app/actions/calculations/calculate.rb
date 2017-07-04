@@ -19,6 +19,8 @@ module Calculations
                      .do_step(Steps::SelectInSourceEvent)
                      .do_step(Steps::MapResultsToSelections)
                      .do_step(Steps::MapSelectionsToResults)
+                     .do_step(Steps::AssignSelectionsPoints)
+                     .do_step(Steps::SumResultsPoints)
                      .do_step(Steps::Sort)
                      .do_step(Steps::Place)
 

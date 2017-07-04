@@ -10,190 +10,191 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161023002304) do
+ActiveRecord::Schema.define(version: 20170704205152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "calculations_calculations", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id",                                            null: false
-    t.decimal  "dnf_points",                 precision: 10, default: 0,                 null: false
-    t.boolean  "members_only",                              default: false,             null: false
-    t.string   "name",                                      default: "New Calculation", null: false
-    t.datetime "created_at",                                                            null: false
-    t.datetime "updated_at",                                                            null: false
-    t.index ["dawn_patrol_association_id"], name: "index_calculations_calculations_on_dawn_patrol_association_id", using: :btree
+    t.integer "dawn_patrol_association_id", null: false
+    t.decimal "dnf_points", precision: 10, default: "0", null: false
+    t.boolean "members_only", default: false, null: false
+    t.string "name", default: "New Calculation", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "points", default: []
+    t.index ["dawn_patrol_association_id"], name: "index_calculations_calculations_on_dawn_patrol_association_id"
   end
 
   create_table "calculations_calculations_categories", primary_key: "false", force: :cascade do |t|
-    t.integer  "calculation_id"
-    t.integer  "category_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.index ["calculation_id", "category_id"], name: "index_calculations_categories_on_calculation_id_and_category_id", unique: true, using: :btree
-    t.index ["calculation_id"], name: "index_calculations_calculations_categories_on_calculation_id", using: :btree
-    t.index ["category_id"], name: "index_calculations_calculations_categories_on_category_id", using: :btree
+    t.integer "calculation_id"
+    t.integer "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["calculation_id", "category_id"], name: "index_calculations_categories_on_calculation_id_and_category_id", unique: true
+    t.index ["calculation_id"], name: "index_calculations_calculations_categories_on_calculation_id"
+    t.index ["category_id"], name: "index_calculations_calculations_categories_on_category_id"
   end
 
   create_table "calculations_rejections", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id", null: false
-    t.integer  "event_id",                   null: false
-    t.integer  "result_id",                  null: false
-    t.string   "reason"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["dawn_patrol_association_id"], name: "index_calculations_rejections_on_dawn_patrol_association_id", using: :btree
-    t.index ["event_id", "result_id"], name: "index_calculations_rejections_on_event_id_and_result_id", unique: true, using: :btree
-    t.index ["event_id"], name: "index_calculations_rejections_on_event_id", using: :btree
-    t.index ["result_id"], name: "index_calculations_rejections_on_result_id", using: :btree
+    t.integer "dawn_patrol_association_id", null: false
+    t.integer "event_id", null: false
+    t.integer "result_id", null: false
+    t.string "reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dawn_patrol_association_id"], name: "index_calculations_rejections_on_dawn_patrol_association_id"
+    t.index ["event_id", "result_id"], name: "index_calculations_rejections_on_event_id_and_result_id", unique: true
+    t.index ["event_id"], name: "index_calculations_rejections_on_event_id"
+    t.index ["result_id"], name: "index_calculations_rejections_on_result_id"
   end
 
   create_table "calculations_selections", force: :cascade do |t|
-    t.integer  "calculated_result_id",                                  null: false
-    t.integer  "dawn_patrol_association_id",                            null: false
-    t.decimal  "points",                     precision: 10, default: 0, null: false
-    t.integer  "source_result_id",                                      null: false
-    t.datetime "created_at",                                            null: false
-    t.datetime "updated_at",                                            null: false
-    t.index ["calculated_result_id", "source_result_id"], name: "index_calculations_selections_calculated_result_source_result", unique: true, using: :btree
-    t.index ["calculated_result_id"], name: "index_calculations_selections_on_calculated_result_id", using: :btree
-    t.index ["dawn_patrol_association_id"], name: "index_calculations_selections_on_dawn_patrol_association_id", using: :btree
-    t.index ["source_result_id"], name: "index_calculations_selections_on_source_result_id", using: :btree
+    t.integer "calculated_result_id", null: false
+    t.integer "dawn_patrol_association_id", null: false
+    t.decimal "points", precision: 10, default: "0", null: false
+    t.integer "source_result_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["calculated_result_id", "source_result_id"], name: "index_calculations_selections_calculated_result_source_result", unique: true
+    t.index ["calculated_result_id"], name: "index_calculations_selections_on_calculated_result_id"
+    t.index ["dawn_patrol_association_id"], name: "index_calculations_selections_on_dawn_patrol_association_id"
+    t.index ["source_result_id"], name: "index_calculations_selections_on_source_result_id"
   end
 
   create_table "categories", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id",                          null: false
-    t.string   "name",                       default: "New Category", null: false
-    t.string   "slug",                                                null: false
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.index ["dawn_patrol_association_id", "name"], name: "index_categories_on_dawn_patrol_association_id_and_name", unique: true, using: :btree
-    t.index ["dawn_patrol_association_id", "slug"], name: "index_categories_on_dawn_patrol_association_id_and_slug", unique: true, using: :btree
-    t.index ["dawn_patrol_association_id"], name: "index_categories_on_dawn_patrol_association_id", using: :btree
+    t.integer "dawn_patrol_association_id", null: false
+    t.string "name", default: "New Category", null: false
+    t.string "slug", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dawn_patrol_association_id", "name"], name: "index_categories_on_dawn_patrol_association_id_and_name", unique: true
+    t.index ["dawn_patrol_association_id", "slug"], name: "index_categories_on_dawn_patrol_association_id_and_slug", unique: true
+    t.index ["dawn_patrol_association_id"], name: "index_categories_on_dawn_patrol_association_id"
   end
 
   create_table "dawn_patrol_associations", force: :cascade do |t|
-    t.string   "acronym",    default: "CBRA",                                      null: false
-    t.string   "host",       default: "localhost|0.0.0.0|127.0.0.1|::1|test.host", null: false
-    t.string   "name",       default: "Cascadia Bicycle Racing Association",       null: false
-    t.string   "time_zone",  default: "Pacific Time (US & Canada)",                null: false
-    t.datetime "created_at",                                                       null: false
-    t.datetime "updated_at",                                                       null: false
-    t.integer  "position"
-    t.index ["acronym"], name: "index_dawn_patrol_associations_on_acronym", unique: true, using: :btree
-    t.index ["host"], name: "index_dawn_patrol_associations_on_host", unique: true, using: :btree
-    t.index ["name"], name: "index_dawn_patrol_associations_on_name", unique: true, using: :btree
+    t.string "acronym", default: "CBRA", null: false
+    t.string "host", default: "localhost|0.0.0.0|127.0.0.1|::1|test.host", null: false
+    t.string "name", default: "Cascadia Bicycle Racing Association", null: false
+    t.string "time_zone", default: "Pacific Time (US & Canada)", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "position"
+    t.index ["acronym"], name: "index_dawn_patrol_associations_on_acronym", unique: true
+    t.index ["host"], name: "index_dawn_patrol_associations_on_host", unique: true
+    t.index ["name"], name: "index_dawn_patrol_associations_on_name", unique: true
   end
 
   create_table "disciplines", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id",                  null: false
-    t.string   "name",                       default: "Road", null: false
-    t.string   "slug",                                        null: false
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.index ["dawn_patrol_association_id", "name"], name: "index_disciplines_on_dawn_patrol_association_id_and_name", unique: true, using: :btree
-    t.index ["dawn_patrol_association_id", "slug"], name: "index_disciplines_on_dawn_patrol_association_id_and_slug", unique: true, using: :btree
-    t.index ["dawn_patrol_association_id"], name: "index_disciplines_on_dawn_patrol_association_id", using: :btree
+    t.integer "dawn_patrol_association_id", null: false
+    t.string "name", default: "Road", null: false
+    t.string "slug", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dawn_patrol_association_id", "name"], name: "index_disciplines_on_dawn_patrol_association_id_and_name", unique: true
+    t.index ["dawn_patrol_association_id", "slug"], name: "index_disciplines_on_dawn_patrol_association_id_and_slug", unique: true
+    t.index ["dawn_patrol_association_id"], name: "index_disciplines_on_dawn_patrol_association_id"
   end
 
   create_table "event_categories", force: :cascade do |t|
-    t.integer  "category_id"
-    t.integer  "dawn_patrol_association_id", null: false
-    t.integer  "event_id"
-    t.string   "slug",                       null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["category_id", "event_id"], name: "index_event_categories_on_category_id_and_event_id", using: :btree
-    t.index ["category_id"], name: "index_event_categories_on_category_id", using: :btree
-    t.index ["dawn_patrol_association_id"], name: "index_event_categories_on_dawn_patrol_association_id", using: :btree
-    t.index ["event_id", "slug"], name: "index_event_categories_on_event_id_and_slug", unique: true, using: :btree
-    t.index ["event_id"], name: "index_event_categories_on_event_id", using: :btree
+    t.integer "category_id"
+    t.integer "dawn_patrol_association_id", null: false
+    t.integer "event_id"
+    t.string "slug", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id", "event_id"], name: "index_event_categories_on_category_id_and_event_id"
+    t.index ["category_id"], name: "index_event_categories_on_category_id"
+    t.index ["dawn_patrol_association_id"], name: "index_event_categories_on_dawn_patrol_association_id"
+    t.index ["event_id", "slug"], name: "index_event_categories_on_event_id_and_slug", unique: true
+    t.index ["event_id"], name: "index_event_categories_on_event_id"
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id",                       null: false
-    t.integer  "discipline_id",                                    null: false
-    t.integer  "calculation_id"
-    t.integer  "parent_id"
-    t.datetime "starts_at",                                        null: false
-    t.string   "city"
-    t.string   "name",                       default: "New Event", null: false
-    t.integer  "racing_on_rails_id"
-    t.string   "phone"
-    t.string   "slug",                                             null: false
-    t.string   "state"
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-    t.index ["calculation_id"], name: "index_events_on_calculation_id", using: :btree
-    t.index ["dawn_patrol_association_id", "slug"], name: "index_events_on_dawn_patrol_association_id_and_slug", unique: true, using: :btree
-    t.index ["dawn_patrol_association_id"], name: "index_events_on_dawn_patrol_association_id", using: :btree
-    t.index ["discipline_id"], name: "index_events_on_discipline_id", using: :btree
-    t.index ["name"], name: "index_events_on_name", using: :btree
-    t.index ["parent_id"], name: "index_events_on_parent_id", using: :btree
-    t.index ["racing_on_rails_id"], name: "index_events_on_racing_on_rails_id", using: :btree
-    t.index ["starts_at"], name: "index_events_on_starts_at", using: :btree
+    t.integer "dawn_patrol_association_id", null: false
+    t.integer "discipline_id", null: false
+    t.integer "calculation_id"
+    t.integer "parent_id"
+    t.datetime "starts_at", null: false
+    t.string "city"
+    t.string "name", default: "New Event", null: false
+    t.integer "racing_on_rails_id"
+    t.string "phone"
+    t.string "slug", null: false
+    t.string "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["calculation_id"], name: "index_events_on_calculation_id"
+    t.index ["dawn_patrol_association_id", "slug"], name: "index_events_on_dawn_patrol_association_id_and_slug", unique: true
+    t.index ["dawn_patrol_association_id"], name: "index_events_on_dawn_patrol_association_id"
+    t.index ["discipline_id"], name: "index_events_on_discipline_id"
+    t.index ["name"], name: "index_events_on_name"
+    t.index ["parent_id"], name: "index_events_on_parent_id"
+    t.index ["racing_on_rails_id"], name: "index_events_on_racing_on_rails_id"
+    t.index ["starts_at"], name: "index_events_on_starts_at"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string   "slug",                      null: false
-    t.integer  "sluggable_id",              null: false
-    t.string   "sluggable_type", limit: 50
-    t.string   "scope"
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
     t.datetime "created_at"
-    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
-    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
-    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
-    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
   create_table "memberships", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id", null: false
-    t.integer  "person_id"
-    t.datetime "start_at",                   null: false
-    t.datetime "end_at",                     null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["dawn_patrol_association_id"], name: "index_memberships_on_dawn_patrol_association_id", using: :btree
-    t.index ["person_id"], name: "index_memberships_on_person_id", using: :btree
+    t.integer "dawn_patrol_association_id", null: false
+    t.integer "person_id"
+    t.datetime "start_at", null: false
+    t.datetime "end_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dawn_patrol_association_id"], name: "index_memberships_on_dawn_patrol_association_id"
+    t.index ["person_id"], name: "index_memberships_on_person_id"
   end
 
   create_table "people", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id", null: false
-    t.string   "name"
-    t.integer  "racing_on_rails_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["dawn_patrol_association_id"], name: "index_people_on_dawn_patrol_association_id", using: :btree
-    t.index ["name"], name: "index_people_on_name", using: :btree
-    t.index ["racing_on_rails_id"], name: "index_people_on_racing_on_rails_id", using: :btree
+    t.integer "dawn_patrol_association_id", null: false
+    t.string "name"
+    t.integer "racing_on_rails_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dawn_patrol_association_id"], name: "index_people_on_dawn_patrol_association_id"
+    t.index ["name"], name: "index_people_on_name"
+    t.index ["racing_on_rails_id"], name: "index_people_on_racing_on_rails_id"
   end
 
   create_table "promoters", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id", null: false
-    t.integer  "event_id",                   null: false
-    t.integer  "person_id",                  null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["dawn_patrol_association_id"], name: "index_promoters_on_dawn_patrol_association_id", using: :btree
-    t.index ["event_id", "person_id"], name: "index_promoters_on_event_id_and_person_id", unique: true, using: :btree
-    t.index ["event_id"], name: "index_promoters_on_event_id", using: :btree
-    t.index ["person_id"], name: "index_promoters_on_person_id", using: :btree
+    t.integer "dawn_patrol_association_id", null: false
+    t.integer "event_id", null: false
+    t.integer "person_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dawn_patrol_association_id"], name: "index_promoters_on_dawn_patrol_association_id"
+    t.index ["event_id", "person_id"], name: "index_promoters_on_event_id_and_person_id", unique: true
+    t.index ["event_id"], name: "index_promoters_on_event_id"
+    t.index ["person_id"], name: "index_promoters_on_person_id"
   end
 
   create_table "results", force: :cascade do |t|
-    t.integer  "dawn_patrol_association_id",                             null: false
-    t.integer  "event_category_id"
-    t.integer  "person_id"
-    t.string   "place",                                     default: "", null: false
-    t.decimal  "points",                     precision: 10, default: 0,  null: false
-    t.integer  "racing_on_rails_id"
-    t.decimal  "time",                       precision: 10
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-    t.index ["dawn_patrol_association_id"], name: "index_results_on_dawn_patrol_association_id", using: :btree
-    t.index ["event_category_id"], name: "index_results_on_event_category_id", using: :btree
-    t.index ["person_id"], name: "index_results_on_person_id", using: :btree
-    t.index ["racing_on_rails_id"], name: "index_results_on_racing_on_rails_id", using: :btree
+    t.integer "dawn_patrol_association_id", null: false
+    t.integer "event_category_id"
+    t.integer "person_id"
+    t.string "place", default: "", null: false
+    t.decimal "points", precision: 10, default: "0", null: false
+    t.integer "racing_on_rails_id"
+    t.decimal "time", precision: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dawn_patrol_association_id"], name: "index_results_on_dawn_patrol_association_id"
+    t.index ["event_category_id"], name: "index_results_on_event_category_id"
+    t.index ["person_id"], name: "index_results_on_person_id"
+    t.index ["racing_on_rails_id"], name: "index_results_on_racing_on_rails_id"
   end
 
 end
