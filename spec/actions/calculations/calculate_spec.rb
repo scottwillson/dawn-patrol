@@ -5,16 +5,16 @@ RSpec.describe "Calculations::Calculate" do
     save_default_current_association!
   end
 
-  describe "default Calculation" do
+  describe "do_it!" do
     it "calculates results" do
-      event = Events::Create.new(starts_at: 1.year.ago).do_it!
+      last_year_event = Events::Create.new(starts_at: 1.year.ago).do_it!
       category = Category.create!(name: "Senior Women")
-      event_category = event.event_categories.create!(category: category)
+      event_category = last_year_event.event_categories.create!(category: category)
       last_year_result = event_category.results.create!(person: Person.create!, place: "1")
 
-      event = Events::Create.new(starts_at: 1.year.from_now).do_it!
+      future_event = Events::Create.new(starts_at: 1.year.from_now).do_it!
       category = Category.create!(name: "Junior Men")
-      event_category = event.event_categories.create!(category: category)
+      event_category = future_event.event_categories.create!(category: category)
       next_year_result = event_category.results.create!(person: Person.create!, place: "2")
 
       event = Events::Create.new.do_it!
@@ -27,7 +27,13 @@ RSpec.describe "Calculations::Calculate" do
       event_category.results.create!(person: Person.create!, place: "DNS")
       event_category.results.create!(person: Person.create!, place: "DNF")
 
+      excluded_event = Events::Create.new.do_it!
+      category = Category.create!(name: "Junior Women")
+      event_category = excluded_event.event_categories.create!(category: category)
+      excluded_result = event_category.results.create!(person: Person.create!, place: "5")
+
       calculation = Calculations::Calculation.create!(name: "Ironman")
+      calculation.excluded_source_events << excluded_event
 
       action_result = Calculations::Calculate.new(calculation: calculation).do_it!
       expect(action_result).to be(true)
@@ -53,6 +59,7 @@ RSpec.describe "Calculations::Calculate" do
       expect(source_result.calculations_rejections.reload.count).to eq(0)
       expect(last_year_result.calculations_rejections.reload.count).to eq(0)
       expect(next_year_result.calculations_rejections.reload.count).to eq(0)
+      expect(excluded_result.calculations_rejections.reload.count).to eq(1)
 
       expect(result_without_participant.calculations_rejections.reload.count).to eq(1)
       rejection = result_without_participant.calculations_rejections.first

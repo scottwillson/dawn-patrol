@@ -32,18 +32,15 @@
 	from app/models/event.rb:66:in `year'
 	from app/models/event.rb:37:in `name_and_year'
 	from (irb):5
- * re-use calculation selections and rejections
  * batch update calculation selections and rejections for speed
 
 
  Calculations
  ============
- * filter results
- * handle excluded events
  * re-use existing events
  * re-use existing results
  * re-use categories
- * parameterize year
+ * re-use existing calculation selections and rejections
  * include year in calculation event name?
  * check performance (DB queries) with real data
  * assert result name and team
