@@ -108,7 +108,15 @@ module RacingOnRails
       attributes = result.attributes.slice(*%w{ created_at place points time updated_at })
       attributes[:points] = attributes[:points] || 0
       attributes[:racing_on_rails_id] = result.id
-      event_category.results.create!(attributes.merge(person_id: @person_ids[result.attributes["person_id"]]))
+
+      if result.attributes["person_id"]
+        person_id = @person_ids[result.attributes["person_id"]]
+        if person_id
+          attributes[:person_id] = person_id
+        end
+      end
+
+      event_category.results.create!(attributes)
     end
   end
 end
