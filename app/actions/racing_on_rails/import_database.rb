@@ -20,6 +20,7 @@ module RacingOnRails
           import_events_and_results
           import_event_editors
           set_parents
+          set_source_event_exclusions
         end
       end
     end
@@ -62,6 +63,15 @@ module RacingOnRails
           parent_id = ::Event.where(racing_on_rails_id: racing_on_rails_event.parent_id).ids.first
           ::Event.where(racing_on_rails_id: racing_on_rails_event.id).update_all(parent_id: parent_id)
         end
+      end
+    end
+
+    def set_source_event_exclusions
+      racing_on_rails_ids = RacingOnRails::Event.where(ironman: false).ids
+      ActsAsTenant.with_tenant(association_instance) do
+        ironman = Calculations::Calculation.create!(name: "Ironman")
+        excluded_events = ::Event.where(racing_on_rails_id: racing_on_rails_ids)
+        ironman.excluded_source_events = excluded_events
       end
     end
 
