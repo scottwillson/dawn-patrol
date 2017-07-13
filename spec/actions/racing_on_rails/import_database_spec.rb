@@ -24,8 +24,8 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(Result.first.person.name).to eq("Jame Carney")
       expect(Result.first.person.results.count).to eq(2)
       expect(Result.first.place).to eq("1")
-      expect(Result.first.racing_on_rails_id).to eq("1")
-      expect(Result.second.racing_on_rails_id).to eq("1")
+      expect(Result.first.racing_on_rails_id).to eq(1)
+      expect(Result.second.racing_on_rails_id).to eq(2)
     end
 
     ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "WSBA").first!) do
