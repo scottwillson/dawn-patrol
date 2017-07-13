@@ -9,7 +9,7 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
 
     ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "ATRA").first!) do
       expect(Event.count).to eq(2)
-      event = Event.where(racing_on_rails_id: 1)
+      event = Event.where(racing_on_rails_id: 1).first!
       expect(event.name).to eq("Hellyer Challenge")
       expect(event.city).to eq("San Jose")
       expect(event.starts_at).to eq(Time.zone.local(2009, 7, 3))
@@ -24,11 +24,13 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(Result.first.person.name).to eq("Jame Carney")
       expect(Result.first.person.results.count).to eq(2)
       expect(Result.first.place).to eq("1")
+      expect(Result.first.racing_on_rails_id).to eq("1")
+      expect(Result.second.racing_on_rails_id).to eq("1")
     end
 
     ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "WSBA").first!) do
       expect(Event.count).to eq(3)
-      event = Event.order(:starts_at).first
+      event = Event.order(:starts_at).first!
       expect(event.name).to eq("Tahuya-Seabeck-Tahuya Road Race")
       expect(event.city).to eq("Tahuya")
       expect(event.racing_on_rails_id).to eq(1)

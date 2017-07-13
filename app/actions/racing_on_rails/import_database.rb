@@ -102,12 +102,12 @@ module RacingOnRails
       if result.attributes["person_id"] && !@person_ids.include?(result.attributes["person_id"])
         name = result.attributes["name"]
         person = ::Person.where(racing_on_rails_id: result.attributes["person_id"], name: name).first_or_create!
-        @person_ids << result.attributes["person_id"]
+        @person_ids[result.attributes["person_id"]] = person.id
       end
 
       attributes = result.attributes.slice(*%w{ created_at place points time updated_at })
       attributes[:points] = attributes[:points] || 0
-      event_category.results.create!(attributes.merge(person_id: person&.id))
+      event_category.results.create!(attributes.merge(person_id: @person_ids[result.attributes["person_id"]]))
     end
   end
 end
