@@ -53,7 +53,8 @@ module Calculations
 
     def create_categories(event)
       if @calculation.categories.empty?
-        @calculation.categories.create!(name: @calculation.name)
+        category = Categories::Create.new(name: @calculation.name).do_it!
+        @calculation.categories << category
       end
 
       if event.event_categories.empty?
