@@ -43,6 +43,10 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       parent = Event.where(racing_on_rails_id: 2).first!
       child = Event.where(racing_on_rails_id: 3).first!
       expect(child.parent).to eq(parent)
+
+      ironman = Calculations::Calculation.where(name: "Ironman").first!
+      expect(ironman.excluded_source_events.count).to eq(1)
+      expect(ironman.excluded_source_events.first).to eq(child)
     end
 
     expect(DawnPatrol::Association.count).to eq(2)
