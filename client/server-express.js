@@ -9,7 +9,7 @@ var uuid = require('node-uuid');
 
 var comments = [
   { author: 'Pete Hunt', text: 'Hey there!', id: uuid.v4() },
-  { author: 'Justin Gordon', text: 'Aloha from @railsonmaui', id: uuid.v4() },
+  { author: 'Justin Gordon', text: 'Aloha from @railsonmaui', id: uuid.v4() }
 ];
 
 var server = new WebpackDevServer(webpack(config), {
@@ -21,8 +21,8 @@ var server = new WebpackDevServer(webpack(config), {
     hash: false,
     version: false,
     chunks: false,
-    children: false,
-  },
+    children: false
+  }
 });
 
 server.app.use(bodyParser.json(null));
@@ -49,7 +49,7 @@ server.app.post('/comments.json', (req, res) => {
 
 server.app.use('/', (_req, res) => {
   var locals = {
-    props: JSON.stringify({ comments }),
+    props: JSON.stringify({ comments })
   };
   var layout = `${process.cwd()}/index.pug`;
   var html = pug.compileFile(layout, { pretty: true })(locals);
