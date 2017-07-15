@@ -16,6 +16,9 @@ racing_on_rails_default: &racing_on_rails_default
   host: localhost
   adapter: mysql2
   encoding: utf8
+  <% if ENV["DATABASE_MYSQL_PASSWORD"] %>
+  password: ENV["DATABASE_MYSQL_PASSWORD"]
+  <% end %>
 
 racing_on_rails_atra_test:
   <<: *racing_on_rails_default
