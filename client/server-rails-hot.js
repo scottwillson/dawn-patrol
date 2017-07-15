@@ -17,7 +17,7 @@ const compiler = webpack(webpackConfig);
 
 const devServer = new WebpackDevServer(compiler, {
   proxy: {
-    '*': `http://lvh.me:${hotReloadingPort}`,
+    '*': `http://lvh.me:${hotReloadingPort}`
   },
   contentBase: hotReloadingUrl,
   hot: true,
@@ -31,8 +31,8 @@ const devServer = new WebpackDevServer(compiler, {
     hash: false,
     version: false,
     chunks: false,
-    children: false,
-  },
+    children: false
+  }
 });
 
 devServer.listen(hotReloadingPort, hotReloadingHostname, (err) => {
