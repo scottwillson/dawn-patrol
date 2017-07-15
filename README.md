@@ -15,3 +15,5 @@
 * Deployment instructions
 
 * ...
+
+[![Build Status](https://semaphoreci.com/api/v1/scott-willson/dawn-patrol/branches/master/badge.svg)](https://semaphoreci.com/scott-willson/dawn-patrol)
