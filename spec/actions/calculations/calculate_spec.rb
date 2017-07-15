@@ -143,6 +143,36 @@ RSpec.describe "Calculations::Calculate" do
     end
   end
 
+  describe "#source_results" do
+    it "sets event_parent" do
+      solo_event = Events::Create.new.do_it!
+      category = Category.create!
+      event_category = solo_event.event_categories.create!(category: category)
+      solo_event_result = event_category.results.create!
+
+      parent_event = Events::Create.new.do_it!
+      event_category = parent_event.event_categories.create!(category: category)
+      parent_event_result = event_category.results.create!
+
+      child_event = Events::Create.new(parent: parent_event).do_it!
+      event_category = child_event.event_categories.create!(category: category)
+      child_event_result = event_category.results.create!
+
+      calculation = Calculations::Calculation.create!
+
+      source_results = Calculations::Calculate.new(calculation: calculation).source_results
+
+      result = source_results.detect { |r| r == solo_event_result}
+      expect(result.event_parent?).to be(false)
+
+      result = source_results.detect { |r| r == parent_event_result}
+      expect(result.event_parent?).to be(true)
+
+      result = source_results.detect { |r| r == child_event_result}
+      expect(result.event_parent?).to be(false)
+    end
+  end
+
   describe "find_or_create_event" do
     it "creates a calculated Event" do
       calculation = Calculations::Calculation.create!(name: "Ironman")

@@ -48,7 +48,7 @@ class Event < ApplicationRecord
     when NilClass
       # OK, just remove all promoters
     else
-      raise IllegalArgumentError, "promoter must be Promoter, Person or nil, but was #{promoter.class}"
+      raise ArgumentError, "promoter must be Promoter, Person or nil, but was #{promoter.class}"
     end
   end
 

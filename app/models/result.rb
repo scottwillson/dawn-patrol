@@ -2,6 +2,9 @@ class Result < ApplicationRecord
   # 999_999_999_999, not Float::INFINITY for JSON serialization
   PLACE_MAX = 999_999_999_999
 
+  # Populated by Calculations
+  attr_accessor :event_parent
+
   acts_as_tenant :dawn_patrol_association
 
   has_many :calculations_selections,
@@ -41,6 +44,16 @@ class Result < ApplicationRecord
 
   def event_id
     event_category&.event_id
+  end
+
+  def event_parent
+    raise("@event_parent must be set before calling event_parent") if @event_parent.nil?
+    @event_parent
+  end
+
+  def event_parent?
+    raise("@event_parent must be set before calling event_parent?") if @event_parent.nil?
+    @event_parent
   end
 
   def member?

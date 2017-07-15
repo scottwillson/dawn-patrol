@@ -18,6 +18,7 @@ module Calculations
                      .do_step(Steps::SelectMembers)
                      .do_step(Steps::SelectInSourceEvent)
                      .do_step(Steps::RejectExcludedSourceEvents)
+                     .do_step(Steps::RejectParentSourceEvent)
                      .do_step(Steps::MapResultsToSelections)
                      .do_step(Steps::MapSelectionsToResults)
                      .do_step(Steps::AssignSelectionsPoints)
@@ -35,10 +36,7 @@ module Calculations
 
     def source_results
       Calculation.benchmark("#{self.class} source_results calculation: #{@calculation.name}", level: :debug) do
-        Result
-          .includes(event_category: :event)
-          .year(@year)
-          .readonly!
+        add_event_parent year_results
       end
     end
 
@@ -53,8 +51,8 @@ module Calculations
 
     def create_categories(event)
       if @calculation.categories.empty?
-        category = Categories::Create.new(name: @calculation.name).do_it!
-        @calculation.categories << category
+        calculation_category = Categories::Create.new(name: @calculation.name).do_it!
+        @calculation.categories << calculation_category
       end
 
       if event.event_categories.empty?
@@ -71,7 +69,7 @@ module Calculations
           existing_result = event_category.results.where(person_id: result.person_id).first
 
           if existing_result
-            existing_result.update!(points: result.points, place: result.place)
+            existing_result.update! points: result.points, place: result.place
           else
             result.event_category = event_category
             result.calculations_selections.select(&:new_record?).each { |selection| selection.calculated_result = result }
@@ -95,6 +93,23 @@ module Calculations
             rejection.save!
           end
         end
+      end
+    end
+
+    def year_results
+      Calculation.benchmark("#{self.class} year_results calculation: #{@calculation.name}", level: :debug) do
+        Result
+          .includes(event_category: :event)
+          .year(@year)
+          .readonly!
+      end
+    end
+
+    def add_event_parent(results)
+      event_ids = results.map(&:event_id).uniq
+      parent_ids = ::Event.where(id: event_ids).joins(:children).pluck(:id).uniq
+      results.each do |result|
+        result.event_parent = result.event_id.in?(parent_ids)
       end
     end
   end
