@@ -9,7 +9,7 @@ export default class Picker extends Component {
       <span>
         <select onChange={e => onChange(e.target.value)}
                 value={value}>
-          {options.map(option =>
+          {options.sort().map(option =>
             <option value={option} key={option}>
               {option}
             </option>)
