@@ -34,6 +34,7 @@
 	from (irb):5
  * batch update calculation selections and rejections for speed
  * use etag and/or last_modified for JSON requests
+ * Move some EventsController logic to view helper class
 
 
  Calculations

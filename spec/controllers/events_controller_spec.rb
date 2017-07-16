@@ -13,6 +13,37 @@ RSpec.describe EventsController, type: :controller do
     it "responds with json" do
       get :index, format: :json
     end
+
+    it "defaults to current year" do
+      current_year = DawnPatrol::Association.current.year
+      get :index, format: :json
+      expect(assigns(:year)).to eq(current_year)
+    end
+
+    it "defaults nil year to current year" do
+      current_year = DawnPatrol::Association.current.year
+
+      get :index, format: :json, params: { year: nil }
+
+      expect(assigns(:year)).to eq(current_year)
+      json = JSON.parse(response.body)
+      link_group = json["link_groups"].detect { |lg| lg["slug"] == "year"}
+      expect(link_group["links"]).to eq([ current_year ])
+      expect(link_group["selected"]).to eq(current_year)
+    end
+
+    it "ensures years is unique" do
+      DawnPatrol::Association.current = @default_association
+      Events::Create.new(starts_at: Time.zone.local(2012, 5)).do_it!
+
+      get :index, format: :json, params: { year: 2012 }
+
+      expect(assigns(:year)).to eq(2012)
+      json = JSON.parse(response.body)
+      link_group = json["link_groups"].detect { |lg| lg["slug"] == "year"}
+      expect(link_group["links"]).to eq([ 2012 ])
+      expect(link_group["selected"]).to eq(2012)
+    end
   end
 
   describe "#set_current_association_by_host" do

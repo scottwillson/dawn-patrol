@@ -22,7 +22,7 @@ class Event < ApplicationRecord
   scope :year, ->(year) { where(starts_at: DawnPatrol::Association.current.year_range(year)) }
 
   def self.years
-    Event.pluck("distinct date_part('year', starts_at)")
+    Event.pluck("distinct date_part('year', starts_at)").map(&:to_i)
   end
 
   def calculated?
