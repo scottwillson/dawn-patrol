@@ -1,8 +1,9 @@
+import { selectYear, fetchEventsIfNeeded } from '../actions';
+import AlertMessage from '../../../components/AlertMessage';
+import Events from '../components/Events';
+import Picker from '../components/Picker';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { selectYear, fetchEventsIfNeeded } from '../actions';
-import Picker from '../components/Picker';
-import Events from '../components/Events';
 
 class AsyncApp extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class AsyncApp extends Component {
 
     return (
       <div>
+        <AlertMessage error={this.props.error}/>
         <h2>{selectedYear} Schedule</h2>
         <Picker value={selectedYear}
                 onChange={this.handleChange}
