@@ -33,6 +33,7 @@
 	from app/models/event.rb:37:in `name_and_year'
 	from (irb):5
  * batch update calculation selections and rejections for speed
+ * use etag and/or last_modified for JSON requests
 
 
  Calculations

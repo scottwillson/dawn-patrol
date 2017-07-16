@@ -1,2 +1,2 @@
 <% @title = "#{@association.acronym}: #{@year} Schedule" %>
-<%= react_component("IndexApp", props: { events: [], year: @year, link_groups: [] }, prerender: false) %>
+<%= react_component("Root", props: { year: @year }, prerender: false) %>

@@ -20,7 +20,8 @@ module.exports = {
   context: __dirname,
   entry: [
     'babel-polyfill',
-    './app/bundles/Events/Index/startup/IndexApp',
+    './app/bundles/MasterEvents/index/startup/IndexApp',
+    './app/bundles/Public/containers/Root',
     './app/bundles/Results/App',
   ],
   output: {
