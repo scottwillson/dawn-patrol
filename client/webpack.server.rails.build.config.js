@@ -21,7 +21,7 @@ module.exports = {
   entry: [
     'babel-polyfill',
     './app/bundles/MasterEvents/index/startup/IndexApp',
-    './app/bundles/Events/PublicApp',
+    './app/bundles/Events/EventsApp',
     './app/bundles/Results/App',
   ],
   output: {
