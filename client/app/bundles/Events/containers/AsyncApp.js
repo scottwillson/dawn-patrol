@@ -8,7 +8,6 @@ class AsyncApp extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.handleRefreshClick = this.handleRefreshClick.bind(this);
   }
 
   componentDidMount() {
@@ -27,19 +26,13 @@ class AsyncApp extends Component {
     this.props.dispatch(selectYear(nextYear));
   }
 
-  handleRefreshClick(e) {
-    e.preventDefault();
-
-    const { dispatch, selectedYear } = this.props;
-    dispatch(fetchEventsIfNeeded(selectedYear));
-  }
-
   render () {
     const { selectedYear, events, isFetching, lastUpdated } = this.props;
     const years = this.props.linkGroups[1].links;
 
     return (
       <div>
+        <h2>{selectedYear} Schedule</h2>
         <Picker value={selectedYear}
                 onChange={this.handleChange}
                 options={years} />
@@ -49,12 +42,6 @@ class AsyncApp extends Component {
               Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
               {' '}
             </span>
-          }
-          {!isFetching &&
-            <a href='#'
-               onClick={this.handleRefreshClick}>
-              Refresh
-            </a>
           }
         </p>
         {isFetching && events.length === 0 &&
