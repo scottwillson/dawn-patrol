@@ -1,8 +1,9 @@
-import { selectYear, fetchEventsIfNeeded } from '../actions';
+import { fetchEventsIfNeeded, selectYear } from '../actions';
 import AlertMessage from '../../../components/AlertMessage';
 import Events from '../components/Events';
 import Picker from '../components/Picker';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class AsyncApp extends Component {
@@ -12,14 +13,14 @@ class AsyncApp extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, selectedYear } = this.props;
-    dispatch(fetchEventsIfNeeded(selectedYear));
+    const { dispatch, year } = this.props;
+    dispatch(fetchEventsIfNeeded(year));
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedYear !== this.props.selectedYear) {
-      const { dispatch, selectedYear } = nextProps;
-      dispatch(fetchEventsIfNeeded(selectedYear));
+    if (nextProps.year !== this.props.year) {
+      const { dispatch, year } = nextProps;
+      dispatch(fetchEventsIfNeeded(year));
     }
   }
 
@@ -28,24 +29,16 @@ class AsyncApp extends Component {
   }
 
   render () {
-    const { selectedYear, events, isFetching, lastUpdated } = this.props;
+    const { year, events, isFetching } = this.props;
     const years = this.props.linkGroups[1].links;
 
     return (
       <div>
         <AlertMessage error={this.props.error}/>
-        <h2>{selectedYear} Schedule</h2>
-        <Picker value={selectedYear}
+        <h2>{year} Schedule</h2>
+        <Picker value={year}
                 onChange={this.handleChange}
                 options={years} />
-        <p>
-          {lastUpdated &&
-            <span>
-              Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
-              {' '}
-            </span>
-          }
-        </p>
         {isFetching && events.length === 0 &&
           <h2>Loading...</h2>
         }
@@ -63,24 +56,21 @@ class AsyncApp extends Component {
 }
 
 AsyncApp.propTypes = {
-  selectedYear: PropTypes.string.isRequired,
   events: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
-  const { selectedYear, lastUpdated } = state;
+  const { year } = state;
   const { events, isFetching } = state.events || { events: [], isFetching: true };
   const linkGroups = state.events.linkGroups || [ { links: [] }, { links: [] }];
 
   return {
-    selectedYear,
+    year,
     linkGroups,
     events,
-    isFetching,
-    lastUpdated
+    isFetching
   };
 }
 

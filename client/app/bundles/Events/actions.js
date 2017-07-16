@@ -18,13 +18,12 @@ function requestEvents(year) {
   };
 }
 
-function receiveEvents(year, json) {
+function receiveEvents(json) {
   return {
     type: RECEIVE_EVENTS,
-    year,
+    year: json.year,
     events: json.events,
-    linkGroups: json.link_groups,
-    receivedAt: Date.now()
+    linkGroups: json.link_groups
   };
 }
 
@@ -33,13 +32,12 @@ function fetchEvents(year) {
     dispatch(requestEvents(year));
     return fetch(`/events.json?year=${year}`)
       .then(req => req.json())
-      .then(json => dispatch(receiveEvents(year, json)));
+      .then(json => dispatch(receiveEvents(json)));
   }
 }
 
 function shouldFetchEvents(state, year) {
-  const events = state.events;
-  return !events.isFetching
+  return !state.events.isFetching
 }
 
 export function fetchEventsIfNeeded(year) {

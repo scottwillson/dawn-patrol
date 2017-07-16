@@ -5,7 +5,7 @@ import EventCategoryLinks from './EventCategoryLinks';
 import LinkGroups from '../../components/LinkGroups';
 import moment from 'moment';
 import R from 'ramda';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 export default class Index extends React.Component {
   render() {

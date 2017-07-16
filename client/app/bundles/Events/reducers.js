@@ -4,7 +4,7 @@ import {
   REQUEST_EVENTS, RECEIVE_EVENTS
 } from './actions';
 
-function selectedYear(state = '2017', action) {
+function year(state = null, action) {
   switch (action.type) {
   case SELECT_YEAR:
     return action.year;
@@ -26,8 +26,7 @@ function events(state = {
     return Object.assign({}, state, {
       isFetching: false,
       events: action.events,
-      linkGroups: action.linkGroups,
-      lastUpdated: action.receivedAt
+      linkGroups: action.linkGroups
     });
   default:
     return state;
@@ -35,7 +34,7 @@ function events(state = {
 }
 const rootReducer = combineReducers({
   events,
-  selectedYear
+  year
 });
 
 export default rootReducer;

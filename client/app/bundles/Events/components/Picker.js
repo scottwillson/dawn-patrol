@@ -5,23 +5,21 @@ export default class Picker extends Component {
   render () {
     const { value, onChange, options } = this.props;
 
-    return (
-      <span>
-        <select onChange={e => onChange(e.target.value)}
-                value={value}>
-          {options.sort().map(option =>
-            <option value={option} key={option}>
-              {option}
-            </option>)
-          }
-        </select>
-      </span>
-    );
+    if (value && onChange && options) {
+      return (
+        <span>
+          <select onChange={e => onChange(e.target.value)}
+                  value={value}>
+            {options.sort().reverse().map(option =>
+              <option value={option} key={option}>
+                {option}
+              </option>)
+            }
+          </select>
+        </span>
+      );
+    }
+
+    return (<span></span>);
   }
 }
-
-Picker.propTypes = {
-  options: PropTypes.array.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
-};
