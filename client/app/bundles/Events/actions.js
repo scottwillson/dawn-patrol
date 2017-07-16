@@ -1,8 +1,10 @@
 import fetch from 'isomorphic-fetch';
 
+export const END_FETCHING = 'END_FETCHING';
 export const REQUEST_EVENTS = 'REQUEST_EVENTS';
 export const RECEIVE_EVENTS = 'RECEIVE_EVENTS';
 export const SELECT_YEAR = 'SELECT_YEAR';
+export const START_FETCHING = 'START_FETCHING';
 
 export function selectYear(year) {
   return {
@@ -27,22 +29,32 @@ function receiveEvents(json) {
   };
 }
 
-function fetchEvents(year) {
+function endFetching() {
+  return {
+    type: END_FETCHING
+  };
+}
+
+function startFetching() {
+  return {
+    type: START_FETCHING
+  };
+}
+
+export function fetchEvents(year) {
   return dispatch => {
-    dispatch(requestEvents(year));
+    dispatch(startFetching(year), requestEvents(year));
     return fetch(`/events.json?year=${year}`)
       .then(req => req.json())
-      .then(json => dispatch(receiveEvents(json)));
+      .then(json => dispatch(receiveEvents(json)))
+      .then(events => dispatch(selectYear(events.year)))
+      .then(() => dispatch(endFetching()));
   }
 }
 
-function shouldFetchEvents(state, year) {
-  return !state.events.isFetching
-}
-
-export function fetchEventsIfNeeded(year) {
+export function fetchEventsIfNeeded(year, nextYear) {
   return (dispatch, getState) => {
-    if (shouldFetchEvents(getState(), year)) {
+    if (!getState().fetching) {
       return dispatch(fetchEvents(year));
     }
   };

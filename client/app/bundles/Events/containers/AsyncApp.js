@@ -1,4 +1,4 @@
-import { fetchEventsIfNeeded, selectYear } from '../actions';
+import { fetching, fetchEvents, fetchEventsIfNeeded, selectYear } from '../actions';
 import AlertMessage from '../../../components/AlertMessage';
 import Events from '../components/Events';
 import Picker from '../components/Picker';
@@ -13,15 +13,12 @@ class AsyncApp extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, year } = this.props;
-    dispatch(fetchEventsIfNeeded(year));
+    this.props.dispatch(fetchEventsIfNeeded(this.props.year));
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.year !== this.props.year) {
-      const { dispatch, year } = nextProps;
-      dispatch(fetchEventsIfNeeded(year));
-    }
+    const { dispatch, year } = nextProps;
+    dispatch(fetchEventsIfNeeded(this.props.year, year));
   }
 
   handleChange(nextYear) {
@@ -29,7 +26,7 @@ class AsyncApp extends Component {
   }
 
   render () {
-    const { year, events, isFetching } = this.props;
+    const { year, events, fetching } = this.props;
     const years = this.props.linkGroups[1].links;
 
     return (
@@ -39,14 +36,14 @@ class AsyncApp extends Component {
         <Picker value={year}
                 onChange={this.handleChange}
                 options={years} />
-        {isFetching && events.length === 0 &&
+              {fetching && events.length === 0 &&
           <h2>Loading...</h2>
         }
-        {!isFetching && events.length === 0 &&
+        {!fetching && events.length === 0 &&
           <h2>Empty.</h2>
         }
         {events.length > 0 &&
-          <div style={{ opacity: isFetching ? 0.5 : 1 }}>
+          <div style={{ opacity: fetching ? 0.5 : 1 }}>
             <Events events={events} />
           </div>
         }
@@ -57,20 +54,19 @@ class AsyncApp extends Component {
 
 AsyncApp.propTypes = {
   events: PropTypes.array.isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  fetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
-  const { year } = state;
-  const { events, isFetching } = state.events || { events: [], isFetching: true };
+  const { year, fetching, events } = state;
   const linkGroups = state.events.linkGroups || [ { links: [] }, { links: [] }];
 
   return {
     year,
     linkGroups,
     events,
-    isFetching
+    fetching
   };
 }
 
