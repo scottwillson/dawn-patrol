@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 class Events extends Component {
   componentDidMount() {
-    this.props.fetchData(`/events.json?year=2012`);
+    this.props.fetchData(`/events.json?year=${this.props.year}`);
   }
 
   render() {
@@ -17,18 +17,20 @@ class Events extends Component {
       return <p > Loading… < /p>;
     }
 
-    return ( <
-      ul > {
-        this.props.events.map((event) => ( <
-          li key = {
-            event.id
-          } > {
-            event.name
-          } <
-          /li>
-        ))
-      } <
-      /ul>
+    return (
+      <div>
+        <h1>{this.props.year} Schedule</h1>
+        <ul> {
+          this.props.events.map((event) => ( <
+            li key = {
+              event.id
+            } > {
+              event.name
+            } <
+            /li>
+          ))
+        } </ul>
+      </div>
     );
   }
 }
@@ -43,7 +45,8 @@ const mapStateToProps = (state) => {
   return {
     events: state.events,
     error: state.error,
-    isLoading: state.eventsIsLoading
+    isLoading: state.eventsIsLoading,
+    year: state.year
   };
 };
 

@@ -33,7 +33,7 @@ export function eventsFetchData(url) {
 
         return response;
       })
-      .then((response) => response.json())
+      .then(response => response.json())
       .then(json => dispatch(exports.eventsFetchDataSuccess(json.events)))
       .catch(error => dispatch(exports.error(error)));
   };

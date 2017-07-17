@@ -27,3 +27,10 @@ export function events(state = [], action) {
       return state;
   }
 }
+
+export function year(state = 2011, action) {
+  switch (action.type) {
+    default:
+      return state;
+  }
+}
