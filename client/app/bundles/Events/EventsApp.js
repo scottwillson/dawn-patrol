@@ -1,8 +1,21 @@
-import 'babel-polyfill';
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-import EventsRoot from './containers/EventsRoot';
+import React, { Component } from 'react';
+import {render} from 'react-dom';
+import {Provider} from 'react-redux';
+import configureStore from './store/configureStore';
 import ReactOnRails from 'react-on-rails';
 
-ReactOnRails.register({ EventsRoot });
+import Events from './components/Events';
+
+const store = configureStore();
+
+export default class EventsApp extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Events/>
+      </Provider>
+    );
+  }
+}
+
+ReactOnRails.register({EventsApp});
