@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { eventsFetchData } from '../actions/events';
+import { setYear } from '../actions/events';
+import Picker from '../components/Picker';
 import PropTypes from 'prop-types';
+import { year } from '../actions/events';
 
 class Events extends Component {
-  componentDidMount() {
-    this.props.fetchData(`/events.json?year=${this.props.year}`);
-  }
-
   render() {
     if (this.props.error) {
       return <p >Sorry! There was an error loading the events: {this.props.error} < /p>;
@@ -20,6 +18,9 @@ class Events extends Component {
     return (
       <div>
         <h1>{this.props.year} Schedule</h1>
+        <Picker value={this.props.year}
+                onChange={this.props.yearChanged}
+                options={[]} />
         <ul> {
           this.props.events.map((event) => ( <
             li key = {
@@ -36,9 +37,10 @@ class Events extends Component {
 }
 
 Events.propTypes = {
-  fetchData: PropTypes.func.isRequired,
   events: PropTypes.array.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  year: PropTypes.number,
+  yearChanged: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -50,9 +52,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    fetchData: (url) => dispatch(eventsFetchData(url))
+    yearChanged: year => dispatch(setYear(year))
   };
 };
 

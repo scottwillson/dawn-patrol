@@ -60,3 +60,10 @@
    * children of single parent event
    * specific set of parents
  * show rejections on calculation results pages
+
+React
+=====
+* add years to state
+* containers
+* destructure
+* lint

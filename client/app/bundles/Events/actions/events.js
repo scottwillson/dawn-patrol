@@ -19,7 +19,9 @@ export function eventsFetchDataSuccess(events) {
   };
 }
 
-export function eventsFetchData(url) {
+export function fetchEvents(year) {
+  const url = `/events.json?year=${year}`;
+
   return (dispatch) => {
     dispatch(exports.eventsIsLoading(true));
 
@@ -36,5 +38,13 @@ export function eventsFetchData(url) {
       .then(response => response.json())
       .then(json => dispatch(exports.eventsFetchDataSuccess(json.events)))
       .catch(error => dispatch(exports.error(error)));
+  };
+}
+
+export function setYear(year) {
+  dispatch(fetchEvents(year));
+  return {
+    type: 'SET_YEAR',
+    year
   };
 }

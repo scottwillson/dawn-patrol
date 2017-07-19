@@ -28,8 +28,11 @@ export function events(state = [], action) {
   }
 }
 
-export function year(state = 2011, action) {
+export function year(state = null, action) {
   switch (action.type) {
+    case 'SET_YEAR':
+      return action.year;
+
     default:
       return state;
   }
