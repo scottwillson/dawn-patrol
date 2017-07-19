@@ -30,8 +30,18 @@ export function events(state = [], action) {
 
 export function year(state = null, action) {
   switch (action.type) {
-    case 'SET_YEAR':
+    case 'EVENTS_FETCH_DATA_SUCCESS':
       return action.year;
+
+    default:
+      return state;
+  }
+}
+
+export function years(state = null, action) {
+  switch (action.type) {
+    case 'EVENTS_FETCH_DATA_SUCCESS':
+      return action.years;
 
     default:
       return state;

@@ -52,7 +52,7 @@ export function fetchEvents(year) {
   }
 }
 
-export function fetchEventsIfNeeded(year, nextYear) {
+export function fetchEvents(year, nextYear) {
   return (dispatch, getState) => {
     if (!getState().fetching) {
       return dispatch(fetchEvents(year));

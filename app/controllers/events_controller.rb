@@ -30,7 +30,8 @@ class EventsController < ApplicationController
       {
         link_groups: link_groups(events, years, @year),
         events: events.as_json(methods: :promoter_names),
-        year: @year
+        year: @year,
+        years: years
       }
     end
   end

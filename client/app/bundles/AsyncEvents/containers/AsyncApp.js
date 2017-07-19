@@ -1,4 +1,4 @@
-import { fetching, fetchEvents, fetchEventsIfNeeded, selectYear } from '../actions';
+import { fetching, fetchEvents, fetchEvents, selectYear } from '../actions';
 import AlertMessage from '../../../components/AlertMessage';
 import Events from '../components/Events';
 import Picker from '../components/Picker';
@@ -13,12 +13,12 @@ class AsyncApp extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchEventsIfNeeded(this.props.year));
+    this.props.dispatch(fetchEvents(this.props.year));
   }
 
   componentWillReceiveProps(nextProps) {
     const { dispatch, year } = nextProps;
-    dispatch(fetchEventsIfNeeded(this.props.year, year));
+    dispatch(fetchEvents(this.props.year, year));
   }
 
   handleChange(nextYear) {

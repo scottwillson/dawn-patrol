@@ -12,10 +12,12 @@ export function eventsIsLoading(bool) {
   };
 }
 
-export function eventsFetchDataSuccess(events) {
+export function eventsFetchDataSuccess(json) {
   return {
     type: 'EVENTS_FETCH_DATA_SUCCESS',
-    events
+    events: json.events,
+    year: json.year,
+    years: json.years
   };
 }
 
@@ -36,15 +38,7 @@ export function fetchEvents(year) {
         return response;
       })
       .then(response => response.json())
-      .then(json => dispatch(exports.eventsFetchDataSuccess(json.events)))
+      .then(json => dispatch(exports.eventsFetchDataSuccess(json)))
       .catch(error => dispatch(exports.error(error)));
-  };
-}
-
-export function setYear(year) {
-  dispatch(fetchEvents(year));
-  return {
-    type: 'SET_YEAR',
-    year
   };
 }
