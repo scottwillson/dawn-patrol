@@ -17,6 +17,11 @@ RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
   config.include SpecHelpers::Tenant
 
+  ReactOnRails::TestHelper.configure_rspec_to_compile_assets(config, :requires_webpack_assets)
+  config.define_derived_metadata(file_path: %r{spec/(features|requests)}) do |metadata|
+    metadata[:requires_webpack_assets] = true
+  end
+
   config.before(:each) do
     set_current_association_to_default
   end

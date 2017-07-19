@@ -5,16 +5,16 @@ RSpec.describe "Calculations::Calculate" do
     save_default_current_association!
   end
 
-  describe "default Calculation" do
+  describe "do_it!" do
     it "calculates results" do
-      event = Events::Create.new(starts_at: 1.year.ago).do_it!
+      last_year_event = Events::Create.new(starts_at: 1.year.ago).do_it!
       category = Category.create!(name: "Senior Women")
-      event_category = event.event_categories.create!(category: category)
+      event_category = last_year_event.event_categories.create!(category: category)
       last_year_result = event_category.results.create!(person: Person.create!, place: "1")
 
-      event = Events::Create.new(starts_at: 1.year.from_now).do_it!
+      future_event = Events::Create.new(starts_at: 1.year.from_now).do_it!
       category = Category.create!(name: "Junior Men")
-      event_category = event.event_categories.create!(category: category)
+      event_category = future_event.event_categories.create!(category: category)
       next_year_result = event_category.results.create!(person: Person.create!, place: "2")
 
       event = Events::Create.new.do_it!
@@ -27,7 +27,13 @@ RSpec.describe "Calculations::Calculate" do
       event_category.results.create!(person: Person.create!, place: "DNS")
       event_category.results.create!(person: Person.create!, place: "DNF")
 
+      excluded_event = Events::Create.new.do_it!
+      category = Category.create!(name: "Junior Women")
+      event_category = excluded_event.event_categories.create!(category: category)
+      excluded_result = event_category.results.create!(person: Person.create!, place: "5")
+
       calculation = Calculations::Calculation.create!(name: "Ironman")
+      calculation.excluded_source_events << excluded_event
 
       action_result = Calculations::Calculate.new(calculation: calculation).do_it!
       expect(action_result).to be(true)
@@ -53,6 +59,7 @@ RSpec.describe "Calculations::Calculate" do
       expect(source_result.calculations_rejections.reload.count).to eq(0)
       expect(last_year_result.calculations_rejections.reload.count).to eq(0)
       expect(next_year_result.calculations_rejections.reload.count).to eq(0)
+      expect(excluded_result.calculations_rejections.reload.count).to eq(1)
 
       expect(result_without_participant.calculations_rejections.reload.count).to eq(1)
       rejection = result_without_participant.calculations_rejections.first
@@ -115,6 +122,9 @@ RSpec.describe "Calculations::Calculate" do
 
       action_result = Calculations::Calculate.new(calculation: calculation).do_it!
       expect(action_result).to be(true)
+
+      calculated_result = calculation.events.first.event_categories.first.results.where(person: person).first!
+      expect(calculated_result.calculations_selections.size).to eq(2)
     end
   end
 
@@ -130,6 +140,36 @@ RSpec.describe "Calculations::Calculate" do
       ]
 
       expect(calculation.source_event_ids).to eq(events.map(&:id))
+    end
+  end
+
+  describe "#source_results" do
+    it "sets event_parent" do
+      solo_event = Events::Create.new.do_it!
+      category = Category.create!
+      event_category = solo_event.event_categories.create!(category: category)
+      solo_event_result = event_category.results.create!
+
+      parent_event = Events::Create.new.do_it!
+      event_category = parent_event.event_categories.create!(category: category)
+      parent_event_result = event_category.results.create!
+
+      child_event = Events::Create.new(parent: parent_event).do_it!
+      event_category = child_event.event_categories.create!(category: category)
+      child_event_result = event_category.results.create!
+
+      calculation = Calculations::Calculation.create!
+
+      source_results = Calculations::Calculate.new(calculation: calculation).source_results
+
+      result = source_results.detect { |r| r == solo_event_result}
+      expect(result.event_parent?).to be(false)
+
+      result = source_results.detect { |r| r == parent_event_result}
+      expect(result.event_parent?).to be(true)
+
+      result = source_results.detect { |r| r == child_event_result}
+      expect(result.event_parent?).to be(false)
     end
   end
 
@@ -230,11 +270,11 @@ RSpec.describe "Calculations::Calculate" do
       calculate.create_categories(calculation_event)
       calculation_event_category = calculation_event.event_categories.reload.first
 
-      calculation_event_category.results.create!(
-        calculations_selections: [  Calculations::Selection.new(points: 1, source_result: source_result_2) ],
+      result = calculation_event_category.results.create!(
         person_id: source_result_2.person_id,
         points: 1
       )
+      result.calculations_selections.create!(points: 1, source_result: source_result_2)
 
       selection_1 = Calculations::Selection.new(
         points: 1,

@@ -1,5 +1,5 @@
 import R from 'ramda';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import Result from './Result';
 
 export default props => (

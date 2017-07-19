@@ -1,6 +1,6 @@
 import EventCategoryLinkRow from './EventCategoryLinkRow';
 import R from 'ramda';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 export default props => {
   if (props.eventCategories.length < 2) {

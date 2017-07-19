@@ -8,11 +8,10 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
     RacingOnRails::ImportDatabase.new(association: "WSBA").do_it!
 
     ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "ATRA").first!) do
-      expect(Event.count).to eq(1)
-      event = Event.first
+      expect(Event.count).to eq(2)
+      event = Event.where(racing_on_rails_id: 1).first!
       expect(event.name).to eq("Hellyer Challenge")
       expect(event.city).to eq("San Jose")
-      expect(event.racing_on_rails_id).to eq(1)
       expect(event.starts_at).to eq(Time.zone.local(2009, 7, 3))
       expect(event.discipline.name).to eq("Track")
       expect(event.state).to eq("CA")
@@ -21,14 +20,17 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       expect(event.updated_at).to eq(Time.zone.local(2009, 1, 7, 11, 34))
 
       expect(Person.count).to eq(2)
-      expect(Result.count).to eq(1)
+      expect(Result.count).to eq(2)
       expect(Result.first.person.name).to eq("Jame Carney")
+      expect(Result.first.person.results.count).to eq(2)
       expect(Result.first.place).to eq("1")
+      expect(Result.first.racing_on_rails_id).to eq(1)
+      expect(Result.second.racing_on_rails_id).to eq(2)
     end
 
     ActsAsTenant.with_tenant(DawnPatrol::Association.where(acronym: "WSBA").first!) do
       expect(Event.count).to eq(3)
-      event = Event.order(:starts_at).first
+      event = Event.order(:starts_at).first!
       expect(event.name).to eq("Tahuya-Seabeck-Tahuya Road Race")
       expect(event.city).to eq("Tahuya")
       expect(event.racing_on_rails_id).to eq(1)
@@ -41,6 +43,10 @@ RSpec.describe "RacingOnRails::ImportDatabase" do
       parent = Event.where(racing_on_rails_id: 2).first!
       child = Event.where(racing_on_rails_id: 3).first!
       expect(child.parent).to eq(parent)
+
+      ironman = Calculations::Calculation.where(name: "Ironman").first!
+      expect(ironman.excluded_source_events.count).to eq(1)
+      expect(ironman.excluded_source_events.first).to eq(child)
     end
 
     expect(DawnPatrol::Association.count).to eq(2)

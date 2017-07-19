@@ -3,6 +3,7 @@ class Person < ApplicationRecord
 
   belongs_to :dawn_patrol_association, class_name: "DawnPatrol::Association"
   has_many :memberships
+  has_many :results
 
   def member?
     memberships.any?(&:current?)

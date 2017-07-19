@@ -27,15 +27,22 @@
  * Add CreateCategory (Save?) action that ensures correct state (what is correct state? normalized name?)
  * does format.html belong in stale? block?
  * report exceptions
+ * NoMethodError: undefined method `in_time_zone' for 2017:Integer
+	from app/models/dawn_patrol/association.rb:32:in `year'
+	from app/models/event.rb:66:in `year'
+	from app/models/event.rb:37:in `name_and_year'
+	from (irb):5
+ * batch update calculation selections and rejections for speed
+ * use etag and/or last_modified for JSON requests
+ * Move some EventsController logic to view helper class
+
 
  Calculations
  ============
- * filter results
- * handle excluded events
  * re-use existing events
  * re-use existing results
  * re-use categories
- * parameterize year
+ * re-use existing calculation selections and rejections
  * include year in calculation event name?
  * check performance (DB queries) with real data
  * assert result name and team
@@ -53,3 +60,10 @@
    * children of single parent event
    * specific set of parents
  * show rejections on calculation results pages
+
+React
+=====
+* add years to state
+* containers
+* destructure
+* lint

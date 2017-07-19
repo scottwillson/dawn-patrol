@@ -9,8 +9,6 @@ class EventCategory < ApplicationRecord
   belongs_to :event
   has_many :results
 
-  validates :category, :event, presence: true
-
   def name
     category&.name
   end

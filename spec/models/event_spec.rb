@@ -41,6 +41,13 @@ RSpec.describe Event, type: :model do
     end
   end
 
+  describe ".years" do
+    it "returns integer years" do
+      Events::Create.new(starts_at: Time.zone.local(2013)).do_it!
+      expect(Event.years).to contain_exactly(2013)
+    end
+  end
+
   describe "#promoter_names" do
     it "returns array if there is no promoter" do
       event = Events::Create.new.do_it!

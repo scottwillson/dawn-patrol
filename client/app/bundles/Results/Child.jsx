@@ -1,6 +1,6 @@
 import moment from 'moment';
 import R from 'ramda';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 export default props => (
   <tr>

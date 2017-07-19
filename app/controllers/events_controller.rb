@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   def index
-    @year = (params[:year] || DawnPatrol::Association.current.year).to_i
+    @year = year(params)
     @last_updated_event = Event.year(@year).order(:updated_at).last
 
     if stale?(@last_updated_event)
@@ -13,15 +13,25 @@ class EventsController < ApplicationController
     end
   end
 
+  private
+
+  def year(params)
+    year = params[:year]&.to_i
+    return year if year && year > 1900
+
+    DawnPatrol::Association.current.year
+  end
+
   def events_as_json
-    years = Event.years
+    years = (Event.years << @year).uniq
     Rails.cache.fetch([ @last_updated_event&.cache_key, years, @year ]) do
       events = Events::FindAll.new(discipline: @discipline, year: @year).do_it!
 
       {
         link_groups: link_groups(events, years, @year),
         events: events.as_json(methods: :promoter_names),
-        year: @year
+        year: @year,
+        years: years
       }
     end
   end

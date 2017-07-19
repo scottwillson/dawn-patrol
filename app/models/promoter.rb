@@ -5,8 +5,5 @@ class Promoter < ApplicationRecord
   belongs_to :event
   belongs_to :person
 
-  validates :event, presence: true
-  validates :person, presence: true
-
   validates_uniqueness_of :event, scope: :person
 end

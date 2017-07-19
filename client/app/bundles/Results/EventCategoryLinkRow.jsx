@@ -1,5 +1,5 @@
 import EventCategoryLink from './EventCategoryLink';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 export default props => (
   <tr>

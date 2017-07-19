@@ -20,11 +20,13 @@ module RacingOnRails
           import_events_and_results
           import_event_editors
           set_parents
+          set_source_event_exclusions
         end
       end
     end
 
     def import_events_and_results
+      Rails.logger.debug "RacingOnRails::ImportDatabase import_events_and_results, association: #{@association}, events: #{RacingOnRails::Event.count}"
       racing_on_rails_events.find_each do |racing_on_rails_event|
         ActsAsTenant.with_tenant(association_instance) do
           event = Events::Create.new(racing_on_rails_event.imported_attributes).do_it!
@@ -64,6 +66,15 @@ module RacingOnRails
       end
     end
 
+    def set_source_event_exclusions
+      racing_on_rails_ids = RacingOnRails::Event.where(ironman: false).ids
+      ActsAsTenant.with_tenant(association_instance) do
+        ironman = Calculations::Calculation.create!(name: "Ironman")
+        excluded_events = ::Event.where(racing_on_rails_id: racing_on_rails_ids)
+        ironman.excluded_source_events = excluded_events
+      end
+    end
+
     def association_instance
       RacingOnRails::RacingAssociation.association = @association
       racing_on_rails_racing_association = RacingOnRails::RacingAssociation.first
@@ -99,14 +110,23 @@ module RacingOnRails
       person = nil
 
       if result.attributes["person_id"] && !@person_ids.include?(result.attributes["person_id"])
-        name = result.attributes["name"]&.delete("\u0000")&.gsub("\u0019", "'")
+        name = RacingOnRails::Person.scrubbed_name(result.attributes["name"])
         person = ::Person.where(racing_on_rails_id: result.attributes["person_id"], name: name).first_or_create!
-        @person_ids << result.attributes["person_id"]
+        @person_ids[result.attributes["person_id"]] = person.id
       end
 
       attributes = result.attributes.slice(*%w{ created_at place points time updated_at })
       attributes[:points] = attributes[:points] || 0
-      event_category.results.create!(attributes.merge(person_id: person&.id))
+      attributes[:racing_on_rails_id] = result.id
+
+      if result.attributes["person_id"]
+        person_id = @person_ids[result.attributes["person_id"]]
+        if person_id
+          attributes[:person_id] = person_id
+        end
+      end
+
+      event_category.results.create!(attributes)
     end
   end
 end
