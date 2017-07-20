@@ -5,6 +5,7 @@
   no-console: 0  */
 
 // Common webpack configuration for server bundle
+const path = require('path');
 const { resolve } = require('path');
 const webpack = require('webpack');
 const webpackConfigLoader = require('react-on-rails/webpackConfigLoader');
@@ -21,7 +22,6 @@ module.exports = {
   entry: [
     'babel-polyfill',
     './app/bundles/Events/EventsApp',
-    './app/bundles/Results/App',
   ],
   output: {
     // Important to NOT use a hash if the server webpack config runs separately from the client one.
@@ -37,7 +37,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      libs: resolve(__dirname, 'app', 'libs'),
+      libs: resolve(__dirname, 'app/libs'),
+      moment: path.resolve('./node_modules/moment'),
+      ramda: path.resolve('./node_modules/ramda'),
+      react: path.resolve('./node_modules/react'),
+      'react-dom': path.resolve('./node_modules/react-dom'),
+      superagent: path.resolve('./node_modules/superagent')
     },
   },
   plugins: [

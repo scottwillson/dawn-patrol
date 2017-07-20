@@ -8,7 +8,7 @@ export default class Event extends Component {
       <tr>
         <td className="date">{moment(this.props.starts_at).format('ddd M/D')}</td>
         <td>
-          {this.props.name}
+          <a href={`/events/${this.props.id}/results`}>{this.props.name}</a>
         </td>
         <td className="hidden-sm-down">{this.props.promoter_names.join('<br/>')}</td>
         <td className="hidden-sm-down">{this.props.phone}</td>
