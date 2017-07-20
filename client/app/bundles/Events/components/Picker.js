@@ -9,6 +9,7 @@ export default class Picker extends Component {
       return (
         <span>
           <select onChange={e => onChange(e.target.value)}
+                  name="year" 
                   value={value}>
             {options.sort().reverse().map(option =>
               <option value={option} key={option}>

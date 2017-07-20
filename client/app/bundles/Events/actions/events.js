@@ -1,3 +1,5 @@
+import fetch from "isomorphic-fetch"; 
+
 export function error(error) {
   return {
     type: 'ERROR',

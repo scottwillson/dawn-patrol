@@ -15,7 +15,7 @@ RSpec.describe "DawnPatrol" do
     expect(page).to have_no_css ".events a", text: "Hellyer Challenge"
     expect(page).to have_no_css ".events a", text: "Tahuya-Seabeck-Tahuya Road Race"
 
-    visit "/events?year=2009"
+    select("2009", from: "year")
     expect(page).to have_css ".events"
     expect(page).to have_css ".events a", text: "Hellyer Challenge"
     expect(page).to have_no_css ".events a", text: "Tahuya-Seabeck-Tahuya Road Race"

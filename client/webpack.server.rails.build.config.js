@@ -38,6 +38,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     alias: {
       libs: resolve(__dirname, 'app/libs'),
+      'isomorphic-fetch': path.resolve('./node_modules/isomorphic-fetch'),
       moment: path.resolve('./node_modules/moment'),
       ramda: path.resolve('./node_modules/ramda'),
       react: path.resolve('./node_modules/react'),
