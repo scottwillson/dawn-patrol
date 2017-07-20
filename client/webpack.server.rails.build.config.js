@@ -22,6 +22,7 @@ module.exports = {
   entry: [
     'babel-polyfill',
     './app/bundles/Events/EventsApp',
+    './app/bundles/Results/ResultsApp'
   ],
   output: {
     // Important to NOT use a hash if the server webpack config runs separately from the client one.

@@ -1,8 +1,8 @@
-import AlertMessage from '../../components/AlertMessage';
+import AlertMessage from '../../../components/AlertMessage';
 import Children from './Children';
 import EventCategory from './EventCategory';
 import EventCategoryLinks from './EventCategoryLinks';
-import LinkGroups from '../../components/LinkGroups';
+import LinkGroups from '../../../components/LinkGroups';
 import moment from 'moment';
 import R from 'ramda';
 import React, { Component } from 'react';
