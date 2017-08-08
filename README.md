@@ -1,19 +1,3 @@
-# README
+## Setup
 
-* Ruby version 2.3
-
-* brew install mysql postgres phantomjs
-
-* ./bin/setup
-
-* Database creation
-
-* Database initialization
-
-* rails spec
-
-* Deployment instructions
-
-* ...
-
-[![Build Status](https://semaphoreci.com/api/v1/scott-willson/dawn-patrol/branches/master/badge.svg)](https://semaphoreci.com/scott-willson/dawn-patrol)
+Run `./bin/setup` to install dependencies (OS X or Ubuntu), spin up app locally, and run e2e test

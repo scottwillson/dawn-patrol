@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+dropdb -U postgres --if-exists dawnpatrol
+dropuser -U postgres --if-exists dawnpatrol
+createuser -U postgres dawnpatrol
+createdb -U postgres dawnpatrol -O dawnpatrol
+
+psql -v ON_ERROR_STOP=1 dawnpatrol postgres < /docker-entrypoint-initdb.d/schema

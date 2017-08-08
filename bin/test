@@ -1,0 +1,5 @@
+#!/bin/bash
+
+( cd api && go clean && go test ./... )
+( cd web && CI=true yarn test )
+rspec

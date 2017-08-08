@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby
-
-ENV["DAWN_PATROL_ATRA_URL"] = "mysql2://root@localhost/atra_development"
-ENV["DAWN_PATROL_OBRA_URL"] = "mysql2://root@localhost/obra_development"
-ENV["DAWN_PATROL_WSBA_URL"] = "mysql2://root@localhost/wsba_development"
-
-puts `rails r RacingOnRails::ImportDatabase.new(association: 'ATRA').do_it!`
-puts `rails r RacingOnRails::ImportDatabase.new(association: 'OBRA').do_it!`
-puts `rails r RacingOnRails::ImportDatabase.new(association: 'WSBA').do_it!`
