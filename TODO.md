@@ -1,3 +1,17 @@
+* Docker Hub builds
+  * db
+  * api
+  * web
+* CI
+  * unit tests
+  * E2E
+* Deployment
+  * data persistence
+  * migrations
+* Dev
+  * run unit tests in Docker?
+  * run E2E tests from Docker?
+* Try alpine/scratch images once everything works
 * Extract scripts from bin/setup
   * e2e
   * tests
@@ -9,4 +23,4 @@
 * Create MySQL container
 * Add data import to E2E
 * Move goose code to /db?
-* COonsolidate DB init
+* Consolidate DB init

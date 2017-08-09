@@ -17,8 +17,8 @@ go get -tags 'nosqlite3 nomymysql nomysql' github.com/steinbacher/goose/cmd/goos
 ( cd api && bin/migrate_databases )
 
 ( cd api && \
-  rm -f api && \
-  CGO_ENABLED=0 GOOS=linux go build -ldflags "-s" -a -installsuffix cgo main/api.go
+  go clean ./... && \
+  go build ./...
 )
 
 ( cd web && yarn && yarn build )
