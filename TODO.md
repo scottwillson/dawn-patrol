@@ -24,3 +24,4 @@
 * Add data import to E2E
 * Move goose code to /db?
 * Consolidate DB init
+* Update web/README
