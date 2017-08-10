@@ -12,4 +12,4 @@ RUN chown -R nginx:nginx /usr/share/nginx/html
 RUN cp -r build /usr/share/nginx/html
 RUN nginx -t
 
-CMD nginx
+CMD ["nginx"]
