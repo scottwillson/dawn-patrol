@@ -1,3 +1,26 @@
+* Pipeline
+  * https://success.docker.com/Architecture/Docker_Reference_Architecture%3A_Development_Pipeline_Best_Practices_Using_Docker_EE
+  * Unit test?
+    * Go API
+    * node.js
+    * in build container?
+  * Build artifacts with Docker build containers
+    * DB? (schema? migrations?)
+    * API build container creates Go API binary
+    * web build container creates prod bundle of static files
+  * Store build artifacts
+    * Go API binary
+    * web-packed static files
+  * Build Docker deploy containers
+    * From build artifacts
+    * API
+    * web
+  * E2E test deploy containers
+  * Deploy deploy containers to stage and prod?
+    * Just prod now by default?
+    * Separate stage build?
+  * Canary test before making new container live?
+
 * Docker Hub builds
   * db
   * api
