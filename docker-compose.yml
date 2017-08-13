@@ -6,12 +6,3 @@ services:
     build: api
     depends_on:
       - db
-    environment:
-      - DATABASE_URL=postgres://dawnpatrol@db/dawnpatrol?sslmode=disable
-      - DATABASE_URL=user=dawnpatrol dbname=dawnpatrol host=db sslmode=disable
-  web:
-    build: web
-    depends_on:
-      - api
-    ports:
-      - "8080:80"

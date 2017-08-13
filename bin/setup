@@ -2,33 +2,30 @@
 set -e
 
 if [ "$(uname)" == "Darwin" ]; then
+  brew --version >/dev/null 2>&1 || { echo "Install Homebrew or docker and git manually"; exit 1;}
   docker-compose -v >/dev/null 2>&1 || { brew install docker-compose; }
-  go version >/dev/null 2>&1 || { brew install golang; }
-  phantomjs --version >/dev/null 2>&1 || { brew install phantomjs; }
-  psql --version >/dev/null 2>&1 || { brew install postgresql; }
-  ruby --version >/dev/null 2>&1 || { brew install ruby; }
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-  sudo apt-get -y install docker-compose golang-1.8-go phantomjs postgresql
+  sudo apt-get -y install docker-compose
 fi
 
-go get -tags 'nosqlite3 nomymysql nomysql' github.com/steinbacher/goose/cmd/goose github.com/jinzhu/gorm
+# go get -tags 'nosqlite3 nomymysql nomysql' github.com/steinbacher/goose/cmd/goose github.com/jinzhu/gorm
 
-( cd db && bin/create_development_databases )
-( cd api && bin/migrate_databases )
-
-( cd api && \
-  go clean ./... && \
-  go build ./...
-)
-
-( cd web && yarn && yarn build )
-
-docker-compose stop
-docker-compose up -d --build
-
-gem install bundler
-bundle
-
-./bin/test
-
-docker-compose stop
+# ( cd db && bin/create_development_databases )
+# ( cd api && bin/migrate_databases )
+#
+# ( cd api && \
+#   go clean ./... && \
+#   go build ./...
+# )
+#
+# ( cd web && yarn && yarn build )
+#
+# docker-compose stop
+# docker-compose up -d --build
+#
+# gem install bundler
+# bundle
+#
+# ./bin/test
+#
+# docker-compose stop

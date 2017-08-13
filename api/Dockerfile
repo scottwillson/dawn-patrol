@@ -5,6 +5,5 @@ COPY . .
 
 RUN go get ./...
 RUN go build ./...
-RUN GOBIN=$GOPATH/bin go-wrapper install main/api.go
 
-CMD ["api"]
+CMD ["go", "test", "./..."]

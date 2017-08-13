@@ -10,7 +10,7 @@ import (
 )
 
 func TestFind(t *testing.T) {
-	db, err := gorm.Open("postgres", "postgres://dawnpatrol@localhost/dawnpatrol_test?sslmode=disable")
+	db, err := gorm.Open("postgres", "postgres://dawnpatrol@db/dawnpatrol?sslmode=disable")
 	if err != nil {
 		panic(err)
 	}
