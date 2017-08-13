@@ -1,10 +1,14 @@
 version: '3'
 services:
-  db:
-    build: db
   api:
     build: api
     depends_on:
       - db
     volumes:
       - ./api:/go/src/rocketsurgeryllc.com/dawnpatrol/api
+  db:
+    build: db
+  web:
+    build: web
+    volumes:
+      - ./web:/web

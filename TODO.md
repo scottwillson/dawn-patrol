@@ -22,6 +22,7 @@
     * Separate stage build?
   * Canary test before making new container live?
 
+* Fix web README
 * Docker Hub builds
   * db
   * api
