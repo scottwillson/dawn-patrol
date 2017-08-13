@@ -8,6 +8,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   docker-compose -v >/dev/null 2>&1 || { sudo apt-get -y install docker-compose; }
 fi
 
+./bin/test
+
 # go get -tags 'nosqlite3 nomymysql nomysql' github.com/steinbacher/goose/cmd/goose github.com/jinzhu/gorm
 
 # ( cd db && bin/create_development_databases )

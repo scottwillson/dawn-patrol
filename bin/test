@@ -1,5 +1,5 @@
 #!/bin/bash
+set -e
 
-( cd api && go clean ./... && go test ./... )
-( cd web && CI=true yarn test )
-rspec
+docker-compose -f docker-compose/test.yml --project-directory . up api
+docker-compose -f docker-compose/test.yml --project-directory . up web
