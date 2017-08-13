@@ -5,7 +5,7 @@ if [ "$(uname)" == "Darwin" ]; then
   brew --version >/dev/null 2>&1 || { echo "Install Homebrew or docker and git manually"; exit 1;}
   docker-compose -v >/dev/null 2>&1 || { brew install docker-compose; }
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-  sudo apt-get -y install docker-compose
+  docker-compose -v >/dev/null 2>&1 || { sudo apt-get -y install docker-compose; }
 fi
 
 # go get -tags 'nosqlite3 nomymysql nomysql' github.com/steinbacher/goose/cmd/goose github.com/jinzhu/gorm
