@@ -6,3 +6,5 @@ services:
     build: api
     depends_on:
       - db
+    volumes:
+      - ./api:/go/src/rocketsurgeryllc.com/dawnpatrol/api
