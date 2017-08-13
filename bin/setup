@@ -9,25 +9,5 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 fi
 
 ./bin/test
-
-# go get -tags 'nosqlite3 nomymysql nomysql' github.com/steinbacher/goose/cmd/goose github.com/jinzhu/gorm
-
-# ( cd db && bin/create_development_databases )
-# ( cd api && bin/migrate_databases )
-#
-# ( cd api && \
-#   go clean ./... && \
-#   go build ./...
-# )
-#
-# ( cd web && yarn && yarn build )
-#
-# docker-compose stop
-# docker-compose up -d --build
-#
-# gem install bundler
-# bundle
-#
-# ./bin/test
-#
-# docker-compose stop
+docker-compose stop
+docker-compose -f docker-compose/development.yml --project-dir . up --build

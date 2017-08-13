@@ -1,4 +1,9 @@
 * Pipeline
+  * Separate dev and test DBs
+  * Add api watcher
+  * Add web dev server reload (already there?)
+  * autotest API
+  * autotest web
   * install git, docker, bash; git clone; setup; project can be outside GOPATH!
   * https://success.docker.com/Architecture/Docker_Reference_Architecture%3A_Development_Pipeline_Best_Practices_Using_Docker_EE
   * Unit test?
@@ -21,6 +26,12 @@
     * Just prod now by default?
     * Separate stage build?
   * Canary test before making new container live?
+  * Make things faster and small
+  * Vendor Go deps? Glide? https://github.com/golang/dep
+  * base images?
+  * Use overrides with docker-compose files?
+  * Use overrides/DRY up Dockerfiles?
+  * Generally use conventions more/fewer flags
 
 * Fix web README
 * Docker Hub builds
@@ -50,3 +61,10 @@
 * Move goose code to /db?
 * Consolidate DB init
 * Update web/README
+* Smarter/better wait on DB start in docker-compose
+* Refactor API DB URL
+* Don't drop prod DB
+* Replication
+* Backups
+* Nagios alerts
+* Ansible server setup

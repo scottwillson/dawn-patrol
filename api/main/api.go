@@ -26,7 +26,7 @@ func main() {
 func databaseURL() string {
 	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
-		return "postgres://dawnpatrol@localhost/dawnpatrol_development?sslmode=disable"
+		return "postgres://dawnpatrol@db/dawnpatrol?sslmode=disable"
 	}
 	return databaseURL
 }
