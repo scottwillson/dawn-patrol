@@ -1,7 +1,9 @@
 version: '3'
 services:
   api:
-    build: api
+    build:
+      context: api
+      dockerfile: Dockerfile-test
     depends_on:
       - db
     volumes:
@@ -9,6 +11,8 @@ services:
   db:
     build: db
   web:
-    build: web
+    build:
+      context: web
+      dockerfile: Dockerfile-test
     volumes:
       - ./web:/web
