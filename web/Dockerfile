@@ -2,9 +2,8 @@ FROM node
 MAINTAINER Scott Willson "<scott.willson@gmail.com>"
 
 WORKDIR /web
+COPY package.json .
+
+RUN yarn install
+
 COPY . .
-
-RUN yarn
-
-ENV HOST=0.0.0.0
-CMD ["yarn", "start"]
