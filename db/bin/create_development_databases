@@ -1,16 +1,16 @@
 #!/bin/bash
 set -e
 
-dropdb --if-exists dawnpatrol_development
-dropdb --if-exists dawnpatrol_test
+dropdb -U postgres --if-exists dawnpatrol_development
+dropdb -U postgres --if-exists dawnpatrol_test
 
-dropuser --if-exists dawnpatrol
-createuser dawnpatrol
+dropuser -U postgres --if-exists dawnpatrol
+createuser -U postgres dawnpatrol
 
-createdb dawnpatrol_development -O dawnpatrol
+createdb -U postgres dawnpatrol_development -O dawnpatrol
 psql -v ON_ERROR_STOP=1 dawnpatrol_development -c 'drop extension if exists plpgsql'
-psql -v ON_ERROR_STOP=1 dawnpatrol_development dawnpatrol < schema.sql
+psql -v ON_ERROR_STOP=1 dawnpatrol_development dawnpatrol < /docker-entrypoint-initdb.d/schema
 
 createdb dawnpatrol_test -O dawnpatrol
 psql -v ON_ERROR_STOP=1 dawnpatrol_test -c 'drop extension if exists plpgsql'
-psql -v ON_ERROR_STOP=1 dawnpatrol_test dawnpatrol < schema.sql
+psql -v ON_ERROR_STOP=1 dawnpatrol_test dawnpatrol < /docker-entrypoint-initdb.d/schema

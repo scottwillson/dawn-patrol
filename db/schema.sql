@@ -160,4 +160,3 @@ SELECT pg_catalog.setval('goose_db_version_id_seq', 2, true);
 --
 -- PostgreSQL database dump complete
 --
-

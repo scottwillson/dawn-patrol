@@ -1,16 +1,16 @@
 version: '3'
 services:
-  api:
+  api-test:
     build:
       context: api
       dockerfile: Dockerfile-test
     depends_on:
-      - db
+      - db-test
     volumes:
       - ./api:/go/src/rocketsurgeryllc.com/dawnpatrol/api
-  db:
+  db-test:
     build: db
-  web:
+  web-test:
     build:
       context: web
       dockerfile: Dockerfile-test
