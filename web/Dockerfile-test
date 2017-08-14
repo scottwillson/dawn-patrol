@@ -3,5 +3,9 @@ MAINTAINER Scott Willson "<scott.willson@gmail.com>"
 
 WORKDIR /web
 COPY . .
+
+RUN yarn
+RUN yarn build
+
 ENV CI=true
 CMD ["yarn", "test"]
