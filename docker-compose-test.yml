@@ -6,13 +6,9 @@ services:
       dockerfile: Dockerfile-test
     depends_on:
       - db-test
-    volumes:
-      - ./api:/go/src/rocketsurgeryllc.com/dawnpatrol/api
   db-test:
     build: db
   web-test:
     build:
       context: web
       dockerfile: Dockerfile-test
-    volumes:
-      - ./web:/web

@@ -13,6 +13,7 @@ docker-compose -f docker-compose-test.yml stop
 docker-compose -f docker-compose-test.yml rm -f
 docker-compose stop
 docker-compose rm -f
+rm -rf web/build
 rm -rf web/node_modules
 
 echo "Run tests"
