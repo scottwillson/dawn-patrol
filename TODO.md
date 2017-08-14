@@ -1,5 +1,4 @@
 * Pipeline
-  * Separate dev and test DBs
   * Add api watcher
   * Add web dev server reload (already there?)
   * autotest API
@@ -32,6 +31,7 @@
   * Use overrides with docker-compose files?
   * Use overrides/DRY up Dockerfiles?
   * Generally use conventions more/fewer flags
+  * Make API port configurable
 
 * Fix web README
 * Docker Hub builds
