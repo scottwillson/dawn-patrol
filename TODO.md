@@ -32,6 +32,8 @@
   * Use overrides/DRY up Dockerfiles?
   * Generally use conventions more/fewer flags
   * Make API port configurable
+  * Secrets?
+  * Ansible to set up compose servers?
 
 * Fix web README
 * Docker Hub builds
