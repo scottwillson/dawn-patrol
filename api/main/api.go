@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -10,7 +11,7 @@ import (
 )
 
 func main() {
-	postgres, err := gorm.Open("postgres", databaseURL())
+	postgres, err := openDb()
 	if err != nil {
 		panic(err)
 	}
@@ -23,10 +24,24 @@ func main() {
 	http.ListenAndServe(mux)
 }
 
+func openDb() (*gorm.DB, error) {
+	var conn *gorm.DB
+	var err error
+	for attempts := 0; attempts < 11; attempts++ {
+		conn, err = gorm.Open("postgres", databaseURL())
+		if err == nil && conn != nil {
+			return conn, nil
+		}
+		time.Sleep(time.Duration(1 * time.Second))
+	}
+
+	return nil, err
+}
+
 func databaseURL() string {
 	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
-		return "postgres://dawnpatrol@db/dawnpatrol?sslmode=disable"
+		return "postgres://dawnpatrol@db/dawnpatrol_development?sslmode=disable"
 	}
 	return databaseURL
 }

@@ -2,6 +2,7 @@ package db
 
 import (
 	"testing"
+	"time"
 
 	"rocketsurgeryllc.com/dawnpatrol/api"
 
@@ -10,7 +11,7 @@ import (
 )
 
 func TestFind(t *testing.T) {
-	db, err := gorm.Open("postgres", "postgres://dawnpatrol@db/dawnpatrol?sslmode=disable")
+	db, err := openDb()
 	if err != nil {
 		panic(err)
 	}
@@ -28,4 +29,16 @@ func TestFind(t *testing.T) {
 	if len(events) != 2 {
 		t.Errorf("Expect events len to be 2, but is %v", len(events))
 	}
+}
+
+func openDb() (*gorm.DB, error) {
+	var err error
+	for attempts := 0; attempts < 4; attempts++ {
+		if db, err := gorm.Open("postgres", "postgres://dawnpatrol@db-test/dawnpatrol_test?sslmode=disable"); err == nil && db != nil {
+			return db, err
+		}
+		time.Sleep(time.Duration(1 * time.Second))
+	}
+
+	return nil, err
 }
