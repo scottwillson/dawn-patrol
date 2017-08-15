@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 
-docker-compose -f docker-compose-test.yml up --build --remove-orphans -d db-test
+docker-compose -f docker-compose-test.yml up --build --remove-orphans -d db
 docker-compose -f docker-compose-test.yml up --build --remove-orphans --abort-on-container-exit api-test
 docker-compose -f docker-compose-test.yml up --build --remove-orphans --abort-on-container-exit web-test

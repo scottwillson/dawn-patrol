@@ -1,6 +1,4 @@
 * Pipeline
-  * Add api watcher
-  * Add web dev server reload (already there?)
   * autotest API
   * autotest web
   * https://success.docker.com/Architecture/Docker_Reference_Architecture%3A_Development_Pipeline_Best_Practices_Using_Docker_EE
@@ -70,3 +68,4 @@
 * Nagios alerts
 * Ansible server setup
 * Deal with docker-compose versions
+* multi-stage builds: https://docs.docker.com/engine/userguide/eng-image/multistage-build/

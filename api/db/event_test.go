@@ -1,6 +1,7 @@
 package db
 
 import (
+	"errors"
 	"testing"
 	"time"
 
@@ -32,13 +33,12 @@ func TestFind(t *testing.T) {
 }
 
 func openDb() (*gorm.DB, error) {
-	var err error
 	for attempts := 0; attempts < 4; attempts++ {
-		if db, err := gorm.Open("postgres", "postgres://dawnpatrol@db-test/dawnpatrol_test?sslmode=disable"); err == nil && db != nil {
+		if db, err := gorm.Open("postgres", "postgres://dawnpatrol@db/dawnpatrol_test?sslmode=disable"); err == nil && db != nil {
 			return db, err
 		}
 		time.Sleep(time.Duration(1 * time.Second))
 	}
 
-	return nil, err
+	return nil, errors.New("Could not connect to database")
 }

@@ -5,8 +5,8 @@ services:
       context: api
       dockerfile: Dockerfile-test
     depends_on:
-      - db-test
-  db-test:
+      - db
+  db:
     build: db
   web-test:
     build:
