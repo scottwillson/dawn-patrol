@@ -1,9 +1,5 @@
 * Pipeline
   * https://success.docker.com/Architecture/Docker_Reference_Architecture%3A_Development_Pipeline_Best_Practices_Using_Docker_EE
-  * Unit test?
-    * Go API
-    * node.js
-    * in build container?
   * Build artifacts with Docker build containers
     * DB? (schema? migrations?)
     * API build container creates Go API binary
@@ -67,3 +63,4 @@
 * Ansible server setup
 * Deal with docker-compose versions
 * multi-stage builds: https://docs.docker.com/engine/userguide/eng-image/multistage-build/
+* move main/api.go to cmd/?
