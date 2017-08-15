@@ -1,6 +1,4 @@
 * Pipeline
-  * autotest API
-  * autotest web
   * https://success.docker.com/Architecture/Docker_Reference_Architecture%3A_Development_Pipeline_Best_Practices_Using_Docker_EE
   * Unit test?
     * Go API

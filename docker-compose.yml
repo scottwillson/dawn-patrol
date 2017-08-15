@@ -32,3 +32,14 @@ services:
     volumes:
       - ./web:/web
       - /web/node_modules
+  web_test:
+    build: web
+    command: yarn test
+    depends_on:
+      - api
+      - web
+    environment:
+      - HOST=0.0.0.0
+    volumes:
+      - ./web:/web
+      - /web/node_modules
