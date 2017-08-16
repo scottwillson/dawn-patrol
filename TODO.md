@@ -12,6 +12,7 @@
     * API
     * web
   * E2E test deploy containers
+  * Push to Docker Hub
   * Deploy deploy containers to stage and prod?
     * Just prod now by default?
     * Separate stage build?
