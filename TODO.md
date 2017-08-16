@@ -64,3 +64,4 @@
 * Deal with docker-compose versions
 * multi-stage builds: https://docs.docker.com/engine/userguide/eng-image/multistage-build/
 * move main/api.go to cmd/?
+* move DB data out of init dir
