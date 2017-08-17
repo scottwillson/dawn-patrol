@@ -19,3 +19,6 @@ Install Docker
 End-to-end Docker dev, test, deploy pipeline.
 
 Dev requires only Docker, git and bash
+
+## Deploy
+docker login

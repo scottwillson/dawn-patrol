@@ -6,13 +6,16 @@ services:
       dockerfile: Dockerfile-deploy
     depends_on:
       - db
+    image: scottwillson/dawn-patrol-api
   db:
     build: db
+    image: scottwillson/dawn-patrol-db
   web:
     build:
       context: web
       dockerfile: Dockerfile-deploy
     depends_on:
       - api
+    image: scottwillson/dawn-patrol-web
     ports:
       - 8080:80

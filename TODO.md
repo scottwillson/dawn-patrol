@@ -2,15 +2,6 @@
   * https://success.docker.com/Architecture/Docker_Reference_Architecture%3A_Development_Pipeline_Best_Practices_Using_Docker_EE
   * Build artifacts with Docker build containers
     * DB? (schema? migrations?)
-    * API build container creates Go API binary
-    * web build container creates prod bundle of static files
-  * Store build artifacts
-    * Go API binary
-    * web-packed static files
-  * Build Docker deploy containers
-    * From build artifacts
-    * API
-    * web
   * E2E test deploy containers
   * Push to Docker Hub
   * Deploy deploy containers to stage and prod?
@@ -66,3 +57,4 @@
 * multi-stage builds: https://docs.docker.com/engine/userguide/eng-image/multistage-build/
 * move main/api.go to cmd/?
 * move DB data out of init dir
+* Document SemaphoreCI and Docker.io/hub setup
