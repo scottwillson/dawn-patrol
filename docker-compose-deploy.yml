@@ -4,9 +4,15 @@ services:
     build:
       context: api
       dockerfile: Dockerfile-deploy
-    ports:
-      - 8080:8080
     depends_on:
       - db
   db:
     build: db
+  web:
+    build:
+      context: web
+      dockerfile: Dockerfile-deploy
+    depends_on:
+      - api
+    ports:
+      - 8080:80
