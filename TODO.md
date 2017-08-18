@@ -58,3 +58,6 @@
 * move main/api.go to cmd/?
 * move DB data out of init dir
 * Document SemaphoreCI and Docker.io/hub setup
+* Review and apply Docker best practices
+* Performance test
+* Add test of dev build to CI

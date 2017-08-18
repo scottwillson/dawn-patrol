@@ -23,5 +23,15 @@ echo "Stop and remove test containers"
 docker-compose -f docker-compose-test.yml stop
 docker-compose -f docker-compose-test.yml rm -f
 
+echo "Build and start deploy containers"
+docker-compose -f docker-compose-deploy.yml build
+docker-compose -f docker-compose-deploy.yml up -d api db web
+
+echo "Run E2E tests"
+docker-compose -f docker-compose-deploy.yml up e2e-test
+
+echo "Stop deploy containers"
+docker-compose -f docker-compose-deploy.yml stop
+
 echo "Dev up"
 docker-compose up --build -d --remove-orphans
