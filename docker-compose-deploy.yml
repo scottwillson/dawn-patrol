@@ -1,21 +1,25 @@
 version: '3.3'
 services:
-  api-deploy:
+  api:
     build:
       context: api
       dockerfile: Dockerfile-deploy
     depends_on:
-      - db-deploy
+      - db
     image: scottwillson/dawn-patrol-api
-  db-deploy:
+  db:
     build: db
     image: scottwillson/dawn-patrol-db
-  web-deploy:
+  e2e-test:
+    build: e2e-test
+    depends_on:
+      - web
+  web:
     build:
       context: web
       dockerfile: Dockerfile-deploy
     depends_on:
-      - api-deploy
+      - api
     image: scottwillson/dawn-patrol-web
     ports:
       - 8080:80
