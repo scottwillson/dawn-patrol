@@ -1,63 +1,37 @@
-* Pipeline
-  * https://success.docker.com/Architecture/Docker_Reference_Architecture%3A_Development_Pipeline_Best_Practices_Using_Docker_EE
-  * Build artifacts with Docker build containers
-    * DB? (schema? migrations?)
-  * E2E test deploy containers
-  * Push to Docker Hub
-  * Deploy deploy containers to stage and prod?
-    * Just prod now by default?
-    * Separate stage build?
-  * Canary test before making new container live?
-  * Make things faster and small
-  * Vendor Go deps? Glide? https://github.com/golang/dep
-  * base images?
-  * Use overrides with docker-compose files?
-  * Use overrides/DRY up Dockerfiles?
-  * Generally use conventions more/fewer flags
-  * Make API port configurable
-  * Secrets?
-  * Ansible to set up compose servers?
-
+* Vendor Go deps? Glide? https://github.com/golang/dep
+* base images?
+* Use overrides with docker-compose files?
+* Use overrides/DRY up Dockerfiles?
+* Generally use conventions more/fewer flags
 * Fix web README
-* Docker Hub builds
-  * db
-  * api
-  * web
-* CI
-  * unit tests
-  * E2E
-* Deployment
-  * data persistence
-  * migrations
-* Dev
-  * run unit tests in Docker?
-  * run E2E tests from Docker?
-* Try alpine/scratch images once everything works
+* Persist data
+* migrations
 * Extract scripts from bin/setup
   * e2e
   * tests
   * start servers
-* E2E on Digital Ocean
 * Prod on Digital Ocean
-* hot reload for go server
-* Auto-run all tests
 * Create MySQL container
 * Add data import to E2E
 * Move goose code to /db?
 * Consolidate DB init
-* Update web/README
-* Smarter/better wait on DB start in docker-compose
-* Refactor API DB URL
-* Don't drop prod DB
 * Replication
 * Backups
 * Nagios alerts
-* Ansible server setup
-* Deal with docker-compose versions
-* multi-stage builds: https://docs.docker.com/engine/userguide/eng-image/multistage-build/
+* Ansible server setup?
 * move main/api.go to cmd/?
 * move DB data out of init dir
 * Document SemaphoreCI and Docker.io/hub setup
 * Review and apply Docker best practices
 * Performance test
 * Add test of dev build to CI
+* Deploy deploy containers to stage and prod based on branch
+  * Docker image tags
+  * branches
+  * Separate CI builds
+* Canary test before making new container live?
+* Make API port configurable
+* Secrets?
+* Split into separate projects for independent deploys
+  * What does testing/build pipeline look like?
+  

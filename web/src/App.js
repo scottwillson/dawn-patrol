@@ -1,6 +1,5 @@
 import './App.css';
 import Events from './Events.js';
-import logo from './logo.svg';
 import React, { Component } from 'react';
 
 class App extends Component {
@@ -15,7 +14,6 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h2>Dawn Patrol</h2>
         </div>
         <Events events={this.state.events} />
