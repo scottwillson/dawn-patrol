@@ -1,3 +1,4 @@
+require 'net/http'
 require 'spec_helper'
 
 RSpec.describe "DawnPatrol", type: "feature" do
@@ -6,7 +7,7 @@ RSpec.describe "DawnPatrol", type: "feature" do
     expect(page).to have_css "h2", text: "Dawn Patrol"
     expect(page).to have_css ".events", text: "0 events"
 
-    # import
+    Net::HTTP.post_form URI('http://web/import'), {}
 
     visit "http://web/"
     expect(page).to have_css ".events", text: "4 events"
