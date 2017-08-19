@@ -11,7 +11,7 @@ type EventService struct {
 }
 
 // Find all events
-func (s *EventService) Find() []api.Event {
+func (s EventService) Find() []api.Event {
 	var events []api.Event
 	s.DB.Find(&events)
 	return events

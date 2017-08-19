@@ -1,3 +1,6 @@
+* Sort out rails packages
+  * change to rails?
+  * put in separate tree?
 * Vendor Go deps? Glide? https://github.com/golang/dep
 * base images?
 * Use overrides with docker-compose files?
@@ -35,3 +38,4 @@
   * What does testing/build pipeline look like?
 * Run e2e tests and dev containers at same time
 * Be consistent with .sh or not
+* Ensure reflex really notices changes to all files
