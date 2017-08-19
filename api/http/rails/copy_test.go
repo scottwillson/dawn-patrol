@@ -1,4 +1,4 @@
-package racingonrails
+package rails
 
 import (
 	"net/http"
@@ -11,24 +11,24 @@ import (
 	"goji.io/pat"
 )
 
-func TestRacingOnRailsService(t *testing.T) {
+func TestRailsService(t *testing.T) {
 	mux := goji.NewMux()
 
-	var service mock.RacingOnRailsService
+	var service mock.RailsService
 	var handler Copy
-	handler.RacingOnRailsService = &service
+	handler.RailsService = &service
 
 	service.CopyFn = func() bool {
 		return true
 	}
 
-	req, err := http.NewRequest("POST", "/racing-on-rails/copy", nil)
+	req, err := http.NewRequest("POST", "/rails/copy", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	resp := httptest.NewRecorder()
-	mux.Handle(pat.Post("/racing-on-rails/copy"), &handler)
+	mux.Handle(pat.Post("/rails/copy"), &handler)
 
 	mux.ServeHTTP(resp, req)
 

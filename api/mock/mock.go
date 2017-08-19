@@ -12,12 +12,12 @@ func (s *EventService) Find() []api.Event {
 	return s.FindFn()
 }
 
-// RacingOnRailsService mocks db.RacingOnRailsService
-type RacingOnRailsService struct {
+// RailsService mocks db.RailsService
+type RailsService struct {
 	CopyFn func() bool
 }
 
-// Copy mocks db.RacingOnRailsService.Copy()
-func (s *RacingOnRailsService) Copy() bool {
+// Copy mocks db.RailsService.Copy()
+func (s *RailsService) Copy() bool {
 	return s.CopyFn()
 }

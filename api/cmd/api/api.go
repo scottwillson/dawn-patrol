@@ -20,9 +20,9 @@ func main() {
 	var es db.EventService
 	es.DB = postgres
 
-	var rors db.RacingOnRailsService
+	var rails db.RailsService
 
-	mux := http.NewMux(es, rors)
+	mux := http.NewMux(es, rails)
 	http.ListenAndServe(mux)
 }
 
