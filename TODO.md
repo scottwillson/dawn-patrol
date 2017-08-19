@@ -19,7 +19,6 @@
 * Backups
 * Nagios alerts
 * Ansible server setup?
-* move main/api.go to cmd/?
 * move DB data out of init dir
 * Document SemaphoreCI and Docker.io/hub setup
 * Review and apply Docker best practices
@@ -35,3 +34,4 @@
 * Split into separate projects for independent deploys
   * What does testing/build pipeline look like?
 * Run e2e tests and dev containers at same time
+* Be consistent with .sh or not

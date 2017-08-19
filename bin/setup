@@ -35,4 +35,3 @@ docker-compose -f docker-compose-deploy.yml stop
 
 echo "Dev up"
 bin/dev.sh
-docker-compose logs -f --tail=0
