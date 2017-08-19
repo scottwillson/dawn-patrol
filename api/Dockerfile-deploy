@@ -5,7 +5,8 @@ COPY . /go/src/rocketsurgeryllc.com/dawnpatrol/api
 
 RUN go get ./...
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo cmd/api/api.go cmd/import/import.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo cmd/api/api.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo cmd/import/import.go
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
