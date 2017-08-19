@@ -28,11 +28,11 @@ docker-compose -f docker-compose-deploy.yml build
 docker-compose -f docker-compose-deploy.yml up -d api db web
 
 echo "Run E2E tests"
-docker-compose -f docker-compose-deploy.yml up e2e-test
+e2e-test/bin/test.sh
 
 echo "Stop deploy containers"
 docker-compose -f docker-compose-deploy.yml stop
 
 echo "Dev up"
-docker-compose up --build -d --remove-orphans
+bin/dev.sh
 docker-compose logs -f --tail=0

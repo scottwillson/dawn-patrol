@@ -34,4 +34,4 @@
 * Secrets?
 * Split into separate projects for independent deploys
   * What does testing/build pipeline look like?
-  
+* Run e2e tests and dev containers at same time
