@@ -8,7 +8,9 @@ services:
       - db
     image: scottwillson/dawn-patrol-api
   db:
-    build: db
+    build:
+      context: db
+      dockerfile: Dockerfile-deploy
     image: scottwillson/dawn-patrol-db
   e2e-test:
     build: e2e-test
