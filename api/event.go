@@ -7,5 +7,6 @@ type Event struct {
 
 // EventService manages Events
 type EventService interface {
+	Create([]Event)
 	Find() []Event
 }

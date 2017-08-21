@@ -1,6 +1,6 @@
 * Sort out rails packages
-  * change to rails?
   * put in separate tree?
+* RailsService.Copy should return void, not bool
 * Vendor Go deps? Glide? https://github.com/golang/dep
 * base images?
 * Use overrides with docker-compose files?
@@ -39,3 +39,7 @@
 * Run e2e tests and dev containers at same time
 * Be consistent with .sh or not
 * Ensure reflex really notices changes to all files
+* openDB loop should raise original errors
+* Split out mock
+* Split out RailsService into CopyService? How to organize services and services DI?
+* Ensure implements gorm.Model

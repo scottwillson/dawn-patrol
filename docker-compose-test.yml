@@ -8,6 +8,8 @@ services:
       - db
   db:
     build: db
+  rails:
+    build: rails
   web-test:
     build:
       context: web
