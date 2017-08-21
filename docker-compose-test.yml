@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile-test
     depends_on:
       - db
+    environment:
+      - DATABASE_URL=postgres://dawnpatrol@db/dawnpatrol_test?sslmode=disable
   db:
     build: db
   rails:

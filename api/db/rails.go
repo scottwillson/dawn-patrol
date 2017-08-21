@@ -1,6 +1,8 @@
 package db
 
 import (
+	"os"
+
 	"github.com/jinzhu/gorm"
 	"rocketsurgeryllc.com/dawnpatrol/api"
 )
@@ -31,4 +33,17 @@ func (s RailsService) Find() []api.RailsEvent {
 	var events []api.RailsEvent
 	s.DB.Find(&events)
 	return events
+}
+
+// Open Rails MySQL DB conn
+func OpenRails() *gorm.DB {
+	return open(railsDatabaseURL())
+}
+
+func railsDatabaseURL() string {
+	databaseURL := os.Getenv("RAILS_DATABASE_URL")
+	if databaseURL == "" {
+		return "rails:rails@tcp(rails:3306)/rails"
+	}
+	return databaseURL
 }
