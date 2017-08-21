@@ -16,6 +16,8 @@ services:
     build: e2e-test
     depends_on:
       - web
+  rails:
+    build: rails
   web:
     build:
       context: web
