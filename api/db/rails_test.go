@@ -73,7 +73,7 @@ func TestRailsFind(t *testing.T) {
 
 // Open Rails MySQL DB conn
 func openRails() (*gorm.DB, error) {
-	for attempts := 0; attempts < 4; attempts++ {
+	for attempts := 0; attempts < 10; attempts++ {
 		if db, err := gorm.Open("mysql", "rails:rails@tcp(rails:3306)/rails"); err == nil && db != nil {
 			return db, nil
 		}
