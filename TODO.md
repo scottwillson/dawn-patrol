@@ -13,7 +13,6 @@
   * e2e
   * tests
   * start servers
-* Prod on Digital Ocean
 * Create MySQL container
 * Add data import to E2E
 * Move goose code to /db?
@@ -36,10 +35,11 @@
 * Secrets?
 * Split into separate projects for independent deploys
   * What does testing/build pipeline look like?
-* Run e2e tests and dev containers at same time
 * Be consistent with .sh or not
 * Ensure reflex really notices changes to all files
 * openDB loop should raise original errors
 * Split out mock
 * Split out RailsService into CopyService? How to organize services and services DI?
 * Ensure implements gorm.Model
+* Set up DNS and a floating IP
+* Notify on build, deploy
