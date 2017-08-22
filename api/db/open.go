@@ -14,17 +14,18 @@ func Open() *gorm.DB {
 }
 
 func open(url string) *gorm.DB {
-	var db *gorm.DB
 	var err error
-	for attempts := 0; attempts < 4; attempts++ {
-		if db, err = gorm.Open("postgres", url); err == nil && db != nil {
+	var db *gorm.DB
+	driver := databaseDriver(url)
+
+	for attempts := 0; attempts < 10; attempts++ {
+		if db, err = gorm.Open(driver, url); err == nil && db != nil {
 			return db
 		}
 		time.Sleep(time.Duration(1 * time.Second))
 	}
 
-	// panic("Could not connect to " + url)
-	panic("Could not connect to " + url + ". " + err.Error())
+	panic("Could not connect to " + driver + ", " + url + ". " + err.Error())
 }
 
 func databaseURL() string {
@@ -38,9 +39,9 @@ func databaseURL() string {
 func databaseDriver(url string) string {
 	if strings.HasPrefix(url, "postgres") {
 		return "postgres"
-	} else if strings.HasPrefix(url, "mysql") {
+	} else if strings.HasPrefix(url, "rails") {
 		return "mysql"
 	} else {
-		panic("Did not recogonize driver in " + url)
+		panic("Could not find driver for " + url)
 	}
 }
