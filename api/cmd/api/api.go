@@ -13,15 +13,12 @@ func main() {
 	postgres := db.Open()
 	defer postgres.Close()
 
-	var es db.EventService
-	es.DB = postgres
+	es := &db.EventService{DB: postgres}
 
 	mysql := railsDB.Open()
 	defer mysql.Close()
 
-	var rails railsDB.EventService
-	rails.DB = mysql
-	rails.ApiEventService = es
+	rails := &railsDB.EventService{DB: mysql, ApiEventService: es}
 
 	mux := http.NewMux(es, rails)
 	http.ListenAndServe(mux)

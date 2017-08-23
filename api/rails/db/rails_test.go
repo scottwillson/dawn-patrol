@@ -21,12 +21,9 @@ func TestRailsCopy(t *testing.T) {
 	railsDB := Open()
 	defer railsDB.Close()
 
-	var eventService apiDB.EventService
-	eventService.DB = db
+	eventService := &apiDB.EventService{DB: db}
 
-	var railsService EventService
-	railsService.DB = railsDB
-	railsService.ApiEventService = eventService
+	railsService := &EventService{DB: railsDB, ApiEventService: eventService}
 	railsService.Copy()
 
 	var events = eventService.Find()

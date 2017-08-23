@@ -10,6 +10,7 @@ type EventService struct {
 	DB *gorm.DB
 }
 
+// Create Events
 func (s *EventService) Create(events []api.Event) {
 	for _, event := range events {
 		s.DB.Create(event)

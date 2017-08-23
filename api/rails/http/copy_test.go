@@ -14,7 +14,7 @@ import (
 func TestRailsService(t *testing.T) {
 	mux := goji.NewMux()
 
-	var service mock.EventService
+	service := &mock.EventService{}
 	var handler Copy
 	handler.EventService = service
 
