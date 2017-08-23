@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"rocketsurgeryllc.com/dawnpatrol/api"
+	apiDB "rocketsurgeryllc.com/dawnpatrol/api/db"
 
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -11,21 +12,21 @@ import (
 )
 
 func TestRailsCopy(t *testing.T) {
-	db := Open()
+	db := apiDB.Open()
 	defer db.Close()
 
 	// TODO encapsulate in test service method
 	db.Delete(api.Event{})
 
-	railsDB := OpenRails()
+	railsDB := Open()
 	defer railsDB.Close()
 
-	var eventService EventService
+	var eventService apiDB.EventService
 	eventService.DB = db
 
-	var railsService RailsService
+	var railsService EventService
 	railsService.DB = railsDB
-	railsService.EventService = &eventService
+	railsService.ApiEventService = eventService
 	railsService.Copy()
 
 	var events = eventService.Find()
@@ -36,20 +37,13 @@ func TestRailsCopy(t *testing.T) {
 }
 
 func TestRailsFind(t *testing.T) {
-	railsDB := OpenRails()
-	defer railsDB.Close()
-
-	var railsService RailsService
-	railsService.DB = railsDB
-
 	db := Open()
 	defer db.Close()
 
 	var eventService EventService
 	eventService.DB = db
-	railsService.EventService = &eventService
 
-	var events = railsService.Find()
+	var events = eventService.Find()
 
 	if len(events) != 2 {
 		t.Errorf("Expect events len to be 2, but is %v", len(events))

@@ -1,16 +1,16 @@
-package rails
+package http
 
 import (
 	"net/http"
 
-	"rocketsurgeryllc.com/dawnpatrol/api"
+	"rocketsurgeryllc.com/dawnpatrol/api/rails"
 )
 
 // Copy starts a copy of Racing on Rails data
 type Copy struct {
-	RailsService api.RailsService
+	EventService rails.EventService
 }
 
 func (h *Copy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	h.RailsService.Copy()
+	h.EventService.Copy()
 }

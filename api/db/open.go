@@ -10,10 +10,10 @@ import (
 )
 
 func Open() *gorm.DB {
-	return open(databaseURL())
+	return OpenURL(databaseURL())
 }
 
-func open(url string) *gorm.DB {
+func OpenURL(url string) *gorm.DB {
 	var err error
 	var db *gorm.DB
 	driver := databaseDriver(url)

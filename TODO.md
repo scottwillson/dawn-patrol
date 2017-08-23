@@ -1,6 +1,8 @@
-* Sort out rails packages
-  * put in separate tree?
+* Revisit db/service/rails names again
 * RailsService.Copy should return void, not bool
+* Refactor openURL to open("{dawnpatrol,rails}") and read URL by convention?
+* Use a better testing framework
+* Check coverage and add tests for public functions
 * Vendor Go deps? Glide? https://github.com/golang/dep
 * base images?
 * Use overrides with docker-compose files?
@@ -43,3 +45,4 @@
 * Ensure implements gorm.Model
 * Set up DNS and a floating IP
 * Notify on build, deploy
+* Can EventService.ApiEventService be a pointer?

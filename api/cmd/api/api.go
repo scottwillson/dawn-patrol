@@ -6,6 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"rocketsurgeryllc.com/dawnpatrol/api/db"
 	"rocketsurgeryllc.com/dawnpatrol/api/http"
+	railsDB "rocketsurgeryllc.com/dawnpatrol/api/rails/db"
 )
 
 func main() {
@@ -15,12 +16,12 @@ func main() {
 	var es db.EventService
 	es.DB = postgres
 
-	railsDB := db.OpenRails()
-	defer railsDB.Close()
+	mysql := railsDB.Open()
+	defer mysql.Close()
 
-	var rails db.RailsService
-	rails.DB = railsDB
-	rails.EventService = &es
+	var rails railsDB.EventService
+	rails.DB = mysql
+	rails.ApiEventService = es
 
 	mux := http.NewMux(es, rails)
 	http.ListenAndServe(mux)

@@ -14,18 +14,3 @@ func (s *EventService) Create([]api.Event) {}
 func (s *EventService) Find() []api.Event {
 	return s.FindFn()
 }
-
-// RailsService mocks db.RailsService
-type RailsService struct {
-	CopyFn func() bool
-}
-
-// Copy mocks db.RailsService.Copy()
-func (s *RailsService) Copy() bool {
-	return s.CopyFn()
-}
-
-// Find mocks db.RailsService.Find()
-func (s *RailsService) Find() []api.RailsEvent {
-	return []api.RailsEvent{}
-}

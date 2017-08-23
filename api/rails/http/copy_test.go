@@ -1,11 +1,11 @@
-package rails
+package http
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"rocketsurgeryllc.com/dawnpatrol/api/mock"
+	"rocketsurgeryllc.com/dawnpatrol/api/rails/mock"
 
 	goji "goji.io"
 	"goji.io/pat"
@@ -14,9 +14,9 @@ import (
 func TestRailsService(t *testing.T) {
 	mux := goji.NewMux()
 
-	var service mock.RailsService
+	var service mock.EventService
 	var handler Copy
-	handler.RailsService = &service
+	handler.EventService = service
 
 	service.CopyFn = func() bool {
 		return true

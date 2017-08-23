@@ -5,17 +5,19 @@ import (
 
 	"github.com/jinzhu/gorm"
 	"rocketsurgeryllc.com/dawnpatrol/api"
+	"rocketsurgeryllc.com/dawnpatrol/api/db"
+	"rocketsurgeryllc.com/dawnpatrol/api/rails"
 )
 
-// RailsService implements api.RailsService
-type RailsService struct {
-	DB           *gorm.DB
-	EventService *EventService
+// EventService implements api.rails.EventService
+type EventService struct {
+	DB              *gorm.DB
+	ApiEventService api.EventService
 }
 
 // Copy from Racing on Rails MySQL DB
-func (s RailsService) Copy() bool {
-	var railsEvents []api.RailsEvent
+func (s *EventService) Copy() bool {
+	var railsEvents []rails.Event
 	s.DB.Find(&railsEvents)
 
 	events := make([]api.Event, len(railsEvents))
@@ -23,21 +25,21 @@ func (s RailsService) Copy() bool {
 		events[i] = api.Event{Name: event.Name}
 	}
 
-	s.EventService.Create(events)
+	s.ApiEventService.Create(events)
 
 	return true
 }
 
 // Find all events in the Racing on Rails MySQL DB
-func (s RailsService) Find() []api.RailsEvent {
-	var events []api.RailsEvent
+func (s *EventService) Find() []rails.Event {
+	var events []rails.Event
 	s.DB.Find(&events)
 	return events
 }
 
 // Open Rails MySQL DB conn
-func OpenRails() *gorm.DB {
-	return open(railsDatabaseURL())
+func Open() *gorm.DB {
+	return db.OpenURL(railsDatabaseURL())
 }
 
 func railsDatabaseURL() string {
