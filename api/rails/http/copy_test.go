@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"rocketsurgeryllc.com/dawnpatrol/api/rails/mock"
 
 	goji "goji.io"
@@ -28,8 +29,5 @@ func TestRailsService(t *testing.T) {
 
 	mux.ServeHTTP(resp, req)
 
-	if status := resp.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
-	}
+	assert.Equal(t, http.StatusOK, resp.Code, "handler status code")
 }

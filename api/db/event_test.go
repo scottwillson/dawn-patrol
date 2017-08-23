@@ -4,6 +4,7 @@ import (
 	"sort"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"rocketsurgeryllc.com/dawnpatrol/api"
 )
 
@@ -32,17 +33,10 @@ func TestCreate(t *testing.T) {
 
 	sort.Sort(ByName(events))
 
-	if len(events) != 2 {
-		t.Errorf("Expect events len to be 2, but is %v", len(events))
-	}
-
-	if events[0].Name != "Copperopolis Road Race" {
-		t.Errorf("Expect event name to be 'Copperopolis Road Race', but is %v", events[0].Name)
-	}
-
-	if events[1].Name != "Sausalito Criterium" {
-		t.Errorf("Expect event name to be 'Sausalito Criterium', but is %v", events[1].Name)
-	}
+	assert := assert.New(t)
+	assert.Equal(2, len(events), "events")
+	assert.Equal("Copperopolis Road Race", events[0].Name, "event name")
+	assert.Equal("Sausalito Criterium", events[1].Name, "event name")
 }
 
 func TestFind(t *testing.T) {
@@ -57,8 +51,5 @@ func TestFind(t *testing.T) {
 	service.DB = db
 
 	var events = service.Find()
-
-	if len(events) != 2 {
-		t.Errorf("Expect events len to be 2, but is %v", len(events))
-	}
+	assert.Equal(t, 2, len(events), "events")
 }

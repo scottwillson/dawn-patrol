@@ -1,5 +1,3 @@
-* Refactor openURL to open("{dawnpatrol,rails}") and read URL by convention?
-* Use a better testing framework
 * Check coverage and add tests for public functions
 * Vendor Go deps? Glide? https://github.com/golang/dep
 * base images?

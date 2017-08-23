@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"rocketsurgeryllc.com/dawnpatrol/api"
 	"rocketsurgeryllc.com/dawnpatrol/api/mock"
 
@@ -34,10 +35,8 @@ func TestRoot(t *testing.T) {
 
 	mux.ServeHTTP(resp, req)
 
-	if status := resp.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
-	}
+	assert := assert.New(t)
+	assert.Equal(http.StatusOK, resp.Code, "handler status code")
 
 	var events []api.Event
 	e := json.Unmarshal(resp.Body.Bytes(), &events)
@@ -45,7 +44,5 @@ func TestRoot(t *testing.T) {
 		t.Error(e)
 	}
 
-	if len(events) != 1 {
-		t.Errorf("Expect events len to be 1, but is %v", len(events))
-	}
+	assert.Equal(1, len(events), "events")
 }

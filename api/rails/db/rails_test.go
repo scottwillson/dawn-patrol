@@ -3,6 +3,7 @@ package db
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"rocketsurgeryllc.com/dawnpatrol/api"
 	apiDB "rocketsurgeryllc.com/dawnpatrol/api/db"
 
@@ -28,9 +29,7 @@ func TestRailsCopy(t *testing.T) {
 
 	var events = eventService.Find()
 
-	if len(events) != 2 {
-		t.Errorf("Expect events len to be 2, but is %v", len(events))
-	}
+	assert.Equal(t, 2, len(events), "events")
 }
 
 func TestRailsFind(t *testing.T) {
@@ -42,7 +41,5 @@ func TestRailsFind(t *testing.T) {
 
 	var events = eventService.Find()
 
-	if len(events) != 2 {
-		t.Errorf("Expect events len to be 2, but is %v", len(events))
-	}
+	assert.Equal(t, 2, len(events), "events")
 }
