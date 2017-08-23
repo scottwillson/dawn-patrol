@@ -18,7 +18,10 @@ services:
     depends_on:
       - web
   rails-db:
-    build: rails-db
+    build:
+      context: rails-db
+      dockerfile: Dockerfile
+    image: scottwillson/dawn-patrol-rails-db
   web:
     build:
       context: web
