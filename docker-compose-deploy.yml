@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile-deploy
     depends_on:
       - db
+      - rails-db
     image: scottwillson/dawn-patrol-api
   db:
     build:
@@ -16,8 +17,8 @@ services:
     build: e2e-test
     depends_on:
       - web
-  rails:
-    build: rails
+  rails-db:
+    build: rails-db
   web:
     build:
       context: web

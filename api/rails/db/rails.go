@@ -45,7 +45,7 @@ func Open() *gorm.DB {
 func railsDatabaseURL() string {
 	databaseURL := os.Getenv("RAILS_DATABASE_URL")
 	if databaseURL == "" {
-		return "rails:rails@tcp(rails:3306)/rails"
+		return "rails:rails@tcp(rails-db:3306)/rails"
 	}
 	return databaseURL
 }

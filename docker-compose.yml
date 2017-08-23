@@ -7,6 +7,7 @@ services:
       - 8080:8080
     depends_on:
       - db
+      - rails-db
     volumes:
       - ./api:/go/src/rocketsurgeryllc.com/dawnpatrol/api
   api_test:
@@ -20,8 +21,8 @@ services:
     build: db
     ports:
       - 5432:5432
-  rails:
-    build: rails
+  rails-db:
+    build: rails-db
   web:
     build: web
     command: yarn start

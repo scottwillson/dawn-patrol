@@ -1,4 +1,5 @@
 * Revisit db/service/rails names again
+* Rename rails container to scottwillson/dawn-patrol-rails-db
 * RailsService.Copy should return void, not bool
 * Refactor openURL to open("{dawnpatrol,rails}") and read URL by convention?
 * Use a better testing framework

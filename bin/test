@@ -2,6 +2,6 @@
 set -e
 
 docker-compose -f docker-compose-test.yml up --build --remove-orphans -d db
-docker-compose -f docker-compose-test.yml up --build --remove-orphans -d rails
+docker-compose -f docker-compose-test.yml up --build --remove-orphans -d rails-db
 docker-compose -f docker-compose-test.yml up --build --remove-orphans --abort-on-container-exit api-test
 docker-compose -f docker-compose-test.yml up --build --remove-orphans --abort-on-container-exit web-test
