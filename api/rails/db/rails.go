@@ -15,8 +15,8 @@ type EventService struct {
 	ApiEventService api.EventService
 }
 
-// Copy from Racing on Rails MySQL DB
-func (s *EventService) Copy() bool {
+// Copy from Racing on Rails MySQL DB to Dawn Patrol DB
+func (s *EventService) Copy() {
 	var railsEvents []rails.Event
 	s.DB.Find(&railsEvents)
 
@@ -26,8 +26,6 @@ func (s *EventService) Copy() bool {
 	}
 
 	s.ApiEventService.Create(events)
-
-	return true
 }
 
 // Find all events in the Racing on Rails MySQL DB

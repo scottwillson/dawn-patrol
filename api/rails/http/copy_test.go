@@ -18,10 +18,6 @@ func TestRailsService(t *testing.T) {
 	var handler Copy
 	handler.EventService = service
 
-	service.CopyFn = func() bool {
-		return true
-	}
-
 	req, err := http.NewRequest("POST", "/rails/copy", nil)
 	if err != nil {
 		t.Fatal(err)
