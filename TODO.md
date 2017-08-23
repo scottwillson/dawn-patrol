@@ -1,4 +1,3 @@
-* lint
 * Refactor openURL to open("{dawnpatrol,rails}") and read URL by convention?
 * Use a better testing framework
 * Check coverage and add tests for public functions
@@ -44,4 +43,4 @@
 * Ensure implements gorm.Model
 * Set up DNS and a floating IP
 * Notify on build, deploy
-* Can EventService.ApiEventService be a pointer?
+* Can EventService.APIEventService be a pointer?

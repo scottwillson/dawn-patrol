@@ -12,7 +12,7 @@ import (
 // EventService implements api.rails.EventService
 type EventService struct {
 	DB              *gorm.DB
-	ApiEventService api.EventService
+	APIEventService api.EventService
 }
 
 // Copy from Racing on Rails MySQL DB to Dawn Patrol DB
@@ -25,7 +25,7 @@ func (s *EventService) Copy() {
 		events[i] = api.Event{Name: event.Name}
 	}
 
-	s.ApiEventService.Create(events)
+	s.APIEventService.Create(events)
 }
 
 // Find all events in the Racing on Rails MySQL DB
