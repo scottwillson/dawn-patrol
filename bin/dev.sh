@@ -2,4 +2,4 @@
 set -e
 
 docker-compose up --build -d --remove-orphans
-docker-compose logs -f --tail=0
+exec docker-compose logs -f --tail=0
