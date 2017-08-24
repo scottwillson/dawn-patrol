@@ -16,7 +16,6 @@ func TestRailsCopy(t *testing.T) {
 	db := apiDB.Open()
 	defer db.Close()
 
-	// TODO encapsulate in test service method
 	db.Delete(api.Event{})
 
 	railsDB := Open()

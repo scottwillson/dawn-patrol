@@ -17,6 +17,14 @@ Install Docker
 ## Dev
 `docker-compose logs -f --tail=0`
 
+### local
+For development outside of Docker (for example, if you're using Atom's Go-plus to run tests and show coverage in the editor), set environment variables for DB connections.
+
+```
+export DATABASE_URL=postgres://dawnpatrol@localhost:55432/dawnpatrol_development?sslmode=disable
+export RAILS_DATABASE_URL="rails:rails@tcp(localhost:53306)/rails"
+```
+
 ## Goal
 
 End-to-end Docker dev, test, deploy pipeline.

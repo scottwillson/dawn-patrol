@@ -20,9 +20,11 @@ services:
   db:
     build: db
     ports:
-      - 5432:5432
+      - 55432:5432
   rails-db:
     build: rails-db
+    ports:
+      - 53306:3306
   web:
     build: web
     command: yarn start
