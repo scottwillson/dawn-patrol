@@ -24,8 +24,18 @@ func TestDatabaseURL(t *testing.T) {
 	assert.NotNil(t, databaseURL(), "db.databaseURL()")
 }
 
-func TestDatabaseDriver(t *testing.T) {
+func TestDatabaseDriverForMysql(t *testing.T) {
 	assert := assert.New(t)
-	assert.Equal("postgres", databaseDriver("postgres://dawnpatrol@db/dawnpatrol_test"), "db.databaseDriver() for postgres")
-	assert.Equal("mysql", databaseDriver("rails:rails@tcp(rails-db:3306)/rails"), "db.databaseDriver() for mysql")
+
+	driver, err := databaseDriver("rails:rails@tcp(rails-db:3306)/rails")
+	assert.Nil(err, "db.databaseDriver() for mysql")
+	assert.Equal("mysql", driver, "db.databaseDriver() for mysql")
+}
+
+func TestDatabaseDriverForPostgres(t *testing.T) {
+	assert := assert.New(t)
+
+	driver, err := databaseDriver("postgres://dawnpatrol@db/dawnpatrol_test")
+	assert.Nil(err, "db.databaseDriver() for postgres")
+	assert.Equal("postgres", driver, "db.databaseDriver() for postgres")
 }

@@ -1,6 +1,7 @@
 package db
 
 import (
+	"errors"
 	"os"
 	"strings"
 	"time"
@@ -19,7 +20,11 @@ func Open() *gorm.DB {
 func OpenURL(url string) *gorm.DB {
 	var err error
 	var db *gorm.DB
-	driver := databaseDriver(url)
+	var driver string
+
+	if driver, err = databaseDriver(url); err != nil {
+		panic(err)
+	}
 
 	for attempts := 0; attempts < 10; attempts++ {
 		if db, err = gorm.Open(driver, url); err == nil && db != nil {
@@ -39,12 +44,12 @@ func databaseURL() string {
 	return databaseURL
 }
 
-func databaseDriver(url string) string {
+func databaseDriver(url string) (string, error) {
 	if strings.HasPrefix(url, "postgres") {
-		return "postgres"
+		return "postgres", nil
 	} else if strings.HasPrefix(url, "rails") {
-		return "mysql"
+		return "mysql", nil
 	} else {
-		panic("Could not find driver for " + url)
+		return "", errors.New("Could not find driver for " + url)
 	}
 }
