@@ -1,4 +1,5 @@
 * Check coverage and add tests for public functions
+* rename db/rails to db/events
 * Vendor Go deps? Glide? https://github.com/golang/dep
 * base images?
 * Use overrides with docker-compose files?
