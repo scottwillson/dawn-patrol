@@ -12,6 +12,7 @@
 /public/webpack/
 /tmp/*
 api/api
+coverage.out
 node_modules
 npm-debug.log*
 web/build

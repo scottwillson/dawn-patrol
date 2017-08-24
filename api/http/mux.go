@@ -14,7 +14,7 @@ func NewMux(es api.EventService, rs rails.EventService) *goji.Mux {
 	mux := goji.NewMux()
 
 	mux.Use(log.Request)
-	mux.Handle(pat.Get("/index.json"), &Root{es})
+	mux.Handle(pat.Get("/index.json"), newRoot(es))
 	mux.Handle(pat.Post("/rails/copy"), &railsHttp.Copy{rs})
 
 	return mux

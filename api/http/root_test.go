@@ -2,6 +2,7 @@ package http
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -14,12 +15,17 @@ import (
 	"goji.io/pat"
 )
 
+type ErroringRootEventJSON struct{}
+
+func (h *ErroringRootEventJSON) marshal(events []api.Event) (string, error) {
+	return "", errors.New("Parsing failed")
+}
+
 func TestRoot(t *testing.T) {
 	mux := goji.NewMux()
 
-	var es mock.EventService
-	var h Root
-	h.EventService = &es
+	es := mock.EventService{}
+	h := newRoot(&es)
 
 	es.FindFn = func() []api.Event {
 		return []api.Event{api.Event{}}
@@ -31,7 +37,7 @@ func TestRoot(t *testing.T) {
 	}
 
 	resp := httptest.NewRecorder()
-	mux.Handle(pat.Get("/index.json"), &h)
+	mux.Handle(pat.Get("/index.json"), h)
 
 	mux.ServeHTTP(resp, req)
 
@@ -45,4 +51,25 @@ func TestRoot(t *testing.T) {
 	}
 
 	assert.Equal(1, len(events), "events")
+}
+
+func TestRootServicError(t *testing.T) {
+	mux := goji.NewMux()
+
+	var es mock.EventService
+	h := Root{EventJSON: &ErroringRootEventJSON{}, EventService: &es}
+
+	es.FindFn = func() []api.Event {
+		return []api.Event{api.Event{}}
+	}
+
+	req, err := http.NewRequest("GET", "/index.json", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	resp := httptest.NewRecorder()
+	mux.Handle(pat.Get("/index.json"), &h)
+
+	assert.Panics(t, func() { mux.ServeHTTP(resp, req) })
 }

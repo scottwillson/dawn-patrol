@@ -43,3 +43,4 @@
 * Set up DNS and a floating IP
 * Notify on build, deploy
 * Can EventService.APIEventService be a pointer?
+* Failing E2E test should exit bin/setup

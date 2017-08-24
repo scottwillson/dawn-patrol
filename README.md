@@ -23,6 +23,7 @@ For development outside of Docker (for example, if you're using Atom's Go-plus t
 ```
 export DATABASE_URL=postgres://dawnpatrol@localhost:55432/dawnpatrol_development?sslmode=disable
 export RAILS_DATABASE_URL="rails:rails@tcp(localhost:53306)/rails"
+go get ./..
 ```
 
 ## Goal

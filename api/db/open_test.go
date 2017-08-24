@@ -1,6 +1,7 @@
 package db
 
 import (
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -20,8 +21,20 @@ func TestOpenURL(t *testing.T) {
 	assert.NotNil(t, db, "db from db.OpenURL()")
 }
 
-func TestDatabaseURL(t *testing.T) {
-	assert.NotNil(t, databaseURL(), "db.databaseURL()")
+func TestOpenURLPanicsOnBogusURL(t *testing.T) {
+	assert.Panics(t, func() { OpenURL("*** bogus ***") })
+}
+
+func TestDefaultDatabaseURL(t *testing.T) {
+	assert.Equal(t, "postgres://dawnpatrol@db/dawnpatrol_development?sslmode=disable", databaseURL(), "db.databaseURL()")
+}
+
+func TestDatabaseURLFromEnv(t *testing.T) {
+	originalDatabaseURL := os.Getenv("DATABASE_URL")
+	defer func() { os.Setenv("DATABASE_URL", originalDatabaseURL) }()
+
+	os.Setenv("DATABASE_URL", "postgres://test-db")
+	assert.Equal(t, "postgres://test-db", databaseURL(), "db.databaseURL()")
 }
 
 func TestDatabaseDriverForMysql(t *testing.T) {
@@ -38,4 +51,12 @@ func TestDatabaseDriverForPostgres(t *testing.T) {
 	driver, err := databaseDriver("postgres://dawnpatrol@db/dawnpatrol_test")
 	assert.Nil(err, "db.databaseDriver() for postgres")
 	assert.Equal("postgres", driver, "db.databaseDriver() for postgres")
+}
+
+func TestUnkownDatabaseDriver(t *testing.T) {
+	assert := assert.New(t)
+
+	driver, err := databaseDriver("no url!")
+	assert.NotNil(err, "err for unknown URL")
+	assert.Equal("", driver, "driver for unknown URL")
 }
