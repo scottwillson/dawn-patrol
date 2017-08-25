@@ -1,4 +1,5 @@
 * Vendor Go deps? Glide? https://github.com/golang/dep
+* Separate deps for different envs?
 * base images?
 * Use overrides with docker-compose files?
 * Use overrides/DRY up Dockerfiles?
