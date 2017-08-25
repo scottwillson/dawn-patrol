@@ -26,6 +26,10 @@ func TestOpenURLPanicsOnBogusURL(t *testing.T) {
 }
 
 func TestDefaultDatabaseURL(t *testing.T) {
+	originalDatabaseURL := os.Getenv("DATABASE_URL")
+	defer func() { os.Setenv("DATABASE_URL", originalDatabaseURL) }()
+
+	os.Setenv("DATABASE_URL", "")
 	assert.Equal(t, "postgres://dawnpatrol@db/dawnpatrol_development?sslmode=disable", databaseURL(), "db.databaseURL()")
 }
 
