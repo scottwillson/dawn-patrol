@@ -10,12 +10,12 @@ import (
 )
 
 // NewMux creates a new HTTP multiplexer
-func NewMux(es api.EventService, rs rails.EventService) *goji.Mux {
+func NewMux(es api.EventService, railsES rails.EventService) *goji.Mux {
 	mux := goji.NewMux()
 
 	mux.Use(log.Request)
 	mux.Handle(pat.Get("/index.json"), newRoot(es))
-	mux.Handle(pat.Post("/rails/copy"), &railsHttp.Copy{rs})
+	mux.Handle(pat.Post("/rails/copy"), &railsHttp.Copy{railsES})
 
 	return mux
 }

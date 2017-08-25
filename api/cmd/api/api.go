@@ -18,8 +18,8 @@ func main() {
 	mysql := railsDB.Open()
 	defer mysql.Close()
 
-	rails := &railsDB.EventService{DB: mysql, APIEventService: es}
+	railsES := &railsDB.EventService{DB: mysql, APIEventService: es}
 
-	mux := http.NewMux(es, rails)
+	mux := http.NewMux(es, railsES)
 	http.ListenAndServe(mux)
 }

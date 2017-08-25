@@ -14,10 +14,12 @@ type Root struct {
 	EventService api.EventService
 }
 
+// EventJSON marshals Events to JSON string
 type EventJSON interface {
 	marshal(events []api.Event) (string, error)
 }
 
+// DefaultEventJSON implements EventJSON. Allows tests to mock JSON marshalling.
 type DefaultEventJSON struct{}
 
 func (h *DefaultEventJSON) marshal(events []api.Event) (string, error) {
