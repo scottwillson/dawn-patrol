@@ -18,15 +18,15 @@ func Open() *gorm.DB {
 
 // OpenURL opens a DB connection to URL
 func OpenURL(url string) *gorm.DB {
-	var err error
 	var db *gorm.DB
 	var driver string
+	var err error
 
 	if driver, err = databaseDriver(url); err != nil {
 		panic(err)
 	}
 
-	for attempts := 0; attempts < 10; attempts++ {
+	for a := 0; a < 10; a++ {
 		if db, err = gorm.Open(driver, url); err == nil && db != nil {
 			return db
 		}

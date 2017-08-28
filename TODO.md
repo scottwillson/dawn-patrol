@@ -1,4 +1,3 @@
-* naming conventions: https://talks.golang.org/2014/names.slide
 * review https://peter.bourgon.org/go-in-production/
 * review https://peter.bourgon.org/go-best-practices-2016/
 * Consider https://github.com/thockin/go-build-template

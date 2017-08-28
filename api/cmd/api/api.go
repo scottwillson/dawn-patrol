@@ -10,10 +10,10 @@ import (
 )
 
 func main() {
-	postgres := db.Open()
-	defer postgres.Close()
+	dpDB := db.Open()
+	defer dpDB.Close()
 
-	es := &db.EventService{DB: postgres}
+	es := &db.EventService{DB: dpDB}
 
 	mysql := railsDB.Open()
 	defer mysql.Close()

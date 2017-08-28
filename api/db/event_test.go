@@ -20,16 +20,15 @@ func TestCreate(t *testing.T) {
 
 	db.Delete(api.Event{})
 
-	var service EventService
-	service.DB = db
+	es := EventService{DB: db}
 
 	events := []api.Event{
 		api.Event{Name: "Copperopolis Road Race"},
 		api.Event{Name: "Sausalito Criterium"},
 	}
-	service.Create(events)
+	es.Create(events)
 
-	events = service.Find()
+	events = es.Find()
 
 	sort.Sort(ByName(events))
 
@@ -47,9 +46,8 @@ func TestFind(t *testing.T) {
 	db.Create(&api.Event{})
 	db.Create(&api.Event{})
 
-	var service EventService
-	service.DB = db
+	es := EventService{DB: db}
 
-	var events = service.Find()
+	var events = es.Find()
 	assert.Equal(t, 2, len(events), "events")
 }

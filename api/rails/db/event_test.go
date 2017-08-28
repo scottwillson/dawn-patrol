@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"rocketsurgeryllc.com/dawnpatrol/api"
-	apiDB "rocketsurgeryllc.com/dawnpatrol/api/db"
+	"rocketsurgeryllc.com/dawnpatrol/api/db"
 
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -13,30 +13,30 @@ import (
 )
 
 func TestRailsCopy(t *testing.T) {
-	db := apiDB.Open()
-	defer db.Close()
+	dpDB := db.Open()
+	defer dpDB.Close()
 
-	db.Delete(api.Event{})
+	dpDB.Delete(api.Event{})
 
 	railsDB := Open()
 	defer railsDB.Close()
 
-	eventService := &apiDB.EventService{DB: db}
+	eventService := &db.EventService{DB: dpDB}
 
 	railsService := &EventService{DB: railsDB, APIEventService: eventService}
 	railsService.Copy()
 
-	var events = eventService.Find()
+	events := eventService.Find()
 
 	assert.Equal(t, 2, len(events), "events")
 }
 
 func TestRailsFind(t *testing.T) {
-	db := Open()
-	defer db.Close()
+	dpDB := Open()
+	defer dpDB.Close()
 
 	var eventService EventService
-	eventService.DB = db
+	eventService.DB = dpDB
 
 	var events = eventService.Find()
 

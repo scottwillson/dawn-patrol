@@ -15,9 +15,7 @@ import (
 func TestRailsService(t *testing.T) {
 	mux := goji.NewMux()
 
-	service := &mock.EventService{}
-	var handler Copy
-	handler.EventService = service
+	handler := Copy{EventService: &mock.EventService{}}
 
 	req, err := http.NewRequest("POST", "/rails/copy", nil)
 	if err != nil {

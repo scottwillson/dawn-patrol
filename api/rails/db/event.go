@@ -21,8 +21,8 @@ func (s *EventService) Copy() {
 	s.DB.Find(&railsEvents)
 
 	events := make([]api.Event, len(railsEvents))
-	for i, event := range railsEvents {
-		events[i] = api.Event{Name: event.Name}
+	for i, e := range railsEvents {
+		events[i] = api.Event{Name: e.Name}
 	}
 
 	s.APIEventService.Create(events)
