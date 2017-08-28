@@ -9,7 +9,7 @@ import (
 	railsHttp "rocketsurgeryllc.com/dawnpatrol/api/pkg/rails/http"
 )
 
-// NewMux creates a new HTTP multiplexer
+// NewMux creates a new HTTP multiplexer.
 func NewMux(es api.EventService, railsES rails.EventService) *goji.Mux {
 	mux := goji.NewMux()
 

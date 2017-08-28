@@ -6,7 +6,7 @@ import (
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/rails"
 )
 
-// Copy starts a copy of Racing on Rails data
+// Copy starts a copy of Racing on Rails data.
 type Copy struct {
 	EventService rails.EventService
 }

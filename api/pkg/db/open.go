@@ -7,16 +7,16 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
-	// Required for Gorm
+	// Required for Gorm.
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-// Open DB connection to databaseURL()
+// Open opens DB connection to databaseURL().
 func Open() *gorm.DB {
 	return OpenURL(databaseURL())
 }
 
-// OpenURL opens a DB connection to URL
+// OpenURL opens a DB connection to URL.
 func OpenURL(url string) *gorm.DB {
 	var db *gorm.DB
 	var driver string

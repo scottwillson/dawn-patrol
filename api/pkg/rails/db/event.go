@@ -9,13 +9,13 @@ import (
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/rails"
 )
 
-// EventService implements api.rails.EventService
+// EventService implements api.rails.EventService.
 type EventService struct {
 	DB              *gorm.DB
 	APIEventService api.EventService
 }
 
-// Copy from Racing on Rails MySQL DB to Dawn Patrol DB
+// Copy copies events from Racing on Rails MySQL DB to Dawn Patrol DB.
 func (s *EventService) Copy() {
 	var railsEvents []rails.Event
 	s.DB.Find(&railsEvents)
@@ -28,14 +28,14 @@ func (s *EventService) Copy() {
 	s.APIEventService.Create(events)
 }
 
-// Find all events in the Racing on Rails MySQL DB
+// Find finds all events in the Racing on Rails MySQL DB.
 func (s *EventService) Find() []rails.Event {
 	var events []rails.Event
 	s.DB.Find(&events)
 	return events
 }
 
-// Open Rails MySQL DB conn
+// Open opens a connection to the Rails MySQL DB.
 func Open() *gorm.DB {
 	return db.OpenURL(railsDatabaseURL())
 }

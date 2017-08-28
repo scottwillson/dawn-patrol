@@ -8,13 +8,13 @@ import (
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
 )
 
-// Root returns array of Events as JSON
+// Root returns an array of Events as JSON.
 type Root struct {
 	EventJSON    EventJSON
 	EventService api.EventService
 }
 
-// EventJSON marshals Events to JSON string
+// EventJSON marshals Events to JSON string.
 type EventJSON interface {
 	marshal(events []api.Event) (string, error)
 }

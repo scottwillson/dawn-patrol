@@ -6,7 +6,7 @@ import (
 	goji "goji.io"
 )
 
-// ListenAndServe starts a HTTP with this multiplexer
+// ListenAndServe starts an HTTP server with this multiplexer.
 func ListenAndServe(mux *goji.Mux) {
 	http.ListenAndServe(":8080", mux)
 }

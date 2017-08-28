@@ -5,19 +5,19 @@ import (
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
 )
 
-// EventService implements api.EventService
+// EventService implements api.EventService.
 type EventService struct {
 	DB *gorm.DB
 }
 
-// Create Events
+// Create creates api.Events.
 func (s *EventService) Create(events []api.Event) {
 	for _, event := range events {
 		s.DB.Create(event)
 	}
 }
 
-// Find all events
+// Find finds all events as api.Events.
 func (s *EventService) Find() []api.Event {
 	var events []api.Event
 	s.DB.Find(&events)
