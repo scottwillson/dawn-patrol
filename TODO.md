@@ -1,24 +1,33 @@
-* Vendor Go deps? Glide? https://github.com/golang/dep
-* Separate deps for different envs?
-* base images?
+* naming conventions: https://talks.golang.org/2014/names.slide
+* review https://peter.bourgon.org/go-in-production/
+* review https://peter.bourgon.org/go-best-practices-2016/
+* Consider https://github.com/thockin/go-build-template
+  * Put library code under a pkg/ subdirectory. Put binaries under a cmd/ subdirectory.
 * Use overrides with docker-compose files?
 * Use overrides/DRY up Dockerfiles?
 * Generally use conventions more/fewer flags
 * Fix web README
 * Persist data
 * migrations
+* https://prometheus.io/ for monitoring
+* think about flags/env/12-factors for config
 * Extract scripts from bin/setup
   * e2e
   * tests
   * start servers
 * Create MySQL container
+* consider go-kit/log for structured logging
 * Add data import to E2E
 * Move goose code to /db?
 * Consolidate DB init
 * Replication
 * Backups
 * Nagios alerts
+  * Or something more modern
 * Ansible server setup?
+* Error catching
+* Something like New Relic
+* read https://peter.bourgon.org/go-best-practices-2016/#dependency-management
 * move DB data out of init dir
 * Document SemaphoreCI and Docker.io/hub setup
 * Review and apply Docker best practices
@@ -31,6 +40,8 @@
 * Canary test before making new container live?
 * Make API port configurable
 * Secrets?
+* consider https://getgb.io/
+* use scratch for go: https://medium.com/@kelseyhightower/optimizing-docker-images-for-static-binaries-b5696e26eb07
 * Split into separate projects for independent deploys
   * What does testing/build pipeline look like?
 * Be consistent with .sh or not
@@ -44,3 +55,8 @@
 * Can EventService.APIEventService be a pointer?
 * Failing E2E test should exit bin/setup
 * Check for dupe code
+* Prefer go install to go build
+* Use struct literal initialization for config/args
+* Avoid nil checks via default no-op implementations
+* make loggers and http clients dependencies
+* base images?
