@@ -1,7 +1,5 @@
 * review https://peter.bourgon.org/go-in-production/
 * review https://peter.bourgon.org/go-best-practices-2016/
-* Consider https://github.com/thockin/go-build-template
-  * Put library code under a pkg/ subdirectory. Put binaries under a cmd/ subdirectory.
 * Use overrides with docker-compose files?
 * Use overrides/DRY up Dockerfiles?
 * Generally use conventions more/fewer flags
@@ -59,3 +57,5 @@
 * Avoid nil checks via default no-op implementations
 * make loggers and http clients dependencies
 * base images?
+* Consider https://github.com/thockin/go-build-template
+  * Put library code under a pkg/ subdirectory. Put binaries under a cmd/ subdirectory.

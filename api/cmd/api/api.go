@@ -4,9 +4,9 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"rocketsurgeryllc.com/dawnpatrol/api/db"
-	"rocketsurgeryllc.com/dawnpatrol/api/http"
-	railsDB "rocketsurgeryllc.com/dawnpatrol/api/rails/db"
+	"rocketsurgeryllc.com/dawnpatrol/api/pkg/db"
+	"rocketsurgeryllc.com/dawnpatrol/api/pkg/http"
+	railsDB "rocketsurgeryllc.com/dawnpatrol/api/pkg/rails/db"
 )
 
 func main() {
