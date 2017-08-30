@@ -52,10 +52,10 @@
 * Can EventService.APIEventService be a pointer?
 * Failing E2E test should exit bin/setup
 * Check for dupe code
-* Prefer go install to go build
 * Use struct literal initialization for config/args
 * Avoid nil checks via default no-op implementations
 * make loggers and http clients dependencies
 * base images?
 * Consider https://github.com/thockin/go-build-template
   * Put library code under a pkg/ subdirectory. Put binaries under a cmd/ subdirectory.
+* Ensure dev builds on CI to catch problems there
