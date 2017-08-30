@@ -29,6 +29,7 @@
 * Review and apply Docker best practices
 * Performance test
 * Add test of dev build to CI
+* CI build should just execute a script
 * Deploy deploy containers to stage and prod based on branch
   * Docker image tags
   * branches
@@ -51,11 +52,11 @@
 * Can EventService.APIEventService be a pointer?
 * Failing E2E test should exit bin/setup
 * Check for dupe code
+* https://github.com/alecthomas/gometalinter
 * Use struct literal initialization for config/args
 * Avoid nil checks via default no-op implementations
 * make loggers and http clients dependencies
 * base images?
 * Consider https://github.com/thockin/go-build-template
-  * Put library code under a pkg/ subdirectory. Put binaries under a cmd/ subdirectory.
 * Ensure dev builds on CI to catch problems there
 * All seed scripts valid?

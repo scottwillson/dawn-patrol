@@ -1,7 +1,9 @@
 version: '3'
 services:
   api-test:
-    build: api
+    build:
+      context: api
+      dockerfile: Dockerfile-dev
     command: go test ./...
     depends_on:
       - db
@@ -13,7 +15,9 @@ services:
   rails-db:
     build: rails-db
   web-test:
-    build: web
+    build:
+      context: web
+      dockerfile: Dockerfile-dev
     command: yarn test
     environment:
       - CI=true

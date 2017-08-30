@@ -1,10 +1,15 @@
-FROM golang:1.9
+FROM golang:1.9 as builder
 
 WORKDIR /go/src/rocketsurgeryllc.com/dawnpatrol/api
-COPY . .
+COPY . /go/src/rocketsurgeryllc.com/dawnpatrol/api
 
-ENV GOBIN=$GOPATH/bin
-
-RUN go get github.com/cespare/reflex
 RUN go get -u github.com/golang/dep/cmd/dep
 RUN dep ensure
+
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo cmd/api/api.go
+
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+COPY --from=builder /go/src/rocketsurgeryllc.com/dawnpatrol/api/api /usr/local/bin/api
+
+CMD ["api"]

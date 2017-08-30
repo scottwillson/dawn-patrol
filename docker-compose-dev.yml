@@ -1,7 +1,9 @@
 version: '3.3'
 services:
   api:
-    build: api
+    build:
+      context: api
+      dockerfile: Dockerfile-dev
     command: reflex -g '**/*.go' -s -- sh -c '/go/src/rocketsurgeryllc.com/dawnpatrol/api/bin/build.sh'
     ports:
       - 8080:8080
@@ -11,14 +13,18 @@ services:
     volumes:
       - ./api:/go/src/rocketsurgeryllc.com/dawnpatrol/api
   api_test:
-    build: api
+    build:
+      context: api
+      dockerfile: Dockerfile-dev
     command: reflex -g '**/*.go' -s -- sh -c '/go/src/rocketsurgeryllc.com/dawnpatrol/api/bin/test.sh'
     depends_on:
       - db
     volumes:
       - ./api:/go/src/rocketsurgeryllc.com/dawnpatrol/api
   db:
-    build: db
+    build:
+      context: db
+      dockerfile: Dockerfile-dev
     ports:
       - 55432:5432
   rails-db:
@@ -26,7 +32,9 @@ services:
     ports:
       - 53306:3306
   web:
-    build: web
+    build:
+      context: web
+      dockerfile: Dockerfile-dev
     command: yarn start
     depends_on:
       - api
@@ -38,7 +46,9 @@ services:
       - ./web:/web
       - /web/node_modules
   web_test:
-    build: web
+    build:
+      context: web
+      dockerfile: Dockerfile-dev
     command: yarn test
     depends_on:
       - api
