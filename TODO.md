@@ -1,8 +1,3 @@
-* Rename containers for different envs/compose files
-  * -test
-  * -dev
-  * (deploy has no suffix)
-* Fix web README
 * Persist data
 * migrations
 * https://prometheus.io/ for monitoring
