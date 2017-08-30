@@ -1,28 +1,28 @@
+* consider go-kit/log for structured logging
+* go var?
+* https://prometheus.io/ for monitoring
+* Something like New Relic for performance monitoring
+* Backups
+* Nagios alerts
+  * Or something more modern
+* Error aggregation service
+* Performance test
 * Persist data
 * migrations
-* https://prometheus.io/ for monitoring
-* think about flags/env/12-factors for config
 * Extract scripts from bin/setup
   * e2e
   * tests
   * start servers
 * Create MySQL container
-* consider go-kit/log for structured logging
-* Add data import to E2E
 * Move goose code to /db?
 * Consolidate DB init
-* Replication
-* Backups
-* Nagios alerts
-  * Or something more modern
 * Ansible server setup?
-* Error catching
-* Something like New Relic
+  * Replace Docker Hub
+* Replication from Rails
 * read https://peter.bourgon.org/go-best-practices-2016/#dependency-management
 * move DB data out of init dir
 * Document SemaphoreCI and Docker.io/hub setup
 * Review and apply Docker best practices
-* Performance test
 * Add test of dev build to CI
 * CI build should just execute a script
 * Deploy deploy containers to stage and prod based on branch
@@ -30,8 +30,9 @@
   * branches
   * Separate CI builds
 * Canary test before making new container live?
-* Make API port configurable
-* Secrets?
+* think about flags/env/12-factors for config
+  * Make API port configurable
+* Use Docker secrets?
 * consider https://getgb.io/
 * use scratch for go: https://medium.com/@kelseyhightower/optimizing-docker-images-for-static-binaries-b5696e26eb07
 * Split into separate projects for independent deploys
@@ -55,3 +56,4 @@
 * Consider https://github.com/thockin/go-build-template
 * Ensure dev builds on CI to catch problems there
 * All seed scripts valid?
+* Look at https://github.com/go-kit/kit

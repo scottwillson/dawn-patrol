@@ -1,17 +1,21 @@
 package db
 
 import (
+	"github.com/go-kit/kit/log"
+
 	"github.com/jinzhu/gorm"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
 )
 
 // EventService implements api.EventService.
 type EventService struct {
-	DB *gorm.DB
+	DB     *gorm.DB
+	Logger log.Logger
 }
 
 // Create creates api.Events.
 func (s *EventService) Create(events []api.Event) {
+	s.Logger.Log("action" "create")
 	for _, event := range events {
 		s.DB.Create(event)
 	}
