@@ -1,5 +1,3 @@
-* Use overrides with docker-compose files?
-* Use overrides/DRY up Dockerfiles?
 * Generally use conventions more/fewer flags
 * Fix web README
 * Persist data

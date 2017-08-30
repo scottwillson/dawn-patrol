@@ -13,6 +13,7 @@ services:
   rails-db:
     build: rails-db
   web-test:
-    build:
-      context: web
-      dockerfile: Dockerfile-test
+    build: web
+    command: yarn test
+    environment:
+      - CI=true
