@@ -8,15 +8,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   docker-compose -v >/dev/null 2>&1 || { sudo apt-get -y install docker-compose; }
 fi
 
-echo "Stop and remove containers"
-docker-compose -f docker-compose-deploy.yml stop
-docker-compose -f docker-compose-deploy.yml rm -f
-docker-compose -f docker-compose-test.yml stop
-docker-compose -f docker-compose-test.yml rm -f
-docker-compose stop
-docker-compose rm -f
-rm -rf web/build
-rm -rf web/node_modules
+echo "Clean: stop and remove containers"
+./bin/clean
 
 echo "Run tests"
 ./bin/test

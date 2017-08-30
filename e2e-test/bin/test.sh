@@ -1,4 +1,4 @@
 #!/bin/sh
 set -e
 
-docker-compose -f docker-compose-deploy.yml up e2e-test
+docker-compose -f docker-compose-deploy.yml up --abort-on-container-exit e2e-test

@@ -16,6 +16,7 @@ services:
   e2e-test:
     build: e2e-test
     depends_on:
+      - api
       - web
   rails-db:
     build:
