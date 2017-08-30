@@ -9,6 +9,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 fi
 
 echo "Stop and remove containers"
+docker-compose -f docker-compose-deploy.yml stop
+docker-compose -f docker-compose-deploy.yml rm -f
 docker-compose -f docker-compose-test.yml stop
 docker-compose -f docker-compose-test.yml rm -f
 docker-compose stop
