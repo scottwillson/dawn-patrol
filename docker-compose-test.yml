@@ -1,9 +1,8 @@
 version: '3'
 services:
   api-test:
-    build:
-      context: api
-      dockerfile: Dockerfile-test
+    build: api
+    command: go test ./...
     depends_on:
       - db
       - rails-db

@@ -1,5 +1,3 @@
-* review https://peter.bourgon.org/go-in-production/
-* review https://peter.bourgon.org/go-best-practices-2016/
 * Use overrides with docker-compose files?
 * Use overrides/DRY up Dockerfiles?
 * Generally use conventions more/fewer flags
