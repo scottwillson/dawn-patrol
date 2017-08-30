@@ -58,3 +58,4 @@
 * Consider https://github.com/thockin/go-build-template
   * Put library code under a pkg/ subdirectory. Put binaries under a cmd/ subdirectory.
 * Ensure dev builds on CI to catch problems there
+* All seed scripts valid?

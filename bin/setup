@@ -19,14 +19,14 @@ docker-compose -f docker-compose-test.yml stop
 docker-compose -f docker-compose-test.yml rm -f
 
 echo "Build and start deploy containers"
-docker-compose -f docker-compose-deploy.yml build
-docker-compose -f docker-compose-deploy.yml up -d api db web
+docker-compose build
+docker-compose up -d api db web
 
 echo "Run E2E tests"
 e2e-test/bin/test.sh
 
 echo "Stop deploy containers"
-docker-compose -f docker-compose-deploy.yml stop
+docker-compose stop
 
 echo "Dev up"
 bin/dev.sh

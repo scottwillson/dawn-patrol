@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-docker-compose exec db psql -v ON_ERROR_STOP=1 dawnpatrol_test dawnpatrol -f /docker-entrypoint-initdb.d/seed
+docker-compose -f docker-compose-test.yml exec db psql -v ON_ERROR_STOP=1 dawnpatrol_test dawnpatrol -f /docker-entrypoint-initdb.d/seed

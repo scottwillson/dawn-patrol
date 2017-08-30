@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-docker-compose -f docker-compose-deploy.yml run api import
+docker-compose run api import

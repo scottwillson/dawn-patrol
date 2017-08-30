@@ -1,0 +1,50 @@
+version: '3.3'
+services:
+  api:
+    build: api
+    command: reflex -g '**/*.go' -s -- sh -c '/go/src/rocketsurgeryllc.com/dawnpatrol/api/bin/build.sh'
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+      - rails-db
+    volumes:
+      - ./api:/go/src/rocketsurgeryllc.com/dawnpatrol/api
+  api_test:
+    build: api
+    command: reflex -g '**/*.go' -s -- sh -c '/go/src/rocketsurgeryllc.com/dawnpatrol/api/bin/test.sh'
+    depends_on:
+      - db
+    volumes:
+      - ./api:/go/src/rocketsurgeryllc.com/dawnpatrol/api
+  db:
+    build: db
+    ports:
+      - 55432:5432
+  rails-db:
+    build: rails-db
+    ports:
+      - 53306:3306
+  web:
+    build: web
+    command: yarn start
+    depends_on:
+      - api
+    environment:
+      - HOST=0.0.0.0
+    ports:
+      - 3000:3000
+    volumes:
+      - ./web:/web
+      - /web/node_modules
+  web_test:
+    build: web
+    command: yarn test
+    depends_on:
+      - api
+      - web
+    environment:
+      - HOST=0.0.0.0
+    volumes:
+      - ./web:/web
+      - /web/node_modules
