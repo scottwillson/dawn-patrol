@@ -1,4 +1,3 @@
-* fix go reloading
 * https://prometheus.io/ for monitoring
 * Something like New Relic for performance monitoring
 * Backups
@@ -37,7 +36,6 @@
 * Split into separate projects for independent deploys
   * What does testing/build pipeline look like?
 * Be consistent with .sh or not
-* Ensure reflex really notices changes to all files
 * openDB loop should raise original errors
 * Split out mock
 * Split out RailsService into CopyService? How to organize services and services DI?

@@ -4,7 +4,7 @@ services:
     build:
       context: api
       dockerfile: Dockerfile-dev
-    command: reflex -g '**/*.go' -s -- sh -c '/go/src/rocketsurgeryllc.com/dawnpatrol/api/bin/build.sh'
+    command: reflex -r '.go' -s -- sh -c '/go/src/rocketsurgeryllc.com/dawnpatrol/api/bin/build.sh'
     ports:
       - 8080:8080
     depends_on:
@@ -18,7 +18,7 @@ services:
     build:
       context: api
       dockerfile: Dockerfile-dev
-    command: reflex -g '**/*.go' -s -- sh -c '/go/src/rocketsurgeryllc.com/dawnpatrol/api/bin/test.sh'
+    command: reflex -r '.go' -s -- sh -c '/go/src/rocketsurgeryllc.com/dawnpatrol/api/bin/test.sh'
     depends_on:
       - db-dev
     environment:
