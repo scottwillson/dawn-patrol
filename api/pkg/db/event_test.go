@@ -47,7 +47,7 @@ func TestFind(t *testing.T) {
 	db.Create(&api.Event{})
 	db.Create(&api.Event{})
 
-	es := EventService{DB: db}
+	es := EventService{DB: db, Logger: &mock.Logger{}}
 
 	var events = es.Find()
 	assert.Equal(t, 2, len(events), "events")

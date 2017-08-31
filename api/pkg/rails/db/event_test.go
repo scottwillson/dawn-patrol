@@ -36,8 +36,7 @@ func TestRailsFind(t *testing.T) {
 	dpDB := Open()
 	defer dpDB.Close()
 
-	var eventService EventService
-	eventService.DB = dpDB
+	eventService := &db.EventService{DB: dpDB, Logger: &mock.Logger{}}
 
 	var events = eventService.Find()
 

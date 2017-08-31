@@ -1,4 +1,3 @@
-* consider go-kit/log for structured logging
 * fix go reloading
 * go var?
 * https://prometheus.io/ for monitoring
@@ -58,3 +57,6 @@
 * Ensure dev builds on CI to catch problems there
 * All seed scripts valid?
 * Look at https://github.com/go-kit/kit
+* Add logging to db/open.go?
+* Default struct Logger to something reasonable
+* Use command pattern, not services?

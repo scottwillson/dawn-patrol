@@ -19,6 +19,8 @@ type EventService struct {
 
 // Copy copies events from Racing on Rails MySQL DB to Dawn Patrol DB.
 func (s *EventService) Copy() {
+	s.Logger.Log("action", "copy")
+
 	var railsEvents []rails.Event
 	s.DB.Find(&railsEvents)
 
@@ -32,6 +34,8 @@ func (s *EventService) Copy() {
 
 // Find finds all events in the Racing on Rails MySQL DB.
 func (s *EventService) Find() []rails.Event {
+	s.Logger.Log("action", "find")
+
 	var events []rails.Event
 	s.DB.Find(&events)
 	return events

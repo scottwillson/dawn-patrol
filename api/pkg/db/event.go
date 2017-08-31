@@ -23,6 +23,7 @@ func (s *EventService) Create(events []api.Event) {
 
 // Find finds all events as api.Events.
 func (s *EventService) Find() []api.Event {
+	s.Logger.Log("action", "find")
 	var events []api.Event
 	s.DB.Find(&events)
 	return events
