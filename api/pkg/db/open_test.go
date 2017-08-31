@@ -15,7 +15,7 @@ func TestOpen(t *testing.T) {
 }
 
 func TestOpenURL(t *testing.T) {
-	db := OpenURL("postgres://dawnpatrol@db/dawnpatrol_development?sslmode=disable")
+	db := OpenURL("postgres://dawnpatrol@db-dev/dawnpatrol_test?sslmode=disable")
 	defer db.Close()
 
 	assert.NotNil(t, db, "db from db.OpenURL()")

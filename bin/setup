@@ -8,25 +8,25 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
   docker-compose -v >/dev/null 2>&1 || { sudo apt-get -y install docker-compose; }
 fi
 
-echo "Clean: stop and remove containers"
+echo "[Clean: stop and remove containers]"
 ./bin/clean
 
-echo "Run tests"
+echo "[Run tests]"
 ./bin/test
 
-echo "Stop and remove test containers"
+echo "[Stop and remove test containers]"
 docker-compose -f docker-compose-test.yml stop
 docker-compose -f docker-compose-test.yml rm -f
 
-echo "Build and start deploy containers"
+echo "[Build and start deploy containers]"
 docker-compose build
 docker-compose up -d api db web
 
-echo "Run E2E tests"
+echo "[Run E2E tests]"
 e2e-test/bin/test.sh
 
-echo "Stop deploy containers"
+echo "[Stop deploy containers]"
 docker-compose stop
 
-echo "Dev up"
+echo "[Dev up]"
 bin/dev.sh

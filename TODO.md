@@ -1,5 +1,4 @@
 * fix go reloading
-* go var?
 * https://prometheus.io/ for monitoring
 * Something like New Relic for performance monitoring
 * Backups

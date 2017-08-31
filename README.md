@@ -21,10 +21,10 @@ Install Docker
 For development outside of Docker (for example, if you're using Atom's Go-plus to run tests and show coverage in the editor), set environment variables for DB connections.
 
 ```
-export DATABASE_URL=postgres://dawnpatrol@localhost:55432/dawnpatrol_development?sslmode=disable
+export DATABASE_URL=postgres://dawnpatrol@localhost:55432/dawnpatrol_test?sslmode=disable
 export RAILS_DATABASE_URL="rails:rails@tcp(localhost:53306)/rails"
-RUN go get -u github.com/golang/dep/cmd/dep
-RUN dep ensure
+go get -u github.com/golang/dep/cmd/dep
+dep ensure
 ```
 
 ## Goal
