@@ -3,6 +3,7 @@ package db
 import (
 	"os"
 
+	"github.com/go-kit/kit/log"
 	"github.com/jinzhu/gorm"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/db"
@@ -11,8 +12,9 @@ import (
 
 // EventService implements api.rails.EventService.
 type EventService struct {
-	DB              *gorm.DB
 	APIEventService api.EventService
+	DB              *gorm.DB
+	Logger          log.Logger
 }
 
 // Copy copies events from Racing on Rails MySQL DB to Dawn Patrol DB.

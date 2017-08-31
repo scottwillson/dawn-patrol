@@ -28,7 +28,9 @@ func main() {
 	railsESLogger := log.With(logger, "component", "rails-event-service")
 	railsES := &railsDB.EventService{DB: mysql, APIEventService: es, Logger: railsESLogger}
 
-	httpLogger := log.With(logger, "component", "http")
-	mux := http.NewMux(es, railsES, httpLogger)
+	mux := http.NewMux(http.MuxConfig{
+		EventService:      es,
+		RailsEventService: railsES,
+	})
 	http.ListenAndServe(mux)
 }

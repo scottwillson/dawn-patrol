@@ -14,3 +14,9 @@ func (s *EventService) Create([]api.Event) {}
 func (s *EventService) Find() []api.Event {
 	return s.FindFn()
 }
+
+type Logger struct{}
+
+func (l *Logger) Log(keyvals ...interface{}) error {
+	return nil
+}

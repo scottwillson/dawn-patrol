@@ -1,14 +1,17 @@
 package log
 
 import (
-	"fmt"
 	"net/http"
+	"os"
+
+	"github.com/go-kit/kit/log"
 )
 
-// Request logs the request URL to stdout.
+// Request logs the request URL to go-kit logger. Can't pass dependencies, so use global logger.
 func Request(h http.Handler) http.Handler {
+	logger := log.NewLogfmtLogger(log.NewSyncWriter(os.Stderr))
 	fn := func(w http.ResponseWriter, r *http.Request) {
-		fmt.Printf("%v %v\n", r.Method, r.URL)
+		logger.Log("component", "http", "method", r.Method, "url", r.URL)
 		h.ServeHTTP(w, r)
 	}
 	return http.HandlerFunc(fn)

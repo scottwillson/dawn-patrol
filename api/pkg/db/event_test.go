@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
+	"rocketsurgeryllc.com/dawnpatrol/api/pkg/mock"
 )
 
 type ByName []api.Event
@@ -20,7 +21,7 @@ func TestCreate(t *testing.T) {
 
 	db.Delete(api.Event{})
 
-	es := EventService{DB: db}
+	es := EventService{DB: db, Logger: &mock.Logger{}}
 
 	events := []api.Event{
 		api.Event{Name: "Copperopolis Road Race"},
