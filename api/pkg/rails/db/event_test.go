@@ -6,7 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/db"
-	"rocketsurgeryllc.com/dawnpatrol/api/pkg/mock"
 
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -22,9 +21,9 @@ func TestRailsCopy(t *testing.T) {
 	railsDB := Open()
 	defer railsDB.Close()
 
-	eventService := &db.EventService{DB: dpDB, Logger: &mock.Logger{}}
+	eventService := &db.EventService{DB: dpDB, Logger: &api.MockLogger{}}
 
-	railsService := &EventService{DB: railsDB, APIEventService: eventService, Logger: &mock.Logger{}}
+	railsService := &EventService{DB: railsDB, APIEventService: eventService, Logger: &api.MockLogger{}}
 	railsService.Copy()
 
 	events := eventService.Find()
@@ -36,7 +35,7 @@ func TestRailsFind(t *testing.T) {
 	dpDB := Open()
 	defer dpDB.Close()
 
-	eventService := &db.EventService{DB: dpDB, Logger: &mock.Logger{}}
+	eventService := &db.EventService{DB: dpDB, Logger: &api.MockLogger{}}
 
 	var events = eventService.Find()
 

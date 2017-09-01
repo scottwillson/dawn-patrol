@@ -3,8 +3,10 @@
 * Backups
 * Nagios alerts
   * Or something more modern
+  * https://github.com/prometheus/alertmanager
 * Error aggregation service
 * Performance test
+* https
 * Persist data
 * migrations
 * Extract scripts from bin/setup
@@ -57,3 +59,5 @@
 * Add logging to db/open.go?
 * Default struct Logger to something reasonable
 * Use command pattern, not services?
+* https://github.com/google/cadvisor?
+* https://github.com/prometheus/node_exporter?

@@ -9,6 +9,7 @@ import (
 	railsHttp "rocketsurgeryllc.com/dawnpatrol/api/pkg/rails/http"
 )
 
+// MuxConfig defines goji.Mux dependencies
 type MuxConfig struct {
 	EventService      api.EventService
 	RailsEventService rails.EventService

@@ -9,7 +9,6 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
-	"rocketsurgeryllc.com/dawnpatrol/api/pkg/mock"
 
 	goji "goji.io"
 	"goji.io/pat"
@@ -24,7 +23,7 @@ func (h *ErroringRootEventJSON) marshal(events []api.Event) (string, error) {
 func TestRoot(t *testing.T) {
 	mux := goji.NewMux()
 
-	es := mock.EventService{}
+	es := api.MockEventService{}
 	h := newRoot(&es)
 
 	es.FindFn = func() []api.Event {
@@ -56,7 +55,7 @@ func TestRoot(t *testing.T) {
 func TestRootServicError(t *testing.T) {
 	mux := goji.NewMux()
 
-	var es mock.EventService
+	var es api.MockEventService
 	h := Root{EventJSON: &ErroringRootEventJSON{}, EventService: &es}
 
 	es.FindFn = func() []api.Event {
