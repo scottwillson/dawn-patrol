@@ -26,7 +26,7 @@ func TestNewInstrumentedHandler(t *testing.T) {
 	es := mock.EventService{}
 	h := NewInstrumentedHandler(app, newRoot(&es))
 
-	assert.NotNil(t, h, "instrumented NewRelicApp")
+	assert.NotNil(t, h, "instrumented Handler")
 
 	w := httptest.NewRecorder()
 	r, err := http.NewRequest("GET", "/index.json", nil)

@@ -17,11 +17,13 @@ func main() {
 	logger := log.NewLogfmtLogger(log.NewSyncWriter(os.Stderr))
 	log.With(logger, "at", log.DefaultTimestampUTC)
 
+	nr := api.NewNewRelicApp(logger)
+
 	dpDB := db.Open()
 	defer dpDB.Close()
 
 	esLogger := log.With(logger, "component", "event-service")
-	es := &db.EventService{DB: dpDB, Logger: esLogger}
+	es := db.NewInstrumentedEventService(nr, &db.EventService{DB: dpDB, Logger: esLogger})
 
 	mysql := railsDB.Open()
 	defer mysql.Close()
@@ -31,7 +33,7 @@ func main() {
 
 	mux := http.NewMux(http.MuxConfig{
 		EventService:      es,
-		NewRelicApp:       api.NewNewRelicApp(logger),
+		NewRelicApp:       nr,
 		RailsEventService: railsES,
 	})
 	http.ListenAndServe(mux)

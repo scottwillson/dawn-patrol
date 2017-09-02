@@ -1,3 +1,5 @@
+* DRY up mock New Relic
+* Use New Relic segments for HTTP handlers?
 * Error aggregation service
 * Performance test
 * Persist data
