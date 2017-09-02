@@ -81,6 +81,10 @@ module.exports = function(proxy, allowedHost) {
       '/index.json': {
         target: 'http://api-dev:8080',
         secure: false
+      },
+      '/status': {
+        target: 'http://api-dev:8080',
+        secure: false
       }
     },
     setup(app) {

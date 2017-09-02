@@ -27,6 +27,7 @@ func NewMux(cfg MuxConfig) *goji.Mux {
 	mux.Use(log.Request)
 	mux.Handle(pat.Get("/index.json"), NewInstrumentedHandler(cfg.NewRelicApp, newRoot(cfg.EventService)))
 	mux.Handle(pat.Post("/rails/copy"), NewInstrumentedHandler(cfg.NewRelicApp, &railsHttp.Copy{cfg.RailsEventService}))
+	mux.Handle(pat.Get("/status"), NewInstrumentedHandler(cfg.NewRelicApp, newStatus()))
 
 	return mux
 }

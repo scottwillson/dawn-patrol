@@ -1,15 +1,12 @@
-* Backups
-* Nagios alerts
-  * Or something more modern
 * Error aggregation service
 * Performance test
 * Persist data
 * migrations
+* Backups
 * Extract scripts from bin/setup
   * e2e
   * tests
   * start servers
-* Create MySQL container
 * Move goose code to /db?
 * Consolidate DB init
 * Ansible server setup?
@@ -26,6 +23,7 @@
   * branches
   * Separate CI builds
 * Canary test before making new container live?
+* New Relic RUM or similar?
 * think about flags/env/12-factors for config
   * Make API port configurable
 * consider https://getgb.io/
@@ -55,3 +53,9 @@
 * Use command pattern, not services?
 * https://prometheus.io/ for monitoring
 * Move appName() to to-level
+* alerts
+  * Prometheus?
+  * New Relic
+  * Digital Ocean?
+  * Docker Hub?
+  * Ansible setup?
