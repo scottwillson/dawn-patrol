@@ -51,3 +51,17 @@ docker login
 
 To instrument with New Relic, set NEW_RELIC_LICENSE_KEY in the environment
 Set DAWN_PATROL_ENVIRONMENT for dev, test, stage
+
+## Performance testing
+
+warmup:
+`ab -n 100 -c 4 http://web.dawn-patrol-stage.c21e9163.svc.dockerapp.io/`
+
+Minimal benchmark:
+`ab -n 100 http://web.dawn-patrol-stage.c21e9163.svc.dockerapp.io/`
+
+Typical:
+`ab -n 100 -c 2 http://web.dawn-patrol-stage.c21e9163.svc.dockerapp.io/`
+
+Stress:
+`ab -n 4000 -c 20 http://web.dawn-patrol-stage.c21e9163.svc.dockerapp.io/`
