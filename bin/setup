@@ -23,10 +23,10 @@ docker-compose build
 docker-compose up -d api db web
 
 echo "[Run E2E tests]"
-e2e-test/bin/test.sh
+e2e-test/bin/test
 
 echo "[Stop deploy containers]"
 docker-compose stop
 
 echo "[Dev up]"
-bin/dev.sh
+bin/dev
