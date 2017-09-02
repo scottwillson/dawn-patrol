@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+e2e-test/bin/rebuild-base.sh
+
+./test
+
+docker-compose -f docker-compose-test.yml stop
+docker-compose -f docker-compose-test.yml rm -f
+
+docker-compose build
+docker-compose up -d api db web
+
+e2e-test/bin/test.sh
+
+docker-compose push
