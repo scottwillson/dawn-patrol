@@ -18,8 +18,8 @@ type instrumentedHandler struct {
 // The New Relic app name is set from DAWN_PATROL_ENVIRONMENT, and defaults to just 'Dawn Patrol' (production).
 func NewNewRelicApp(logger log.Logger) newrelic.Application {
 	license := os.Getenv("NEW_RELIC_LICENSE_KEY")
+	logger.Log("component", "instrumentation", "new_relic_license_key", license != "")
 	if license == "" {
-		logger.Log("component", "instrumentation", "new_relic_license_key", false)
 		return nil
 	}
 
