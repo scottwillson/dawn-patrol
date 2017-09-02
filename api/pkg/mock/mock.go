@@ -18,11 +18,3 @@ func (s *EventService) Find() []api.Event {
 
 	return []api.Event{}
 }
-
-// Logger mocks go-kit/log.Logger
-type Logger struct{}
-
-// Log mocks go-kit/log.Logger.Log
-func (l *Logger) Log(keyvals ...interface{}) error {
-	return nil
-}

@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
-	"rocketsurgeryllc.com/dawnpatrol/api/pkg/mock"
+	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 )
 
 type ByName []api.Event
@@ -21,7 +21,7 @@ func TestCreate(t *testing.T) {
 
 	db.Delete(api.Event{})
 
-	es := EventService{DB: db, Logger: &mock.Logger{}}
+	es := EventService{DB: db, Logger: &log.MockLogger{}}
 
 	events := []api.Event{
 		api.Event{Name: "Copperopolis Road Race"},
@@ -47,7 +47,7 @@ func TestFind(t *testing.T) {
 	db.Create(&api.Event{})
 	db.Create(&api.Event{})
 
-	es := EventService{DB: db, Logger: &mock.Logger{}}
+	es := EventService{DB: db, Logger: &log.MockLogger{}}
 
 	var events = es.Find()
 	assert.Equal(t, 2, len(events), "events")

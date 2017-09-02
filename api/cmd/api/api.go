@@ -7,6 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	api "rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/db"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/http"
 	railsDB "rocketsurgeryllc.com/dawnpatrol/api/pkg/rails/db"
@@ -30,7 +31,7 @@ func main() {
 
 	mux := http.NewMux(http.MuxConfig{
 		EventService:      es,
-		NewRelicApp:       http.NewNewRelicApp(logger),
+		NewRelicApp:       api.NewNewRelicApp(logger),
 		RailsEventService: railsES,
 	})
 	http.ListenAndServe(mux)
