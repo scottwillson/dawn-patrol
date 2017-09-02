@@ -3,7 +3,7 @@ set -e
 
 e2e-test/bin/rebuild-base
 
-./test
+bin/test
 
 docker-compose -f docker-compose-test.yml stop
 docker-compose -f docker-compose-test.yml rm -f

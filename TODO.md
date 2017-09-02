@@ -28,12 +28,10 @@
 * Canary test before making new container live?
 * think about flags/env/12-factors for config
   * Make API port configurable
-* Use Docker secrets?
 * consider https://getgb.io/
 * use scratch for go: https://medium.com/@kelseyhightower/optimizing-docker-images-for-static-binaries-b5696e26eb07
 * Split into separate projects for independent deploys
   * What does testing/build pipeline look like?
-* Be consistent with .sh or not
 * openDB loop should raise original errors
 * Split out mock
 * Split out RailsService into CopyService? How to organize services and services DI?
