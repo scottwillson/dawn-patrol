@@ -12,6 +12,9 @@ services:
       - rails-db
     environment:
       - DATABASE_URL=postgres://dawnpatrol@db-dev/dawnpatrol_development?sslmode=disable
+      - DAWN_PATROL_ENVIRONMENT=dev
+      - NEW_RELIC_LICENSE_KEY
+
     volumes:
       - ./api:/go/src/rocketsurgeryllc.com/dawnpatrol/api
   api-test:

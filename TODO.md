@@ -1,5 +1,3 @@
-* https://prometheus.io/ for monitoring
-* Something like New Relic for performance monitoring
 * Backups
 * Nagios alerts
   * Or something more modern
@@ -57,3 +55,5 @@
 * Add logging to db/open.go?
 * Default struct Logger to something reasonable
 * Use command pattern, not services?
+* https://prometheus.io/ for monitoring
+* Move appName() to to-level

@@ -30,6 +30,7 @@ func main() {
 
 	mux := http.NewMux(http.MuxConfig{
 		EventService:      es,
+		NewRelicApp:       http.NewNewRelicApp(logger),
 		RailsEventService: railsES,
 	})
 	http.ListenAndServe(mux)

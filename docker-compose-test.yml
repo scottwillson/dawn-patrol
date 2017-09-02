@@ -10,6 +10,7 @@ services:
       - rails-db
     environment:
       - DATABASE_URL=postgres://dawnpatrol@db-dev/dawnpatrol_test?sslmode=disable
+      - DAWN_PATROL_ENVIRONMENT=test
   db-dev:
     build:
       context: db

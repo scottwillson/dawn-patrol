@@ -48,3 +48,6 @@ https://success.docker.com/Architecture/Docker_Reference_Architecture%3A_Develop
 
 ## Deploy
 docker login
+
+To instrument with New Relic, set NEW_RELIC_LICENSE_KEY in the environment
+Set DAWN_PATROL_ENVIRONMENT for dev, test, stage

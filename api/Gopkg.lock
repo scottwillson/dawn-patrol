@@ -56,6 +56,12 @@
   revision = "e42267488fe361b9dc034be7a6bffef5b195bceb"
 
 [[projects]]
+  name = "github.com/newrelic/go-agent"
+  packages = [".","internal","internal/jsonx","internal/logger","internal/sysinfo","internal/utilization"]
+  revision = "29ec3cd1bb2f21d21d36da37dae52695cb2c3a17"
+  version = "v1.9.0"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
@@ -76,6 +82,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "4962d86b56e4143033f744b2e08a3e23261ce434cb03f6258fff5cd30ee65c71"
+  inputs-digest = "b6262c1bf21f1a840055280c02a736d132375a48c4de26bd104e85bc97739ae4"
   solver-name = "gps-cdcl"
   solver-version = 1
