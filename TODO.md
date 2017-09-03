@@ -1,7 +1,9 @@
 * DRY up mock New Relic
 * Use New Relic segments for HTTP handlers?
+* Semaphore: change to `exec ci`?
 * Error aggregation service
-* Performance test
+  * https://elithrar.github.io/article/http-handler-error-handling-revisited/
+  * nginx errors?
 * Persist data
 * migrations
 * Backups
@@ -61,3 +63,5 @@
   * Digital Ocean?
   * Docker Hub?
   * Ansible setup?
+* Performance test
+  * real URLs like /person/:id/results
