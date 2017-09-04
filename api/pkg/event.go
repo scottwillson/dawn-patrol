@@ -1,8 +1,11 @@
 package api
 
+import "time"
+
 // Event is a bike race on a date or dates with (optional) categories and results.
 type Event struct {
-	Name string `json:"name"`
+	StartsAt time.Time `json:"startsAt"`
+	Name     string    `json:"name"`
 }
 
 // EventService manages Events.
@@ -11,6 +14,7 @@ type EventService interface {
 	Find() []Event
 }
 
+// ByName is a predicate to sort Events by Name
 type ByName []Event
 
 func (a ByName) Len() int           { return len(a) }

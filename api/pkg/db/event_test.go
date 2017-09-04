@@ -46,20 +46,3 @@ func TestFind(t *testing.T) {
 	var events = es.Find()
 	assert.Equal(t, 2, len(events), "events")
 }
-
-func TestByName(t *testing.T) {
-	events := []api.Event{}
-	sort.Sort(api.ByName(events))
-
-	events = []api.Event{
-		api.Event{Name: "Sausalito Criterium"},
-		api.Event{Name: "Copperopolis Road Race"},
-	}
-
-	sort.Sort(api.ByName(events))
-
-	assert := assert.New(t)
-	assert.Equal(2, len(events), "events")
-	assert.Equal("Copperopolis Road Race", events[0].Name, "event name")
-	assert.Equal("Sausalito Criterium", events[1].Name, "event name")
-}

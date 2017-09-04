@@ -44,7 +44,7 @@ func TestDatabaseURLFromEnv(t *testing.T) {
 func TestDatabaseDriverForMysql(t *testing.T) {
 	assert := assert.New(t)
 
-	driver, err := databaseDriver("rails:rails@tcp(rails-db:3306)/rails")
+	driver, err := databaseDriver("rails:rails@tcp(rails-db:3306)/rails?parseTime=True")
 	assert.Nil(err, "db.databaseDriver() for mysql")
 	assert.Equal("mysql", driver, "db.databaseDriver() for mysql")
 }

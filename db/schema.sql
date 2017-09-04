@@ -26,9 +26,12 @@ SET default_with_oids = false;
 
 CREATE TABLE events (
     id integer NOT NULL,
-    name text
+    name text NOT NULL,
+    starts_at timestamp with time zone NOT NULL
 );
 
+CREATE INDEX ON events (name);
+CREATE INDEX ON events (starts_at);
 
 ALTER TABLE events OWNER TO dawnpatrol;
 

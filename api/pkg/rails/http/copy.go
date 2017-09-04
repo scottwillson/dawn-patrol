@@ -12,5 +12,7 @@ type Copy struct {
 }
 
 func (h *Copy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	h.EventService.Copy()
+	if err := h.EventService.Copy(); err != nil {
+		panic(err)
+	}
 }

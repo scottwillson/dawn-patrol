@@ -1,12 +1,15 @@
 package rails
 
+import "time"
+
 // Event is a bike race in the Racing on Rails DB.
 type Event struct {
-	Name string `json:"name"`
+	Date time.Time `json:"date"`
+	Name string    `json:"name"`
 }
 
 // EventService copies data from Racing on Rails MySQL DB.
 type EventService interface {
-	Copy()
+	Copy() error
 	Find() []Event
 }
