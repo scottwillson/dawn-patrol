@@ -1,6 +1,7 @@
 package http
 
 import (
+	newrelic "github.com/newrelic/go-agent"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	goji "goji.io"
 	"goji.io/pat"
@@ -10,9 +11,13 @@ import (
 	railsHttp "rocketsurgeryllc.com/dawnpatrol/api/pkg/rails/http"
 )
 
-// MuxConfig defines goji.Mux dependencies
+// MuxConfig holds configuration and dependencies for a goji.Mu instance.
+// EventService: main api EventService.
+// NewRelicApp: New Relic configuration.
+// RailsEventService: Rails EventService.
 type MuxConfig struct {
 	EventService      api.EventService
+	NewRelicApp       newrelic.Application
 	RailsEventService rails.EventService
 }
 
@@ -24,6 +29,7 @@ func NewMux(cfg MuxConfig) *goji.Mux {
 	mux.Handle(pat.Get("/index.json"), newRoot(cfg.EventService))
 	mux.Handle(pat.Get("/metrics"), promhttp.Handler())
 	mux.Handle(pat.Post("/rails/copy"), &railsHttp.Copy{cfg.RailsEventService})
+	mux.Handle(pat.Get("/status"), NewInstrumentedHandler(cfg.NewRelicApp, newStatus()))
 
 	return mux
 }

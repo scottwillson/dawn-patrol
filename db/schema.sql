@@ -26,9 +26,20 @@ SET default_with_oids = false;
 
 CREATE TABLE events (
     id integer NOT NULL,
-    name text
+    city text,
+    discipline text NOT NULL default 'Road',
+    name text NOT NULL default 'New Event',
+    rails_id integer,
+    rails_created_at timestamp with time zone,
+    rails_updated_at timestamp with time zone,
+    starts_at timestamp with time zone NOT NULL,
+    state text
 );
 
+CREATE INDEX ON events (discipline);
+CREATE INDEX ON events (name);
+CREATE INDEX ON events (rails_id);
+CREATE INDEX ON events (starts_at);
 
 ALTER TABLE events OWNER TO dawnpatrol;
 

@@ -5,6 +5,8 @@ services:
     depends_on:
       - db
       - rails-db
+    environment:
+      - NEW_RELIC_LICENSE_KEY
     image: scottwillson/dawn-patrol-api
   db:
     build: db

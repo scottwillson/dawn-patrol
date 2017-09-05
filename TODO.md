@@ -1,19 +1,26 @@
+* Ensure MySQL is using UTC
 * https://prometheus.io/ for monitoring
-* Something like New Relic for performance monitoring
-* Backups
-* Nagios alerts
-  * Or something more modern
-  * https://github.com/prometheus/alertmanager
+* DRY up mock New Relic
+* Use New Relic segments for HTTP handlers?
+* Semaphore: change to `exec ci`?
 * Error aggregation service
-* Performance test
+  * https://elithrar.github.io/article/http-handler-error-handling-revisited/
+  * nginx errors?
+* alerts
+  * https://github.com/prometheus/alertmanager
+  * Prometheus?
+  * New Relic
+  * Digital Ocean?
+  * Docker Hub?
+  * Ansible setup?
 * https
 * Persist data
 * migrations
+* Backups
 * Extract scripts from bin/setup
   * e2e
   * tests
   * start servers
-* Create MySQL container
 * Move goose code to /db?
 * Consolidate DB init
 * Ansible server setup?
@@ -30,14 +37,13 @@
   * branches
   * Separate CI builds
 * Canary test before making new container live?
+* New Relic RUM or similar?
 * think about flags/env/12-factors for config
   * Make API port configurable
-* Use Docker secrets?
 * consider https://getgb.io/
 * use scratch for go: https://medium.com/@kelseyhightower/optimizing-docker-images-for-static-binaries-b5696e26eb07
 * Split into separate projects for independent deploys
   * What does testing/build pipeline look like?
-* Be consistent with .sh or not
 * openDB loop should raise original errors
 * Split out mock
 * Split out RailsService into CopyService? How to organize services and services DI?
@@ -59,5 +65,10 @@
 * Add logging to db/open.go?
 * Default struct Logger to something reasonable
 * Use command pattern, not services?
+* Move appName() to to-level
 * https://github.com/google/cadvisor?
 * https://github.com/prometheus/node_exporter?
+* alerts
+* Performance test
+  * real URLs like /person/:id/results
+* Add assert equal for Dates

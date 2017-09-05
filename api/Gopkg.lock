@@ -74,6 +74,12 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/newrelic/go-agent"
+  packages = [".","internal","internal/jsonx","internal/logger","internal/sysinfo","internal/utilization"]
+  revision = "29ec3cd1bb2f21d21d36da37dae52695cb2c3a17"
+  version = "v1.9.0"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
@@ -81,7 +87,7 @@
 
 [[projects]]
   name = "github.com/prometheus/client_golang"
-  packages = ["prometheus"]
+  packages = ["prometheus","prometheus/promhttp"]
   revision = "c5b7fccd204277076155f10851dad72b76a49317"
   version = "v0.8.0"
 
@@ -118,6 +124,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0ef99a128d360f17b5fc96e77adfa6014b6588d8a22e19b18b6702ba2196da7f"
+  inputs-digest = "cfac64d71d5db1cfc78ef466f30663cab50ab3b8e2d4eb7bb2f65aca4c41e643"
   solver-name = "gps-cdcl"
   solver-version = 1

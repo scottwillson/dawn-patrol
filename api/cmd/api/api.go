@@ -23,6 +23,8 @@ func main() {
 	logger := log.NewLogfmtLogger(log.NewSyncWriter(os.Stderr))
 	log.With(logger, "at", log.DefaultTimestampUTC)
 
+	nr := api.NewNewRelicApp(logger)
+
 	dpDB := db.Open()
 	defer dpDB.Close()
 
@@ -54,6 +56,7 @@ func main() {
 
 	mux := http.NewMux(http.MuxConfig{
 		EventService:      es,
+		NewRelicApp:       nr,
 		RailsEventService: railsES,
 	})
 	http.ListenAndServe(mux)
