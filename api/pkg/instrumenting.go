@@ -31,8 +31,8 @@ func (s *instrumentingService) Create(events []Event) {
 
 func (s *instrumentingService) Find() []Event {
 	defer func(begin time.Time) {
-		s.requestCount.With("method", "create").Add(1)
-		s.requestLatency.With("method", "create").Observe(time.Since(begin).Seconds())
+		s.requestCount.With("method", "find").Add(1)
+		s.requestLatency.With("method", "find").Observe(time.Since(begin).Seconds())
 	}(time.Now())
 
 	return s.EventService.Find()

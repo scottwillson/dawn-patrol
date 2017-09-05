@@ -19,5 +19,7 @@ RSpec.describe 'DawnPatrol', type: 'feature' do
 
     visit 'http://web/'
     expect(page).to have_css '.events', text: '2 events'
+
+    visit 'http://api:8080/metrics'
   end
 end

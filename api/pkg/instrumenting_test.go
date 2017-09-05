@@ -8,13 +8,13 @@ import (
 	kitprometheus "github.com/go-kit/kit/metrics/prometheus"
 )
 
-func TestInstrumentedCreate(t *testing.T) {
+func TestInstrumented(t *testing.T) {
 	fieldKeys := []string{"method"}
 
 	var es EventService
 	es = &MockEventService{}
 
-	NewInstrumentingService(
+	es = NewInstrumentingService(
 		kitprometheus.NewCounterFrom(stdprometheus.CounterOpts{
 			Namespace: "api",
 			Subsystem: "event_service",
@@ -29,4 +29,7 @@ func TestInstrumentedCreate(t *testing.T) {
 		}, fieldKeys),
 		es,
 	)
+
+	es.Create([]Event{})
+	es.Find()
 }

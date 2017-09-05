@@ -10,7 +10,11 @@ func (s *MockEventService) Create([]Event) {}
 
 // Find mocks db.EventService.Find().
 func (s *MockEventService) Find() []Event {
-	return s.FindFn()
+	if s.FindFn != nil {
+		return s.FindFn()
+	}
+
+	return []Event{}
 }
 
 type MockLogger struct{}
