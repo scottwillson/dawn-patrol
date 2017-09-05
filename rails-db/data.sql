@@ -23,8 +23,8 @@ insert into events (date, discipline, city, id, name, promoter_id, state, type, 
   1,
   'OR',
   'SingleDayEvent',
-  '2009-01-07 11:34:00',
-  '2009-01-07 11:34:00'
+  '2009-01-07 11:35:00',
+  '2009-01-09 02:00:01'
 );
 
 insert into racing_associations (name, short_name) values (
