@@ -4,8 +4,9 @@ import "time"
 
 // Event is a bike race on a date or dates with (optional) categories and results.
 type Event struct {
-	StartsAt time.Time `json:"startsAt"`
-	Name     string    `json:"name"`
+	Discipline string    `json:"discipline"`
+	Name       string    `json:"name"`
+	StartsAt   time.Time `json:"startsAt"`
 }
 
 // EventService manages Events.

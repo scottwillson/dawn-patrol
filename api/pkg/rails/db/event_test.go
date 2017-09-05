@@ -38,17 +38,24 @@ func TestRailsCopy(t *testing.T) {
 	assert.Equal(2, len(events), "events")
 
 	// date, discipline, city, id, name, promoter_id, state, type, created_at, updated_at
-	assert.Equal("AVC", events[0].Name, "event name")
-
-	assert.Equal("Hellyer Challenge", events[1].Name, "event name")
 	pacific, err := time.LoadLocation("America/Los_Angeles")
 	if err != nil {
 		t.Error(err)
 	}
-	dateInPacific := time.Date(2009, 7, 3, 0, 0, 0, 0, pacific)
+
+	assert.Equal("AVC", events[0].Name, "event name")
+	dateInPacific := time.Date(2009, 7, 10, 0, 0, 0, 0, pacific)
+	if !dateInPacific.Equal(events[0].StartsAt) {
+		t.Errorf("ToAssociationTimeZone should convert time %v to association time zone %v", events[0].StartsAt, dateInPacific)
+	}
+	assert.Equal("Track", events[0].Discipline, "event discipline")
+
+	assert.Equal("Hellyer Challenge", events[1].Name, "event name")
+	dateInPacific = time.Date(2009, 7, 3, 0, 0, 0, 0, pacific)
 	if !dateInPacific.Equal(events[1].StartsAt) {
 		t.Errorf("ToAssociationTimeZone should convert time %v to association time zone %v", events[1].StartsAt, dateInPacific)
 	}
+	assert.Equal("Track", events[1].Discipline, "event discipline")
 }
 
 func TestToAssociationTimeZone(t *testing.T) {

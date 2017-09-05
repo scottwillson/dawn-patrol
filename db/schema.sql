@@ -26,10 +26,12 @@ SET default_with_oids = false;
 
 CREATE TABLE events (
     id integer NOT NULL,
-    name text NOT NULL,
+    discipline text NOT NULL default 'Road',
+    name text NOT NULL default 'New Event',
     starts_at timestamp with time zone NOT NULL
 );
 
+CREATE INDEX ON events (discipline);
 CREATE INDEX ON events (name);
 CREATE INDEX ON events (starts_at);
 

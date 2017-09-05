@@ -32,7 +32,7 @@ func (s *EventService) Copy() error {
 		if date, err = ToAssociationTimeZone(e.Date); err != nil {
 			return err
 		}
-		events[i] = api.Event{Name: e.Name, StartsAt: date}
+		events[i] = api.Event{Discipline: e.Discipline, Name: e.Name, StartsAt: date}
 	}
 
 	s.APIEventService.Create(events)
