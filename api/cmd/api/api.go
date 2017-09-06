@@ -14,8 +14,8 @@ import (
 )
 
 func main() {
-	logger := log.NewLogfmtLogger(log.NewSyncWriter(os.Stderr))
-	log.With(logger, "at", log.DefaultTimestampUTC)
+	var logger = log.NewLogfmtLogger(log.NewSyncWriter(os.Stderr))
+	logger = log.With(logger, "at", log.DefaultTimestampUTC)
 
 	nr := api.NewNewRelicApp(logger)
 
