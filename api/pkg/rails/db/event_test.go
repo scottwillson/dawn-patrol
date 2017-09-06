@@ -52,13 +52,13 @@ func TestRailsCopy(t *testing.T) {
 	assert.Equal("Track", events[0].Discipline, "event discipline")
 	assert.Equal(2, events[0].RailsID, "event Rails ID")
 	assert.Equal("OR", events[0].State, "event State")
-	railsCreatedAt := time.Date(2009, 7, 10, 18, 35, 0, 0, time.UTC)
+	railsCreatedAt := time.Date(2009, 1, 7, 11, 35, 0, 0, time.UTC)
 	if !railsCreatedAt.Equal(events[0].RailsCreatedAt) {
-		t.Errorf("expected railsCreatedAt %v to be %v", railsCreatedAt, events[0].RailsCreatedAt)
+		t.Errorf("expected railsCreatedAt %v to be %v", events[0].RailsCreatedAt, railsCreatedAt)
 	}
-	railsUpdatedAt := time.Date(2009, 7, 8, 18, 0, 1, 0, time.UTC)
+	railsUpdatedAt := time.Date(2009, 1, 9, 2, 0, 1, 0, time.UTC)
 	if !railsUpdatedAt.Equal(events[0].RailsUpdatedAt) {
-		t.Errorf("expected RailsUpdatedAt %v to be %v", railsUpdatedAt, events[0].RailsUpdatedAt)
+		t.Errorf("expected RailsUpdatedAt %v to be %v", events[0].RailsUpdatedAt, railsUpdatedAt)
 	}
 
 	assert.Equal("Hellyer Challenge", events[1].Name, "event name")
@@ -70,13 +70,13 @@ func TestRailsCopy(t *testing.T) {
 	assert.Equal("Track", events[1].Discipline, "event discipline")
 	assert.Equal(1, events[1].RailsID, "event Rails ID")
 	assert.Equal("CA", events[1].State, "event State")
-	railsCreatedAt = time.Date(2009, 7, 10, 18, 34, 0, 0, time.UTC)
+	railsCreatedAt = time.Date(2009, 1, 7, 11, 34, 0, 0, time.UTC)
 	if !railsCreatedAt.Equal(events[1].RailsCreatedAt) {
-		t.Errorf("expected railsCreatedAt %v to be %v", railsCreatedAt, events[0].RailsCreatedAt)
+		t.Errorf("expected railsCreatedAt %v to be %v", events[0].RailsCreatedAt, railsCreatedAt)
 	}
-	railsUpdatedAt = time.Date(2009, 7, 10, 18, 34, 0, 0, time.UTC)
+	railsUpdatedAt = time.Date(2009, 1, 7, 11, 34, 0, 0, time.UTC)
 	if !railsUpdatedAt.Equal(events[1].RailsUpdatedAt) {
-		t.Errorf("expected RailsUpdatedAt %v to be %v", railsUpdatedAt, events[0].RailsUpdatedAt)
+		t.Errorf("expected RailsUpdatedAt %v to be %v", events[0].RailsUpdatedAt, railsUpdatedAt)
 	}
 }
 

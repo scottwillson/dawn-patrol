@@ -1,4 +1,3 @@
-* Ensure MySQL is using UTC
 * DRY up mock New Relic
 * Use New Relic segments for HTTP handlers?
 * Semaphore: change to `exec ci`?
