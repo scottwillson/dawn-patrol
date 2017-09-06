@@ -1,4 +1,4 @@
-* DRY up mock New Relic
+* Log and instrument everything
 * Use New Relic segments for HTTP handlers?
 * Semaphore: change to `exec ci`?
 * Error aggregation service
