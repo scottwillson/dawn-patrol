@@ -10,12 +10,13 @@ import (
 )
 
 func TestCreate(t *testing.T) {
-	db := Open()
+	logger := log.MockLogger{}
+	db := Open(&logger)
 	defer db.Close()
 
 	db.Delete(api.Event{})
 
-	es := EventService{DB: db, Logger: &log.MockLogger{}}
+	es := EventService{DB: db, Logger: &logger}
 
 	events := []api.Event{
 		api.Event{Name: "Copperopolis Road Race"},
@@ -34,14 +35,15 @@ func TestCreate(t *testing.T) {
 }
 
 func TestFind(t *testing.T) {
-	db := Open()
+	logger := log.MockLogger{}
+	db := Open(&logger)
 	defer db.Close()
 
 	db.Delete(&api.Event{})
 	db.Create(&api.Event{})
 	db.Create(&api.Event{})
 
-	es := EventService{DB: db, Logger: &log.MockLogger{}}
+	es := EventService{DB: db, Logger: &logger}
 
 	var events = es.Find()
 	assert.Equal(t, 2, len(events), "events")

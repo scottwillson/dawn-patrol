@@ -67,9 +67,10 @@ func ToAssociationTimeZone(date time.Time) (time.Time, error) {
 		date.Year(), date.Month(), date.Day(), date.Minute(), date.Hour(), date.Second(), date.Nanosecond(), pacific), nil
 }
 
-// Open opens a connection to the Rails MySQL DB.
-func Open() *gorm.DB {
-	return db.OpenURL(railsDatabaseURL())
+func Open(logger log.Logger) *gorm.DB {
+	url := railsDatabaseURL()
+	logger.Log("action", "open", "url", url)
+	return db.OpenURL(url)
 }
 
 func railsDatabaseURL() string {

@@ -6,14 +6,19 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-kit/kit/log"
 	"github.com/jinzhu/gorm"
 	// Required for Gorm.
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // Open opens DB connection to databaseURL().
-func Open() *gorm.DB {
-	return OpenURL(databaseURL())
+func Open(logger log.Logger) *gorm.DB {
+	url := databaseURL()
+	if logger != nil {
+		logger.Log("action", "open", "url", url)
+	}
+	return OpenURL(url)
 }
 
 // OpenURL opens a DB connection to URL.

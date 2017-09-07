@@ -4,11 +4,13 @@ import (
 	"os"
 	"testing"
 
+	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
+
 	"github.com/stretchr/testify/assert"
 )
 
 func TestOpen(t *testing.T) {
-	db := Open()
+	db := Open(&log.MockLogger{})
 	defer db.Close()
 
 	assert.NotNil(t, db, "db from db.Open()")

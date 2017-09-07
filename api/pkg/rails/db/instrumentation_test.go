@@ -20,15 +20,15 @@ func TestNewInstrumentedEventService(t *testing.T) {
 
 	nr := api.NewNewRelicApp(&logger)
 
-	dpDB := db.Open()
+	dpDB := db.Open(&logger)
 	defer dpDB.Close()
 
 	dpDB.Delete(api.Event{})
 
-	railsDB := Open()
+	railsDB := Open(&logger)
 	defer railsDB.Close()
 
-	eventService := &db.EventService{DB: dpDB, Logger: &log.MockLogger{}}
+	eventService := &db.EventService{DB: dpDB, Logger: &logger}
 
 	var railsService rails.EventService
 	railsService = &EventService{DB: railsDB, APIEventService: eventService, Logger: &log.MockLogger{}}
