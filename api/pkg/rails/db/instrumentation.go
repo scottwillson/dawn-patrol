@@ -30,7 +30,7 @@ func (ies *instrumentedEventService) Copy() error {
 	es := ies.EventService
 
 	txn := ies.NewRelicApp.StartTransaction(fmt.Sprintf("%T", es), nil, nil)
-	txn.SetName("rails.db.EventService#Create()")
+	txn.SetName("rails.db.EventService#Copy()")
 	defer txn.End()
 
 	return es.Copy()

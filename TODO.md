@@ -66,3 +66,4 @@
 * Performance test
   * real URLs like /person/:id/results
 * Add assert equal for Dates
+* For React: https://medium.com/@tanepiper/takeoff-a-rapid-development-environment-designed-for-hack-days-9a45ae891366
