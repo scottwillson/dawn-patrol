@@ -24,6 +24,7 @@ func (s *EventService) Copy() error {
 
 	var railsEvents []rails.Event
 	s.DB.Find(&railsEvents)
+	s.Logger.Log("action", "copy", "rails_events", len(railsEvents))
 
 	events := make([]api.Event, len(railsEvents))
 	var date time.Time
