@@ -1,5 +1,3 @@
-* Log and instrument everything
-* Use New Relic segments for HTTP handlers?
 * Semaphore: change to `exec ci`?
 * Error aggregation service
   * https://elithrar.github.io/article/http-handler-error-handling-revisited/
@@ -67,3 +65,4 @@
   * real URLs like /person/:id/results
 * Add assert equal for Dates
 * For React: https://medium.com/@tanepiper/takeoff-a-rapid-development-environment-designed-for-hack-days-9a45ae891366
+* Use New Relic segments for HTTP handlers?
