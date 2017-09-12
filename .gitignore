@@ -15,5 +15,6 @@ api/api
 coverage.out
 node_modules
 npm-debug.log*
+rails-db/data-dir
 web/build
 web/node_modules

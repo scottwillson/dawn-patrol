@@ -19,6 +19,8 @@ services:
   rails-db:
     build: rails-db
     image: scottwillson/dawn-patrol-rails-db
+    volumes:
+      - ./rails-db/data-dir:/var/lib/mysql
   web:
     build: web
     depends_on:
