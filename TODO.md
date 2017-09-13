@@ -1,3 +1,11 @@
+* Replication from Rails
+  * use docker-cloud to upload stackfile
+    * docker-cloud stack update -f stackfile.yml dawn-patrol-stage
+    * Add to CI?
+  * Build transfer image
+  * Include pub key in transfer securely
+  * share volume between transfer and rails-db
+  * Auto import dumps if exist
 * Semaphore: change to `exec ci`?
 * Error aggregation service
   * https://elithrar.github.io/article/http-handler-error-handling-revisited/
@@ -13,7 +21,6 @@
 * Consolidate DB init
 * Ansible server setup?
   * Replace Docker Hub
-* Replication from Rails
 * read https://peter.bourgon.org/go-best-practices-2016/#dependency-management
 * move DB data out of init dir
 * Document SemaphoreCI and Docker.io/hub setup
@@ -66,3 +73,4 @@
 * Add assert equal for Dates
 * For React: https://medium.com/@tanepiper/takeoff-a-rapid-development-environment-designed-for-hack-days-9a45ae891366
 * Use New Relic segments for HTTP handlers?
+* script docker-cloud

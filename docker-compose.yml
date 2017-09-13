@@ -18,9 +18,14 @@ services:
       - web
   rails-db:
     build: rails-db
+    depends_on:
+      - transfer
     image: scottwillson/dawn-patrol-rails-db
     volumes:
       - ./rails-db/data-dir:/var/lib/mysql
+  transfer:
+    build: transfer
+    image: scottwillson/dawn-patrol-transfer
   web:
     build: web
     depends_on:

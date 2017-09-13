@@ -13,6 +13,7 @@
 /tmp/*
 api/api
 coverage.out
+identity.pub
 node_modules
 npm-debug.log*
 rails-db/data-dir
