@@ -2,6 +2,7 @@ package db
 
 import (
 	"errors"
+	"math"
 	"os"
 	"strings"
 	"time"
@@ -35,7 +36,8 @@ func OpenURL(url string) *gorm.DB {
 		if db, err = gorm.Open(driver, url); err == nil && db != nil {
 			return db
 		}
-		time.Sleep(time.Duration(1 * time.Second))
+		seconds := time.Duration(math.Pow(2, float64(a))) * time.Second
+		time.Sleep(seconds)
 	}
 
 	panic("Could not connect to " + driver + ", " + url + ". " + err.Error())
