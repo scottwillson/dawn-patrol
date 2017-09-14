@@ -13,8 +13,9 @@ type instrumentedEventService struct {
 	EventService api.EventService
 }
 
-// NewInstrumentedHandler instruments an HTTP Handler with New Relic. It starts a New Relic transaction and then delegates to the Handler's
-// ServeHTTP() function. This function returns the wrapped Handler.
+// NewInstrumentedEventService instruments a service with New Relic. It starts
+// a New Relic transaction and then delegates to services functions. This
+// function returns the wrapped Service.
 func NewInstrumentedEventService(nr newrelic.Application, es api.EventService) api.EventService {
 	if nr == nil {
 		return es

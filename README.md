@@ -52,6 +52,7 @@ docker login
 To instrument with New Relic, set NEW_RELIC_LICENSE_KEY in the environment
 Set DAWN_PATROL_ENVIRONMENT for dev, test, stage
 identity.pub for transfer
+CC_TEST_REPORTER_ID
 
 ## Containers
 

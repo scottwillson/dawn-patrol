@@ -59,6 +59,10 @@ func (s *EventService) Find() []rails.Event {
 	return events
 }
 
+// ToAssociationTimeZone converts date to Dawn Patrol Association's time zone.
+// It disregards date's time zone. In other words, if date is Dec 1, 9 AM UTC
+// and the Association is in Central time, ToAssociationTimeZone converts date
+// to Dec 1, 9 AM CST.
 func ToAssociationTimeZone(date time.Time) (time.Time, error) {
 	pacific, err := time.LoadLocation("America/Los_Angeles")
 	if err != nil {
@@ -68,6 +72,7 @@ func ToAssociationTimeZone(date time.Time) (time.Time, error) {
 		date.Year(), date.Month(), date.Day(), date.Minute(), date.Hour(), date.Second(), date.Nanosecond(), pacific), nil
 }
 
+// Open returns a connection to the Rails DB
 func Open(logger log.Logger) *gorm.DB {
 	url := railsDatabaseURL()
 	logger.Log("action", "open", "url", url)

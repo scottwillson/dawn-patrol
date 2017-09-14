@@ -1,9 +1,15 @@
 #!/bin/sh
 set -e
 
+curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+chmod +x ./cc-test-reporter
+./cc-test-reporter before-build
+
 e2e-test/bin/rebuild-base
 
 bin/test
+
+./cc-test-reporter after-build --exit-code $?
 
 docker-compose -f docker-compose-test.yml stop
 docker-compose -f docker-compose-test.yml rm -f
