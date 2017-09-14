@@ -63,7 +63,7 @@ Open port 2222 on DO host
 
 ## Replication
 Specific to Racing on Rails.
-scp
+scp -P 2222 -i ~/.ssh/sw_rsa dbdump.db root@transfer.dawn-patrol-stage.fb90a06c.svc.dockerapp.io:.
 
 ## Performance testing
 

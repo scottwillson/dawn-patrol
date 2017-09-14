@@ -1,5 +1,6 @@
 * Re-gen New Relic key
 * Replication from Rails
+  * need root password or an user to import dump
   * use docker-cloud to upload stackfile
     * docker-cloud stack update -f stackfile.yml dawn-patrol-stage
     * Add to CI?
