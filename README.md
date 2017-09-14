@@ -72,3 +72,5 @@ Typical:
 
 Stress:
 `ab -n 4000 -c 20 http://web.dawn-patrol-stage.c21e9163.svc.dockerapp.io/`
+
+[![Build Status](https://semaphoreci.com/api/v1/scott-willson/dawn-patrol/branches/master/badge.svg)](https://semaphoreci.com/scott-willson/dawn-patrol)
