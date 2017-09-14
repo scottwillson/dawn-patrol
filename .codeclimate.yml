@@ -1,0 +1,36 @@
+---
+engines:
+  csslint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+      - ruby
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+  gofmt:
+    enabled: true
+  golint:
+    enabled: true
+  govet:
+    enabled: true
+  nodesecurity:
+    enabled: true
+  rubocop:
+    enabled: true
+  shellcheck:
+    enabled: true
+ratings:
+  paths:
+  - "**.css"
+  - "**.go"
+  - "**.js"
+  - "**.jsx"
+  - "**.rb"
+  - "**.sh"
+exclude_paths:
+- api/vendor
