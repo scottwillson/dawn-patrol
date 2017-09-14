@@ -1,3 +1,4 @@
+* Re-gen New Relic key
 * Replication from Rails
   * use docker-cloud to upload stackfile
     * docker-cloud stack update -f stackfile.yml dawn-patrol-stage

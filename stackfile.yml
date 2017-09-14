@@ -2,7 +2,6 @@ api:
   autoredeploy: true
   environment:
     - DAWN_PATROL_ENVIRONMENT=stage
-    - NEW_RELIC_LICENSE_KEY
   image: 'scottwillson/dawn-patrol-api:latest'
   links:
     - db
@@ -20,6 +19,8 @@ rails-db:
 transfer:
   autoredeploy: true
   image: 'scottwillson/dawn-patrol-transfer:latest'
+  ports:
+    - '2222:22'
   volumes:
     - /transfer
 web:

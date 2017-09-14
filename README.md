@@ -54,6 +54,11 @@ Set DAWN_PATROL_ENVIRONMENT for dev, test, stage
 identity.pub for transfer
 CC_TEST_REPORTER_ID
 
+docker-cloud stack update -f stackfile.yml --sync dawn-patrol-stage
+docker-cloud service set --env NEW_RELIC_LICENSE_KEY="…" --redeploy api
+
+Open port 2222 on DO host
+
 ## Containers
 
 ## Replication
