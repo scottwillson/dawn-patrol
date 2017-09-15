@@ -1,14 +1,14 @@
 * Re-gen New Relic key
 * Replication from Rails
-  * need root password or an user to import dump
+  * need root password or a user to import dump
   * use docker-cloud to upload stackfile
     * docker-cloud stack update -f stackfile.yml dawn-patrol-stage
     * Add to CI?
-  * Build transfer image
   * Include pub key in transfer securely
-  * share volume between transfer and rails-db
   * Auto import dumps if exist
+  * fix replication config
 * Semaphore: change to `exec ci`?
+* Add association slug to /copy
 * Error aggregation service
   * https://elithrar.github.io/article/http-handler-error-handling-revisited/
   * nginx errors?
