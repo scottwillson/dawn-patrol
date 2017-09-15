@@ -36,7 +36,7 @@ func OpenURL(url string) *gorm.DB {
 		if db, err = gorm.Open(driver, url); err == nil && db != nil {
 			return db
 		}
-		seconds := time.Duration(math.Pow(2, float64(a))) * time.Second
+		seconds := time.Duration(math.Pow(1.5, float64(a))) * time.Second
 		time.Sleep(seconds)
 	}
 
