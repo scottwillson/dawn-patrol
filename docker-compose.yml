@@ -20,6 +20,8 @@ services:
     build: rails-db
     depends_on:
       - transfer
+    environment:
+      - MYSQL_ROOT_PASSWORD
     image: scottwillson/dawn-patrol-rails-db
     volumes:
       - ./rails-db/data-dir:/var/lib/mysql

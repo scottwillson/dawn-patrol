@@ -36,6 +36,8 @@ services:
       - 55432:5432
   rails-db:
     build: rails-db
+    environment:
+      - MYSQL_ROOT_PASSWORD
     ports:
       - 53306:3306
   web-dev:

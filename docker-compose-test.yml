@@ -17,6 +17,8 @@ services:
       dockerfile: Dockerfile-dev
   rails-db:
     build: rails-db
+    environment:
+      - MYSQL_ROOT_PASSWORD
   web-test:
     build:
       context: web
