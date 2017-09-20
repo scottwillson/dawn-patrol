@@ -31,5 +31,11 @@ services:
     depends_on:
       - api
     image: scottwillson/dawn-patrol-web
+    networks:
+      default:
+        aliases:
+         - atra.web
+         - rails.web
+         - wsba.web
     ports:
       - 8080:80

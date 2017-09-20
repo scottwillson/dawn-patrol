@@ -52,6 +52,7 @@ docker login
 To instrument with New Relic, set NEW_RELIC_LICENSE_KEY in the environment
 Set DAWN_PATROL_ENVIRONMENT for dev, test, stage
 identity.pub for transfer
+CHANGE MASTER TO MASTER_LOG_FILE='binary.000726', MASTER_LOG_POS=1792467, MASTER_HOST='obra.org', MASTER_USER='...', MASTER_PASSWORD='...', MASTER_SSL=1;
 
 ## Containers
 

@@ -1,12 +1,3 @@
-* Replication from Rails
-  * use docker-cloud to upload stackfile
-    * docker-cloud stack update -f stackfile.yml dawn-patrol-stage
-    * Add to CI?
-  * Build transfer image
-  * Include pub key in transfer securely
-  * share volume between transfer and rails-db
-  * Auto import dumps if exist
-* Semaphore: change to `exec ci`?
 * Error aggregation service
   * https://elithrar.github.io/article/http-handler-error-handling-revisited/
   * nginx errors?
@@ -46,8 +37,7 @@
 * Set up DNS and a floating IP
 * Notify on build, deploy
 * Can EventService.APIEventService be a pointer?
-* Failing E2E test should exit bin/setup
-* Check for dupe code
+* Fix for dupe code
 * https://github.com/alecthomas/gometalinter
 * Use struct literal initialization for config/args
 * Avoid nil checks via default no-op implementations
@@ -74,3 +64,11 @@
 * For React: https://medium.com/@tanepiper/takeoff-a-rapid-development-environment-designed-for-hack-days-9a45ae891366
 * Use New Relic segments for HTTP handlers?
 * script docker-cloud
+* replicate over ssl
+* use docker-cloud to upload stackfile
+  * docker-cloud stack update -f stackfile.yml dawn-patrol-stage
+  * Add to CI?
+* Replication from Rails
+  * Auto import dumps if exist (save as .sql should suffice)
+  * need to open route firewall, from EasyStreet?
+* Use default CBRA association
