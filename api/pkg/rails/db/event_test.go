@@ -29,7 +29,7 @@ func TestRailsCopy(t *testing.T) {
 	eventService := &db.EventService{DB: dpDB, Logger: &logger}
 
 	railsService := &EventService{DB: railsDB, APIEventService: eventService, Logger: &logger}
-	if err := railsService.Copy(); err != nil {
+	if err := railsService.Copy("rails"); err != nil {
 		t.Error(err)
 	}
 

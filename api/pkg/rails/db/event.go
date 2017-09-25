@@ -14,16 +14,16 @@ import (
 // EventService implements api.rails.EventService.
 type EventService struct {
 	APIEventService api.EventService
-	DB              *gorm.DB
+	DB              db.Databases
 	Logger          log.Logger
 }
 
-// Copy copies events from Racing on Rails MySQL DB to Dawn Patrol DB.
-func (s *EventService) Copy() error {
-	s.Logger.Log("action", "copy")
+// Copy copies events for an association from the Racing on Rails MySQL DB to Dawn Patrol DB.
+func (s *EventService) Copy(association string) error {
+	s.Logger.Log("action", "copy", "association", association)
 
 	var railsEvents []rails.Event
-	s.DB.Find(&railsEvents)
+	s.DB.For(association).Find(&railsEvents)
 	s.Logger.Log("action", "copy", "rails_events", len(railsEvents))
 
 	events := make([]api.Event, len(railsEvents))
