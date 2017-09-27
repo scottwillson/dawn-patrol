@@ -18,7 +18,8 @@ func TestNewInstrumentedEventService(t *testing.T) {
 
 	nr := api.NewNewRelicApp(&logger)
 
-	db := Open(&logger)
+	dbs := Databases{Logger: &logger}
+	db := dbs.Default()
 	defer db.Close()
 
 	db.Delete(api.Event{})

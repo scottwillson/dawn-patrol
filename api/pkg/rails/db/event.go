@@ -1,11 +1,9 @@
 package db
 
 import (
-	"os"
 	"time"
 
 	"github.com/go-kit/kit/log"
-	"github.com/jinzhu/gorm"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/db"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/rails"
@@ -14,7 +12,7 @@ import (
 // EventService implements api.rails.EventService.
 type EventService struct {
 	APIEventService api.EventService
-	DB              db.Databases
+	Databases       db.Databases
 	Logger          log.Logger
 }
 
@@ -23,7 +21,9 @@ func (s *EventService) Copy(association string) error {
 	s.Logger.Log("action", "copy", "association", association)
 
 	var railsEvents []rails.Event
-	s.DB.For(association).Find(&railsEvents)
+	db := s.Databases.For(association)
+	defer db.Close()
+	db.Find(&railsEvents)
 	s.Logger.Log("action", "copy", "rails_events", len(railsEvents))
 
 	events := make([]api.Event, len(railsEvents))
@@ -51,11 +51,13 @@ func (s *EventService) Copy(association string) error {
 }
 
 // Find finds all events in the Racing on Rails MySQL DB.
-func (s *EventService) Find() []rails.Event {
+func (s *EventService) Find(association string) []rails.Event {
 	s.Logger.Log("action", "find")
 
 	var events []rails.Event
-	s.DB.Find(&events)
+	db := s.Databases.For(association)
+	defer db.Close()
+	db.Find(&events)
 	return events
 }
 
@@ -66,18 +68,4 @@ func ToAssociationTimeZone(date time.Time) (time.Time, error) {
 	}
 	return time.Date(
 		date.Year(), date.Month(), date.Day(), date.Minute(), date.Hour(), date.Second(), date.Nanosecond(), pacific), nil
-}
-
-func Open(logger log.Logger) *gorm.DB {
-	url := railsDatabaseURL()
-	logger.Log("action", "open", "url", url)
-	return db.OpenURL(url)
-}
-
-func railsDatabaseURL() string {
-	databaseURL := os.Getenv("RAILS_DATABASE_URL")
-	if databaseURL == "" {
-		return "rails:rails@tcp(rails-db:3306)/rails?parseTime=True"
-	}
-	return databaseURL
 }

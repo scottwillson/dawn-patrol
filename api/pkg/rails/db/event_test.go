@@ -17,18 +17,14 @@ import (
 
 func TestRailsCopy(t *testing.T) {
 	logger := log.MockLogger{}
+	dbs := db.Databases{Logger: &logger}
 
-	dpDB := db.Open(&logger)
+	dpDB := dbs.Default()
 	defer dpDB.Close()
-
-	dpDB.Delete(api.Event{})
-
-	railsDB := Open(&logger)
-	defer railsDB.Close()
 
 	eventService := &db.EventService{DB: dpDB, Logger: &logger}
 
-	railsService := &EventService{DB: railsDB, APIEventService: eventService, Logger: &logger}
+	railsService := &EventService{Databases: dbs, APIEventService: eventService, Logger: &logger}
 	if err := railsService.Copy("rails"); err != nil {
 		t.Error(err)
 	}
@@ -103,13 +99,11 @@ func TestToAssociationTimeZone(t *testing.T) {
 
 func TestRailsFind(t *testing.T) {
 	logger := log.MockLogger{}
+	dbs := db.Databases{Logger: &logger}
 
-	dpDB := Open(&logger)
-	defer dpDB.Close()
+	eventService := &EventService{Databases: dbs, Logger: &logger}
 
-	eventService := &db.EventService{DB: dpDB, Logger: &logger}
-
-	var events = eventService.Find()
+	var events = eventService.Find("rails")
 
 	assert.Equal(t, 2, len(events), "events")
 }
