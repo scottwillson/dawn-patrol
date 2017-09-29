@@ -1,7 +1,6 @@
 package db
 
 import (
-	"errors"
 	"fmt"
 	"math"
 	"os"
@@ -39,30 +38,20 @@ func databaseURL(association string) string {
 			return "postgres://dawnpatrol@db/dawnpatrol_development?sslmode=disable"
 		}
 		return databaseURL
-	} else if association == "rails" {
-		databaseURL := os.Getenv("RAILS_DATABASE_URL")
-		if databaseURL == "" {
-			return "rails:rails@tcp(rails-db:3306)/rails?parseTime=True"
-		}
-		return databaseURL
-	} else {
-		key := fmt.Sprintf("%s_URL", strings.ToUpper(association))
-		databaseURL := os.Getenv(key)
-		if databaseURL == "" {
-			panic(fmt.Sprintf("Database URL for '%s' not found in env", key))
-		}
-		return databaseURL
 	}
+	key := fmt.Sprintf("%s_URL", strings.ToUpper(association))
+	databaseURL := os.Getenv(key)
+	if databaseURL == "" {
+		return fmt.Sprintf("%s:rails@tcp(rails-db:3306)/%s?parseTime=True", association, association)
+	}
+	return databaseURL
 }
 
 func openURL(url string) *gorm.DB {
 	var db *gorm.DB
-	var driver string
 	var err error
 
-	if driver, err = databaseDriver(url); err != nil {
-		panic(err)
-	}
+	driver := databaseDriver(url)
 
 	for a := 0; a < 10; a++ {
 		if db, err = gorm.Open(driver, url); err == nil && db != nil {
@@ -75,12 +64,9 @@ func openURL(url string) *gorm.DB {
 	panic("Could not connect to " + driver + ", " + url + ". " + err.Error())
 }
 
-func databaseDriver(url string) (string, error) {
+func databaseDriver(url string) string {
 	if strings.HasPrefix(url, "postgres") {
-		return "postgres", nil
-	} else if strings.HasPrefix(url, "rails") {
-		return "mysql", nil
-	} else {
-		return "", errors.New("Could not find driver for " + url)
+		return "postgres"
 	}
+	return "mysql"
 }

@@ -77,23 +77,13 @@ func TestDatabaseURLFromEnv(t *testing.T) {
 func TestDatabaseDriverForMysql(t *testing.T) {
 	assert := assert.New(t)
 
-	driver, err := databaseDriver("rails:rails@tcp(rails-db:3306)/rails?parseTime=True")
-	assert.Nil(err, "db.databaseDriver() for mysql")
+	driver := databaseDriver("rails:rails@tcp(rails-db:3306)/rails?parseTime=True")
 	assert.Equal("mysql", driver, "db.databaseDriver() for mysql")
 }
 
 func TestDatabaseDriverForPostgres(t *testing.T) {
 	assert := assert.New(t)
 
-	driver, err := databaseDriver("postgres://dawnpatrol@db/dawnpatrol_test")
-	assert.Nil(err, "db.databaseDriver() for postgres")
+	driver := databaseDriver("postgres://dawnpatrol@db/dawnpatrol_test")
 	assert.Equal("postgres", driver, "db.databaseDriver() for postgres")
-}
-
-func TestUnkownDatabaseDriver(t *testing.T) {
-	assert := assert.New(t)
-
-	driver, err := databaseDriver("no url!")
-	assert.NotNil(err, "err for unknown URL")
-	assert.Equal("", driver, "driver for unknown URL")
 }

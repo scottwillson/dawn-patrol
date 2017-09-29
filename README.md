@@ -73,3 +73,8 @@ Typical:
 
 Stress:
 `ab -n 4000 -c 20 http://web.dawn-patrol-stage.c21e9163.svc.dockerapp.io/`
+
+## Ad hoc testing
+`curl 0.0.0.0:3000`
+`curl 0.0.0.0:3000/index.json`
+`curl -X POST -d "association=rails" 0.0.0.0:8080/rails/copy`

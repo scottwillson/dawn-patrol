@@ -21,7 +21,7 @@ RSpec.describe 'DawnPatrol', type: 'feature' do
     expect(page).to have_css 'h2', text: 'Dawn Patrol'
     expect(page).to have_css '.events', text: '0 events'
 
-    Net::HTTP.post_form URI('http://api:8080/rails/copy?association=atra'), {}
+    Net::HTTP.post_form URI('http://api:8080/rails/copy'), { association: 'atra' }
 
     visit 'http://atra.web/'
     expect(page).to have_css '.events', text: '2 events'
@@ -29,7 +29,7 @@ RSpec.describe 'DawnPatrol', type: 'feature' do
     visit 'http://wsba.web/'
     expect(page).to have_css '.events', text: '0 events'
 
-    Net::HTTP.post_form URI('http://api:8080/rails/copy?association=wsba'), {}
+    Net::HTTP.post_form URI('http://api:8080/rails/copy?association=wsba'), { association: 'wsba' }
 
     visit 'http://atra.web/'
     expect(page).to have_css '.events', text: '2 events'
