@@ -69,7 +69,6 @@ func openURLWithAttempts(url string, attempts int) *gorm.DB {
 		if db, err = gorm.Open(driver, url); err == nil && db != nil {
 			return db
 		}
-		fmt.Println(err)
 		seconds := time.Duration(math.Pow(1.5, float64(a))) * time.Second
 		time.Sleep(seconds)
 	}
