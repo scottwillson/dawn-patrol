@@ -8,8 +8,10 @@ import (
 	"time"
 
 	"github.com/go-kit/kit/log"
+	// Gorm requirement
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	// Gorm requirement
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -19,16 +21,22 @@ type Databases struct {
 	Logger log.Logger
 }
 
+// Default returns a connection to the default Dawn Patrol Postgres DB
 func (d Databases) Default() *gorm.DB {
 	return d.For("")
 }
 
+// For returns a connection to the MySQL database for the association
 func (d Databases) For(association string) *gorm.DB {
 	url := databaseURL(association)
 	if d.Logger != nil {
 		d.Logger.Log("action", "open", "url", url)
 	}
-	return openURL(url)
+
+	db := openURL(url)
+	d.Logger.Log("action", "opened", "url", url)
+
+	return db
 }
 
 func databaseURL(association string) string {
@@ -48,16 +56,21 @@ func databaseURL(association string) string {
 }
 
 func openURL(url string) *gorm.DB {
+	return openURLWithAttempts(url, 10)
+}
+
+func openURLWithAttempts(url string, attempts int) *gorm.DB {
 	var db *gorm.DB
 	var err error
 
 	driver := databaseDriver(url)
 
-	for a := 0; a < 10; a++ {
+	for a := 0; a < attempts; a++ {
 		if db, err = gorm.Open(driver, url); err == nil && db != nil {
 			return db
 		}
-		seconds := time.Duration(math.Pow(2, float64(a))) * time.Second
+		fmt.Println(err)
+		seconds := time.Duration(math.Pow(1.5, float64(a))) * time.Second
 		time.Sleep(seconds)
 	}
 

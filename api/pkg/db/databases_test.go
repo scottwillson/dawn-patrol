@@ -55,7 +55,7 @@ func TestOpenURL(t *testing.T) {
 }
 
 func TestOpenURLPanicsOnBogusURL(t *testing.T) {
-	assert.Panics(t, func() { openURL("*** bogus ***") })
+	assert.Panics(t, func() { openURLWithAttempts("*** bogus ***", 2) })
 }
 
 func TestDefaultDatabaseURL(t *testing.T) {

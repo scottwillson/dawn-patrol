@@ -23,8 +23,10 @@ func TestRailsCopy(t *testing.T) {
 	defer dpDB.Close()
 
 	eventService := &db.EventService{DB: dpDB, Logger: &logger}
-
 	railsService := &EventService{Databases: dbs, APIEventService: eventService, Logger: &logger}
+
+	dpDB.Delete(api.Event{})
+
 	if err := railsService.Copy("rails"); err != nil {
 		t.Error(err)
 	}
