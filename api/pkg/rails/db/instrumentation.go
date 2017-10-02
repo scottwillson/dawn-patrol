@@ -27,22 +27,22 @@ func NewInstrumentedEventService(nr newrelic.Application, es rails.EventService)
 	}
 }
 
-func (ies *instrumentedEventService) Copy() error {
+func (ies *instrumentedEventService) Copy(association string) error {
 	es := ies.EventService
 
 	txn := ies.NewRelicApp.StartTransaction(fmt.Sprintf("%T", es), nil, nil)
 	txn.SetName("rails.db.EventService#Copy()")
 	defer txn.End()
 
-	return es.Copy()
+	return es.Copy(association)
 }
 
-func (ies *instrumentedEventService) Find() []rails.Event {
+func (ies *instrumentedEventService) Find(association string) []rails.Event {
 	es := ies.EventService
 
 	txn := ies.NewRelicApp.StartTransaction(fmt.Sprintf("%T", es), nil, nil)
 	txn.SetName("rails.db.EventService#Find()")
 	defer txn.End()
 
-	return es.Find()
+	return es.Find(association)
 }

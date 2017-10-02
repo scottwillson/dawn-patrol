@@ -17,6 +17,6 @@ type Event struct {
 
 // EventService copies data from Racing on Rails MySQL DB.
 type EventService interface {
-	Copy() error
-	Find() []Event
+	Copy(string) error
+	Find(string) []Event
 }

@@ -17,26 +17,28 @@ import (
 
 func TestRailsCopy(t *testing.T) {
 	logger := log.MockLogger{}
+	dbs := db.Databases{Logger: &logger}
 
-	dpDB := db.Open(&logger)
+	dpDB := dbs.Default()
 	defer dpDB.Close()
+
+	eventService := &db.EventService{DB: dpDB, Logger: &logger}
+	railsService := &EventService{Databases: dbs, APIEventService: eventService, Logger: &logger}
 
 	dpDB.Delete(api.Event{})
 
-	railsDB := Open(&logger)
-	defer railsDB.Close()
+	events := eventService.Find()
+	assert := assert.New(t)
+	assert.Equal(0, len(events), "events")
 
-	eventService := &db.EventService{DB: dpDB, Logger: &logger}
+	railsEvents := railsService.Find("rails")
+	assert.Equal(2, len(railsEvents), "Rails events")
 
-	railsService := &EventService{DB: railsDB, APIEventService: eventService, Logger: &logger}
-	if err := railsService.Copy(); err != nil {
+	if err := railsService.Copy("rails"); err != nil {
 		t.Error(err)
 	}
 
-	events := eventService.Find()
-	sort.Sort(api.ByName(events))
-
-	assert := assert.New(t)
+	events = eventService.Find()
 	assert.Equal(2, len(events), "events")
 
 	// promoter_id, type, created_at, updated_at
@@ -45,6 +47,7 @@ func TestRailsCopy(t *testing.T) {
 		t.Error(err)
 	}
 
+	sort.Sort(api.ByName(events))
 	assert.Equal("AVC", events[0].Name, "event name")
 	assert.Equal("Portland", events[0].City, "event city")
 	dateInPacific := time.Date(2009, 7, 10, 0, 0, 0, 0, pacific)
@@ -103,13 +106,11 @@ func TestToAssociationTimeZone(t *testing.T) {
 
 func TestRailsFind(t *testing.T) {
 	logger := log.MockLogger{}
+	dbs := db.Databases{Logger: &logger}
 
-	dpDB := Open(&logger)
-	defer dpDB.Close()
+	eventService := &EventService{Databases: dbs, Logger: &logger}
 
-	eventService := &db.EventService{DB: dpDB, Logger: &logger}
-
-	var events = eventService.Find()
+	var events = eventService.Find("rails")
 
 	assert.Equal(t, 2, len(events), "events")
 }

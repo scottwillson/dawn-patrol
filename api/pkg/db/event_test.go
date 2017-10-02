@@ -11,7 +11,8 @@ import (
 
 func TestCreate(t *testing.T) {
 	logger := log.MockLogger{}
-	db := Open(&logger)
+	dbs := Databases{Logger: &logger}
+	db := dbs.Default()
 	defer db.Close()
 
 	db.Delete(api.Event{})
@@ -36,7 +37,8 @@ func TestCreate(t *testing.T) {
 
 func TestFind(t *testing.T) {
 	logger := log.MockLogger{}
-	db := Open(&logger)
+	dbs := Databases{Logger: &logger}
+	db := dbs.Default()
 	defer db.Close()
 
 	db.Delete(&api.Event{})

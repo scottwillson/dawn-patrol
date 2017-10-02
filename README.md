@@ -59,6 +59,8 @@ docker-cloud service set --env NEW_RELIC_LICENSE_KEY="…" --redeploy api
 
 Open port 2222 on DO host
 
+CHANGE MASTER TO MASTER_LOG_FILE='binary.000726', MASTER_LOG_POS=1792467, MASTER_HOST='obra.org', MASTER_USER='...', MASTER_PASSWORD='...', MASTER_SSL=1;
+
 ## Containers
 
 ## Replication
@@ -78,5 +80,10 @@ Typical:
 
 Stress:
 `ab -n 4000 -c 20 http://web.dawn-patrol-stage.c21e9163.svc.dockerapp.io/`
+
+## Ad hoc testing
+`curl 0.0.0.0:3000`
+`curl 0.0.0.0:3000/index.json`
+`curl -X POST -d "association=rails" 0.0.0.0:8080/rails/copy`
 
 [![Build Status](https://semaphoreci.com/api/v1/scott-willson/dawn-patrol/branches/master/badge.svg)](https://semaphoreci.com/scott-willson/dawn-patrol)

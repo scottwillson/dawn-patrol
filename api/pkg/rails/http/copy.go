@@ -12,7 +12,13 @@ type Copy struct {
 }
 
 func (h *Copy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := h.EventService.Copy(); err != nil {
+	association := r.PostFormValue("association")
+	if association == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if err := h.EventService.Copy(association); err != nil {
 		panic(err)
 	}
 }

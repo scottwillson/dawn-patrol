@@ -6,11 +6,11 @@ import "rocketsurgeryllc.com/dawnpatrol/api/pkg/rails"
 type EventService struct{}
 
 // Copy mocks rails.db.EventService.Copy().
-func (s *EventService) Copy() error {
+func (s *EventService) Copy(association string) error {
 	return nil
 }
 
 // Find mocks rails.db.EventService.Find().
-func (s *EventService) Find() []rails.Event {
+func (s *EventService) Find(association string) []rails.Event {
 	return []rails.Event{}
 }
