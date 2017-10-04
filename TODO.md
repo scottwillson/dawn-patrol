@@ -1,4 +1,3 @@
-* Cache DB conns and URLs
 * Error aggregation service
   * https://elithrar.github.io/article/http-handler-error-handling-revisited/
   * nginx errors?
@@ -73,3 +72,5 @@
   * Auto import dumps if exist (save as .sql should suffice)
   * need to open route firewall, from EasyStreet?
 * Use default CBRA association
+* Cache DB conns and URLs
+  * Where it makes sense. Only tests?
