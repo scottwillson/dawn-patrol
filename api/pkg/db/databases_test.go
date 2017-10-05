@@ -37,7 +37,7 @@ func TestDefault(t *testing.T) {
 	}
 	es.Create(events)
 
-	events = es.Find()
+	events = es.Find("cbra")
 
 	sort.Sort(api.ByName(events))
 

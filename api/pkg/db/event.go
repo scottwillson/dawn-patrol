@@ -22,7 +22,7 @@ func (s *EventService) Create(events []api.Event) {
 }
 
 // Find finds all events as api.Events.
-func (s *EventService) Find() []api.Event {
+func (s *EventService) Find(association string) []api.Event {
 	s.Logger.Log("action", "find")
 	var events []api.Event
 	s.DB.Find(&events)

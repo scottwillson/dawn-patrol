@@ -25,7 +25,7 @@ func TestCreate(t *testing.T) {
 	}
 	es.Create(events)
 
-	events = es.Find()
+	events = es.Find("cbra")
 
 	sort.Sort(api.ByName(events))
 
@@ -41,12 +41,18 @@ func TestFind(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
+	db.Delete(&api.Association{})
+	association := api.Association{Acronym: "cbra"}
+	db.Create(&association)
+
 	db.Delete(&api.Event{})
-	db.Create(&api.Event{})
-	db.Create(&api.Event{})
+	db.Create(&api.Event{Association: association})
+	db.Create(&api.Event{Association: association})
 
 	es := EventService{DB: db, Logger: &logger}
 
-	var events = es.Find()
+	var events = es.Find("cbra")
 	assert.Equal(t, 2, len(events), "events")
+
+	assert.Panics(t, func() { es.Find("") }, "requires association")
 }
