@@ -1,13 +1,8 @@
 * Error aggregation service
   * https://elithrar.github.io/article/http-handler-error-handling-revisited/
   * nginx errors?
-* Persist data
 * migrations
 * Backups
-* Extract scripts from bin/setup
-  * e2e
-  * tests
-  * start servers
 * Move goose code to /db?
 * Consolidate DB init
 * Ansible server setup?

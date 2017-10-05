@@ -5,6 +5,7 @@ ENV MYSQL_USER rails
 ENV MYSQL_PASSWORD rails
 
 VOLUME /var/lib/mysql
+
 COPY dawn-patrol.cnf /etc/mysql/conf.d
 COPY schema.sql /docker-entrypoint-initdb.d/_schema.sql
 COPY atra.sql /docker-entrypoint-initdb.d
