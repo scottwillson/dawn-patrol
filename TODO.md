@@ -1,5 +1,4 @@
 * Error aggregation service
-  * https://elithrar.github.io/article/http-handler-error-handling-revisited/
   * nginx errors?
 * migrations
 * Backups
@@ -69,3 +68,5 @@
 * Use default CBRA association
 * Cache DB conns and URLs
   * Where it makes sense. Only tests?
+* Improve error handling in handlers
+  * https://elithrar.github.io/article/http-handler-error-handling-revisited/
