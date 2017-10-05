@@ -1,6 +1,8 @@
 package db
 
 import (
+	"errors"
+
 	"github.com/go-kit/kit/log"
 
 	"github.com/jinzhu/gorm"
@@ -23,7 +25,12 @@ func (s *EventService) Create(events []api.Event) {
 
 // Find finds all events as api.Events.
 func (s *EventService) Find(association string) []api.Event {
-	s.Logger.Log("action", "find")
+	s.Logger.Log("action", "find", "association", association)
+
+	if association == "" {
+		return errors.New("'association' cannot be blank")
+	}
+
 	var events []api.Event
 	s.DB.Find(&events)
 	return events

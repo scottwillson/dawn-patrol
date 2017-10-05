@@ -27,7 +27,7 @@ func TestRailsCopy(t *testing.T) {
 
 	dpDB.Delete(api.Event{})
 
-	events := eventService.Find()
+	events := eventService.Find("cbra")
 	assert := assert.New(t)
 	assert.Equal(0, len(events), "events")
 
@@ -38,7 +38,7 @@ func TestRailsCopy(t *testing.T) {
 		t.Error(err)
 	}
 
-	events = eventService.Find()
+	events = eventService.Find("cbra")
 	assert.Equal(2, len(events), "events")
 
 	// promoter_id, type, created_at, updated_at
