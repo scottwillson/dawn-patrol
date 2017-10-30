@@ -29,5 +29,5 @@ func TestNewInstrumentedEventService(t *testing.T) {
 	es = NewInstrumentedEventService(nr, es)
 
 	es.Create([]api.Event{})
-	es.Find("cbra")
+	es.Find("CBRA")
 }

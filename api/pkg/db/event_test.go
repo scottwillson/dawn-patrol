@@ -35,7 +35,7 @@ func TestCreateEvents(t *testing.T) {
 	es.Create(events)
 
 	var err error
-	events, err = es.Find("cbra")
+	events, err = es.Find("CBRA")
 	if err != nil {
 		assert.FailNow(t, "Could not find events", err.Error())
 	}
@@ -64,7 +64,7 @@ func TestFind(t *testing.T) {
 
 	es := EventService{DB: db, Logger: &logger}
 
-	var events, err = es.Find("cbra")
+	var events, err = es.Find("CBRA")
 	if err != nil {
 		assert.FailNow(t, "Could not find events", err.Error())
 	}

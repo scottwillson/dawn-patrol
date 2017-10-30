@@ -21,7 +21,7 @@ func TestFor(t *testing.T) {
 	db.Find(&events)
 }
 
-func TestDefault(t *testing.T) {
+func TestCreate(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
 	db := dbs.Default()
@@ -31,18 +31,18 @@ func TestDefault(t *testing.T) {
 	db.Delete(api.Event{})
 
 	as := AssociationService{DB: db, Logger: &logger}
-	as.CreateDefault()
+	association := as.CreateDefault()
 
 	es := EventService{DB: db, Logger: &logger}
 
 	events := []api.Event{
-		api.Event{Name: "Copperopolis Road Race"},
-		api.Event{Name: "Sausalito Criterium"},
+		api.Event{Name: "Copperopolis Road Race", Association: association},
+		api.Event{Name: "Sausalito Criterium", Association: association},
 	}
 	es.Create(events)
 
 	var err error
-	events, err = es.Find("cbra")
+	events, err = es.Find("CBRA")
 	if err != nil {
 		assert.FailNow(t, "Could not find events", err.Error())
 	}

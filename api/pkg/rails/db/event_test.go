@@ -27,7 +27,7 @@ func TestRailsCopy(t *testing.T) {
 
 	dpDB.Delete(api.Event{})
 
-	events, err := eventService.Find("cbra")
+	events, err := eventService.Find("CBRA")
 	if err != nil {
 		t.Error(err)
 	}
@@ -41,7 +41,7 @@ func TestRailsCopy(t *testing.T) {
 		t.Error(err)
 	}
 
-	events, err = eventService.Find("cbra")
+	events, err = eventService.Find("CBRA")
 	if err != nil {
 		t.Error(err)
 	}

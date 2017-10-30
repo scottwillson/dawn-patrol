@@ -3,6 +3,7 @@ package db
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	api "rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 )
@@ -16,8 +17,9 @@ func TestCreateDefault(t *testing.T) {
 	db.Delete(api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
-	as.CreateDefault()
+	association := as.CreateDefault()
 
+	assert.Equal(t, "CBRA", association.Acronym, "Association acronym")
 	// TODO find association
 }
 

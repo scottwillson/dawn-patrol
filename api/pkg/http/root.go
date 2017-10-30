@@ -32,7 +32,7 @@ func newRoot(es api.EventService) *Root {
 }
 
 func (h *Root) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	events, err := h.EventService.Find("cbra")
+	events, err := h.EventService.Find("CBRA")
 	if err != nil {
 		panic(err)
 	}
