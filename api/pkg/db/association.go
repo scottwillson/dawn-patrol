@@ -29,3 +29,11 @@ func (s *AssociationService) CreateDefault() api.Association {
 	s.Create(association)
 	return association
 }
+
+// FindDefault finds default CBRA api.Association.
+func (s *AssociationService) FindDefault() api.Association {
+	s.Logger.Log("action", "find_default")
+	association := api.Association{}
+	s.DB.Where(&api.Association{Acronym: "CBRA"}).First(&association)
+	return association
+}

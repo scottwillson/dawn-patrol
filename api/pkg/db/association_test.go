@@ -17,12 +17,10 @@ func TestCreateDefault(t *testing.T) {
 	db.Delete(api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
-	association := as.CreateDefault()
+	var association = as.CreateDefault()
 
 	assert.Equal(t, "CBRA", association.Acronym, "Association acronym")
-	// TODO find association
-}
 
-// TODO test create if default already exists
-// TODO instrument
-// TODO test find
+	association = as.FindDefault()
+	assert.Equal(t, "CBRA", association.Acronym, "Default association acronym")
+}

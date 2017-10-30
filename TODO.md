@@ -1,3 +1,7 @@
+* association
+  * TODO test create if default already exists
+  * TODO instrument
+  * TODO test find
 * add wrapper method to ensure default association and add default condition
 * require event association
 * add create default association helper
