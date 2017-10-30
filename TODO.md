@@ -1,3 +1,4 @@
+* add wrapper method to ensure default association and add default condition
 * require event association
 * add create default association helper
 * read association from domain/sub-domain
@@ -8,6 +9,7 @@
   * https://elithrar.github.io/article/http-handler-error-handling-revisited/
   * nginx errors?
 * migrations
+  * run on deploys
 * Backups
 * Move goose code to /db?
 * Consolidate DB init
@@ -73,3 +75,5 @@
 * Use default CBRA association
 * Cache DB conns and URLs
   * Where it makes sense. Only tests?
+* Run all DB operations run inside of Docker to simplify configs and versions
+* Test GORM SQL injection

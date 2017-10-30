@@ -1,6 +1,0 @@
-#!/bin/bash
-set -e
-
-goose up
-pg_dump --schema-only -U dawnpatrol dawnpatrol_development > ../db/schema.sql
-pg_dump --data-only -U dawnpatrol --table=goose_db_version dawnpatrol_development >> ../db/schema.sql

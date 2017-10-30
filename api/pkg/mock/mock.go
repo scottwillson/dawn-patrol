@@ -11,10 +11,10 @@ type EventService struct {
 func (s *EventService) Create([]api.Event) {}
 
 // Find mocks db.EventService.Find().
-func (s *EventService) Find(_ string) []api.Event {
+func (s *EventService) Find(_ string) ([]api.Event, error) {
 	if s.FindFn != nil {
-		return s.FindFn()
+		return s.FindFn(), nil
 	}
 
-	return []api.Event{}
+	return []api.Event{}, nil
 }

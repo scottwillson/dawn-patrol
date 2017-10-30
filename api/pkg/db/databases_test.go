@@ -27,7 +27,11 @@ func TestDefault(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
+	db.Delete(api.Association{})
 	db.Delete(api.Event{})
+
+	as := AssociationService{DB: db, Logger: &logger}
+	as.CreateDefault()
 
 	es := EventService{DB: db, Logger: &logger}
 
@@ -37,7 +41,11 @@ func TestDefault(t *testing.T) {
 	}
 	es.Create(events)
 
-	events = es.Find("cbra")
+	var err error
+	events, err = es.Find("cbra")
+	if err != nil {
+		assert.FailNow(t, "Could not find events", err.Error())
+	}
 
 	sort.Sort(api.ByName(events))
 
@@ -72,6 +80,14 @@ func TestDatabaseURLFromEnv(t *testing.T) {
 
 	os.Setenv("DATABASE_URL", "postgres://test-db")
 	assert.Equal(t, "postgres://test-db", databaseURL(""), "db.databaseURL()")
+}
+
+func TestDatabaseURLForRails(t *testing.T) {
+	originalDatabaseURL := os.Getenv("RAILS_DATABASE_URL")
+	defer func() { os.Setenv("RAILS_DATABASE_URL", originalDatabaseURL) }()
+
+	os.Setenv("RAILS_DATABASE_URL", "mysql://rails-db")
+	assert.Equal(t, "mysql://rails-db", databaseURL("rails"), "db.databaseURL('rails')")
 }
 
 func TestDatabaseDriverForMysql(t *testing.T) {

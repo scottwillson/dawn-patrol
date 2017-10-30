@@ -32,7 +32,11 @@ func newRoot(es api.EventService) *Root {
 }
 
 func (h *Root) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	events := h.EventService.Find("cbra")
+	events, err := h.EventService.Find("cbra")
+	if err != nil {
+		panic(err)
+	}
+
 	jsonOut, err := h.EventJSON.marshal(events)
 	if err != nil {
 		panic(err)

@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+docker-compose -f docker-compose-dev.yml exec db-dev env LOGIN=dawnpatrol HOST=0.0.0.0 ./shmig -t postgresql -d dawnpatrol_development -m migrations up
+docker-compose -f docker-compose-dev.yml exec db-dev env LOGIN=dawnpatrol HOST=0.0.0.0 ./shmig -t postgresql -d dawnpatrol_test -m migrations up
+docker-compose -f docker-compose-dev.yml exec db-dev pg_dump --schema-only -U dawnpatrol dawnpatrol_development | tr -d '\r' > db/schema.sql
+docker-compose -f docker-compose-dev.yml exec db-dev pg_dump --data-only -U dawnpatrol --table=shmig_version dawnpatrol_development | tr -d '\r' >> db/schema.sql

@@ -9,23 +9,36 @@ import (
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 )
 
-func TestCreate(t *testing.T) {
+func TestCreateEvents(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
 	db := dbs.Default()
 	defer db.Close()
 
 	db.Delete(api.Event{})
+	db.Delete(api.Association{})
+
+	as := AssociationService{DB: db, Logger: &logger}
+
+	association := api.Association{
+		Acronym: "CBRA",
+		Name:    "Cascadia Bicycle Racing Association",
+	}
+	as.Create(association)
 
 	es := EventService{DB: db, Logger: &logger}
 
 	events := []api.Event{
-		api.Event{Name: "Copperopolis Road Race"},
-		api.Event{Name: "Sausalito Criterium"},
+		api.Event{Name: "Copperopolis Road Race", Association: association},
+		api.Event{Name: "Sausalito Criterium", Association: association},
 	}
 	es.Create(events)
 
-	events = es.Find("cbra")
+	var err error
+	events, err = es.Find("cbra")
+	if err != nil {
+		assert.FailNow(t, "Could not find events", err.Error())
+	}
 
 	sort.Sort(api.ByName(events))
 
@@ -42,7 +55,7 @@ func TestFind(t *testing.T) {
 	defer db.Close()
 
 	db.Delete(&api.Association{})
-	association := api.Association{Acronym: "cbra"}
+	association := api.Association{Acronym: "CBRA", Name: "Cascadia Bicycle Racing Association"}
 	db.Create(&association)
 
 	db.Delete(&api.Event{})
@@ -51,8 +64,18 @@ func TestFind(t *testing.T) {
 
 	es := EventService{DB: db, Logger: &logger}
 
-	var events = es.Find("cbra")
+	var events, err = es.Find("cbra")
+	if err != nil {
+		assert.FailNow(t, "Could not find events", err.Error())
+	}
+
 	assert.Equal(t, 2, len(events), "events")
 
-	assert.Panics(t, func() { es.Find("") }, "requires association")
+	events, err = es.Find("")
+	assert.Equal(t, 0, len(events), "events")
+	assert.NotNil(t, err, "Find() requires association")
+
+	events, err = es.Find("xbi")
+	assert.Equal(t, 0, len(events), "events")
+	assert.NotNil(t, err, "Find() requires association")
 }
