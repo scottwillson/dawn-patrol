@@ -8,7 +8,7 @@ import (
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 )
 
-func TestCreateDefault(t *testing.T) {
+func TestDefaultAndTestCreateDefault(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
 	db := dbs.Default()
@@ -21,6 +21,30 @@ func TestCreateDefault(t *testing.T) {
 
 	assert.Equal(t, "CBRA", association.Acronym, "Association acronym")
 
-	association = as.FindDefault()
+	association = as.Default()
 	assert.Equal(t, "CBRA", association.Acronym, "Default association acronym")
+}
+
+func TestDefaultOrCreateDefault(t *testing.T) {
+	logger := log.MockLogger{}
+	dbs := Databases{Logger: &logger}
+	db := dbs.Default()
+	defer db.Close()
+
+	db.Delete(api.Association{})
+
+	as := AssociationService{DB: db, Logger: &logger}
+	var association = as.DefaultOrCreateDefault()
+
+	assert.Equal(t, "CBRA", association.Acronym, "Association acronym")
+
+	association = as.Default()
+	assert.Equal(t, "CBRA", association.Acronym, "Default association acronym")
+
+	association = as.DefaultOrCreateDefault()
+	assert.Equal(t, "CBRA", association.Acronym, "Default association acronym")
+
+	var count int
+	db.Table("associations").Count(&count)
+	assert.Equal(t, 1, count)
 }

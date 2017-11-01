@@ -8,6 +8,7 @@ import (
 )
 
 // AssociationService implements api.EventService.
+// TODO move
 type AssociationService struct {
 	DB     *gorm.DB
 	Logger log.Logger
@@ -30,10 +31,19 @@ func (s *AssociationService) CreateDefault() api.Association {
 	return association
 }
 
-// FindDefault finds default CBRA api.Association.
-func (s *AssociationService) FindDefault() api.Association {
-	s.Logger.Log("action", "find_default")
+// Default finds default CBRA api.Association.
+func (s *AssociationService) Default() api.Association {
+	s.Logger.Log("action", "first_default")
 	association := api.Association{}
 	s.DB.Where(&api.Association{Acronym: "CBRA"}).First(&association)
+	return association
+}
+
+// DefaultOrCreateDefault returns default Association. Creates it with acronym CBRA
+// if it doesn't exist.
+func (s *AssociationService) DefaultOrCreateDefault() api.Association {
+	s.Logger.Log("action", "first_or_create_default")
+	association := api.Association{}
+	s.DB.Where(api.Association{Acronym: "CBRA"}).FirstOrCreate(&association)
 	return association
 }
