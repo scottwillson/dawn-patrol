@@ -7,8 +7,7 @@ import (
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
 )
 
-// AssociationService implements api.EventService.
-// TODO move
+// AssociationService implements api.AssociationService.
 type AssociationService struct {
 	DB     *gorm.DB
 	Logger log.Logger
