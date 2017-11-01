@@ -22,10 +22,7 @@ func (s *AssociationService) Create(association api.Association) {
 // CreateDefault creates default CBRA api.Association.
 func (s *AssociationService) CreateDefault() api.Association {
 	s.Logger.Log("action", "create_default")
-	association := api.Association{
-		Acronym: "CBRA",
-		Name:    "Cascadia Bicycle Racing Association",
-	}
+	association := newDefault()
 	s.Create(association)
 	return association
 }
@@ -43,6 +40,13 @@ func (s *AssociationService) Default() api.Association {
 func (s *AssociationService) DefaultOrCreateDefault() api.Association {
 	s.Logger.Log("action", "first_or_create_default")
 	association := api.Association{}
-	s.DB.Where(api.Association{Acronym: "CBRA"}).FirstOrCreate(&association)
+	s.DB.Where(newDefault()).FirstOrCreate(&association)
 	return association
+}
+
+func newDefault() api.Association {
+	return api.Association{
+		Acronym: "CBRA",
+		Name:    "Cascadia Bicycle Racing Association",
+	}
 }

@@ -23,6 +23,7 @@ func TestDefaultAndTestCreateDefault(t *testing.T) {
 
 	association = as.Default()
 	assert.Equal(t, "CBRA", association.Acronym, "Default association acronym")
+	assert.Equal(t, "Cascadia Bicycle Racing Association", association.Name, "Default association name")
 }
 
 func TestDefaultOrCreateDefault(t *testing.T) {
@@ -43,6 +44,7 @@ func TestDefaultOrCreateDefault(t *testing.T) {
 
 	association = as.DefaultOrCreateDefault()
 	assert.Equal(t, "CBRA", association.Acronym, "Default association acronym")
+	assert.Equal(t, "Cascadia Bicycle Racing Association", association.Name, "Default association name")
 
 	var count int
 	db.Table("associations").Count(&count)
