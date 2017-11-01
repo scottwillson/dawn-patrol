@@ -10,6 +10,6 @@ type Association struct {
 type AssociationService interface {
 	Create(Association)
 	CreateDefault() Association
-	Default(Association)
-	DefaultOrCreateDefault(Association)
+	Default() Association
+	DefaultOrCreateDefault() Association
 }
