@@ -3,6 +3,7 @@ package api
 // Association is a bike racing association like OBRA or USA Cycling
 type Association struct {
 	Acronym string `json:"acronym"`
+	Host    string `json:"host"`
 	Name    string `json:"name"`
 }
 
@@ -12,4 +13,5 @@ type AssociationService interface {
 	CreateDefault() Association
 	Default() Association
 	DefaultOrCreateDefault() Association
+	FirstAcronymByHost(string) string
 }

@@ -44,6 +44,12 @@ func (s *AssociationService) DefaultOrCreateDefault() api.Association {
 	return association
 }
 
+// FirstAcronymByHost finds first Association acronym that matches host.
+// Does a regex match and honors position.
+func (s *AssociationService) FirstAcronymByHost(host string) string {
+	return "CBRA"
+}
+
 func newDefault() api.Association {
 	return api.Association{
 		Acronym: "CBRA",

@@ -10,8 +10,9 @@ import (
 
 // Root returns an array of Events as JSON.
 type Root struct {
-	EventJSON    EventJSON
-	EventService api.EventService
+	AssociationService api.AssociationService
+	EventJSON          EventJSON
+	EventService       api.EventService
 }
 
 // EventJSON marshals Events to JSON string.
@@ -27,12 +28,17 @@ func (h *DefaultEventJSON) marshal(events []api.Event) (string, error) {
 	return string(jsonOut), err
 }
 
-func newRoot(es api.EventService) *Root {
-	return &Root{EventJSON: &DefaultEventJSON{}, EventService: es}
+func newRoot(as api.AssociationService, es api.EventService) *Root {
+	return &Root{
+		AssociationService: as,
+		EventJSON:          &DefaultEventJSON{},
+		EventService:       es,
+	}
 }
 
 func (h *Root) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	events, err := h.EventService.Find("CBRA")
+	acronym := h.AssociationService.FirstAcronymByHost(r.Host)
+	events, err := h.EventService.Find(acronym)
 	if err != nil {
 		panic(err)
 	}

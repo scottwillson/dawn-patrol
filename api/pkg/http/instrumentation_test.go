@@ -23,8 +23,9 @@ func TestNewInstrumentedHandler(t *testing.T) {
 
 	app := api.NewNewRelicApp(&logger)
 
+	as := mock.AssociationService{}
 	es := mock.EventService{}
-	h := NewInstrumentedHandler(app, newRoot(&es))
+	h := NewInstrumentedHandler(app, newRoot(&as, &es))
 
 	assert.NotNil(t, h, "instrumented Handler")
 
