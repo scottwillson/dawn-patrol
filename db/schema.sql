@@ -27,7 +27,8 @@ SET default_with_oids = false;
 CREATE TABLE associations (
     id integer NOT NULL,
     acronym text NOT NULL,
-    name text NOT NULL
+    name text NOT NULL,
+    host text NOT NULL
 );
 
 
@@ -67,7 +68,8 @@ CREATE TABLE events (
     rails_created_at timestamp with time zone,
     rails_updated_at timestamp with time zone,
     starts_at timestamp with time zone NOT NULL,
-    state text
+    state text,
+    association_id integer NOT NULL
 );
 
 
@@ -202,6 +204,13 @@ CREATE UNIQUE INDEX associations_acronym_idx ON associations USING btree (acrony
 
 
 --
+-- Name: associations_host_idx; Type: INDEX; Schema: public; Owner: dawnpatrol
+--
+
+CREATE UNIQUE INDEX associations_host_idx ON associations USING btree (host);
+
+
+--
 -- Name: associations_name_idx; Type: INDEX; Schema: public; Owner: dawnpatrol
 --
 
@@ -237,6 +246,14 @@ CREATE INDEX events_starts_at_idx ON events USING btree (starts_at);
 
 
 --
+-- Name: events events_association_id; Type: FK CONSTRAINT; Schema: public; Owner: dawnpatrol
+--
+
+ALTER TABLE ONLY events
+    ADD CONSTRAINT events_association_id FOREIGN KEY (association_id) REFERENCES associations(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -264,6 +281,8 @@ SET search_path = public, pg_catalog;
 
 COPY shmig_version (version, migrated_at) FROM stdin;
 1507560488	2017-10-12 02:53:55.467747
+1507776432	2017-11-04 15:43:37.426016
+1509578401	2017-11-04 15:43:37.438428
 \.
 
 

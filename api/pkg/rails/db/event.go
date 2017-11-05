@@ -11,20 +11,30 @@ import (
 
 // EventService implements api.rails.EventService.
 type EventService struct {
-	APIEventService api.EventService
-	Databases       db.Databases
-	Logger          log.Logger
+	APIEventService    api.EventService
+	AssociationService api.AssociationService
+	Databases          db.Databases
+	Logger             log.Logger
 }
 
 // Copy copies events for an association from the Racing on Rails MySQL DB to Dawn Patrol DB.
-func (s *EventService) Copy(association string) error {
-	s.Logger.Log("action", "copy", "association", association)
+func (s *EventService) Copy(associationAcronym string) error {
+	s.Logger.Log("action", "copy", "association", associationAcronym)
 
 	var railsEvents []rails.Event
-	db := s.Databases.For(association)
+	db := s.Databases.For(associationAcronym)
 	defer db.Close()
 	db.Find(&railsEvents)
 	s.Logger.Log("action", "copy", "rails_events", len(railsEvents))
+
+	// TODO test this
+	// TODO add service to read it
+	association := api.Association{
+		Acronym: associationAcronym,
+		Name:    associationAcronym,
+		Host:    "localhost",
+	}
+	s.AssociationService.FirstOrCreate(association)
 
 	events := make([]api.Event, len(railsEvents))
 	var date time.Time
@@ -34,6 +44,7 @@ func (s *EventService) Copy(association string) error {
 			return err
 		}
 		events[i] = api.Event{
+			Association:    association,
 			City:           e.City,
 			Discipline:     e.Discipline,
 			Name:           e.Name,

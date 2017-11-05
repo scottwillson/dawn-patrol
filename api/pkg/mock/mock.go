@@ -23,8 +23,8 @@ func (s *EventService) Find(_ string) ([]api.Event, error) {
 type AssociationService struct {
 }
 
-// Create creates api.Association.
-func (s *AssociationService) Create(association api.Association) {
+// CreateAssociation creates api.Association.
+func (s *AssociationService) CreateAssociation(association api.Association) {
 }
 
 // CreateDefault creates default CBRA api.Association.
@@ -46,4 +46,9 @@ func (s *AssociationService) DefaultOrCreateDefault() api.Association {
 // FirstAcronymByHost mocks db implementation
 func (s *AssociationService) FirstAcronymByHost(host string) string {
 	return ""
+}
+
+// FirstOrCreate mocks db implementation
+func (s *AssociationService) FirstOrCreate(association api.Association) api.Association {
+	return association
 }

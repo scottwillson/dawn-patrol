@@ -63,7 +63,7 @@ func TestFirstAcronymByHost(t *testing.T) {
 	as.CreateDefault()
 
 	atra := api.Association{Acronym: "ATRA", Host: "atra.local"}
-	as.Create(atra)
+	as.CreateAssociation(atra)
 
 	var acronym = as.FirstAcronymByHost("0.0.0.0")
 	assert.Equal(t, "CBRA", acronym)
@@ -76,4 +76,26 @@ func TestFirstAcronymByHost(t *testing.T) {
 
 	acronym = as.FirstAcronymByHost("atra.local")
 	assert.Equal(t, "ATRA", acronym)
+}
+
+func TestFirstOrCreate(t *testing.T) {
+	logger := log.MockLogger{}
+	dbs := Databases{Logger: &logger}
+	db := dbs.Default()
+	defer db.Close()
+
+	db.Delete(api.Association{})
+
+	var association = api.Association{Acronym: "ATRA", Host: "atra.local"}
+	as := AssociationService{DB: db, Logger: &logger}
+
+	association = as.FirstOrCreate(association)
+	assert.Equal(t, "ATRA", association.Acronym)
+
+	association = as.FirstOrCreate(association)
+	assert.Equal(t, "ATRA", association.Acronym)
+
+	var count int
+	db.Table("associations").Count(&count)
+	assert.Equal(t, 1, count)
 }

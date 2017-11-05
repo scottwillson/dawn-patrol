@@ -24,7 +24,7 @@ func TestCreateEvents(t *testing.T) {
 		Acronym: "CBRA",
 		Name:    "Cascadia Bicycle Racing Association",
 	}
-	as.Create(association)
+	as.CreateAssociation(association)
 
 	es := EventService{DB: db, Logger: &logger}
 

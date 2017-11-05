@@ -9,6 +9,7 @@ type Event struct {
 	Association    Association
 	City           string    `json:"city"`
 	Discipline     string    `json:"discipline"`
+	ID             int       `json:"id"`
 	Name           string    `json:"name"`
 	RailsCreatedAt time.Time `json:"railsCreatedAt"`
 	RailsID        int       `json:"railsId"`

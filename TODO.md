@@ -1,9 +1,10 @@
-* association
-  * TODO instrument
+* Use command pattern, not services?
+  * Rename CreateDefault() to Create()
 * add wrapper method to ensure default association and add default condition
-* require event association
+* require event association (in code)
 * add create default association helper
 * read association from domain/sub-domain
+  * test regex
 * /copy should use host, not param
   * curl -X rails.local:8080/rails/copy
   * not curl -X POST -d "association=rails" 0.0.0.0:8080/rails/copy
@@ -13,7 +14,6 @@
 * migrations
   * run on deploys
 * Backups
-* Move goose code to /db?
 * Consolidate DB init
 * Ansible server setup?
   * Replace Docker Hub
@@ -48,11 +48,9 @@
 * base images?
 * Consider https://github.com/thockin/go-build-template
 * Ensure dev builds on CI to catch problems there
-* All seed scripts valid?
 * Look at https://github.com/go-kit/kit
 * Add logging to db/open.go?
 * Default struct Logger to something reasonable
-* Use command pattern, not services?
 * https://prometheus.io/ for monitoring
 * Move appName() to top-level
 * alerts
@@ -79,3 +77,5 @@
   * Where it makes sense. Only tests?
 * Run all DB operations run inside of Docker to simplify configs and versions
 * Test GORM SQL injection
+* Ensure postgres warnings are exceptions
+* Auto-add created and updated

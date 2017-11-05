@@ -22,8 +22,14 @@ func TestRailsCopy(t *testing.T) {
 	dpDB := dbs.Default()
 	defer dpDB.Close()
 
+	as := &db.AssociationService{DB: dpDB, Logger: &logger}
 	eventService := &db.EventService{DB: dpDB, Logger: &logger}
-	railsService := &EventService{Databases: dbs, APIEventService: eventService, Logger: &logger}
+	railsService := &EventService{
+		APIEventService:    eventService,
+		AssociationService: as,
+		Databases:          dbs,
+		Logger:             &logger,
+	}
 
 	dpDB.Delete(api.Event{})
 

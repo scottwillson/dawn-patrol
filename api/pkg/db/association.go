@@ -14,7 +14,7 @@ type AssociationService struct {
 }
 
 // Create creates api.Association.
-func (s *AssociationService) Create(association api.Association) {
+func (s *AssociationService) CreateAssociation(association api.Association) {
 	s.Logger.Log("action", "create")
 	s.DB.Create(association)
 }
@@ -23,7 +23,7 @@ func (s *AssociationService) Create(association api.Association) {
 func (s *AssociationService) CreateDefault() api.Association {
 	s.Logger.Log("action", "create_default")
 	association := newDefault()
-	s.Create(association)
+	s.CreateAssociation(association)
 	return association
 }
 
@@ -50,9 +50,17 @@ func (s *AssociationService) FirstAcronymByHost(host string) string {
 	return "CBRA"
 }
 
+// FirstOrCreate finds first Association that matches acronym or creates Association
+func (s *AssociationService) FirstOrCreate(association api.Association) api.Association {
+	s.Logger.Log("action", "first_or_create")
+	s.DB.FirstOrCreate(&association)
+	return association
+}
+
 func newDefault() api.Association {
 	return api.Association{
 		Acronym: "CBRA",
+		Host:    "0.0.0.0|localhost|cbra.local",
 		Name:    "Cascadia Bicycle Racing Association",
 	}
 }

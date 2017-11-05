@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"os"
 	"sort"
 	"testing"
@@ -32,6 +33,7 @@ func TestCreate(t *testing.T) {
 
 	as := AssociationService{DB: db, Logger: &logger}
 	association := as.CreateDefault()
+	fmt.Println("*** Association ID ", association.ID)
 
 	es := EventService{DB: db, Logger: &logger}
 
