@@ -1,3 +1,4 @@
+* Check all the TODOs
 * Use command pattern, not services?
   * Rename CreateDefault() to Create()
 * add wrapper method to ensure default association and add default condition
@@ -5,6 +6,7 @@
 * add create default association helper
 * read association from domain/sub-domain
   * test regex
+* db.Unscoped().Delete(&api.Event{}) or db.Delete(api.Event{})?
 * /copy should use host, not param
   * curl -X rails.local:8080/rails/copy
   * not curl -X POST -d "association=rails" 0.0.0.0:8080/rails/copy

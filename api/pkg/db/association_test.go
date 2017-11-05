@@ -14,6 +14,7 @@ func TestDefaultAndTestCreateDefaultAssociation(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
+	db.Unscoped().Delete(&api.Event{})
 	db.Unscoped().Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
@@ -32,6 +33,7 @@ func TestDefaultOrCreateDefaultAssociation(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
+	db.Unscoped().Delete(&api.Event{})
 	db.Unscoped().Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
@@ -57,6 +59,7 @@ func TestFirstAcronymByHost(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
+	db.Unscoped().Delete(&api.Event{})
 	db.Unscoped().Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
@@ -84,6 +87,7 @@ func TestFirstOrCreate(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
+	db.Unscoped().Delete(&api.Event{})
 	db.Unscoped().Delete(&api.Association{})
 
 	var association = api.Association{Acronym: "ATRA", Host: "atra.local"}
