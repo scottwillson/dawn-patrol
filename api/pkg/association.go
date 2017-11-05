@@ -10,10 +10,10 @@ type Association struct {
 
 // AssociationService manages Associations.
 type AssociationService interface {
-	CreateAssociation(Association)
+	CreateAssociation(*Association)
 	CreateDefaultAssociation() Association
 	Default() Association
 	DefaultOrCreateDefaultAssociation() Association
 	FirstAcronymByHost(string) string
-	FirstOrCreate(Association) Association
+	FirstOrCreate(*Association)
 }

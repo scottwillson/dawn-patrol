@@ -22,23 +22,31 @@ func TestCreateEvents(t *testing.T) {
 
 	association := as.CreateDefaultAssociation()
 
+	assert := assert.New(t)
+	var count int
+	db.Table("associations").Count(&count)
+	assert.Equal(1, count)
+	assert.NotZero(association.ID)
+
 	es := EventService{DB: db, Logger: &logger}
 
 	events := []api.Event{
-		api.Event{Name: "Copperopolis Road Race", Association: association},
-		api.Event{Name: "Sausalito Criterium", Association: association},
+		api.Event{Name: "Copperopolis Road Race", AssociationID: association.ID},
+		api.Event{Name: "Sausalito Criterium", AssociationID: association.ID},
 	}
 	es.Create(events)
+
+	db.Table("associations").Count(&count)
+	assert.Equal(1, count)
 
 	var err error
 	events, err = es.Find("CBRA")
 	if err != nil {
-		assert.FailNow(t, "Could not find events", err.Error())
+		assert.FailNow("Could not find events", err.Error())
 	}
 
 	sort.Sort(api.ByName(events))
 
-	assert := assert.New(t)
 	assert.Equal(2, len(events), "events")
 	assert.Equal("Copperopolis Road Race", events[0].Name, "event name")
 	assert.Equal("Sausalito Criterium", events[1].Name, "event name")
@@ -50,13 +58,14 @@ func TestFind(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
+	db.Unscoped().Delete(&api.Event{})
 	db.Unscoped().Delete(&api.Association{})
+
 	association := api.Association{Acronym: "CBRA", Name: "Cascadia Bicycle Racing Association"}
 	db.Create(&association)
 
-	db.Unscoped().Delete(&api.Event{})
-	db.Create(&api.Event{Association: association})
-	db.Create(&api.Event{Association: association})
+	db.Create(&api.Event{AssociationID: association.ID})
+	db.Create(&api.Event{AssociationID: association.ID})
 
 	es := EventService{DB: db, Logger: &logger}
 

@@ -24,7 +24,7 @@ type AssociationService struct {
 }
 
 // CreateAssociation creates api.Association.
-func (s *AssociationService) CreateAssociation(association api.Association) {
+func (s *AssociationService) CreateAssociation(association *api.Association) {
 }
 
 // CreateDefaultAssociation creates default CBRA api.Association.
@@ -49,6 +49,5 @@ func (s *AssociationService) FirstAcronymByHost(host string) string {
 }
 
 // FirstOrCreate mocks db implementation
-func (s *AssociationService) FirstOrCreate(association api.Association) api.Association {
-	return association
+func (s *AssociationService) FirstOrCreate(association *api.Association) {
 }

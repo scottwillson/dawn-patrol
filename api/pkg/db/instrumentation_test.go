@@ -23,6 +23,7 @@ func TestNewInstrumentedEventService(t *testing.T) {
 	defer db.Close()
 
 	db.Unscoped().Delete(&api.Event{})
+	db.Unscoped().Delete(&api.Association{})
 
 	var es api.EventService
 	es = &EventService{DB: db, Logger: &logger}

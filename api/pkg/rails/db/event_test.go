@@ -32,6 +32,7 @@ func TestRailsCopy(t *testing.T) {
 	}
 
 	dpDB.Unscoped().Delete(&api.Event{})
+	dpDB.Unscoped().Delete(&api.Association{})
 
 	events, err := eventService.Find("CBRA")
 	if err != nil {

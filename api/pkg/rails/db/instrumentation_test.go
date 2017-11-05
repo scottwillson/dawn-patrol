@@ -23,6 +23,9 @@ func TestNewInstrumentedEventService(t *testing.T) {
 	dpDB := dbs.Default()
 	defer dpDB.Close()
 
+	dpDB.Unscoped().Delete(&api.Event{})
+	dpDB.Unscoped().Delete(&api.Association{})
+
 	eventService := &db.EventService{DB: dpDB, Logger: &logger}
 	railsService := &EventService{Databases: dbs, APIEventService: eventService, Logger: &logger}
 

@@ -34,7 +34,7 @@ func (s *EventService) Copy(associationAcronym string) error {
 		Name:    associationAcronym,
 		Host:    "localhost",
 	}
-	s.AssociationService.FirstOrCreate(association)
+	s.AssociationService.FirstOrCreate(&association)
 
 	events := make([]api.Event, len(railsEvents))
 	var date time.Time
@@ -44,7 +44,7 @@ func (s *EventService) Copy(associationAcronym string) error {
 			return err
 		}
 		events[i] = api.Event{
-			Association:    association,
+			AssociationID:  association.ID,
 			City:           e.City,
 			Discipline:     e.Discipline,
 			Name:           e.Name,
