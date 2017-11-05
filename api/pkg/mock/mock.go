@@ -27,8 +27,8 @@ type AssociationService struct {
 func (s *AssociationService) CreateAssociation(association api.Association) {
 }
 
-// CreateDefault creates default CBRA api.Association.
-func (s *AssociationService) CreateDefault() api.Association {
+// CreateDefaultAssociation creates default CBRA api.Association.
+func (s *AssociationService) CreateDefaultAssociation() api.Association {
 	return api.Association{}
 }
 
@@ -37,9 +37,9 @@ func (s *AssociationService) Default() api.Association {
 	return api.Association{}
 }
 
-// DefaultOrCreateDefault returns default Association. Creates it with acronym CBRA
+// DefaultOrCreateDefaultAssociation returns default Association. Creates it with acronym CBRA
 // if it doesn't exist.
-func (s *AssociationService) DefaultOrCreateDefault() api.Association {
+func (s *AssociationService) DefaultOrCreateDefaultAssociation() api.Association {
 	return api.Association{}
 }
 

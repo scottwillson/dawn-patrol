@@ -7,6 +7,7 @@ import (
 // Event is a bike race on a date or dates with (optional) categories and results.
 type Event struct {
 	Association    Association
+	AssociationID  int       `json:"associationId"`
 	City           string    `json:"city"`
 	Discipline     string    `json:"discipline"`
 	ID             int       `json:"id"`

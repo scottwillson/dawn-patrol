@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
+	api "rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/db"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 
@@ -31,7 +31,7 @@ func TestRailsCopy(t *testing.T) {
 		Logger:             &logger,
 	}
 
-	dpDB.Delete(api.Event{})
+	dpDB.Unscoped().Delete(&api.Event{})
 
 	events, err := eventService.Find("CBRA")
 	if err != nil {
@@ -43,8 +43,8 @@ func TestRailsCopy(t *testing.T) {
 	railsEvents := railsService.Find("rails")
 	assert.Equal(2, len(railsEvents), "Rails events")
 
-	if err := railsService.Copy("rails"); err != nil {
-		t.Error(err)
+	if copyErr := railsService.Copy("rails"); copyErr != nil {
+		t.Error(copyErr)
 	}
 
 	events, err = eventService.Find("CBRA")

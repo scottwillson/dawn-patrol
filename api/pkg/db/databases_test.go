@@ -1,15 +1,15 @@
 package db
 
 import (
-	"fmt"
 	"os"
 	"sort"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
+	api "rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/rails"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestFor(t *testing.T) {
@@ -28,12 +28,11 @@ func TestCreate(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
-	db.Delete(api.Association{})
-	db.Delete(api.Event{})
+	db.Unscoped().Delete(&api.Association{})
+	db.Unscoped().Delete(&api.Event{})
 
 	as := AssociationService{DB: db, Logger: &logger}
-	association := as.CreateDefault()
-	fmt.Println("*** Association ID ", association.ID)
+	association := as.CreateDefaultAssociation()
 
 	es := EventService{DB: db, Logger: &logger}
 

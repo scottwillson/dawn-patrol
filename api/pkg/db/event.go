@@ -20,7 +20,7 @@ type EventService struct {
 func (s *EventService) Create(events []api.Event) {
 	s.Logger.Log("action", "create")
 	for _, event := range events {
-		s.DB.Create(event)
+		s.DB.Create(&event)
 	}
 }
 

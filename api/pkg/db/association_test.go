@@ -8,16 +8,16 @@ import (
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 )
 
-func TestDefaultAndTestCreateDefault(t *testing.T) {
+func TestDefaultAndTestCreateDefaultAssociation(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
 	db := dbs.Default()
 	defer db.Close()
 
-	db.Delete(api.Association{})
+	db.Unscoped().Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
-	var association = as.CreateDefault()
+	var association = as.CreateDefaultAssociation()
 
 	assert.Equal(t, "CBRA", association.Acronym, "Association acronym")
 
@@ -26,23 +26,23 @@ func TestDefaultAndTestCreateDefault(t *testing.T) {
 	assert.Equal(t, "Cascadia Bicycle Racing Association", association.Name, "Default association name")
 }
 
-func TestDefaultOrCreateDefault(t *testing.T) {
+func TestDefaultOrCreateDefaultAssociation(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
 	db := dbs.Default()
 	defer db.Close()
 
-	db.Delete(api.Association{})
+	db.Unscoped().Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
-	var association = as.DefaultOrCreateDefault()
+	var association = as.DefaultOrCreateDefaultAssociation()
 
 	assert.Equal(t, "CBRA", association.Acronym, "Association acronym")
 
 	association = as.Default()
 	assert.Equal(t, "CBRA", association.Acronym, "Default association acronym")
 
-	association = as.DefaultOrCreateDefault()
+	association = as.DefaultOrCreateDefaultAssociation()
 	assert.Equal(t, "CBRA", association.Acronym, "Default association acronym")
 	assert.Equal(t, "Cascadia Bicycle Racing Association", association.Name, "Default association name")
 
@@ -57,10 +57,10 @@ func TestFirstAcronymByHost(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
-	db.Delete(api.Association{})
+	db.Unscoped().Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
-	as.CreateDefault()
+	as.CreateDefaultAssociation()
 
 	atra := api.Association{Acronym: "ATRA", Host: "atra.local"}
 	as.CreateAssociation(atra)
@@ -84,7 +84,7 @@ func TestFirstOrCreate(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
-	db.Delete(api.Association{})
+	db.Unscoped().Delete(&api.Association{})
 
 	var association = api.Association{Acronym: "ATRA", Host: "atra.local"}
 	as := AssociationService{DB: db, Logger: &logger}

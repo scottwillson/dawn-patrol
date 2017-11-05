@@ -15,16 +15,12 @@ func TestCreateEvents(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
-	db.Delete(api.Event{})
-	db.Delete(api.Association{})
+	db.Unscoped().Delete(&api.Event{})
+	db.Unscoped().Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
 
-	association := api.Association{
-		Acronym: "CBRA",
-		Name:    "Cascadia Bicycle Racing Association",
-	}
-	as.CreateAssociation(association)
+	association := as.CreateDefaultAssociation()
 
 	es := EventService{DB: db, Logger: &logger}
 
@@ -54,11 +50,11 @@ func TestFind(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
-	db.Delete(&api.Association{})
+	db.Unscoped().Delete(&api.Association{})
 	association := api.Association{Acronym: "CBRA", Name: "Cascadia Bicycle Racing Association"}
 	db.Create(&association)
 
-	db.Delete(&api.Event{})
+	db.Unscoped().Delete(&api.Event{})
 	db.Create(&api.Event{Association: association})
 	db.Create(&api.Event{Association: association})
 
