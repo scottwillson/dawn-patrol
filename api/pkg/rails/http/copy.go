@@ -8,7 +8,8 @@ import (
 
 // Copy starts a copy of Racing on Rails data.
 type Copy struct {
-	EventService rails.EventService
+	EventService             rails.EventService
+	RacingAssociationService rails.RacingAssociationService
 }
 
 func (h *Copy) ServeHTTP(w http.ResponseWriter, r *http.Request) {

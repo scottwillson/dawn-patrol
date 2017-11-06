@@ -34,23 +34,24 @@ func TestRailsCopy(t *testing.T) {
 	dpDB.Unscoped().Delete(&api.Event{})
 	dpDB.Unscoped().Delete(&api.Association{})
 
-	events, err := eventService.Find("CBRA")
-	if err != nil {
-		t.Error(err)
-	}
-	assert := assert.New(t)
-	assert.Equal(0, len(events), "events")
+	db := dbs.Default()
+	var count int
+	db.Table("associations").Count(&count)
+	assert.Equal(t, 0, count)
 
+	assert := assert.New(t)
 	railsEvents := railsService.Find("rails")
 	assert.Equal(2, len(railsEvents), "Rails events")
 
 	if copyErr := railsService.Copy("rails"); copyErr != nil {
 		t.Error(copyErr)
+		t.FailNow()
 	}
 
-	events, err = eventService.Find("CBRA")
+	events, err := eventService.Find("CBRA")
 	if err != nil {
 		t.Error(err)
+		t.FailNow()
 	}
 	assert.Equal(2, len(events), "events")
 

@@ -21,7 +21,7 @@ func (s *EventService) Create(events []api.Event) {
 	s.Logger.Log("action", "create")
 	for _, event := range events {
 		fmt.Println(event)
-		s.DB.Debug().Create(&event)
+		s.DB.Create(&event)
 	}
 }
 

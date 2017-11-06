@@ -61,7 +61,7 @@ func (s *AssociationService) FirstAcronymByHost(host string) string {
 // FirstOrCreate finds first Association that matches acronym or creates Association
 func (s *AssociationService) FirstOrCreate(association *api.Association) {
 	s.Logger.Log("action", "first_or_create")
-	s.DB.Debug().FirstOrCreate(&association)
+	s.DB.FirstOrCreate(&association)
 }
 
 func newDefault() api.Association {
