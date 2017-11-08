@@ -18,8 +18,11 @@ func TestFind(t *testing.T) {
 
 	service := &RacingAssociationService{Databases: dbs, Logger: &logger}
 
-	var association = service.Find("rails")
+	association, err := service.Find("CBRA")
+	if err != nil {
+		t.Error(err)
+	}
 
-	assert.Equal(t, "rails", association.Name, "association name")
-	assert.Equal(t, "rails", association.ShortName, "association short name")
+	assert.Equal(t, "Cascadia Bicycle Racing Association", association.Name, "association name")
+	assert.Equal(t, "CBRA", association.ShortName, "association short name")
 }

@@ -53,7 +53,7 @@ func TestDefaultOrCreateDefaultAssociation(t *testing.T) {
 	assert.Equal(t, 1, count)
 }
 
-func TestFirstAcronymByHost(t *testing.T) {
+func TestFirstByHost(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
 	db := dbs.Default()
@@ -68,17 +68,29 @@ func TestFirstAcronymByHost(t *testing.T) {
 	atra := api.Association{Acronym: "ATRA", Host: "atra.local"}
 	as.CreateAssociation(&atra)
 
-	var acronym = as.FirstAcronymByHost("0.0.0.0")
-	assert.Equal(t, "CBRA", acronym)
+	var association, err = as.FirstByHost("0.0.0.0")
+	assert.NotNil(t, association)
+	assert.Equal(t, "CBRA", association.Acronym)
+	assert.NoError(t, err)
 
-	acronym = as.FirstAcronymByHost("localhost")
-	assert.Equal(t, "CBRA", acronym)
+	association, err = as.FirstByHost("localhost")
+	assert.NotNil(t, association)
+	assert.Equal(t, "CBRA", association.Acronym)
+	assert.NoError(t, err)
 
-	acronym = as.FirstAcronymByHost("cbra.local")
-	assert.Equal(t, "CBRA", acronym)
+	association, err = as.FirstByHost("cbra.web")
+	assert.NotNil(t, association)
+	assert.Equal(t, "CBRA", association.Acronym)
+	assert.NoError(t, err)
 
-	acronym = as.FirstAcronymByHost("atra.local")
-	assert.Equal(t, "ATRA", acronym)
+	association, err = as.FirstByHost("atra.local")
+	assert.NotNil(t, association)
+	assert.Equal(t, "ATRA", association.Acronym)
+	assert.NoError(t, err)
+
+	association, err = as.FirstByHost("usacycling.org")
+	assert.NotNil(t, association)
+	assert.Error(t, err)
 }
 
 func TestFirstOrCreate(t *testing.T) {

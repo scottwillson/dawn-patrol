@@ -29,25 +29,33 @@ func (s *AssociationService) CreateAssociation(association *api.Association) {
 
 // CreateDefaultAssociation creates default CBRA api.Association.
 func (s *AssociationService) CreateDefaultAssociation() api.Association {
-	return api.Association{}
+	return newMock()
 }
 
 // Default finds default CBRA api.Association.
 func (s *AssociationService) Default() api.Association {
-	return api.Association{}
+	return newMock()
 }
 
 // DefaultOrCreateDefaultAssociation returns default Association. Creates it with acronym CBRA
 // if it doesn't exist.
 func (s *AssociationService) DefaultOrCreateDefaultAssociation() api.Association {
-	return api.Association{}
+	return newMock()
 }
 
-// FirstAcronymByHost mocks db implementation
-func (s *AssociationService) FirstAcronymByHost(host string) string {
-	return ""
+// FirstByHost mocks db implementation
+func (s *AssociationService) FirstByHost(host string) (api.Association, error) {
+	return newMock(), nil
 }
 
 // FirstOrCreate mocks db implementation
 func (s *AssociationService) FirstOrCreate(association *api.Association) {
+}
+
+func newMock() api.Association {
+	return api.Association{
+		Acronym: "MOCK",
+		Host:    "mock.web",
+		Name:    "Mock Bicycle Racing Association",
+	}
 }

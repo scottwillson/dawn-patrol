@@ -37,7 +37,7 @@ services:
       default:
         aliases:
          - atra.web
-         - rails.web
+         - cbra.web
          - wsba.web
     ports:
       - 8080:80

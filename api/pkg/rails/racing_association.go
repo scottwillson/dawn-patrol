@@ -13,5 +13,5 @@ type RacingAssociation struct {
 
 // RacingAssociationService copies data from Racing on Rails MySQL DB.
 type RacingAssociationService interface {
-	Find(string) *RacingAssociation
+	Find(string) (*RacingAssociation, error)
 }

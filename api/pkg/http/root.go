@@ -37,9 +37,14 @@ func newRoot(as api.AssociationService, es api.EventService) *Root {
 }
 
 func (h *Root) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	acronym := h.AssociationService.FirstAcronymByHost(r.Host)
-	events, err := h.EventService.Find(acronym)
-	if err != nil {
+	var association api.Association
+	var err error
+	if association, err = h.AssociationService.FirstByHost(r.Host); err != nil {
+		panic(err)
+	}
+
+	var events []api.Event
+	if events, err = h.EventService.Find(association.Acronym); err != nil {
 		panic(err)
 	}
 

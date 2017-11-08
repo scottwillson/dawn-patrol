@@ -5,7 +5,7 @@ RSpec.describe 'DawnPatrol', type: 'feature' do
   it 'shows a webpage' do
     3.times do
       begin
-        Net::HTTP.post_form URI('http://api:8080/status'), {}
+        Net::HTTP.get URI('http://api:8080/status')
         break
       rescue
         sleep 1

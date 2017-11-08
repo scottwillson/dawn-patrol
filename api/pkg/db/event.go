@@ -20,7 +20,11 @@ type EventService struct {
 func (s *EventService) Create(events []api.Event) {
 	s.Logger.Log("action", "create")
 	for _, event := range events {
-		fmt.Println(event)
+		// TODO return error
+		if event.AssociationID == 0 {
+			panic("'AssociationID' is required")
+		}
+
 		s.DB.Create(&event)
 	}
 }

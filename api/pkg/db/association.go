@@ -22,12 +22,7 @@ func (s *AssociationService) CreateAssociation(association *api.Association) {
 // CreateDefaultAssociation creates default CBRA api.Association.
 func (s *AssociationService) CreateDefaultAssociation() api.Association {
 	s.Logger.Log("action", "create_default")
-	// association := newDefault()
-	association := api.Association{
-		Acronym: "CBRA",
-		Host:    "0.0.0.0|localhost|cbra.local",
-		Name:    "Cascadia Bicycle Racing Association",
-	}
+	association := newDefault()
 	s.CreateAssociation(&association)
 	return association
 }
@@ -49,13 +44,12 @@ func (s *AssociationService) DefaultOrCreateDefaultAssociation() api.Association
 	return association
 }
 
-// FirstAcronymByHost finds first Association acronym that matches host.
+// FirstByHost finds first Association that matches host.
 // Does a regex match and honors position.
-// TODO just return Association?
-func (s *AssociationService) FirstAcronymByHost(host string) string {
+func (s *AssociationService) FirstByHost(host string) (api.Association, error) {
 	association := api.Association{}
-	s.DB.Where("host  ~* ?", host).First(&association)
-	return association.Acronym
+	err := s.DB.Where("host  ~* ?", host).First(&association).Error
+	return association, err
 }
 
 // FirstOrCreate finds first Association that matches acronym or creates Association
@@ -67,7 +61,7 @@ func (s *AssociationService) FirstOrCreate(association *api.Association) {
 func newDefault() api.Association {
 	return api.Association{
 		Acronym: "CBRA",
-		Host:    "0.0.0.0|localhost|cbra.local",
+		Host:    "0.0.0.0|localhost|cbra.web",
 		Name:    "Cascadia Bicycle Racing Association",
 	}
 }

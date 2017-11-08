@@ -24,11 +24,13 @@ func TestRailsCopy(t *testing.T) {
 
 	as := &db.AssociationService{DB: dpDB, Logger: &logger}
 	eventService := &db.EventService{DB: dpDB, Logger: &logger}
+	ras := &RacingAssociationService{Databases: dbs, Logger: &logger}
 	railsService := &EventService{
 		APIEventService:    eventService,
 		AssociationService: as,
 		Databases:          dbs,
 		Logger:             &logger,
+		RacingAssociationService: ras,
 	}
 
 	dpDB.Unscoped().Delete(&api.Event{})
@@ -40,10 +42,10 @@ func TestRailsCopy(t *testing.T) {
 	assert.Equal(t, 0, count)
 
 	assert := assert.New(t)
-	railsEvents := railsService.Find("rails")
+	railsEvents := railsService.Find("CBRA")
 	assert.Equal(2, len(railsEvents), "Rails events")
 
-	if copyErr := railsService.Copy("rails"); copyErr != nil {
+	if copyErr := railsService.Copy("CBRA"); copyErr != nil {
 		t.Error(copyErr)
 		t.FailNow()
 	}
@@ -124,7 +126,7 @@ func TestRailsFind(t *testing.T) {
 
 	eventService := &EventService{Databases: dbs, Logger: &logger}
 
-	var events = eventService.Find("rails")
+	var events = eventService.Find("CBRA")
 
 	assert.Equal(t, 2, len(events), "events")
 }

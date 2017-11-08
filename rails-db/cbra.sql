@@ -28,8 +28,8 @@ insert into events (date, discipline, city, id, name, promoter_id, state, type, 
 );
 
 insert into racing_associations (name, short_name) values (
-  'American Track Racing Association',
-  'ATRA'
+  'Cascadia Bicycle Racing Association',
+  'CBRA'
 );
 
 insert into categories (id, friendly_param, name) values (

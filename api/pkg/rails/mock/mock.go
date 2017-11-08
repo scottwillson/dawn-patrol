@@ -19,6 +19,6 @@ func (s *EventService) Find(association string) []rails.Event {
 type RacingAssociationService struct{}
 
 // Find mocks db.RacingAssociationService.Find().
-func (s *RacingAssociationService) Find(shortName string) *rails.RacingAssociation {
-	return &rails.RacingAssociation{}
+func (s *RacingAssociationService) Find(shortName string) (*rails.RacingAssociation, error) {
+	return &rails.RacingAssociation{Name: "Cascadia Bicycle Racing Association", ID: 1, ShortName: "CBRA"}, nil
 }

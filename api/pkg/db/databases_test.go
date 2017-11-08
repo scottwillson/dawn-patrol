@@ -15,13 +15,14 @@ import (
 func TestFor(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
-	db := dbs.For("rails")
+	db := dbs.For("CBRA")
 	defer db.Close()
 
 	var events []rails.Event
 	db.Find(&events)
 }
 
+// TODO remove dupe?
 func TestCreate(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
@@ -84,11 +85,19 @@ func TestDatabaseURLFromEnv(t *testing.T) {
 }
 
 func TestDatabaseURLForRails(t *testing.T) {
-	originalDatabaseURL := os.Getenv("RAILS_DATABASE_URL")
-	defer func() { os.Setenv("RAILS_DATABASE_URL", originalDatabaseURL) }()
+	originalDatabaseURL := os.Getenv("CBRA_DATABASE_URL")
+	defer func() { os.Setenv("CBRA_DATABASE_URL", originalDatabaseURL) }()
 
-	os.Setenv("RAILS_DATABASE_URL", "mysql://rails-db")
-	assert.Equal(t, "mysql://rails-db", databaseURL("rails"), "db.databaseURL('rails')")
+	os.Setenv("CBRA_DATABASE_URL", "mysql://rails-db")
+	assert.Equal(t, "mysql://rails-db", databaseURL("CBRA"), "db.databaseURL('CBRA')")
+}
+
+func TestDatabaseURLForDevRails(t *testing.T) {
+	originalDatabaseURL := os.Getenv("ATRA_DATABASE_URL")
+	defer func() { os.Setenv("ATRA_DATABASE_URL", originalDatabaseURL) }()
+
+	os.Setenv("ATRA_DATABASE_URL", "mysql://rails-db")
+	assert.Equal(t, "mysql://rails-db", databaseURL("atra"), "db.databaseURL('atra')")
 }
 
 func TestDatabaseDriverForMysql(t *testing.T) {

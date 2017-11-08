@@ -5,35 +5,25 @@ import (
 	"testing"
 
 	api "rocketsurgeryllc.com/dawnpatrol/api/pkg"
-	"rocketsurgeryllc.com/dawnpatrol/api/pkg/db"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
+	"rocketsurgeryllc.com/dawnpatrol/api/pkg/rails/mock"
 )
 
 func TestNewInstrumentedEventService(t *testing.T) {
-	logger := log.MockLogger{}
-
 	originalLicense := os.Getenv("NEW_RELIC_LICENSE_KEY")
 	defer func() { os.Setenv("NEW_RELIC_LICENSE_KEY", originalLicense) }()
-
 	os.Setenv("NEW_RELIC_LICENSE_KEY", "0123456789012345678901234567890123456789")
 
+	logger := log.MockLogger{}
 	nr := api.NewNewRelicApp(&logger)
-	dbs := db.Databases{Logger: &logger}
 
-	dpDB := dbs.Default()
-	defer dpDB.Close()
-
-	dpDB.Unscoped().Delete(&api.Event{})
-	dpDB.Unscoped().Delete(&api.Association{})
-
-	eventService := &db.EventService{DB: dpDB, Logger: &logger}
-	railsService := &EventService{Databases: dbs, APIEventService: eventService, Logger: &logger}
+	railsService := &mock.EventService{}
 
 	instrumentedService := NewInstrumentedEventService(nr, railsService)
 
-	if err := instrumentedService.Copy("rails"); err != nil {
+	if err := instrumentedService.Copy("MOCK"); err != nil {
 		t.Error(err)
 	}
 
-	instrumentedService.Find("rails")
+	instrumentedService.Find("MOCK")
 }

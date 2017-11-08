@@ -52,7 +52,8 @@ func databaseURL(association string) string {
 	key := fmt.Sprintf("%s_DATABASE_URL", strings.ToUpper(association))
 	databaseURL := os.Getenv(key)
 	if databaseURL == "" {
-		return fmt.Sprintf("%s:rails@tcp(rails-db:3306)/%s?parseTime=True", association, association)
+		a := strings.ToLower(association)
+		return fmt.Sprintf("%s:rails@tcp(rails-db:3306)/%s?parseTime=True", a, a)
 	}
 	return databaseURL
 }

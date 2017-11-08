@@ -14,6 +14,6 @@ type AssociationService interface {
 	CreateDefaultAssociation() Association
 	Default() Association
 	DefaultOrCreateDefaultAssociation() Association
-	FirstAcronymByHost(string) string
+	FirstByHost(string) (Association, error)
 	FirstOrCreate(*Association)
 }

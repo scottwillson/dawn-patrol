@@ -108,14 +108,14 @@ func (ias *instrumentedAssociationService) DefaultOrCreateDefaultAssociation() a
 	return as.DefaultOrCreateDefaultAssociation()
 }
 
-func (ias *instrumentedAssociationService) FirstAcronymByHost(host string) string {
+func (ias *instrumentedAssociationService) FirstByHost(host string) (api.Association, error) {
 	as := ias.AssociationService
 
 	txn := ias.NewRelicApp.StartTransaction(fmt.Sprintf("%T", as), nil, nil)
-	txn.SetName("db.AssociationService#FirstAcronymByHost()")
+	txn.SetName("db.AssociationService#FirstByHost()")
 	defer txn.End()
 
-	return as.FirstAcronymByHost(host)
+	return as.FirstByHost(host)
 }
 
 func (ias *instrumentedAssociationService) FirstOrCreate(association *api.Association) {

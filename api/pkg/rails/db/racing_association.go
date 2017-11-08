@@ -13,6 +13,9 @@ type RacingAssociationService struct {
 }
 
 // Find finds RacingAssociation by shortName (acronym)
-func (s *RacingAssociationService) Find(shortName string) *rails.RacingAssociation {
-	return &rails.RacingAssociation{}
+func (s *RacingAssociationService) Find(shortName string) (*rails.RacingAssociation, error) {
+	association := rails.RacingAssociation{}
+	db := s.Databases.For(shortName)
+	err := db.Where("short_name = ?", shortName).First(&association).Error
+	return &association, err
 }
