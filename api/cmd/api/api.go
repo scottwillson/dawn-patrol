@@ -21,16 +21,29 @@ func main() {
 	dpDB := dbs.Default()
 	defer dpDB.Close()
 
+	asLogger := log.With(logger, "component", "association-service")
+	as := db.NewInstrumentedAssociationService(nr, &db.AssociationService{DB: dpDB, Logger: asLogger})
+
 	esLogger := log.With(logger, "component", "event-service")
 	es := db.NewInstrumentedEventService(nr, &db.EventService{DB: dpDB, Logger: esLogger})
 
+	railsASLogger := log.With(logger, "component", "rails-racing-association-service")
+	railsAS := railsDB.RacingAssociationService{Databases: dbs, Logger: railsASLogger}
+
 	railsESLogger := log.With(logger, "component", "rails-event-service")
-	railsES := &railsDB.EventService{Databases: dbs, APIEventService: es, Logger: railsESLogger}
+	railsES := &railsDB.EventService{
+		APIEventService:    es,
+		AssociationService: as,
+		Databases:          dbs,
+		Logger:             railsESLogger,
+		RacingAssociationService: &railsAS,
+	}
 
 	mux := http.NewMux(http.MuxConfig{
-		EventService:      es,
-		NewRelicApp:       nr,
-		RailsEventService: railsES,
+		AssociationService: as,
+		EventService:       es,
+		NewRelicApp:        nr,
+		RailsEventService:  railsES,
 	})
 
 	http.ListenAndServe(mux)
