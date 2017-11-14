@@ -37,7 +37,7 @@ func (s *EventService) Copy(associationAcronym string) error {
 	association := api.Association{
 		Acronym: associationAcronym,
 		Name:    racingAssociation.ShortName,
-		Host:    "localhost",
+		Host:    "localhost|0.0.0.0|atra.web",
 	}
 	s.AssociationService.FirstOrCreate(&association)
 
