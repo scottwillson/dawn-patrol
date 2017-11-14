@@ -1,6 +1,7 @@
 package db
 
 import (
+	"strings"
 	"time"
 
 	"github.com/go-kit/kit/log"
@@ -37,7 +38,7 @@ func (s *EventService) Copy(associationAcronym string) error {
 	association := api.Association{
 		Acronym: associationAcronym,
 		Name:    racingAssociation.ShortName,
-		Host:    "localhost|0.0.0.0|atra.web",
+		Host:    "0.0.0.0|localhost|" + strings.ToLower(racingAssociation.ShortName) + ".web",
 	}
 	s.AssociationService.FirstOrCreate(&association)
 

@@ -16,6 +16,7 @@ Install Docker
 
 ## Dev
 `docker-compose logs -f --tail=0`
+`docker-compose exec db psql -U dawnpatrol dawnpatrol_development`
 
 ### local
 For development outside of Docker (for example, if you're using Atom's Go-plus to run tests and show coverage in the editor), set environment variables for DB connections.

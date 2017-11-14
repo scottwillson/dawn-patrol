@@ -11,6 +11,7 @@
 * /copy should use host, not param
   * curl -X rails.local:8080/rails/copy
   * not curl -X POST -d "association=rails" 0.0.0.0:8080/rails/copy
+* Don't hard-code host field on Rails copy
 * Error aggregation service
   * https://elithrar.github.io/article/http-handler-error-handling-revisited/
   * nginx errors?
