@@ -1,4 +1,3 @@
-* EventService#Find should honor association!
 * Ensure E2E test has clean data
 * Check all the TODOs
 * Use command pattern, not services?

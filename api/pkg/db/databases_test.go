@@ -44,7 +44,7 @@ func TestCreate(t *testing.T) {
 	es.Create(events)
 
 	var err error
-	events, err = es.Find("CBRA")
+	events, err = es.Find(&association)
 	if err != nil {
 		assert.FailNow(t, "Could not find events", err.Error())
 	}

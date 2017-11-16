@@ -50,7 +50,9 @@ func TestRailsCopy(t *testing.T) {
 		t.FailNow()
 	}
 
-	events, err := eventService.Find("CBRA")
+	association := api.Association{Acronym: "CBRA"}
+	as.FirstOrCreate(&association)
+	events, err := eventService.Find(&association)
 	if err != nil {
 		t.Error(err)
 		t.FailNow()

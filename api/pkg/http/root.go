@@ -44,7 +44,7 @@ func (h *Root) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var events []api.Event
-	if events, err = h.EventService.Find(association.Acronym); err != nil {
+	if events, err = h.EventService.Find(&association); err != nil {
 		panic(err)
 	}
 

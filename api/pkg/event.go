@@ -22,7 +22,7 @@ type Event struct {
 // EventService manages Events.
 type EventService interface {
 	Create([]Event)
-	Find(string) ([]Event, error)
+	Find(*Association) ([]Event, error)
 }
 
 // ByName is a predicate to sort Events by Name

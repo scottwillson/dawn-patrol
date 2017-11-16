@@ -37,12 +37,12 @@ func (ies *instrumentedEventService) Create(events []api.Event) {
 	es.Create(events)
 }
 
-func (ies *instrumentedEventService) Find(association string) ([]api.Event, error) {
+func (ies *instrumentedEventService) Find(association *api.Association) ([]api.Event, error) {
 	es := ies.EventService
 
 	txn := ies.NewRelicApp.StartTransaction(fmt.Sprintf("%T", es), nil, nil)
 	txn.SetName("db.EventService#Find()")
-	txn.AddAttribute("association", association)
+	txn.AddAttribute("association", association.Acronym)
 	defer txn.End()
 
 	events, err := es.Find(association)

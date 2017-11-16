@@ -1,9 +1,6 @@
 package db
 
 import (
-	"errors"
-	"fmt"
-
 	"github.com/go-kit/kit/log"
 
 	"github.com/jinzhu/gorm"
@@ -30,25 +27,10 @@ func (s *EventService) Create(events []api.Event) {
 }
 
 // Find finds all events as api.Events.
-func (s *EventService) Find(association string) ([]api.Event, error) {
-	s.Logger.Log("action", "find", "association", association)
-
-	if association == "" {
-		return nil, errors.New("'association' cannot be blank")
-	}
-
-	type Count struct {
-		Count int
-	}
-
-	var count Count
-	s.DB.Raw("SELECT count(*) as count FROM associations WHERE acronym = ?", association).Scan(&count)
-
-	if count.Count < 1 {
-		return nil, fmt.Errorf("'%s' does not exist", association)
-	}
+func (s *EventService) Find(association *api.Association) ([]api.Event, error) {
+	s.Logger.Log("action", "find", "association", association.Acronym)
 
 	var events []api.Event
-	s.DB.Find(&events)
+	s.DB.Where("association_id = ?", association.ID).Find(&events)
 	return events, nil
 }

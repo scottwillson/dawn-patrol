@@ -30,5 +30,5 @@ func TestNewInstrumentedEventService(t *testing.T) {
 	es = NewInstrumentedEventService(nr, es)
 
 	es.Create([]api.Event{})
-	es.Find("CBRA")
+	es.Find(&api.Association{})
 }

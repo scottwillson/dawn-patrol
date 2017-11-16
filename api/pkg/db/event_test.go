@@ -40,7 +40,7 @@ func TestCreateEvents(t *testing.T) {
 	assert.Equal(1, count)
 
 	var err error
-	events, err = es.Find("CBRA")
+	events, err = es.Find(&association)
 	if err != nil {
 		assert.FailNow("Could not find events", err.Error())
 	}
@@ -61,26 +61,22 @@ func TestFind(t *testing.T) {
 	db.Unscoped().Delete(&api.Event{})
 	db.Unscoped().Delete(&api.Association{})
 
-	association := api.Association{Acronym: "CBRA", Name: "Cascadia Bicycle Racing Association"}
-	db.Create(&association)
+	cbra := api.Association{Acronym: "CBRA", Name: "CBRA", Host: "cbra.web"}
+	db.Create(&cbra)
 
-	db.Create(&api.Event{AssociationID: association.ID})
-	db.Create(&api.Event{AssociationID: association.ID})
+	mbra := api.Association{Acronym: "MBRA", Name: "MBRA", Host: "mbra.web"}
+	db.Create(&mbra)
+
+	db.Create(&api.Event{AssociationID: mbra.ID})
+	db.Create(&api.Event{AssociationID: cbra.ID})
+	db.Create(&api.Event{AssociationID: cbra.ID})
 
 	es := EventService{DB: db, Logger: &logger}
 
-	var events, err = es.Find("CBRA")
+	var events, err = es.Find(&cbra)
 	if err != nil {
 		assert.FailNow(t, "Could not find events", err.Error())
 	}
 
 	assert.Equal(t, 2, len(events), "events")
-
-	events, err = es.Find("")
-	assert.Equal(t, 0, len(events), "events")
-	assert.NotNil(t, err, "Find() requires association")
-
-	events, err = es.Find("xbi")
-	assert.Equal(t, 0, len(events), "events")
-	assert.NotNil(t, err, "Find() requires association")
 }
