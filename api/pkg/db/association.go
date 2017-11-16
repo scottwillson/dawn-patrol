@@ -15,7 +15,7 @@ type AssociationService struct {
 
 // CreateAssociation creates api.Association.
 func (s *AssociationService) CreateAssociation(association *api.Association) {
-	s.Logger.Log("action", "create")
+	s.Logger.Log("action", "create", "association", association.Acronym)
 	s.DB.Create(&association)
 }
 
@@ -55,7 +55,7 @@ func (s *AssociationService) FirstByHost(host string) (api.Association, error) {
 
 // FirstOrCreate finds first Association that matches acronym or creates Association
 func (s *AssociationService) FirstOrCreate(association *api.Association) {
-	s.Logger.Log("action", "first_or_create")
+	s.Logger.Log("action", "first_or_create", "association", association.Acronym)
 	s.DB.Where(api.Association{Acronym: association.Acronym}).First(&association)
 	if s.DB.NewRecord(association) {
 		s.CreateAssociation(association)
