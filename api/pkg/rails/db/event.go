@@ -34,11 +34,12 @@ func (s *EventService) Copy(associationAcronym string) error {
 		return err
 	}
 
-	// TODO add RailsCreatedAt
 	association := api.Association{
-		Acronym: associationAcronym,
-		Name:    racingAssociation.ShortName,
-		Host:    "0.0.0.0|localhost|" + strings.ToLower(racingAssociation.ShortName) + ".web",
+		Acronym:        associationAcronym,
+		Host:           "0.0.0.0|localhost|" + strings.ToLower(racingAssociation.ShortName) + ".web",
+		Name:           racingAssociation.ShortName,
+		RailsCreatedAt: racingAssociation.CreatedAt,
+		RailsUpdatedAt: racingAssociation.UpdatedAt,
 	}
 	s.AssociationService.FirstOrCreate(&association)
 

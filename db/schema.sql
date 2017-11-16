@@ -28,7 +28,9 @@ CREATE TABLE associations (
     id integer NOT NULL,
     acronym text NOT NULL,
     name text NOT NULL,
-    host text NOT NULL
+    host text NOT NULL,
+    rails_created_at timestamp with time zone,
+    rails_updated_at timestamp with time zone
 );
 
 
@@ -283,6 +285,7 @@ COPY shmig_version (version, migrated_at) FROM stdin;
 1507560488	2017-10-12 02:53:55.467747
 1507776432	2017-11-04 15:43:37.426016
 1509578401	2017-11-04 15:43:37.438428
+1510868478	2017-11-16 22:12:08.235853
 \.
 
 

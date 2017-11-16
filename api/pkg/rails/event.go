@@ -3,7 +3,6 @@ package rails
 import "time"
 
 // Event is a bike race in the Racing on Rails DB.
-// TODO Need json annotation here?
 type Event struct {
 	City       string
 	CreatedAt  time.Time

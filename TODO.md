@@ -1,7 +1,5 @@
-* Ensure E2E test has clean data
-* Check all the TODOs
 * Use command pattern, not services?
-  * Rename CreateDefault() to Create()
+* Rename CreateDefault() to Create()
 * add wrapper method to ensure default association and add default condition
 * require event association (in code)
 * add create default association helper
@@ -16,6 +14,7 @@
 * Error aggregation service
   * nginx errors?
 * migrations
+  * db/bin/migrate needs to copy migrations to db instance or rebuild it
   * run on deploys
 * Backups
 * Consolidate DB init
@@ -50,7 +49,6 @@
 * Avoid nil checks via default no-op implementations
 * make loggers and http clients dependencies
 * base images?
-* Consider https://github.com/thockin/go-build-template
 * Ensure dev builds on CI to catch problems there
 * Look at https://github.com/go-kit/kit
 * Add logging to db/open.go?
