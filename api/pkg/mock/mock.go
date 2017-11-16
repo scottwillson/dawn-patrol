@@ -25,12 +25,12 @@ func (s *EventService) Find(_ *api.Association) ([]api.Event, error) {
 type AssociationService struct {
 }
 
-// CreateAssociation creates api.Association.
-func (s *AssociationService) CreateAssociation(association *api.Association) {
+// Create creates api.Association.
+func (s *AssociationService) Create(association *api.Association) {
 }
 
-// CreateDefaultAssociation creates default CBRA api.Association.
-func (s *AssociationService) CreateDefaultAssociation() api.Association {
+// CreateDefault creates default CBRA api.Association.
+func (s *AssociationService) CreateDefault() api.Association {
 	return newMock()
 }
 
@@ -39,9 +39,9 @@ func (s *AssociationService) Default() api.Association {
 	return newMock()
 }
 
-// DefaultOrCreateDefaultAssociation returns default Association. Creates it with acronym CBRA
+// DefaultOrCreateDefault returns default Association. Creates it with acronym CBRA
 // if it doesn't exist.
-func (s *AssociationService) DefaultOrCreateDefaultAssociation() api.Association {
+func (s *AssociationService) DefaultOrCreateDefault() api.Association {
 	return newMock()
 }
 

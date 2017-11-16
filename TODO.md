@@ -1,5 +1,3 @@
-* Use command pattern, not services?
-* Rename CreateDefault() to Create()
 * add wrapper method to ensure default association and add default condition
 * require event association (in code)
 * add create default association helper

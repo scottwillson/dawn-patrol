@@ -8,7 +8,7 @@ import (
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 )
 
-func TestDefaultAndTestCreateDefaultAssociation(t *testing.T) {
+func TestDefaultAndTestCreateDefault(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
 	db := dbs.Default()
@@ -18,7 +18,7 @@ func TestDefaultAndTestCreateDefaultAssociation(t *testing.T) {
 	db.Unscoped().Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
-	var association = as.CreateDefaultAssociation()
+	var association = as.CreateDefault()
 
 	assert.Equal(t, "CBRA", association.Acronym, "Association acronym")
 
@@ -27,7 +27,7 @@ func TestDefaultAndTestCreateDefaultAssociation(t *testing.T) {
 	assert.Equal(t, "Cascadia Bicycle Racing Association", association.Name, "Default association name")
 }
 
-func TestDefaultOrCreateDefaultAssociation(t *testing.T) {
+func TestDefaultOrCreateDefault(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
 	db := dbs.Default()
@@ -37,14 +37,14 @@ func TestDefaultOrCreateDefaultAssociation(t *testing.T) {
 	db.Unscoped().Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
-	var association = as.DefaultOrCreateDefaultAssociation()
+	var association = as.DefaultOrCreateDefault()
 
 	assert.Equal(t, "CBRA", association.Acronym, "Association acronym")
 
 	association = as.Default()
 	assert.Equal(t, "CBRA", association.Acronym, "Default association acronym")
 
-	association = as.DefaultOrCreateDefaultAssociation()
+	association = as.DefaultOrCreateDefault()
 	assert.Equal(t, "CBRA", association.Acronym, "Default association acronym")
 	assert.Equal(t, "Cascadia Bicycle Racing Association", association.Name, "Default association name")
 
@@ -63,10 +63,10 @@ func TestFirstByHost(t *testing.T) {
 	db.Unscoped().Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
-	as.CreateDefaultAssociation()
+	as.CreateDefault()
 
 	atra := api.Association{Acronym: "ATRA", Host: "atra.local"}
-	as.CreateAssociation(&atra)
+	as.Create(&atra)
 
 	var association, err = as.FirstByHost("0.0.0.0")
 	assert.NotNil(t, association)

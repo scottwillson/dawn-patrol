@@ -68,24 +68,24 @@ func NewInstrumentedAssociationService(nr newrelic.Application, as api.Associati
 	}
 }
 
-func (ias *instrumentedAssociationService) CreateAssociation(association *api.Association) {
+func (ias *instrumentedAssociationService) Create(association *api.Association) {
 	as := ias.AssociationService
 
 	txn := ias.NewRelicApp.StartTransaction(fmt.Sprintf("%T", as), nil, nil)
 	txn.SetName("db.AssociationService#Create()")
 	defer txn.End()
 
-	as.CreateAssociation(association)
+	as.Create(association)
 }
 
-func (ias *instrumentedAssociationService) CreateDefaultAssociation() api.Association {
+func (ias *instrumentedAssociationService) CreateDefault() api.Association {
 	as := ias.AssociationService
 
 	txn := ias.NewRelicApp.StartTransaction(fmt.Sprintf("%T", as), nil, nil)
-	txn.SetName("db.AssociationService#CreateDefaultAssociation()")
+	txn.SetName("db.AssociationService#CreateDefault()")
 	defer txn.End()
 
-	return as.CreateDefaultAssociation()
+	return as.CreateDefault()
 }
 
 func (ias *instrumentedAssociationService) Default() api.Association {
@@ -98,14 +98,14 @@ func (ias *instrumentedAssociationService) Default() api.Association {
 	return as.Default()
 }
 
-func (ias *instrumentedAssociationService) DefaultOrCreateDefaultAssociation() api.Association {
+func (ias *instrumentedAssociationService) DefaultOrCreateDefault() api.Association {
 	as := ias.AssociationService
 
 	txn := ias.NewRelicApp.StartTransaction(fmt.Sprintf("%T", as), nil, nil)
-	txn.SetName("db.AssociationService#DefaultOrCreateDefaultAssociation()")
+	txn.SetName("db.AssociationService#DefaultOrCreateDefault()")
 	defer txn.End()
 
-	return as.DefaultOrCreateDefaultAssociation()
+	return as.DefaultOrCreateDefault()
 }
 
 func (ias *instrumentedAssociationService) FirstByHost(host string) (api.Association, error) {

@@ -13,17 +13,17 @@ type AssociationService struct {
 	Logger log.Logger
 }
 
-// CreateAssociation creates api.Association.
-func (s *AssociationService) CreateAssociation(association *api.Association) {
+// Create creates api.Association.
+func (s *AssociationService) Create(association *api.Association) {
 	s.Logger.Log("action", "create", "association", association.Acronym)
 	s.DB.Create(&association)
 }
 
-// CreateDefaultAssociation creates default CBRA api.Association.
-func (s *AssociationService) CreateDefaultAssociation() api.Association {
+// CreateDefault creates default CBRA api.Association.
+func (s *AssociationService) CreateDefault() api.Association {
 	s.Logger.Log("action", "create_default")
 	association := newDefault()
-	s.CreateAssociation(&association)
+	s.Create(&association)
 	return association
 }
 
@@ -35,9 +35,9 @@ func (s *AssociationService) Default() api.Association {
 	return association
 }
 
-// DefaultOrCreateDefaultAssociation returns default Association. Creates it with acronym CBRA
+// DefaultOrCreateDefault returns default Association. Creates it with acronym CBRA
 // if it doesn't exist.
-func (s *AssociationService) DefaultOrCreateDefaultAssociation() api.Association {
+func (s *AssociationService) DefaultOrCreateDefault() api.Association {
 	s.Logger.Log("action", "default_or_create_default")
 	association := newDefault()
 	s.DB.Where(newDefault()).FirstOrCreate(&association)
@@ -58,7 +58,7 @@ func (s *AssociationService) FirstOrCreate(association *api.Association) {
 	s.Logger.Log("action", "first_or_create", "association", association.Acronym)
 	s.DB.Where(api.Association{Acronym: association.Acronym}).First(&association)
 	if s.DB.NewRecord(association) {
-		s.CreateAssociation(association)
+		s.Create(association)
 	}
 }
 

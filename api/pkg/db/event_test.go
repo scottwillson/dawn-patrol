@@ -20,7 +20,7 @@ func TestCreateEvents(t *testing.T) {
 
 	as := AssociationService{DB: db, Logger: &logger}
 
-	association := as.CreateDefaultAssociation()
+	association := as.CreateDefault()
 
 	assert := assert.New(t)
 	var count int
