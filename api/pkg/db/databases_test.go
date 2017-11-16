@@ -2,10 +2,8 @@ package db
 
 import (
 	"os"
-	"sort"
 	"testing"
 
-	api "rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/rails"
 
@@ -20,41 +18,6 @@ func TestFor(t *testing.T) {
 
 	var events []rails.Event
 	db.Find(&events)
-}
-
-// TODO remove dupe?
-func TestCreate(t *testing.T) {
-	logger := log.MockLogger{}
-	dbs := Databases{Logger: &logger}
-	db := dbs.Default()
-	defer db.Close()
-
-	db.Unscoped().Delete(&api.Event{})
-	db.Unscoped().Delete(&api.Association{})
-
-	as := AssociationService{DB: db, Logger: &logger}
-	association := as.CreateDefaultAssociation()
-
-	es := EventService{DB: db, Logger: &logger}
-
-	events := []api.Event{
-		api.Event{Name: "Copperopolis Road Race", AssociationID: association.ID},
-		api.Event{Name: "Sausalito Criterium", AssociationID: association.ID},
-	}
-	es.Create(events)
-
-	var err error
-	events, err = es.Find(&association)
-	if err != nil {
-		assert.FailNow(t, "Could not find events", err.Error())
-	}
-
-	sort.Sort(api.ByName(events))
-
-	assert := assert.New(t)
-	assert.Equal(2, len(events), "events")
-	assert.Equal("Copperopolis Road Race", events[0].Name, "event name")
-	assert.Equal("Sausalito Criterium", events[1].Name, "event name")
 }
 
 func TestOpenURL(t *testing.T) {
