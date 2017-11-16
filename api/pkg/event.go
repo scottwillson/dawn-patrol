@@ -1,11 +1,16 @@
 package api
 
-import "time"
+import (
+	"time"
+)
 
 // Event is a bike race on a date or dates with (optional) categories and results.
 type Event struct {
+	Association    Association
+	AssociationID  int       `json:"associationId"`
 	City           string    `json:"city"`
 	Discipline     string    `json:"discipline"`
+	ID             int       `json:"id"`
 	Name           string    `json:"name"`
 	RailsCreatedAt time.Time `json:"railsCreatedAt"`
 	RailsID        int       `json:"railsId"`
@@ -17,7 +22,7 @@ type Event struct {
 // EventService manages Events.
 type EventService interface {
 	Create([]Event)
-	Find() []Event
+	Find(*Association) ([]Event, error)
 }
 
 // ByName is a predicate to sort Events by Name

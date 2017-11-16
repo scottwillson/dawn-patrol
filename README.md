@@ -16,13 +16,14 @@ Install Docker
 
 ## Dev
 `docker-compose logs -f --tail=0`
+`docker-compose exec db psql -U dawnpatrol dawnpatrol_development`
 
 ### local
 For development outside of Docker (for example, if you're using Atom's Go-plus to run tests and show coverage in the editor), set environment variables for DB connections.
 
 ```
-export DATABASE_URL=postgres://dawnpatrol@localhost:55432/dawnpatrol_test?sslmode=disable
-export RAILS_DATABASE_URL="rails:rails@tcp(localhost:53306)/rails"
+export DATABASE_URL=postgres://dawnpatrol@0.0.0.0:55432/dawnpatrol_test?sslmode=disable
+export RAILS_DATABASE_URL="rails:rails@tcp(0.0.0.0:53306)/rails"
 go get -u github.com/golang/dep/cmd/dep
 dep ensure
 ```

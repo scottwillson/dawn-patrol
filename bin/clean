@@ -1,12 +1,9 @@
 #!/bin/bash
 set -e
 
-docker-compose -f docker-compose-test.yml stop
-docker-compose -f docker-compose-test.yml rm -f
-docker-compose -f docker-compose-dev.yml stop
-docker-compose -f docker-compose-dev.yml rm -f
-docker-compose stop
-docker-compose rm -f
+docker-compose -f docker-compose-test.yml rm -f -v -s
+docker-compose -f docker-compose-dev.yml rm -f -v -s
+docker-compose rm -f -v -s
 rm -rf rails-db/data-dir
 rm -rf web/build
 rm -rf web/node_modules

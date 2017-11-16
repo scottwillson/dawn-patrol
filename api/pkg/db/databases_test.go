@@ -5,39 +5,49 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
+	api "rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/rails"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestFor(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
-	db := dbs.For("rails")
+	db := dbs.For("CBRA")
 	defer db.Close()
 
 	var events []rails.Event
 	db.Find(&events)
 }
 
-func TestDefault(t *testing.T) {
+// TODO remove dupe?
+func TestCreate(t *testing.T) {
 	logger := log.MockLogger{}
 	dbs := Databases{Logger: &logger}
 	db := dbs.Default()
 	defer db.Close()
 
-	db.Delete(api.Event{})
+	db.Unscoped().Delete(&api.Event{})
+	db.Unscoped().Delete(&api.Association{})
+
+	as := AssociationService{DB: db, Logger: &logger}
+	association := as.CreateDefaultAssociation()
 
 	es := EventService{DB: db, Logger: &logger}
 
 	events := []api.Event{
-		api.Event{Name: "Copperopolis Road Race"},
-		api.Event{Name: "Sausalito Criterium"},
+		api.Event{Name: "Copperopolis Road Race", AssociationID: association.ID},
+		api.Event{Name: "Sausalito Criterium", AssociationID: association.ID},
 	}
 	es.Create(events)
 
-	events = es.Find()
+	var err error
+	events, err = es.Find(&association)
+	if err != nil {
+		assert.FailNow(t, "Could not find events", err.Error())
+	}
 
 	sort.Sort(api.ByName(events))
 
@@ -72,6 +82,22 @@ func TestDatabaseURLFromEnv(t *testing.T) {
 
 	os.Setenv("DATABASE_URL", "postgres://test-db")
 	assert.Equal(t, "postgres://test-db", databaseURL(""), "db.databaseURL()")
+}
+
+func TestDatabaseURLForRails(t *testing.T) {
+	originalDatabaseURL := os.Getenv("CBRA_DATABASE_URL")
+	defer func() { os.Setenv("CBRA_DATABASE_URL", originalDatabaseURL) }()
+
+	os.Setenv("CBRA_DATABASE_URL", "mysql://rails-db")
+	assert.Equal(t, "mysql://rails-db", databaseURL("CBRA"), "db.databaseURL('CBRA')")
+}
+
+func TestDatabaseURLForDevRails(t *testing.T) {
+	originalDatabaseURL := os.Getenv("ATRA_DATABASE_URL")
+	defer func() { os.Setenv("ATRA_DATABASE_URL", originalDatabaseURL) }()
+
+	os.Setenv("ATRA_DATABASE_URL", "mysql://rails-db")
+	assert.Equal(t, "mysql://rails-db", databaseURL("atra"), "db.databaseURL('atra')")
 }
 
 func TestDatabaseDriverForMysql(t *testing.T) {

@@ -4,3 +4,6 @@ COPY bin/create_development_databases /docker-entrypoint-initdb.d/create_develop
 COPY schema.sql /docker-entrypoint-initdb.d/schema
 COPY seed.sql /docker-entrypoint-initdb.d/seed
 COPY seed.sh /docker-entrypoint-initdb.d/seed.sh
+COPY bin/shmig shmig
+COPY bin/migrate migrate
+COPY migrations migrations

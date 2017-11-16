@@ -22,12 +22,13 @@ func TestNewInstrumentedEventService(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
-	db.Delete(api.Event{})
+	db.Unscoped().Delete(&api.Event{})
+	db.Unscoped().Delete(&api.Association{})
 
 	var es api.EventService
 	es = &EventService{DB: db, Logger: &logger}
 	es = NewInstrumentedEventService(nr, es)
 
 	es.Create([]api.Event{})
-	es.Find()
+	es.Find(&api.Association{})
 }

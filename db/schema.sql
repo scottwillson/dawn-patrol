@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.3
--- Dumped by pg_dump version 9.6.3
+-- Dumped from database version 10.0
+-- Dumped by pg_dump version 10.0
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -21,25 +21,57 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: associations; Type: TABLE; Schema: public; Owner: dawnpatrol
+--
+
+CREATE TABLE associations (
+    id integer NOT NULL,
+    acronym text NOT NULL,
+    name text NOT NULL,
+    host text NOT NULL
+);
+
+
+ALTER TABLE associations OWNER TO dawnpatrol;
+
+--
+-- Name: associations_id_seq; Type: SEQUENCE; Schema: public; Owner: dawnpatrol
+--
+
+CREATE SEQUENCE associations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE associations_id_seq OWNER TO dawnpatrol;
+
+--
+-- Name: associations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dawnpatrol
+--
+
+ALTER SEQUENCE associations_id_seq OWNED BY associations.id;
+
+
+--
 -- Name: events; Type: TABLE; Schema: public; Owner: dawnpatrol
 --
 
 CREATE TABLE events (
     id integer NOT NULL,
     city text,
-    discipline text NOT NULL default 'Road',
-    name text NOT NULL default 'New Event',
+    discipline text DEFAULT 'Road'::text NOT NULL,
+    name text DEFAULT 'New Event'::text NOT NULL,
     rails_id integer,
     rails_created_at timestamp with time zone,
     rails_updated_at timestamp with time zone,
     starts_at timestamp with time zone NOT NULL,
-    state text
+    state text,
+    association_id integer NOT NULL
 );
 
-CREATE INDEX ON events (discipline);
-CREATE INDEX ON events (name);
-CREATE INDEX ON events (rails_id);
-CREATE INDEX ON events (starts_at);
 
 ALTER TABLE events OWNER TO dawnpatrol;
 
@@ -100,6 +132,25 @@ ALTER SEQUENCE goose_db_version_id_seq OWNED BY goose_db_version.id;
 
 
 --
+-- Name: shmig_version; Type: TABLE; Schema: public; Owner: dawnpatrol
+--
+
+CREATE TABLE shmig_version (
+    version integer NOT NULL,
+    migrated_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+
+ALTER TABLE shmig_version OWNER TO dawnpatrol;
+
+--
+-- Name: associations id; Type: DEFAULT; Schema: public; Owner: dawnpatrol
+--
+
+ALTER TABLE ONLY associations ALTER COLUMN id SET DEFAULT nextval('associations_id_seq'::regclass);
+
+
+--
 -- Name: events id; Type: DEFAULT; Schema: public; Owner: dawnpatrol
 --
 
@@ -111,6 +162,14 @@ ALTER TABLE ONLY events ALTER COLUMN id SET DEFAULT nextval('events_id_seq'::reg
 --
 
 ALTER TABLE ONLY goose_db_version ALTER COLUMN id SET DEFAULT nextval('goose_db_version_id_seq'::regclass);
+
+
+--
+-- Name: associations associations_pkey; Type: CONSTRAINT; Schema: public; Owner: dawnpatrol
+--
+
+ALTER TABLE ONLY associations
+    ADD CONSTRAINT associations_pkey PRIMARY KEY (id);
 
 
 --
@@ -130,6 +189,71 @@ ALTER TABLE ONLY goose_db_version
 
 
 --
+-- Name: shmig_version shmig_version_pkey; Type: CONSTRAINT; Schema: public; Owner: dawnpatrol
+--
+
+ALTER TABLE ONLY shmig_version
+    ADD CONSTRAINT shmig_version_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: associations_acronym_idx; Type: INDEX; Schema: public; Owner: dawnpatrol
+--
+
+CREATE UNIQUE INDEX associations_acronym_idx ON associations USING btree (acronym);
+
+
+--
+-- Name: associations_host_idx; Type: INDEX; Schema: public; Owner: dawnpatrol
+--
+
+CREATE UNIQUE INDEX associations_host_idx ON associations USING btree (host);
+
+
+--
+-- Name: associations_name_idx; Type: INDEX; Schema: public; Owner: dawnpatrol
+--
+
+CREATE UNIQUE INDEX associations_name_idx ON associations USING btree (name);
+
+
+--
+-- Name: events_discipline_idx; Type: INDEX; Schema: public; Owner: dawnpatrol
+--
+
+CREATE INDEX events_discipline_idx ON events USING btree (discipline);
+
+
+--
+-- Name: events_name_idx; Type: INDEX; Schema: public; Owner: dawnpatrol
+--
+
+CREATE INDEX events_name_idx ON events USING btree (name);
+
+
+--
+-- Name: events_rails_id_idx; Type: INDEX; Schema: public; Owner: dawnpatrol
+--
+
+CREATE INDEX events_rails_id_idx ON events USING btree (rails_id);
+
+
+--
+-- Name: events_starts_at_idx; Type: INDEX; Schema: public; Owner: dawnpatrol
+--
+
+CREATE INDEX events_starts_at_idx ON events USING btree (starts_at);
+
+
+--
+-- Name: events events_association_id; Type: FK CONSTRAINT; Schema: public; Owner: dawnpatrol
+--
+
+ALTER TABLE ONLY events
+    ADD CONSTRAINT events_association_id FOREIGN KEY (association_id) REFERENCES associations(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -137,8 +261,8 @@ ALTER TABLE ONLY goose_db_version
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.3
--- Dumped by pg_dump version 9.6.3
+-- Dumped from database version 10.0
+-- Dumped by pg_dump version 10.0
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -152,22 +276,17 @@ SET row_security = off;
 SET search_path = public, pg_catalog;
 
 --
--- Data for Name: goose_db_version; Type: TABLE DATA; Schema: public; Owner: dawnpatrol
+-- Data for Name: shmig_version; Type: TABLE DATA; Schema: public; Owner: dawnpatrol
 --
 
-COPY goose_db_version (id, version_id, is_applied, tstamp) FROM stdin;
-1	0	t	2017-08-02 16:28:34.147545
-2	20170730080737	t	2017-08-02 16:28:34.175074
+COPY shmig_version (version, migrated_at) FROM stdin;
+1507560488	2017-10-12 02:53:55.467747
+1507776432	2017-11-04 15:43:37.426016
+1509578401	2017-11-04 15:43:37.438428
 \.
-
-
---
--- Name: goose_db_version_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dawnpatrol
---
-
-SELECT pg_catalog.setval('goose_db_version_id_seq', 2, true);
 
 
 --
 -- PostgreSQL database dump complete
 --
+

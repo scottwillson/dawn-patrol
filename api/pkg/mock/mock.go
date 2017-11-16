@@ -11,10 +11,51 @@ type EventService struct {
 func (s *EventService) Create([]api.Event) {}
 
 // Find mocks db.EventService.Find().
-func (s *EventService) Find() []api.Event {
+func (s *EventService) Find(_ *api.Association) ([]api.Event, error) {
 	if s.FindFn != nil {
-		return s.FindFn()
+		return s.FindFn(), nil
 	}
 
-	return []api.Event{}
+	return []api.Event{}, nil
+}
+
+// AssociationService mocks db.AssociationService
+type AssociationService struct {
+}
+
+// CreateAssociation creates api.Association.
+func (s *AssociationService) CreateAssociation(association *api.Association) {
+}
+
+// CreateDefaultAssociation creates default CBRA api.Association.
+func (s *AssociationService) CreateDefaultAssociation() api.Association {
+	return newMock()
+}
+
+// Default finds default CBRA api.Association.
+func (s *AssociationService) Default() api.Association {
+	return newMock()
+}
+
+// DefaultOrCreateDefaultAssociation returns default Association. Creates it with acronym CBRA
+// if it doesn't exist.
+func (s *AssociationService) DefaultOrCreateDefaultAssociation() api.Association {
+	return newMock()
+}
+
+// FirstByHost mocks db implementation
+func (s *AssociationService) FirstByHost(host string) (api.Association, error) {
+	return newMock(), nil
+}
+
+// FirstOrCreate mocks db implementation
+func (s *AssociationService) FirstOrCreate(association *api.Association) {
+}
+
+func newMock() api.Association {
+	return api.Association{
+		Acronym: "MOCK",
+		Host:    "mock.web",
+		Name:    "Mock Bicycle Racing Association",
+	}
 }

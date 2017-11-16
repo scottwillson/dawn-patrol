@@ -18,7 +18,7 @@ echo "[Run tests]"
 
 echo "[Stop and remove test containers]"
 docker-compose -f docker-compose-test.yml stop
-docker-compose -f docker-compose-test.yml rm -f
+docker-compose -f docker-compose-test.yml rm -f -v -s
 
 echo "[Build and start deploy containers]"
 docker-compose build

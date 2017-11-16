@@ -24,8 +24,9 @@ func (h *ErroringRootEventJSON) marshal(events []api.Event) (string, error) {
 func TestRoot(t *testing.T) {
 	mux := goji.NewMux()
 
+	as := mock.AssociationService{}
 	es := mock.EventService{}
-	h := newRoot(&es)
+	h := newRoot(&as, &es)
 
 	es.FindFn = func() []api.Event {
 		return []api.Event{api.Event{}}

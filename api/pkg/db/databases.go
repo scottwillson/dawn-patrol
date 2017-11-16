@@ -30,11 +30,13 @@ func (d Databases) Default() *gorm.DB {
 func (d Databases) For(association string) *gorm.DB {
 	url := databaseURL(association)
 	if d.Logger != nil {
-		d.Logger.Log("action", "open", "url", url)
+		d.Logger.Log("action", "open", "association", association, "url", url)
 	}
 
 	db := openURL(url)
-	d.Logger.Log("action", "opened", "url", url)
+	if d.Logger != nil {
+		d.Logger.Log("action", "opened", "association", association, "url", url)
+	}
 
 	return db
 }
@@ -47,10 +49,11 @@ func databaseURL(association string) string {
 		}
 		return databaseURL
 	}
-	key := fmt.Sprintf("%s_URL", strings.ToUpper(association))
+	key := fmt.Sprintf("%s_DATABASE_URL", strings.ToUpper(association))
 	databaseURL := os.Getenv(key)
 	if databaseURL == "" {
-		return fmt.Sprintf("%s:rails@tcp(rails-db:3306)/%s?parseTime=True", association, association)
+		a := strings.ToLower(association)
+		return fmt.Sprintf("%s:rails@tcp(rails-db:3306)/%s?parseTime=True", a, a)
 	}
 	return databaseURL
 }

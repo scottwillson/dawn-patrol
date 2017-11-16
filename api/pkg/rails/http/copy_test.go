@@ -16,7 +16,10 @@ import (
 func TestCopy(t *testing.T) {
 	mux := goji.NewMux()
 
-	handler := Copy{EventService: &mock.EventService{}}
+	handler := Copy{
+		EventService:             &mock.EventService{},
+		RacingAssociationService: &mock.RacingAssociationService{},
+	}
 
 	req, _ := http.NewRequest("POST", "/rails/copy", strings.NewReader("association=rails"))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")

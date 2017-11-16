@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
+	api "rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/db"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 
@@ -22,23 +22,41 @@ func TestRailsCopy(t *testing.T) {
 	dpDB := dbs.Default()
 	defer dpDB.Close()
 
+	as := &db.AssociationService{DB: dpDB, Logger: &logger}
 	eventService := &db.EventService{DB: dpDB, Logger: &logger}
-	railsService := &EventService{Databases: dbs, APIEventService: eventService, Logger: &logger}
-
-	dpDB.Delete(api.Event{})
-
-	events := eventService.Find()
-	assert := assert.New(t)
-	assert.Equal(0, len(events), "events")
-
-	railsEvents := railsService.Find("rails")
-	assert.Equal(2, len(railsEvents), "Rails events")
-
-	if err := railsService.Copy("rails"); err != nil {
-		t.Error(err)
+	ras := &RacingAssociationService{Databases: dbs, Logger: &logger}
+	railsService := &EventService{
+		APIEventService:    eventService,
+		AssociationService: as,
+		Databases:          dbs,
+		Logger:             &logger,
+		RacingAssociationService: ras,
 	}
 
-	events = eventService.Find()
+	dpDB.Unscoped().Delete(&api.Event{})
+	dpDB.Unscoped().Delete(&api.Association{})
+
+	db := dbs.Default()
+	var count int
+	db.Table("associations").Count(&count)
+	assert.Equal(t, 0, count)
+
+	assert := assert.New(t)
+	railsEvents := railsService.Find("CBRA")
+	assert.Equal(2, len(railsEvents), "Rails events")
+
+	if copyErr := railsService.Copy("CBRA"); copyErr != nil {
+		t.Error(copyErr)
+		t.FailNow()
+	}
+
+	association := api.Association{Acronym: "CBRA"}
+	as.FirstOrCreate(&association)
+	events, err := eventService.Find(&association)
+	if err != nil {
+		t.Error(err)
+		t.FailNow()
+	}
 	assert.Equal(2, len(events), "events")
 
 	// promoter_id, type, created_at, updated_at
@@ -110,7 +128,7 @@ func TestRailsFind(t *testing.T) {
 
 	eventService := &EventService{Databases: dbs, Logger: &logger}
 
-	var events = eventService.Find("rails")
+	var events = eventService.Find("CBRA")
 
 	assert.Equal(t, 2, len(events), "events")
 }
