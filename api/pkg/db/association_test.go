@@ -102,19 +102,32 @@ func TestFirstOrCreate(t *testing.T) {
 	db.Unscoped().Delete(&api.Event{})
 	db.Unscoped().Delete(&api.Association{})
 
-	var association = api.Association{Acronym: "ATRA", Host: "atra.local"}
 	as := AssociationService{DB: db, Logger: &logger}
 
-	as.FirstOrCreate(&association)
-	assert.Equal(t, "ATRA", association.Acronym)
-	id := association.ID
+	atra := api.Association{Acronym: "ATRA", Host: "atra.local", Name: "American Track"}
+	as.FirstOrCreate(&atra)
+	assert.Equal(t, "ATRA", atra.Acronym)
+	id := atra.ID
 	assert.NotZero(t, id)
 
-	as.FirstOrCreate(&association)
-	assert.Equal(t, "ATRA", association.Acronym)
-	assert.Equal(t, id, association.ID)
+	as.FirstOrCreate(&atra)
+	assert.Equal(t, "ATRA", atra.Acronym)
+	assert.Equal(t, id, atra.ID)
 
 	var count int
 	db.Table("associations").Count(&count)
 	assert.Equal(t, 1, count)
+
+	wsba := api.Association{Acronym: "WSBA", Host: "wsba.local", Name: "Washington"}
+	as.FirstOrCreate(&wsba)
+	assert.Equal(t, "WSBA", wsba.Acronym)
+	wsbaID := wsba.ID
+	assert.NotZero(t, wsbaID)
+
+	as.FirstOrCreate(&wsba)
+	assert.Equal(t, "WSBA", wsba.Acronym)
+	assert.Equal(t, wsbaID, wsba.ID)
+
+	db.Table("associations").Count(&count)
+	assert.Equal(t, 2, count)
 }

@@ -39,7 +39,7 @@ func (s *AssociationService) Default() api.Association {
 // if it doesn't exist.
 func (s *AssociationService) DefaultOrCreateDefaultAssociation() api.Association {
 	s.Logger.Log("action", "default_or_create_default")
-	association := api.Association{}
+	association := newDefault()
 	s.DB.Where(newDefault()).FirstOrCreate(&association)
 	return association
 }
@@ -49,14 +49,17 @@ func (s *AssociationService) DefaultOrCreateDefaultAssociation() api.Association
 func (s *AssociationService) FirstByHost(host string) (api.Association, error) {
 	s.Logger.Log("action", "find_by_host", "host", host)
 	association := api.Association{}
-	err := s.DB.Where("host  ~* ?", host).First(&association).Error
+	err := s.DB.Where("host ~* ?", host).First(&association).Error
 	return association, err
 }
 
 // FirstOrCreate finds first Association that matches acronym or creates Association
 func (s *AssociationService) FirstOrCreate(association *api.Association) {
 	s.Logger.Log("action", "first_or_create")
-	s.DB.FirstOrCreate(&association)
+	s.DB.Where(api.Association{Acronym: association.Acronym}).First(&association)
+	if s.DB.NewRecord(association) {
+		s.CreateAssociation(association)
+	}
 }
 
 func newDefault() api.Association {
