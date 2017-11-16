@@ -5,14 +5,14 @@ import "time"
 // Event is a bike race in the Racing on Rails DB.
 // TODO Need json annotation here?
 type Event struct {
-	City       string    `json:"city"`
-	CreatedAt  time.Time `json:"createdAt"`
-	Date       time.Time `json:"date"`
-	Discipline string    `json:"discipline"`
-	ID         int       `json:"id"`
-	Name       string    `json:"name"`
-	State      string    `json:"state"`
-	UpdatedAt  time.Time `json:"updatedAt"`
+	City       string
+	CreatedAt  time.Time
+	Date       time.Time
+	Discipline string
+	ID         int
+	Name       string
+	State      string
+	UpdatedAt  time.Time
 }
 
 // EventService copies data from Racing on Rails MySQL DB.
