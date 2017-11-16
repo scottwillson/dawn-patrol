@@ -8,7 +8,9 @@ type EventService struct {
 }
 
 // Create mocks db.EventService.Create().
-func (s *EventService) Create([]api.Event) {}
+func (s *EventService) Create([]api.Event) error {
+	return nil
+}
 
 // Find mocks db.EventService.Find().
 func (s *EventService) Find(_ *api.Association) ([]api.Event, error) {

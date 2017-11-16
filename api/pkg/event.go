@@ -21,7 +21,7 @@ type Event struct {
 
 // EventService manages Events.
 type EventService interface {
-	Create([]Event)
+	Create([]Event) error
 	Find(*Association) ([]Event, error)
 }
 

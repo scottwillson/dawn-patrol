@@ -1,6 +1,8 @@
 package db
 
 import (
+	"errors"
+
 	"github.com/go-kit/kit/log"
 
 	"github.com/jinzhu/gorm"
@@ -14,16 +16,17 @@ type EventService struct {
 }
 
 // Create creates api.Events.
-func (s *EventService) Create(events []api.Event) {
+func (s *EventService) Create(events []api.Event) error {
 	s.Logger.Log("action", "create")
 	for _, event := range events {
-		// TODO return error
 		if event.AssociationID == 0 {
-			panic("'AssociationID' is required")
+			return errors.New("'AssociationID' is required")
 		}
 
 		s.DB.Create(&event)
 	}
+
+	return nil
 }
 
 // Find finds all events as api.Events.

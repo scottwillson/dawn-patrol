@@ -27,14 +27,14 @@ func NewInstrumentedEventService(nr newrelic.Application, es api.EventService) a
 	}
 }
 
-func (ies *instrumentedEventService) Create(events []api.Event) {
+func (ies *instrumentedEventService) Create(events []api.Event) error {
 	es := ies.EventService
 
 	txn := ies.NewRelicApp.StartTransaction(fmt.Sprintf("%T", es), nil, nil)
 	txn.SetName("db.EventService#Create()")
 	defer txn.End()
 
-	es.Create(events)
+	return es.Create(events)
 }
 
 func (ies *instrumentedEventService) Find(association *api.Association) ([]api.Event, error) {
