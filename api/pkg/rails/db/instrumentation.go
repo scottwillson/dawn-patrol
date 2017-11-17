@@ -13,6 +13,11 @@ type instrumentedEventService struct {
 	EventService rails.EventService
 }
 
+type instrumentedRacingAssociationService struct {
+	NewRelicApp              newrelic.Application
+	RacingAssociationService rails.RacingAssociationService
+}
+
 // NewInstrumentedEventService instruments a service with New Relic. It starts
 // a New Relic transaction and then delegates to services functions. This
 // function returns the wrapped Service.
@@ -27,14 +32,28 @@ func NewInstrumentedEventService(nr newrelic.Application, es rails.EventService)
 	}
 }
 
-func (ies *instrumentedEventService) Copy(association string) error {
-	es := ies.EventService
+// NewInstrumentedRacingAssociationService instruments a service with New Relic. It starts
+// a New Relic transaction and then delegates to services functions. This
+// function returns the wrapped Service.
+func NewInstrumentedRacingAssociationService(nr newrelic.Application, s rails.RacingAssociationService) rails.RacingAssociationService {
+	if nr == nil {
+		return s
+	}
 
-	txn := ies.NewRelicApp.StartTransaction(fmt.Sprintf("%T", es), nil, nil)
-	txn.SetName("rails.db.EventService#Copy()")
+	return &instrumentedRacingAssociationService{
+		NewRelicApp:              nr,
+		RacingAssociationService: s,
+	}
+}
+
+func (is *instrumentedRacingAssociationService) Copy(association string) error {
+	s := is.RacingAssociationService
+
+	txn := is.NewRelicApp.StartTransaction(fmt.Sprintf("%T", s), nil, nil)
+	txn.SetName("rails.db.RacingAssociationService#Copy()")
 	defer txn.End()
 
-	return es.Copy(association)
+	return s.Copy(association)
 }
 
 func (ies *instrumentedEventService) Find(association string) []rails.Event {
@@ -45,4 +64,13 @@ func (ies *instrumentedEventService) Find(association string) []rails.Event {
 	defer txn.End()
 
 	return es.Find(association)
+}
+func (is *instrumentedRacingAssociationService) Find(association string) (*rails.RacingAssociation, error) {
+	s := is.RacingAssociationService
+
+	txn := is.NewRelicApp.StartTransaction(fmt.Sprintf("%T", s), nil, nil)
+	txn.SetName("rails.db.RacingAssociationService#Find()")
+	defer txn.End()
+
+	return s.Find(association)
 }

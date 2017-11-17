@@ -27,23 +27,27 @@ func main() {
 	esLogger := log.With(logger, "component", "event-service")
 	es := db.NewInstrumentedEventService(nr, &db.EventService{DB: dpDB, Logger: esLogger})
 
-	railsASLogger := log.With(logger, "component", "rails-racing-association-service")
-	railsAS := railsDB.RacingAssociationService{Databases: dbs, Logger: railsASLogger}
-
-	railsESLogger := log.With(logger, "component", "rails-event-service")
-	railsES := &railsDB.EventService{
+	railsRAServiceLogger := log.With(logger, "component", "rails-racing-association-service")
+	railsRAService := railsDB.RacingAssociationService{
 		APIEventService:    es,
 		AssociationService: as,
 		Databases:          dbs,
-		Logger:             railsESLogger,
-		RacingAssociationService: &railsAS,
+		Logger:             railsRAServiceLogger,
+	}
+
+	railsESLogger := log.With(logger, "component", "rails-event-service")
+	railsES := &railsDB.EventService{
+		Databases: dbs,
+		Logger:    railsESLogger,
+		RacingAssociationService: &railsRAService,
 	}
 
 	mux := http.NewMux(http.MuxConfig{
-		AssociationService: as,
-		EventService:       es,
-		NewRelicApp:        nr,
-		RailsEventService:  railsES,
+		AssociationService:       as,
+		EventService:             es,
+		NewRelicApp:              nr,
+		RacingAssociationService: &railsRAService,
+		RailsEventService:        railsES,
 	})
 
 	http.ListenAndServe(mux)

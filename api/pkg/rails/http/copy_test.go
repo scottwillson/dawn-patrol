@@ -17,7 +17,6 @@ func TestCopy(t *testing.T) {
 	mux := goji.NewMux()
 
 	handler := Copy{
-		EventService:             &mock.EventService{},
 		RacingAssociationService: &mock.RacingAssociationService{},
 	}
 
@@ -35,7 +34,9 @@ func TestCopy(t *testing.T) {
 func TestCopyRequiresAssociation(t *testing.T) {
 	mux := goji.NewMux()
 
-	handler := Copy{EventService: &mock.EventService{}}
+	handler := Copy{
+		RacingAssociationService: &mock.RacingAssociationService{},
+	}
 
 	req, err := http.NewRequest("POST", "/rails/copy", nil)
 	if err != nil {

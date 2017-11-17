@@ -28,7 +28,7 @@ func NewMux(cfg MuxConfig) *goji.Mux {
 
 	mux.Use(log.Request)
 	mux.Handle(pat.Get("/index.json"), NewInstrumentedHandler(cfg.NewRelicApp, newRoot(cfg.AssociationService, cfg.EventService)))
-	mux.Handle(pat.Post("/rails/copy"), NewInstrumentedHandler(cfg.NewRelicApp, &railsHttp.Copy{cfg.RailsEventService, cfg.RacingAssociationService}))
+	mux.Handle(pat.Post("/rails/copy"), NewInstrumentedHandler(cfg.NewRelicApp, &railsHttp.Copy{RacingAssociationService: cfg.RacingAssociationService}))
 	mux.Handle(pat.Get("/status"), NewInstrumentedHandler(cfg.NewRelicApp, newStatus()))
 
 	return mux
