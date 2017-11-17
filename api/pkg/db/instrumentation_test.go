@@ -8,7 +8,7 @@ import (
 )
 
 func TestNewInstrumentedEventService(t *testing.T) {
-	_, db, logger := SetupTest()
+	_, db, logger, _ := SetupTest(t)
 	defer db.Close()
 
 	originalLicense := os.Getenv("NEW_RELIC_LICENSE_KEY")

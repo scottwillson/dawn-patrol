@@ -5,7 +5,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
 	api "rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/db"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
@@ -13,10 +12,11 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCopy(t *testing.T) {
-	association, dpDB, logger := db.SetupTest()
+	association, dpDB, logger, assert := db.SetupTest(t)
 	defer dpDB.Close()
 
 	dbs := db.Databases{Logger: logger}
@@ -38,9 +38,8 @@ func TestCopy(t *testing.T) {
 	db := dbs.Default()
 	var count int
 	db.Table("associations").Count(&count)
-	assert.Equal(t, 1, count)
+	assert.Equal(1, count)
 
-	assert := assert.New(t)
 	railsEvents := railsEventService.Find("CBRA")
 	assert.Equal(2, len(railsEvents), "Rails events")
 

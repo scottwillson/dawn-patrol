@@ -4,15 +4,13 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
 )
 
 func TestCreateEvents(t *testing.T) {
-	association, db, logger := SetupTest()
+	association, db, logger, assert := SetupTest(t)
 	defer db.Close()
 
-	assert := assert.New(t)
 	var count int
 	db.Table("associations").Count(&count)
 	assert.Equal(1, count)
@@ -43,7 +41,7 @@ func TestCreateEvents(t *testing.T) {
 }
 
 func TestFind(t *testing.T) {
-	cbra, db, logger := SetupTest()
+	cbra, db, logger, assert := SetupTest(t)
 	defer db.Close()
 
 	mbra := api.Association{Acronym: "MBRA", Name: "MBRA", Host: "mbra.web"}
@@ -57,8 +55,8 @@ func TestFind(t *testing.T) {
 
 	var events, err = es.Find(&cbra)
 	if err != nil {
-		assert.FailNow(t, "Could not find events", err.Error())
+		assert.FailNow("Could not find events", err.Error())
 	}
 
-	assert.Equal(t, 2, len(events), "events")
+	assert.Equal(2, len(events), "events")
 }

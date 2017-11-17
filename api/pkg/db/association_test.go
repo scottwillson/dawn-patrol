@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
 	api "rocketsurgeryllc.com/dawnpatrol/api/pkg"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 )
@@ -54,7 +55,7 @@ func TestDefaultOrCreateDefault(t *testing.T) {
 }
 
 func TestFirstByHost(t *testing.T) {
-	_, db, logger := SetupTest()
+	_, db, logger, assert := SetupTest(t)
 	defer db.Close()
 
 	as := AssociationService{DB: db, Logger: logger}
@@ -63,63 +64,63 @@ func TestFirstByHost(t *testing.T) {
 	as.Create(&atra)
 
 	var association, err = as.FirstByHost("0.0.0.0")
-	assert.NotNil(t, association)
-	assert.Equal(t, "CBRA", association.Acronym)
-	assert.NoError(t, err)
+	assert.NotNil(association)
+	assert.Equal("CBRA", association.Acronym)
+	assert.NoError(err)
 
 	association, err = as.FirstByHost("localhost")
-	assert.NotNil(t, association)
-	assert.Equal(t, "CBRA", association.Acronym)
-	assert.NoError(t, err)
+	assert.NotNil(association)
+	assert.Equal("CBRA", association.Acronym)
+	assert.NoError(err)
 
 	association, err = as.FirstByHost("cbra.web")
-	assert.NotNil(t, association)
-	assert.Equal(t, "CBRA", association.Acronym)
-	assert.NoError(t, err)
+	assert.NotNil(association)
+	assert.Equal("CBRA", association.Acronym)
+	assert.NoError(err)
 
 	association, err = as.FirstByHost("atra.local")
-	assert.NotNil(t, association)
-	assert.Equal(t, "ATRA", association.Acronym)
-	assert.NoError(t, err)
+	assert.NotNil(association)
+	assert.Equal("ATRA", association.Acronym)
+	assert.NoError(err)
 
 	association, err = as.FirstByHost("usacycling.org")
-	assert.NotNil(t, association)
-	assert.Error(t, err)
+	assert.NotNil(association)
+	assert.Error(err)
 }
 
 func TestFirstOrCreate(t *testing.T) {
-	_, db, logger := SetupTest()
+	_, db, logger, assert := SetupTest(t)
 	defer db.Close()
 
 	as := AssociationService{DB: db, Logger: logger}
 
 	var count int
 	db.Table("associations").Count(&count)
-	assert.Equal(t, 1, count)
+	assert.Equal(1, count)
 
 	atra := api.Association{Acronym: "ATRA", Host: "atra.local", Name: "American Track"}
 	as.FirstOrCreate(&atra)
-	assert.Equal(t, "ATRA", atra.Acronym)
+	assert.Equal("ATRA", atra.Acronym)
 	id := atra.ID
-	assert.NotZero(t, id)
+	assert.NotZero(id)
 
 	as.FirstOrCreate(&atra)
-	assert.Equal(t, "ATRA", atra.Acronym)
-	assert.Equal(t, id, atra.ID)
+	assert.Equal("ATRA", atra.Acronym)
+	assert.Equal(id, atra.ID)
 
 	db.Table("associations").Count(&count)
-	assert.Equal(t, 2, count)
+	assert.Equal(2, count)
 
 	wsba := api.Association{Acronym: "WSBA", Host: "wsba.local", Name: "Washington"}
 	as.FirstOrCreate(&wsba)
-	assert.Equal(t, "WSBA", wsba.Acronym)
+	assert.Equal("WSBA", wsba.Acronym)
 	wsbaID := wsba.ID
-	assert.NotZero(t, wsbaID)
+	assert.NotZero(wsbaID)
 
 	as.FirstOrCreate(&wsba)
-	assert.Equal(t, "WSBA", wsba.Acronym)
-	assert.Equal(t, wsbaID, wsba.ID)
+	assert.Equal("WSBA", wsba.Acronym)
+	assert.Equal(wsbaID, wsba.ID)
 
 	db.Table("associations").Count(&count)
-	assert.Equal(t, 3, count)
+	assert.Equal(3, count)
 }
