@@ -16,33 +16,29 @@ import (
 )
 
 func TestCopy(t *testing.T) {
-	logger := log.MockLogger{}
-	dbs := db.Databases{Logger: &logger}
-
-	dpDB := dbs.Default()
+	association, dpDB, logger := db.SetupTest()
 	defer dpDB.Close()
 
-	as := &db.AssociationService{DB: dpDB, Logger: &logger}
-	eventService := &db.EventService{DB: dpDB, Logger: &logger}
+	dbs := db.Databases{Logger: logger}
+
+	as := &db.AssociationService{DB: dpDB, Logger: logger}
+	eventService := &db.EventService{DB: dpDB, Logger: logger}
 	ras := &RacingAssociationService{
 		Databases:          dbs,
-		Logger:             &logger,
+		Logger:             logger,
 		APIEventService:    eventService,
 		AssociationService: as,
 	}
 	railsEventService := &EventService{
 		Databases: dbs,
-		Logger:    &logger,
+		Logger:    logger,
 		RacingAssociationService: ras,
 	}
-
-	dpDB.Unscoped().Delete(&api.Event{})
-	dpDB.Unscoped().Delete(&api.Association{})
 
 	db := dbs.Default()
 	var count int
 	db.Table("associations").Count(&count)
-	assert.Equal(t, 0, count)
+	assert.Equal(t, 1, count)
 
 	assert := assert.New(t)
 	railsEvents := railsEventService.Find("CBRA")
@@ -52,9 +48,6 @@ func TestCopy(t *testing.T) {
 		t.Error(copyErr)
 		t.FailNow()
 	}
-
-	association := api.Association{Acronym: "CBRA"}
-	as.FirstOrCreate(&association)
 	events, err := eventService.Find(&association)
 	if err != nil {
 		t.Error(err)

@@ -1,6 +1,5 @@
-* add wrapper method to ensure default association and add default condition
-* require event association (in code)
 * add create default association helper
+  * return assert
 * read association from domain/sub-domain
   * test regex
 * db.Unscoped().Delete(&api.Event{}) or db.Delete(api.Event{})?

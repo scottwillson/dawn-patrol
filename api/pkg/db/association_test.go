@@ -54,16 +54,10 @@ func TestDefaultOrCreateDefault(t *testing.T) {
 }
 
 func TestFirstByHost(t *testing.T) {
-	logger := log.MockLogger{}
-	dbs := Databases{Logger: &logger}
-	db := dbs.Default()
+	_, db, logger := SetupTest()
 	defer db.Close()
 
-	db.Unscoped().Delete(&api.Event{})
-	db.Unscoped().Delete(&api.Association{})
-
-	as := AssociationService{DB: db, Logger: &logger}
-	as.CreateDefault()
+	as := AssociationService{DB: db, Logger: logger}
 
 	atra := api.Association{Acronym: "ATRA", Host: "atra.local"}
 	as.Create(&atra)
@@ -94,15 +88,14 @@ func TestFirstByHost(t *testing.T) {
 }
 
 func TestFirstOrCreate(t *testing.T) {
-	logger := log.MockLogger{}
-	dbs := Databases{Logger: &logger}
-	db := dbs.Default()
+	_, db, logger := SetupTest()
 	defer db.Close()
 
-	db.Unscoped().Delete(&api.Event{})
-	db.Unscoped().Delete(&api.Association{})
+	as := AssociationService{DB: db, Logger: logger}
 
-	as := AssociationService{DB: db, Logger: &logger}
+	var count int
+	db.Table("associations").Count(&count)
+	assert.Equal(t, 1, count)
 
 	atra := api.Association{Acronym: "ATRA", Host: "atra.local", Name: "American Track"}
 	as.FirstOrCreate(&atra)
@@ -114,9 +107,8 @@ func TestFirstOrCreate(t *testing.T) {
 	assert.Equal(t, "ATRA", atra.Acronym)
 	assert.Equal(t, id, atra.ID)
 
-	var count int
 	db.Table("associations").Count(&count)
-	assert.Equal(t, 1, count)
+	assert.Equal(t, 2, count)
 
 	wsba := api.Association{Acronym: "WSBA", Host: "wsba.local", Name: "Washington"}
 	as.FirstOrCreate(&wsba)
@@ -129,5 +121,5 @@ func TestFirstOrCreate(t *testing.T) {
 	assert.Equal(t, wsbaID, wsba.ID)
 
 	db.Table("associations").Count(&count)
-	assert.Equal(t, 2, count)
+	assert.Equal(t, 3, count)
 }

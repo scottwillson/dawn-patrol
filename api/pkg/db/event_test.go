@@ -6,21 +6,11 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"rocketsurgeryllc.com/dawnpatrol/api/pkg"
-	"rocketsurgeryllc.com/dawnpatrol/api/pkg/log"
 )
 
 func TestCreateEvents(t *testing.T) {
-	logger := log.MockLogger{}
-	dbs := Databases{Logger: &logger}
-	db := dbs.Default()
+	association, db, logger := SetupTest()
 	defer db.Close()
-
-	db.Unscoped().Delete(&api.Event{})
-	db.Unscoped().Delete(&api.Association{})
-
-	as := AssociationService{DB: db, Logger: &logger}
-
-	association := as.CreateDefault()
 
 	assert := assert.New(t)
 	var count int
@@ -28,7 +18,7 @@ func TestCreateEvents(t *testing.T) {
 	assert.Equal(1, count)
 	assert.NotZero(association.ID)
 
-	es := EventService{DB: db, Logger: &logger}
+	es := EventService{DB: db, Logger: logger}
 
 	events := []api.Event{
 		api.Event{Name: "Copperopolis Road Race", AssociationID: association.ID},
@@ -53,16 +43,8 @@ func TestCreateEvents(t *testing.T) {
 }
 
 func TestFind(t *testing.T) {
-	logger := log.MockLogger{}
-	dbs := Databases{Logger: &logger}
-	db := dbs.Default()
+	cbra, db, logger := SetupTest()
 	defer db.Close()
-
-	db.Unscoped().Delete(&api.Event{})
-	db.Unscoped().Delete(&api.Association{})
-
-	cbra := api.Association{Acronym: "CBRA", Name: "CBRA", Host: "cbra.web"}
-	db.Create(&cbra)
 
 	mbra := api.Association{Acronym: "MBRA", Name: "MBRA", Host: "mbra.web"}
 	db.Create(&mbra)
@@ -71,7 +53,7 @@ func TestFind(t *testing.T) {
 	db.Create(&api.Event{AssociationID: cbra.ID})
 	db.Create(&api.Event{AssociationID: cbra.ID})
 
-	es := EventService{DB: db, Logger: &logger}
+	es := EventService{DB: db, Logger: logger}
 
 	var events, err = es.Find(&cbra)
 	if err != nil {
