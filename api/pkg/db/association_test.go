@@ -86,6 +86,13 @@ func TestFirstByHost(t *testing.T) {
 	association, err = as.FirstByHost("usacycling.org")
 	assert.NotNil(association)
 	assert.Error(err)
+
+	subdomainHost := api.Association{Acronym: "SUB", Host: "^sub.|subdomain.org", Name: "Subdomain Association"}
+	as.Create(&subdomainHost)
+	association, err = as.FirstByHost("sub.racingonrails.com")
+	assert.NotNil(association)
+	assert.Equal("SUB", association.Acronym)
+	assert.NoError(err)
 }
 
 func TestFirstOrCreate(t *testing.T) {

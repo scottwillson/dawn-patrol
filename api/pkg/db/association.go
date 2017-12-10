@@ -49,7 +49,7 @@ func (s *AssociationService) DefaultOrCreateDefault() api.Association {
 func (s *AssociationService) FirstByHost(host string) (api.Association, error) {
 	s.Logger.Log("action", "find_by_host", "host", host)
 	association := api.Association{}
-	err := s.DB.Where("host ~* ?", host).First(&association).Error
+	err := s.DB.Where("? ~* host", host).First(&association).Error
 	return association, err
 }
 

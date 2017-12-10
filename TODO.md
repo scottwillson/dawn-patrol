@@ -1,7 +1,3 @@
-* add create default association helper
-  * return assert
-* read association from domain/sub-domain
-  * test regex
 * db.Unscoped().Delete(&api.Event{}) or db.Delete(api.Event{})?
 * FirstByHost should strip off port. atra.web:8080 should find ATRA.
 * /copy should use host, not param
