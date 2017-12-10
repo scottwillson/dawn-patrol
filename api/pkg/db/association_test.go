@@ -78,6 +78,11 @@ func TestFirstByHost(t *testing.T) {
 	assert.Equal("CBRA", association.Acronym)
 	assert.NoError(err)
 
+	association, err = as.FirstByHost("cbra.web:8080")
+	assert.NotNil(association)
+	assert.Equal("CBRA", association.Acronym)
+	assert.NoError(err)
+
 	association, err = as.FirstByHost("atra.local")
 	assert.NotNil(association)
 	assert.Equal("ATRA", association.Acronym)

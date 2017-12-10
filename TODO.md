@@ -1,5 +1,3 @@
-* db.Unscoped().Delete(&api.Event{}) or db.Delete(api.Event{})?
-* FirstByHost should strip off port. atra.web:8080 should find ATRA.
 * /copy should use host, not param
   * curl -X rails.local:8080/rails/copy
   * not curl -X POST -d "association=rails" 0.0.0.0:8080/rails/copy
