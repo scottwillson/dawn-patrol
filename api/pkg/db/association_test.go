@@ -15,8 +15,8 @@ func TestDefaultAndTestCreateDefault(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
-	db.Unscoped().Delete(&api.Event{})
-	db.Unscoped().Delete(&api.Association{})
+	db.Delete(&api.Event{})
+	db.Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
 	var association = as.CreateDefault()
@@ -34,8 +34,8 @@ func TestDefaultOrCreateDefault(t *testing.T) {
 	db := dbs.Default()
 	defer db.Close()
 
-	db.Unscoped().Delete(&api.Event{})
-	db.Unscoped().Delete(&api.Association{})
+	db.Delete(&api.Event{})
+	db.Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
 	var association = as.DefaultOrCreateDefault()

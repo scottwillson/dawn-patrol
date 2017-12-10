@@ -17,8 +17,8 @@ func SetupTest(t *testing.T) (api.Association, *gorm.DB, gokitLog.Logger, *asser
 	dbs := Databases{Logger: &logger}
 	db := dbs.Default()
 
-	db.Unscoped().Delete(&api.Event{})
-	db.Unscoped().Delete(&api.Association{})
+	db.Delete(&api.Event{})
+	db.Delete(&api.Association{})
 
 	as := AssociationService{DB: db, Logger: &logger}
 	association := as.CreateDefault()
