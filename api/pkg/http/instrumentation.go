@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	raven "github.com/getsentry/raven-go"
 	newrelic "github.com/newrelic/go-agent"
 )
 
@@ -31,5 +32,6 @@ func (ih *instrumentedHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	txn := ih.NewRelicApp.StartTransaction(fmt.Sprintf("%T", h), w, r)
 	defer txn.End()
 
-	h.ServeHTTP(w, r)
+	rh := raven.RecoveryHandler(h.ServeHTTP)
+	rh(w, r)
 }
