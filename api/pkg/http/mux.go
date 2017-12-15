@@ -32,6 +32,10 @@ func NewMux(cfg MuxConfig) *goji.Mux {
 		NewInstrumentedHandler(cfg.NewRelicApp,
 			newRoot(cfg.AssociationService, cfg.EventService)))
 
+	mux.Handle(pat.Get("/panic"),
+		NewInstrumentedHandler(cfg.NewRelicApp,
+			newTestPanic()))
+
 	mux.Handle(pat.Post("/rails/copy"),
 		NewInstrumentedHandler(cfg.NewRelicApp,
 			&railsHttp.Copy{RacingAssociationService: cfg.RacingAssociationService}))

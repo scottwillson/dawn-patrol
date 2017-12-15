@@ -70,3 +70,4 @@
 * Test GORM SQL injection
 * Ensure postgres warnings are exceptions
 * Auto-add created and updated
+* Disable /panic in production
