@@ -6,6 +6,7 @@ services:
       - db
       - rails-db
     environment:
+      - SENTRY_DSN
       - NEW_RELIC_LICENSE_KEY
     image: scottwillson/dawn-patrol-api
   db:
