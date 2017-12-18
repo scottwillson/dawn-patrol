@@ -2,6 +2,7 @@ package db
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/go-kit/kit/log"
 
@@ -23,7 +24,8 @@ func (s *EventService) Create(events []api.Event) error {
 			return errors.New("'AssociationID' is required")
 		}
 
-		s.DB.Create(&event)
+		fmt.Println(event)
+		s.DB.Debug().Create(&event)
 	}
 
 	return nil

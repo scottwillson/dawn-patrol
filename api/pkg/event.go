@@ -9,6 +9,7 @@ type Event struct {
 	Association    Association
 	AssociationID  int       `json:"associationId"`
 	City           string    `json:"city"`
+	CreatedAt      time.Time `json:"createdAt"`
 	Discipline     string    `json:"discipline"`
 	ID             int       `json:"id"`
 	Name           string    `json:"name"`
@@ -17,6 +18,7 @@ type Event struct {
 	RailsUpdatedAt time.Time `json:"railsUpdatedAt"`
 	StartsAt       time.Time `json:"startsAt"`
 	State          string    `json:"state"`
+	UpdatedAt      time.Time `json:"updatedAt"`
 }
 
 // EventService manages Events.

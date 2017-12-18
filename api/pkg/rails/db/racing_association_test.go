@@ -78,6 +78,12 @@ func TestCopy(t *testing.T) {
 	if !railsUpdatedAt.Equal(events[0].RailsUpdatedAt) {
 		t.Errorf("expected RailsUpdatedAt %v to be %v", events[0].RailsUpdatedAt, railsUpdatedAt)
 	}
+	if !railsCreatedAt.Equal(events[0].CreatedAt) {
+		t.Errorf("expected CreatedAt %v to be %v", events[0].CreatedAt, railsCreatedAt)
+	}
+	if !railsUpdatedAt.Equal(events[0].UpdatedAt) {
+		t.Errorf("expected UpdatedAt %v to be %v", events[0].UpdatedAt, railsUpdatedAt)
+	}
 
 	assert.Equal("Hellyer Challenge", events[1].Name, "event name")
 	assert.Equal("San Jose", events[1].City, "event city")
@@ -95,6 +101,12 @@ func TestCopy(t *testing.T) {
 	railsUpdatedAt = time.Date(2009, 1, 7, 11, 34, 0, 0, time.UTC)
 	if !railsUpdatedAt.Equal(events[1].RailsUpdatedAt) {
 		t.Errorf("expected RailsUpdatedAt %v to be %v", events[0].RailsUpdatedAt, railsUpdatedAt)
+	}
+	if !railsCreatedAt.Equal(events[1].CreatedAt) {
+		t.Errorf("expected CreatedAt %v to be %v", events[0].CreatedAt, railsCreatedAt)
+	}
+	if !railsUpdatedAt.Equal(events[1].RailsUpdatedAt) {
+		t.Errorf("expected UpdatedAt %v to be %v", events[0].UpdatedAt, railsUpdatedAt)
 	}
 }
 

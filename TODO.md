@@ -26,7 +26,6 @@
   * What does testing/build pipeline look like?
 * openDB loop should raise original errors
 * Split out mock
-* Split out RailsService into CopyService? How to organize services and services DI?
 * Ensure implements gorm.Model
 * Set up DNS and a floating IP
 * Notify on build, deploy
@@ -71,3 +70,4 @@
 * Ensure postgres warnings are exceptions
 * Auto-add created and updated
 * Disable /panic in production
+* Add collision detection in copy. Don't update anything updated after RailsUpdatedAt

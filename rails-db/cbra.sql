@@ -27,7 +27,7 @@ insert into events (date, discipline, city, id, name, promoter_id, state, type, 
   '2009-01-09 02:00:01'
 );
 
-insert into racing_associations (name, short_name) values (
+insert into racing_associations (name, short_name, created_at, updated_at) values (
   'Cascadia Bicycle Racing Association',
   'CBRA'
 );

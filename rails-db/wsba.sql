@@ -34,9 +34,11 @@ insert into events (date, discipline, city, id, name, promoter_id, state, type, 
   '2009-03-08 08:59:59'
 );
 
-insert into racing_associations (name, short_name) values (
+insert into racing_associations (name, short_name, created_at, updated_at) values (
   'Washington State Bicycle Racing Association',
-  'WSBA'
+  'WSBA',
+  '2015-01-01 00:00:00',
+  '2015-12-31 23:59:59'  
 );
 
 insert into categories (id, friendly_param, name) values (

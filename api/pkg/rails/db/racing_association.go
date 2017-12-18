@@ -34,10 +34,12 @@ func (s *RacingAssociationService) Copy(associationAcronym string) error {
 
 	association := api.Association{
 		Acronym:        associationAcronym,
+		CreatedAt:      racingAssociation.CreatedAt,
 		Host:           "0.0.0.0|localhost|" + strings.ToLower(racingAssociation.ShortName) + ".web",
 		Name:           racingAssociation.ShortName,
 		RailsCreatedAt: racingAssociation.CreatedAt,
 		RailsUpdatedAt: racingAssociation.UpdatedAt,
+		UpdatedAt:      racingAssociation.UpdatedAt,
 	}
 	s.AssociationService.FirstOrCreate(&association)
 
@@ -50,6 +52,7 @@ func (s *RacingAssociationService) Copy(associationAcronym string) error {
 		events[i] = api.Event{
 			AssociationID:  association.ID,
 			City:           e.City,
+			CreatedAt:      e.CreatedAt,
 			Discipline:     e.Discipline,
 			Name:           e.Name,
 			RailsID:        e.ID,
@@ -57,6 +60,7 @@ func (s *RacingAssociationService) Copy(associationAcronym string) error {
 			RailsUpdatedAt: e.UpdatedAt,
 			StartsAt:       date,
 			State:          e.State,
+			UpdatedAt:      e.UpdatedAt,
 		}
 	}
 

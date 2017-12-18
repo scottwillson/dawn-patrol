@@ -30,7 +30,9 @@ CREATE TABLE associations (
     name text NOT NULL,
     host text NOT NULL,
     rails_created_at timestamp with time zone,
-    rails_updated_at timestamp with time zone
+    rails_updated_at timestamp with time zone,
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone
 );
 
 
@@ -71,7 +73,9 @@ CREATE TABLE events (
     rails_updated_at timestamp with time zone,
     starts_at timestamp with time zone NOT NULL,
     state text,
-    association_id integer NOT NULL
+    association_id integer NOT NULL,
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone
 );
 
 
@@ -286,6 +290,7 @@ COPY shmig_version (version, migrated_at) FROM stdin;
 1507776432	2017-11-04 15:43:37.426016
 1509578401	2017-11-04 15:43:37.438428
 1510868478	2017-11-16 22:12:08.235853
+1513374335	2017-12-17 02:28:34.84871
 \.
 
 
