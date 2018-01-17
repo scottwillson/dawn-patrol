@@ -1,6 +1,8 @@
 package db
 
 import (
+	"fmt"
+
 	"github.com/go-kit/kit/log"
 
 	"github.com/jinzhu/gorm"
@@ -55,10 +57,16 @@ func (s *AssociationService) FirstByHost(host string) (api.Association, error) {
 
 // FirstOrCreate finds first Association that matches acronym or creates Association
 func (s *AssociationService) FirstOrCreate(association *api.Association) {
+	fmt.Println("FirstOrCreate()")
+	fmt.Println(association)
+	// acronym :=
 	s.Logger.Log("action", "first_or_create", "association", association.Acronym)
-	s.DB.Where(api.Association{Acronym: association.Acronym}).First(&association)
-	if s.DB.NewRecord(association) {
+	existingAssociation := api.Association{Acronym: association.Acronym}
+	s.DB.Where(api.Association{Acronym: association.Acronym}).First(&existingAssociation)
+	if s.DB.NewRecord(existingAssociation) {
 		s.Create(association)
+	} else {
+		association = &existingAssociation
 	}
 }
 

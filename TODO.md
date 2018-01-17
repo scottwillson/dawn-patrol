@@ -1,3 +1,4 @@
+* Change Association.FirstOrCreate to accept acronym?
 * Error aggregation service
   * nginx errors?
 * migrations
