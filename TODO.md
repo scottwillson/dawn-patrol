@@ -1,4 +1,5 @@
 * Change Association.FirstOrCreate to accept acronym?
+* Fix blank field problem with DefaultOrCreateDefault?
 * Error aggregation service
   * nginx errors?
 * migrations
