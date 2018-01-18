@@ -18,8 +18,9 @@ type EventService struct {
 
 // Create creates api.Events.
 func (s *EventService) Create(events []api.Event) error {
-	s.Logger.Log("action", "create")
+	s.Logger.Log("action", "create", "events", len(events))
 	for _, event := range events {
+		fmt.Println("event.AssociationID", event.AssociationID)
 		if event.AssociationID == 0 {
 			return errors.New("'AssociationID' is required")
 		}

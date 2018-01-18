@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/go-kit/kit/log"
@@ -42,6 +43,7 @@ func (s *RacingAssociationService) Copy(associationAcronym string) error {
 		UpdatedAt:      racingAssociation.UpdatedAt,
 	}
 	s.AssociationService.FirstOrCreate(&association)
+	fmt.Println("AssociationID", association.ID)
 
 	events := make([]api.Event, len(railsEvents))
 	for i, e := range railsEvents {
@@ -64,6 +66,7 @@ func (s *RacingAssociationService) Copy(associationAcronym string) error {
 		}
 	}
 
+	fmt.Println("event.AssociationID", events[0].AssociationID)
 	s.APIEventService.Create(events)
 
 	return nil

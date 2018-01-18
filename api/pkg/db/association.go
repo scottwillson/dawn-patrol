@@ -56,18 +56,18 @@ func (s *AssociationService) FirstByHost(host string) (api.Association, error) {
 }
 
 // FirstOrCreate finds first Association that matches acronym or creates Association
-func (s *AssociationService) FirstOrCreate(association *api.Association) {
-	fmt.Println("FirstOrCreate()")
-	fmt.Println(association)
-	// acronym :=
-	s.Logger.Log("action", "first_or_create", "association", association.Acronym)
-	existingAssociation := api.Association{Acronym: association.Acronym}
-	s.DB.Where(api.Association{Acronym: association.Acronym}).First(&existingAssociation)
-	if s.DB.NewRecord(existingAssociation) {
-		s.Create(association)
+func (s *AssociationService) FirstOrCreate(acronym string) *api.Association {
+	s.Logger.Log("action", "first_or_create", "association", acronym)
+	fmt.Println("action", "first_or_create", "association", acronym)
+	association := api.Association{Acronym: acronym}
+	s.DB.Where("acronym = ?", acronym).First(&association)
+	if s.DB.NewRecord(association) {
+		fmt.Println("*** Create")
+		s.Create(&association)
 	} else {
-		association = &existingAssociation
+		fmt.Println("*** existing", association.ID)
 	}
+	return &association
 }
 
 func newDefault() api.Association {
