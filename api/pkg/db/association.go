@@ -60,6 +60,7 @@ func (s *AssociationService) FirstOrCreate(acronym string) *api.Association {
 	s.Logger.Log("action", "first_or_create", "association", acronym)
 	fmt.Println("action", "first_or_create", "association", acronym)
 	association := api.Association{Acronym: acronym}
+
 	s.DB.Where("acronym = ?", acronym).First(&association)
 	if s.DB.NewRecord(association) {
 		fmt.Println("*** Create")

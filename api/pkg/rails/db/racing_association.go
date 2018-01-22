@@ -33,6 +33,8 @@ func (s *RacingAssociationService) Copy(associationAcronym string) error {
 		return err
 	}
 
+	s.AssociationService.FirstOrCreate(associationAcronym)
+
 	association := api.Association{
 		Acronym:        associationAcronym,
 		CreatedAt:      racingAssociation.CreatedAt,
@@ -42,7 +44,8 @@ func (s *RacingAssociationService) Copy(associationAcronym string) error {
 		RailsUpdatedAt: racingAssociation.UpdatedAt,
 		UpdatedAt:      racingAssociation.UpdatedAt,
 	}
-	s.AssociationService.FirstOrCreate(&association)
+	s.AssociationService.Save(associationAcronym)
+
 	fmt.Println("AssociationID", association.ID)
 
 	events := make([]api.Event, len(railsEvents))
