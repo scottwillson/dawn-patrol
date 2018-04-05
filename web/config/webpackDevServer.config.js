@@ -80,6 +80,10 @@ module.exports = function(proxy, allowedHost) {
         target: 'http://api-dev:8080',
         secure: false
       },
+      '/panic': {
+        target: 'http://api-dev:8080',
+        secure: false
+      },
       '/status': {
         target: 'http://api-dev:8080',
         secure: false

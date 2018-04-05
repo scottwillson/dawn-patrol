@@ -13,6 +13,7 @@ Run `./bin/setup`
   * Clean up previous builds
   * Run unit tests
   * Start auto-reloading dev env
+  * Will take many minutes the first time, but should be much quicker once Docker base images are cached
 
 ## Dev
 `docker-compose logs -f --tail=0`

@@ -1,4 +1,6 @@
 * Error aggregation service
+  * SENTRY_RELEASE
+  * SENTRY_ENVIRONMENT
   * nginx errors?
 * migrations
   * db/bin/migrate needs to copy migrations to db instance or rebuild it
@@ -71,3 +73,5 @@
 * Ensure postgres warnings are exceptions
 * Auto-add created and updated
 * Disable /panic in production
+* kubernetes
+* improve local dev ENV/secrets
