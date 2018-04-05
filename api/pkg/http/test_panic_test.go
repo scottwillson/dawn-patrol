@@ -14,13 +14,13 @@ func TestPanicTest(t *testing.T) {
 	mux := goji.NewMux()
 	h := newTestPanic()
 
-	req, err := http.NewRequest("GET", "/error", nil)
+	req, err := http.NewRequest("GET", "/panic", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	resp := httptest.NewRecorder()
-	mux.Handle(pat.Get("/error"), h)
+	mux.Handle(pat.Get("/panic"), h)
 
 	assert.Panics(t, func() { mux.ServeHTTP(resp, req) })
 }
