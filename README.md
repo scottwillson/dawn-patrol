@@ -3,9 +3,9 @@
 Install git
 git clone
 
-Run `./bin/setup`
-
 Install Docker
+
+Run `./bin/setup`
 
 ## Setup
 
