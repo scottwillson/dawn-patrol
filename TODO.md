@@ -1,3 +1,4 @@
+* Fix blank field problem with DefaultOrCreateDefault?
 * Error aggregation service
   * SENTRY_RELEASE
   * SENTRY_ENVIRONMENT
@@ -75,3 +76,4 @@
 * Disable /panic in production
 * kubernetes
 * improve local dev ENV/secrets
+* Add collision detection in copy. Don't update anything updated after RailsUpdatedAt
