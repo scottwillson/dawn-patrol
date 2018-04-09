@@ -1,5 +1,5 @@
 ---
-engines:
+plugins:
   csslint:
     enabled: true
   duplication:
@@ -18,18 +18,14 @@ engines:
     enabled: true
   govet:
     enabled: true
+  markdownlint:
+    enabled: true
+  nodesecurity:
+    enabled: true
   rubocop:
     enabled: true
   shellcheck:
     enabled: true
-ratings:
-  paths:
-  - "**.css"
-  - "**.go"
-  - "**.js"
-  - "**.jsx"
-  - "**.rb"
-  - "**.sh"
-exclude_paths:
+exclude_patterns:
 - api/vendor
 - db/bin/shmig
