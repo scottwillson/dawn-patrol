@@ -9,6 +9,7 @@ services:
       - db-dev
       - rails-db
     environment:
+      - CC_TEST_REPORTER_ID
       - DATABASE_URL=postgres://dawnpatrol@db-dev/dawnpatrol_test?sslmode=disable
       - DAWN_PATROL_ENVIRONMENT=test
   db-dev:
