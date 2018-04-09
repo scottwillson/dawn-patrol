@@ -77,3 +77,6 @@
 * kubernetes
 * improve local dev ENV/secrets
 * Add collision detection in copy. Don't update anything updated after RailsUpdatedAt
+* Separate NR and Sentry handlers
+* Improve stack trace on panic/errors
+* Friendly error page
