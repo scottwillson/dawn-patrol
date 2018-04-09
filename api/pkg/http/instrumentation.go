@@ -16,10 +16,6 @@ type instrumentedHandler struct {
 // NewInstrumentedHandler instruments an HTTP Handler with New Relic. It starts a New Relic transaction and then delegates to the Handler's
 // ServeHTTP() function. This function returns the wrapped Handler.
 func NewInstrumentedHandler(nr newrelic.Application, h http.Handler) http.Handler {
-	if nr == nil {
-		return h
-	}
-
 	return &instrumentedHandler{
 		NewRelicApp: nr,
 		Handler:     h,
@@ -29,8 +25,10 @@ func NewInstrumentedHandler(nr newrelic.Application, h http.Handler) http.Handle
 func (ih *instrumentedHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h := ih.Handler
 
-	txn := ih.NewRelicApp.StartTransaction(fmt.Sprintf("%T", h), w, r)
-	defer txn.End()
+	if ih.NewRelicApp != nil {
+		txn := ih.NewRelicApp.StartTransaction(fmt.Sprintf("%T", h), w, r)
+		defer txn.End()
+	}
 
 	rh := raven.RecoveryHandler(h.ServeHTTP)
 	rh(w, r)
