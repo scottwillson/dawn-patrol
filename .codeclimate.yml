@@ -32,3 +32,4 @@ ratings:
   - "**.sh"
 exclude_paths:
 - api/vendor
+- db/bin/shmig
