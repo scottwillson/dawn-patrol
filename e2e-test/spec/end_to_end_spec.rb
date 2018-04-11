@@ -36,5 +36,14 @@ RSpec.describe 'DawnPatrol', type: 'feature' do
 
     visit 'http://wsba.web/'
     expect(page).to have_css '.events', text: '2 events'
+
+    Net::HTTP.post_form URI('http://api:8080/rails/copy'), { association: 'wsba' }
+    Net::HTTP.post_form URI('http://api:8080/rails/copy'), { association: 'atra' }
+    
+    visit 'http://atra.web/'
+    expect(page).to have_css '.events', text: '1 events'
+
+    visit 'http://wsba.web/'
+    expect(page).to have_css '.events', text: '2 events'
   end
 end
