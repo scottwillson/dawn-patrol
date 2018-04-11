@@ -1,13 +1,9 @@
-* Fix blank field problem with DefaultOrCreateDefault?
-* Error aggregation service
-  * SENTRY_RELEASE
-  * SENTRY_ENVIRONMENT
-  * nginx errors?
 * migrations
   * db/bin/migrate needs to copy migrations to db instance or rebuild it
   * run on deploys
 * Backups
 * Consolidate DB init
+* Move to kubernetes in GCE
 * Ansible server setup?
   * Replace Docker Hub
 * read https://peter.bourgon.org/go-best-practices-2016/#dependency-management
@@ -80,3 +76,8 @@
 * Separate NR and Sentry handlers
 * Improve stack trace on panic/errors
 * Friendly error page
+* Fix blank field problem with DefaultOrCreateDefault?
+* Error aggregation service
+  * SENTRY_RELEASE
+  * SENTRY_ENVIRONMENT
+  * nginx errors?
