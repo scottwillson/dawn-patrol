@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: dawn-patrol
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  selector:
+    matchLabels:
+      app: dawn-patrol
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dawn-patrol
+    spec:
+      containers:
+      - name: db
+        image: scottwillson/dawn-patrol-db:latest
+  strategy:
+    type: Recreate
