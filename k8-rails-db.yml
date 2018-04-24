@@ -1,31 +1,30 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: db
+  name: rails-db
 spec:
-  selector:
-    name: db
   ports:
-  - port: 5432
+  - port: 3306
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db
+  name: rails-db
 spec:
   selector:
     matchLabels:
-      run: db
+      run: rails-db
   replicas: 1
   template:
     metadata:
       labels:
-        run: db
+        run: rails-db
     spec:
       containers:
-      - name: db
-        image: scottwillson/dawn-patrol-db:latest
+      - image: scottwillson/dawn-patrol-rails-db:latest
+        name: rails-db
         ports:
-        - containerPort: 5432
+          - containerPort: 3306
+            name: rails-db
   strategy:
     type: Recreate
