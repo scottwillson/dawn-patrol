@@ -1,27 +1,28 @@
 source "https://rubygems.org"
 
-ruby "~> 2.4.1"
+ruby "~> 2.6.0"
 
 gem "acts_as_list"
 gem "acts_as_tenant", git: "https://github.com/ErwinM/acts_as_tenant", ref: "960d3df"
 gem "bcrypt"
+gem "bootsnap", ">= 1.1.0", require: false
 gem "bootstrap" #, "~> 4.0.0.alpha4"
 gem "coffee-rails"
 gem "dalli"
 gem "friendly_id"
-gem "jbuilder", "~> 2.5"
+gem "jbuilder"#{}, "~> 2.5"
 gem "jquery-rails"
 gem "mysql2"
 gem "oj"
 gem "pg"
 gem "puma"
-gem "rails", ">= 5.1.1", "< 5.2"
+gem "rails", ">= 5.2"
 gem "react_on_rails"
 gem "sass-rails"
 gem "sucker_punch"
 gem "turbolinks"
-gem "uglifier", ">= 1.3.0"
-gem "webpacker_lite", "2.0.4"
+gem "uglifier" #, ">= 1.3.0"
+gem "webpacker_lite" #, "2.0.4"
 
 group :development, :test do
   gem "byebug", platform: :mri
@@ -51,8 +52,8 @@ end
 
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-source "https://rails-assets.org" do
-  gem "rails-assets-tether", ">= 1.1.0"
-end
+# source "https://rails-assets.org" do
+#   gem "rails-assets-tether", ">= 1.1.0"
+# end
 
 gem "mini_racer", platforms: :ruby

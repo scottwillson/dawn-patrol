@@ -42,7 +42,8 @@
   "homepage": "https://github.com/shakacode/react-webpack-rails-tutorial",
   "dependencies": {
     "es6-promise": "^4.1.1",
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "yarn": "^1.13.0"
   },
   "devDependencies": {},
   "cacheDirectories": [

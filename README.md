@@ -1,6 +1,6 @@
 # README
 
-* Ruby version 2.3
+* Ruby version 2.6
 
 * brew install mysql postgres phantomjs
 
