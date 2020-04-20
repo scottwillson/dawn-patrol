@@ -81,3 +81,4 @@
   * SENTRY_RELEASE
   * SENTRY_ENVIRONMENT
   * nginx errors?
+* Add PG password 
