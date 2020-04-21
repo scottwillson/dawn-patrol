@@ -1,7 +1,7 @@
 require "capybara/rspec"
-require "capybara/poltergeist"
+require "webdrivers/chromedriver"
 
-Capybara.default_driver = :poltergeist
+Capybara.default_driver = :selenium_chrome_headless
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

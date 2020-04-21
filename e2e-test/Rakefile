@@ -1,0 +1,4 @@
+require "webdrivers"
+load "webdrivers/Rakefile"
+
+Webdrivers.cache_time = 86_400 
