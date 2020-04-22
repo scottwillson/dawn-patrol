@@ -1,9 +1,9 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import Events from './Events';
 
 it('populates itself from API', () => {
-  const events = [{name: ''}];
-  const app = mount(<Events events={events} />);
-  expect(app.find('.events').text()).toEqual("1 events");
+  const props = [{name: ''}];
+  const events = render(<Events events={props} />);
+  expect(events.find('.events').text()).toEqual("1 events");
 });
