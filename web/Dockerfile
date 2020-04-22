@@ -1,4 +1,4 @@
-FROM node as builder
+FROM node:14.0.0 as builder
 MAINTAINER Scott Willson "<scott.willson@gmail.com>"
 
 WORKDIR /web

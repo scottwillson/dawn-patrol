@@ -1,4 +1,4 @@
-FROM mysql:5.6.37
+FROM mysql:5.6.47
 
 ENV MYSQL_DATABASE cbra
 ENV MYSQL_USER cbra
