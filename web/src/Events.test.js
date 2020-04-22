@@ -4,6 +4,7 @@ import Events from './Events';
 
 it('populates itself from API', () => {
   const props = [{name: ''}];
-  const events = render(<Events events={props} />);
-  expect(events.find('.events').text()).toEqual("1 events");
+  const { getByText } = render(<Events events={props} />);
+  const events = getByText(/1 events/i);
+  expect(events).toBeInTheDocument();
 });
