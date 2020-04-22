@@ -9,7 +9,7 @@ docker-compose -f docker-compose-test.yml stop
 docker-compose -f docker-compose-test.yml rm -f
 
 docker-compose build
-docker-compose up -d api db web
+docker-compose up --quiet-pull -d api db web
 
 e2e-test/bin/test
 

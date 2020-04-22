@@ -6,7 +6,7 @@ RUN useradd -ms /bin/bash chrome
 
 RUN wget --quiet https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN apt-get update
-RUN apt install -y ./google-chrome-stable_current_amd64.deb xvfb
+RUN apt install -q -y ./google-chrome-stable_current_amd64.deb xvfb
 
 COPY Gemfile .
 COPY Gemfile.lock .
