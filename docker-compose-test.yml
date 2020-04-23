@@ -24,6 +24,6 @@ services:
     build:
       context: web
       dockerfile: Dockerfile-dev
-    command: yarn test
+    command: npm test
     environment:
       - CI=true

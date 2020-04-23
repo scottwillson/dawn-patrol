@@ -15,7 +15,6 @@ services:
       - DAWN_PATROL_ENVIRONMENT=dev
       - NEW_RELIC_LICENSE_KEY
       - SENTRY_DSN
-
     volumes:
       - ./api:/go/src/rocketsurgeryllc.com/dawnpatrol/api
   api-test:
@@ -45,11 +44,11 @@ services:
     build:
       context: web
       dockerfile: Dockerfile-dev
-    command: yarn start
+    command: npm start
     depends_on:
       - api-dev
     environment:
-      - HOST=localhost
+      - HOST=0.0.0.0
     ports:
       - 3000:3000
     volumes:
@@ -59,7 +58,7 @@ services:
     build:
       context: web
       dockerfile: Dockerfile-dev
-    command: yarn test
+    command: npm test
     depends_on:
       - web-dev
     environment:

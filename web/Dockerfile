@@ -4,11 +4,11 @@ MAINTAINER Scott Willson "<scott.willson@gmail.com>"
 WORKDIR /web
 COPY package.json .
 
-RUN yarn install
+RUN npm install
 
 COPY . .
 
-RUN yarn build
+RUN npm build
 
 FROM nginx:alpine
 
