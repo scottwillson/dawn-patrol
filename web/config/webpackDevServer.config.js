@@ -101,7 +101,20 @@ module.exports = function(proxy, allowedHost) {
     },
     public: allowedHost,
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
-    proxy,
+    proxy: {
+      '/index.json': {
+        target: 'http://api-dev:8080',
+        secure: false
+      },
+      '/panic': {
+        target: 'http://api-dev:8080',
+        secure: false
+      },
+      '/status': {
+        target: 'http://api-dev:8080',
+        secure: false
+      }
+    },
     before(app, server) {
       // Keep `evalSourceMapMiddleware` and `errorOverlayMiddleware`
       // middlewares before `redirectServedPath` otherwise will not have any effect

@@ -48,6 +48,7 @@ services:
     depends_on:
       - api-dev
     environment:
+      - CI=true
       - HOST=0.0.0.0
     ports:
       - 3000:3000
